@@ -1,10 +1,13 @@
+import { cookies } from 'next/headers'
 import NavBar from "@/components/header/Navbar";
 import Footer from "@/components/footer/Footer";
 import { getDataCache } from "@/helpers/getInfoTest";
 import InputBusqueda2 from "@/components/header/InputBusqueda2";
 import FormProvider from "@/context/FormContext";
 import { Inter } from "next/font/google";
+
 import "./globals.css";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +18,11 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+  const cookieStore= cookies()
+  const token = cookieStore.get('token')
 
-  const infoCache = await getDataCache(`https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`);
+
+  const infoCache = await getDataCache(`https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`, token.value);
   
 //  console.log({infoCache: infoCache.data})
 

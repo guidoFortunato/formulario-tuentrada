@@ -1,4 +1,4 @@
-
+import { cookies } from 'next/headers'
 import Articulo from "@/components/main/Articulo";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 
@@ -24,7 +24,9 @@ export const generateMetadata = ({params})=>{
 }
 
 const ItemSubCategorie = async({ params }) => {
-  const info = await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`);
+  const cookieStore= cookies()
+  const token = cookieStore.get('token')
+  const info = await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`, token.value);
   const infoMostViews = await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/articles/most-view`);
 
   return (    

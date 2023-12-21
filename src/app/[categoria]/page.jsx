@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers'
 import SubCategoria from "@/components/main/SubCategoria";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 
@@ -22,8 +23,9 @@ export const generateMetadata = ({params})=>{
 }
 
 const Subcategoria = async ({ params }) => {
-  // console.log({params});
-  const info = await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`);
+  const cookieStore= cookies()
+  const token = cookieStore.get('token')
+  const info = await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`, token.value);
   const category = info?.data?.category;
   // console.log({subcategoria: info})
   return (    

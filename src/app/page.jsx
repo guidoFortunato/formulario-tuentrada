@@ -1,8 +1,11 @@
+import { cookies } from 'next/headers'
 import CardCategoria from "@/components/main/CardCategoria";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 
 export default async function Home() {
-  const info = await getDataPrueba( "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories" );
+  const cookieStore= cookies()
+  const token = cookieStore.get('token')
+  const info = await getDataPrueba( "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories", token.value );
   const { categories } = info.data;
   // console.log({ info: info.data.categories });
   // console.log({categories: categories.data})

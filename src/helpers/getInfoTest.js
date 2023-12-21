@@ -1,40 +1,12 @@
-export async function getTokenPrueba( email = "gfortunato@tuentrada.com", password = "Correa.3030" ) {
-  try {
-    const res = await fetch("https://testapi.tuentrada.com/api/login", {
-      next: { revalidate: 86400 },
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-    // console.log({resToken: res})
-    if (!res.ok) {
-      throw new Error(
-        `Error getToken !res.ok: ${res.status}. ${res.statusText}`
-      );
-    }
 
-    const data = await res.json();
-    const { token } = data;
-    const tokenExpires = new Date(data.expired_at).getTime();
-    // console.log({token})
-    return { token, tokenExpires };
-  } catch (error) {
-    throw new Error(`Error catch getToken: ${error}`);
-  }
-}
 
-export async function getDataPrueba(url) {
+
+export async function getDataPrueba(url, token) {
   try {
-    const { token } = await getTokenPrueba();
 
     const res = await fetch(url, {
-      // next: { revalidate: 3600 },
-      cache: 'no-store',
+      next: { revalidate: 3600 },
+      // cache: 'no-store',
       credentials: "include",
       method: "GET",
       headers: {
@@ -51,9 +23,9 @@ export async function getDataPrueba(url) {
   }
 }
 
-export async function getDataCache(url) {
+export async function getDataCache(url, token) {
   try {
-    const { token } = await getTokenPrueba();
+
 
     const res = await fetch(url, {
       next: { revalidate: 10800 },
@@ -145,8 +117,8 @@ export async function getDataPruebaStorage(url) {
   }
 }
 
-export async function sendDataEmail(url, email) {
-  const { token } = await getTokenPrueba();
+export async function sendDataEmail(url, email, token) {
+
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -168,8 +140,8 @@ export async function sendDataEmail(url, email) {
   }
 }
 
-export async function getDataTickets(url, email, itilcategoriesId) {
-  const { token } = await getTokenPrueba();
+export async function getDataTickets(url, token, email, itilcategoriesId ) {
+
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -193,8 +165,8 @@ export async function getDataTickets(url, email, itilcategoriesId) {
 }
 
 
-export async function createForm(url, email, name, content, itilcategoriesId) {
-  const { token } = await getTokenPrueba();
+export async function createForm(url, token, email, name, content, itilcategoriesId) {
+
   try {
     const res = await fetch(url, {
       method: "POST",

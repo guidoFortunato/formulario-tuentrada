@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers'
 import { Formularios } from "@/components/formulario/Formularios";
 import FormProvider from "@/context/FormContext";
 import { getDataPrueba } from "@/helpers/getInfoTest";
@@ -26,8 +27,9 @@ export const generateMetadata = ({ params }) => {
 };
 
 async function FormPage({ params }) {
-  // const info = await getDataPrueba( `https://testapi.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/form` );
-  const info = await getDataPrueba( `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form` );
+  const cookieStore= cookies()
+  const token = cookieStore.get('token')
+  const info = await getDataPrueba( `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`, token.value );
   const dataForm = info?.data;
 
   // console.log({formPage: dataForm.steps})

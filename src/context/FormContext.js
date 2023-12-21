@@ -1,5 +1,6 @@
 "use client";
-import { createContext, useState } from "react";
+import { getToken } from "@/helpers/getToken";
+import { createContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 export const FormContext = createContext();
 
@@ -10,6 +11,8 @@ const FormProvider = ({ children }) => {
   const [subtitleArticle, setSubtitleArticle] = useState("");
   const [selectDefaultValue, setSelectDefaultValue] = useState("");
   const [errorInput, setErrorInput] = useState(false);
+  const [token, setToken] = useState("");
+  const [tokenExpires, setTokenExpires] = useState("");
 
   const {
     formState: { errors },
@@ -127,6 +130,15 @@ const FormProvider = ({ children }) => {
     },
   ];
 
+  useEffect(() => {
+    const getDataToken = async () => {
+      const { token, tokenExpires } = await getToken();
+      setToken(token);
+      setTokenExpires(tokenExpires);
+    };
+    getDataToken();
+  }, []);
+
   const handleContacto = (contacto) => {
     setDataContacto(contacto);
   };
@@ -161,24 +173,26 @@ const FormProvider = ({ children }) => {
         control,
         currentStep,
         dataContacto,
+        errorInput,
         errors,
+        glpiSubCategory,
         handleContacto,
+        handleErrorInput,
+        handleGlpiSubCategory,
+        handleSelectDefaultValue,
         handleSubmit,
+        handleSubtitleArticle,
         nextStep,
         prevStep,
         register,
         reset,
+        selectDefaultValue,
         setValue,
         stepsEstaticos,
-        watch,
-        glpiSubCategory,
-        handleGlpiSubCategory,
-        handleSubtitleArticle,
         subtitleArticle,
-        handleErrorInput,
-        errorInput,
-        selectDefaultValue,
-        handleSelectDefaultValue,
+        token,
+        tokenExpires,
+        watch,
       }}
     >
       {children}
