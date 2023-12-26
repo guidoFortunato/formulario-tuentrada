@@ -1,21 +1,26 @@
-import { cookies } from 'next/headers'
+import { cookies } from "next/headers";
+import { redirect } from 'next/navigation';
 import CardCategoria from "@/components/main/CardCategoria";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 
-export default async function Home() {
-  const cookieStore= cookies()
-  const token = cookieStore.get('token')
+const getDataCategories = async () => {
   const info = await getDataPrueba( "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories", "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4" );
   const { categories } = info.data;
-  // console.log({ info: info.data.categories });
-  // console.log({categories: categories.data})
-  // console.log({ largo: categories.length });
+  return categories;
+};
 
-  const firstCategories = categories.slice(0, 2);
-  const thirdCategory = categories.slice(2, 3);
-  const restCategories = categories.slice(3);
+export default async function Home() {
 
- 
+  
+  const dataCategories = await getDataCategories();
+  const cookieStore= cookies()
+  const token = cookieStore.get('token')
+  console.log({tokenCookies: token})
+
+  const firstCategories = dataCategories.slice(0, 2);
+  const thirdCategory = dataCategories.slice(2, 3);
+  const restCategories = dataCategories.slice(3);
+
   
 
   return (

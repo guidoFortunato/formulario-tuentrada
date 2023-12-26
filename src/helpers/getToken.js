@@ -10,7 +10,16 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
       const currentDate = Date.now();
 
       if (currentDate < tokenExpires) {
-        console.log(`token sin expirar: ${token}`)
+        return { token, tokenExpires };
+      }
+    }
+
+    if (localStorage.getItem("token") && localStorage.getItem("tokenExpires")) {
+      const currentDate = Date.now();
+      const token = localStorage.getItem("token")
+      const tokenExpires = localStorage.getItem("tokenExpires")
+
+      if (currentDate < tokenExpires) {
         return { token, tokenExpires };
       }
     }
@@ -32,12 +41,16 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
       );
     }
 
+    //! encriptar el token
+
     const data = await res.json();
     const { token } = data;
     const tokenExpires = new Date(data.expired_at).getTime();
     setCookie("token", token);
     setCookie("tokenExpires", tokenExpires);
-    console.log(`token expiró, nuevo token: ${token}`)
+    // console.log(`token expiró, nuevo token: ${token}`)
+    localStorage.setItem("token", token);
+    localStorage.setItem("tokenExpires", tokenExpires);
     return { token, tokenExpires };
   } catch (error) {
     throw new Error(`Error catch getToken: ${error}`);

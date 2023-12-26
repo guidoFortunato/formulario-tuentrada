@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers'
 import SubCategoria from "@/components/main/SubCategoria";
 import { getDataPrueba } from "@/helpers/getInfoTest";
@@ -25,6 +26,8 @@ export const generateMetadata = ({params})=>{
 const Subcategoria = async ({ params }) => {
   const cookieStore= cookies()
   const token = cookieStore.get('token')
+  if (!token) redirect('/');
+  // console.log({tokenCookies: token})
   const info = await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`, "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4");
   const category = info?.data?.category;
   // console.log({subcategoria: info})

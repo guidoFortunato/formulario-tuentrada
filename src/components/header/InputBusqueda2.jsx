@@ -1,6 +1,6 @@
 import { FormBusqueda } from "./FormBusqueda";
 
-const InputBusqueda2 = async () => {
+const InputBusqueda2 = () => {
   
   return (
     <>
