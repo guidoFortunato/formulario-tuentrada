@@ -8,6 +8,8 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
       const token = getCookie("token");
       const tokenExpires = getCookie("tokenExpires");
       const currentDate = Date.now();
+      localStorage.setItem("token", token);
+      localStorage.setItem("tokenExpires", tokenExpires);
 
       if (currentDate < tokenExpires) {
         return { token, tokenExpires };
@@ -18,6 +20,8 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
       const currentDate = Date.now();
       const token = localStorage.getItem("token")
       const tokenExpires = localStorage.getItem("tokenExpires")
+      setCookie("token", token);
+      setCookie("tokenExpires", tokenExpires);
 
       if (currentDate < tokenExpires) {
         return { token, tokenExpires };
@@ -48,7 +52,7 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
     const tokenExpires = new Date(data.expired_at).getTime();
     setCookie("token", token);
     setCookie("tokenExpires", tokenExpires);
-    // console.log(`token expiró, nuevo token: ${token}`)
+    console.log(`token expiró, nuevo token: ${token}`)
     localStorage.setItem("token", token);
     localStorage.setItem("tokenExpires", tokenExpires);
     return { token, tokenExpires };

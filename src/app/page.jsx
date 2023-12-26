@@ -15,7 +15,7 @@ export default async function Home() {
   const dataCategories = await getDataCategories();
   const cookieStore= cookies()
   const token = cookieStore.get('token')
-  console.log({tokenCookies: token})
+  // console.log({tokenCookies: token})
 
   const firstCategories = dataCategories.slice(0, 2);
   const thirdCategory = dataCategories.slice(2, 3);
