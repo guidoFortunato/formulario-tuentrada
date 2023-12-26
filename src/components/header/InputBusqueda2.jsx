@@ -1,6 +1,7 @@
 import { FormBusqueda } from "./FormBusqueda";
 
-const InputBusqueda2 = async ({ data }) => {
+const InputBusqueda2 = async () => {
+  
   return (
     <>
       <div className="flex justify-center flex-col items-center my-10">

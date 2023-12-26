@@ -29,7 +29,7 @@ export const generateMetadata = ({ params }) => {
 async function FormPage({ params }) {
   const cookieStore= cookies()
   const token = cookieStore.get('token')
-  const info = await getDataPrueba( `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`, token.value );
+  const info = await getDataPrueba( `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`, "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4");
   const dataForm = info?.data;
 
   // console.log({formPage: dataForm.steps})

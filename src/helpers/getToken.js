@@ -10,6 +10,7 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
       const currentDate = Date.now();
 
       if (currentDate < tokenExpires) {
+        console.log(`token sin expirar: ${token}`)
         return { token, tokenExpires };
       }
     }
@@ -36,7 +37,7 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
     const tokenExpires = new Date(data.expired_at).getTime();
     setCookie("token", token);
     setCookie("tokenExpires", tokenExpires);
-    // console.log({token})
+    console.log(`token expiró, nuevo token: ${token}`)
     return { token, tokenExpires };
   } catch (error) {
     throw new Error(`Error catch getToken: ${error}`);
