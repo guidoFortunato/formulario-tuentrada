@@ -1,29 +1,58 @@
 import { cookies } from "next/headers";
+import { Inter } from "next/font/google";
 import NavBar from "@/components/header/Navbar";
 import Footer from "@/components/footer/Footer";
-import { getDataCache } from "@/helpers/getInfoTest";
+import { getDataCache, getTokenServer } from "@/helpers/getInfoTest";
 import InputBusqueda2 from "@/components/header/InputBusqueda2";
 import FormProvider from "@/context/FormContext";
-import { Inter } from "next/font/google";
+import { Loader } from "@/components/loading";
 
 import "./globals.css";
-import { Loader } from "@/components/loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Ayuda TuEntrada - Home",
-  description: "Página de ayuda para los clientes",
+  description: "Centro de Ayuda y Consultas - TuEntrada",
 };
 
-
 export default async function RootLayout({ children }) {
+  let data;
   const cookieStore = cookies();
-  const token = cookieStore.get("token");
+  const tokenCookies = cookieStore.get("token");
+  const tokenExpiresCookies = cookieStore.get("tokenExpires");
+  // let expireCookieToken = false;
 
-  const infoCache = await getDataCache( `https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`, "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4" );
+  if (!tokenCookies) {
+    const { token } = await getTokenServer();
+    const infoCache = await getDataCache(
+      `https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`,
+      token
+    );
+    data = infoCache?.data?.site;
+  }
 
-  const dataCache = infoCache?.data?.site;
+  if (tokenCookies) {
+    const currentDate = Date.now();
+    if (currentDate < tokenExpiresCookies) {
+      const infoCache = await getDataCache(
+        `https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`,
+        tokenCookies.value
+      );
+      data = infoCache?.data?.site;
+    } else {
+      //token expiró
+
+      const { token } = await getTokenServer();
+      const infoCache = await getDataCache(
+        `https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`,
+        token
+      );
+      data = infoCache?.data?.site;
+    }
+  }
+
+  // const dataCache = infoCache?.data?.site;
   // console.log({dataCache})
   return (
     <html lang="es">
@@ -33,11 +62,11 @@ export default async function RootLayout({ children }) {
       >
         <FormProvider>
           <header>
-            <NavBar data={dataCache} />
-            <InputBusqueda2 data={dataCache} />
+            <NavBar data={data} />
+            <InputBusqueda2 data={data} />
           </header>
           {children}
-          <Footer data={dataCache} />
+          <Footer data={data} />
         </FormProvider>
       </body>
     </html>

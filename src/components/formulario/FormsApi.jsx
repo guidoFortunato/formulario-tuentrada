@@ -106,6 +106,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const keyCategory = Object.keys(categoryId)[0];
         const info = await getDataTickets(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
+          "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4",
           data.email,
           keyCategory
         );
@@ -137,6 +138,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       if (glpiSubCategory !== "") {
         const info = await getDataTickets(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
+          "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4",
           data.email,
           glpiSubCategory.id
         );
@@ -188,7 +190,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const { categoryId } = stepNow;
         const keyCategory = Object.keys(categoryId)[0];
         const info = await createForm(
-          `https://api.entradauno.com/form`,
+          `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
+          "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4",
           data.email,
           "Categoria + Titulo del Articulo",
           `<div style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;  margin: 0; padding: 0;">
@@ -234,6 +237,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       if (glpiSubCategory !== "") {
         const info = await createForm(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
+          "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4",
           data.email,
           "Categoria + Titulo del Articulo",
           `<div style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;  margin: 0; padding: 0;">

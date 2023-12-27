@@ -1,19 +1,58 @@
 import { cookies } from 'next/headers'
 import CardCategoria from "@/components/main/CardCategoria";
-import { getDataPrueba } from "@/helpers/getInfoTest";
+import { getDataPrueba, getTokenServer } from "@/helpers/getInfoTest";
 
 export default async function Home() {
-  const cookieStore= cookies()
-  const token = cookieStore.get('token')
-  const info = await getDataPrueba( "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories", "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4" );
-  const { categories } = info.data;
+  let data = [];
+  const cookieStore = cookies();
+  const tokenCookies = cookieStore.get("token");
+  const tokenExpiresCookies = cookieStore.get("tokenExpires");
+  // let expireCookieToken = false;
+
+
+  if (!tokenCookies) {
+
+    const { token } = await getTokenServer()
+    console.log({token})
+    const info = await getDataPrueba(
+      `https://testapi.tuentrada.com/api/v1/atencion-cliente/categories`,
+      token
+    );
+    data = info?.data?.categories
+   
+  }
+
+  if (tokenCookies) {
+    const currentDate = Date.now(); 
+    if (currentDate < tokenExpiresCookies) {
+      
+      const info = await getDataPrueba(
+        `https://testapi.tuentrada.com/api/v1/atencion-cliente/categories`,
+        tokenCookies.value
+      );
+      data = info?.data?.categories
+    }else{
+      //token expiró
+      const { token } = await getTokenServer()
+      console.log({token})
+      const info = await getDataPrueba(
+      `https://testapi.tuentrada.com/api/v1/atencion-cliente/categories`,
+      token
+      );
+      data = info?.data?.categories
+     
+    }
+    
+  }
+ 
+
   // console.log({ info: info.data.categories });
   // console.log({categories: categories.data})
   // console.log({ largo: categories.length });
 
-  const firstCategories = categories.slice(0, 2);
-  const thirdCategory = categories.slice(2, 3);
-  const restCategories = categories.slice(3);
+  const firstCategories = data.slice(0, 2);
+  const thirdCategory = data.slice(2, 3);
+  const restCategories = data.slice(3);
 
  
   

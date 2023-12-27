@@ -115,7 +115,7 @@ export async function getDataPruebaStorage(url) {
   }
 }
 
-export async function sendDataEmail(url, email, token) {
+export async function sendDataEmail(url, token, email) {
 
   try {
     const res = await fetch(url, {
@@ -130,7 +130,7 @@ export async function sendDataEmail(url, email, token) {
       }),
     });
 
-    console.log({sendDataPost: res})
+    // console.log({sendDataPost: res})
     const data = await res.json();
     return data;
   } catch (error) {
@@ -188,5 +188,36 @@ export async function createForm(url, token, email, name, content, itilcategorie
     console.log({error}, "error prueba");
   }
 }
+
+
+export async function getTokenServer( email = "gfortunato@tuentrada.com", password = "Correa.3030" ) {
+  try {   
+
+    const res = await fetch("https://testapi.tuentrada.com/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+    // console.log({resToken: res})
+    if (!res.ok) {
+      throw new Error(
+        `Error getToken !res.ok: ${res.status}. ${res.statusText}`
+      );
+    }
+
+    const data = await res.json();
+    const { token } = data;
+    const tokenExpires = new Date(data.expired_at).getTime();
+    return { token, tokenExpires };
+  } catch (error) {
+    throw new Error(`Error catch getToken: ${error}`);
+  }
+}
+
 
 

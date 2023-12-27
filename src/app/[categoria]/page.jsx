@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import SubCategoria from "@/components/main/SubCategoria";
-import { getDataPrueba } from "@/helpers/getInfoTest";
+import { getDataPrueba, getTokenServer } from "@/helpers/getInfoTest";
 
 export const generateMetadata = ({params})=>{
   let primerLetra;
@@ -23,13 +23,52 @@ export const generateMetadata = ({params})=>{
 }
 
 const Subcategoria = async ({ params }) => {
-  const cookieStore= cookies()
-  const token = cookieStore.get('token')
-  const info = await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`, "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4");
-  const category = info?.data?.category;
-  // console.log({subcategoria: info})
+  let data;
+  const cookieStore = cookies();
+  const tokenCookies = cookieStore.get("token");
+  const tokenExpiresCookies = cookieStore.get("tokenExpires");
+  // let expireCookieToken = false;
+
+
+  if (!tokenCookies) {
+
+    const { token } = await getTokenServer()
+  
+    const info = await getDataPrueba(
+      `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`,
+      token
+    );
+    data = info?.data?.category
+   
+  }
+
+  if (tokenCookies) {
+    const currentDate = Date.now(); 
+    if (currentDate < tokenExpiresCookies) {
+      
+      const info = await getDataPrueba(
+        `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`,
+        tokenCookies.value
+      );
+      data = info?.data?.category
+    }else{
+      //token expiró
+      const { token } = await getTokenServer()
+    
+      const info = await getDataPrueba(
+      `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`,
+      token
+      );
+      data = info?.data?.category
+     
+    }
+    
+  }
+  
+
+
   return (    
-      <SubCategoria category={category} params={params}/>    
+      <SubCategoria category={data} params={params}/>    
   );
 };
 

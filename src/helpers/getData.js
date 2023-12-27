@@ -1,97 +1,29 @@
-import getToken from "./getToken";
+import { cookies } from "next/headers";
+import { getTokenServer } from "./getInfoTest";
 
-const getData = async (URL, email, password) => {
-  const tokenSessionStorage = sessionStorage.getItem("tokenSessionStorage");
+export const getData = async (url) => {
+  const cookieStore = cookies();
+  const tokenCookies = cookieStore.get("token");
+  const tokenExpiresCookies = cookieStore.get("tokenExpires");
 
-  // console.log("-------------getDataEvent----------------");
-  if (tokenSessionStorage) {
-    try {
-      const response = await fetch(URL, {
-        credentials: "include",
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${tokenSessionStorage}`,
-          accept: "application/json",
-        },
-      });
-      // console.log(response);
+  if (!tokenCookies) {
+    const { token } = await getTokenServer();
+    const data = await getDataCache(url, token);
+    return data;
+    // await setCookies(token, tokenExpires)
+  }
 
-      if (response.status === 401) {
-        const { token } = await getToken(email, password);
-        // // console.log("Uso token de getToken para hacer la peticion: " + token);
-        const response = await fetch(URL, {
-          credentials: "include",
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            accept: "application/json",
-          },
-        });
-        // console.log(response);
-        if (!response.ok) {
-          console.error(
-            `Error getData con TS !response.ok: ${response.status}: ${response.statusText} `
-          );
-          return {
-            error: "authentication",
-            message: "Authentication not valid",
-            status: false,
-          };
-        }
-        sessionStorage.setItem("tokenSessionStorage", token);
-        const data = await response.json();
-        // console.log('401', {response});
-        return data;
-      }
-      // console.log(
-      //   "Uso tokenSessionStorage para hacer la peticion: " + tokenSessionStorage
-      // );
-      const data = await response.json();
-      // console.log('200', {response});
+  if (tokenCookies) {
+    const currentDate = Date.now();
+    if (currentDate < tokenExpiresCookies) {
+      //token no expiró
+      const data = await getDataCache(url, tokenCookies);
       return data;
-    } catch (error) {
-      console.error(`Error catch getData con TS: ${error}`);
-      return {
-        error: "authentication",
-        message: "Authentication not valid",
-        status: false,
-      };
-    }
-  } else {
-    try {
-      const { token } = await getToken(email, password);
-      console.log("Uso token de getToken para hacer la peticion: " + token);
-      const response = await fetch(URL, {
-        credentials: "include",
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          accept: "application/json",
-        },
-      });
-      console.log(response);
-      if (!response.ok) {
-        console.error(
-          `Error getData sin TS !response.ok: ${response.status}: ${response.statusText} `
-        );
-        return {
-          error: "authentication",
-          message: "Authentication not valid",
-          status: false,
-        };
-      }
-      sessionStorage.setItem("tokenSessionStorage", token);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(`Error catch getData sin TS: ${error}`);
-      return {
-        error: "authentication",
-        message: "Authentication not valid",
-        status: false,
-      };
+    } else {
+      //token expiró
+      const { token } = await getTokenServer();
+      const data = await getDataCache(url, token);
+      return data
     }
   }
 };
-
-export default getData;

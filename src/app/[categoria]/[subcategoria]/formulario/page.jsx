@@ -1,7 +1,7 @@
-import { cookies } from 'next/headers'
+import { cookies } from "next/headers";
 import { Formularios } from "@/components/formulario/Formularios";
 import FormProvider from "@/context/FormContext";
-import { getDataPrueba } from "@/helpers/getInfoTest";
+import { getDataPrueba, getTokenServer } from "@/helpers/getInfoTest";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -27,18 +27,60 @@ export const generateMetadata = ({ params }) => {
 };
 
 async function FormPage({ params }) {
-  const cookieStore= cookies()
-  const token = cookieStore.get('token')
-  const info = await getDataPrueba( `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`, "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4");
-  const dataForm = info?.data;
+  let data;
+  const cookieStore = cookies();
+  const tokenCookies = cookieStore.get("token");
+  const tokenExpiresCookies = cookieStore.get("tokenExpires");
+ 
+  // let expireCookieToken = false;
+
+
+  if (!tokenCookies) {
+
+    const { token } = await getTokenServer()
+    // console.log({token})
+    const info = await getDataPrueba(
+      `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
+      token
+    );
+    data = info?.data
+    console.log({info})
+  }
+
+  if (tokenCookies) {
+    const currentDate = Date.now(); 
+    if (currentDate < tokenExpiresCookies) {
+      
+      const info = await getDataPrueba(
+        `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
+        tokenCookies.value
+      );
+      data = info?.data
+      console.log({info})
+    }else{
+      //token expiró
+      const { token } = await getTokenServer()
+      console.log({token})
+      const info = await getDataPrueba(
+      `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form}`,
+      token
+      );
+      data = info?.data
+      console.log({info})
+    }
+    
+  }
+ 
+  
 
   // console.log({formPage: dataForm.steps})
 
   return (
-    <FormProvider>
-      <Formularios dataForm={dataForm} params={params} />
-    </FormProvider>
-  );
+    <>
+     <Formularios dataForm={data} params={params} />;
+     {/* <span>formulario</span> */}
+    </>
+  )
 }
 
 export default FormPage;
