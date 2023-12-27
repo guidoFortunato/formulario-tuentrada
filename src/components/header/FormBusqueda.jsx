@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { alertaWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
+import { FormContext } from "@/context/FormContext";
 
 export const FormBusqueda = () => {
+  const { token } = useContext(FormContext)
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
@@ -25,7 +27,7 @@ export const FormBusqueda = () => {
         setLoading(true); // Activar indicador de carga
         if (value.length >= 3) {
           const res = await getDataPrueba(
-            `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/article/${value}`
+            `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/article/${value}`, token
           );
           // console.log({ res });
           if (res.data?.articles?.length > 0) {

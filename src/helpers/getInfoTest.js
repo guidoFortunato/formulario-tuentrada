@@ -5,7 +5,7 @@ export async function getDataPrueba(url, token) {
   try {
 
     const res = await fetch(url, {
-      // next: { revalidate: 3600 },
+      next: { revalidate: 600 },
       // cache: 'no-store',
       credentials: "include",
       method: "GET",
@@ -26,7 +26,7 @@ export async function getDataPrueba(url, token) {
 export async function getDataCache(url, token) {
   try {
     const res = await fetch(url, {
-      // next: { revalidate: 10800 },
+      next: { revalidate: 600 },
       // cache: 'force-cache',
       credentials: "include",
       method: "GET",

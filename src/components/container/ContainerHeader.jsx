@@ -8,12 +8,11 @@ import { FormContext } from "@/context/FormContext";
 
 export const ContainerHeader = () => {
   const { token } = useContext(FormContext)
-  // console.log({token})
   const [dataSite, setDataSite] = useState([]);
-  // console.log({dataSite})
 
   useEffect(() => {
     if (token !== '') {
+      console.log('useEffect header')
       const getDataSite = async () => {  
         const info = await getDataCache( `https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`, token );
         const data = info?.data?.site;
