@@ -15,10 +15,10 @@ export const ContainerMain = () => {
   const { token } = useContext(FormContext)
   const [ dataCategories, setDataCategories ] = useState(initialState);
   // console.log({dataCategories})
-  console.log({tokenFueraUef: token})
+  // console.log({tokenFueraUef: token})
   useEffect(() => {
     if (token !== '') {
-      console.log({tokenUef: token})
+      // console.log({tokenUef: token})
       console.log('useEffect main')
       const getDataCategories = async () => {
         const info = await getDataPrueba( "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories", token );
@@ -29,6 +29,64 @@ export const ContainerMain = () => {
     }
     
   }, [token]);
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     if (tokenStorage) {
+  //       console.log("useEffect main tokenStorage");
+  //       const currentDate = Date.now();
+
+  //       if (currentDate < tokenExpiresStorage) {          
+  //         console.log("token no expiró");
+
+  //         const getDataCategories = async () => {
+  //           const info = await getDataPrueba(
+  //             "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories",
+  //             tokenStorage
+  //           );
+  //           const { categories } = info?.data;
+  //           setDataCategories(categories);
+  //         };
+
+  //         getDataCategories();
+
+  //       } else {
+  //         console.log("token expiró");
+
+  //         const getDataCategories = async() => {
+  //           const { token, tokenExpires } = await getToken();
+  //           const info = await getDataPrueba(
+  //             "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories",
+  //             token
+  //           );
+  //           const { categories } = info?.data;
+  //           setDataCategories(categories);
+  //           localStorage.setItem("token", token);
+  //           localStorage.setItem("tokenExpires", tokenExpires);
+  //         };
+
+  //         getDataCategories();
+  //       }
+  //     }
+
+  //     if (!tokenStorage) {
+  //       console.log("useEffect main SIN tokenStorage");
+  //       const getDataCategories = async () => {
+  //         const { token, tokenExpires } = await getToken();
+  //         const info = await getDataPrueba(
+  //           "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories",
+  //           token
+  //         );
+  //         const { categories } = info?.data;
+  //         setDataCategories(categories);
+  //         localStorage.setItem("token", token);
+  //         localStorage.setItem("tokenExpires", tokenExpires);
+  //       };
+  //       getDataCategories();
+  //     }
+  //   };
+  //   getData()
+  // }, []);
 
   if(dataCategories === undefined) return <Loader />
   if(dataCategories.length === 0 ) return <Loader />

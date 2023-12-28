@@ -4,11 +4,11 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
-import { getDataPrueba, sendDataEmail } from "@/helpers/getInfoTest";
+import { sendDataEmail } from "@/helpers/getInfoTest";
 
-export const Form1 = ({ lengthSteps, dataForm }) => {
+export const Form1 = ({ lengthSteps }) => {
   
-  const { register,  handleSubmit,  errors,  watch,  nextStep,  handleContacto,  reset } = useContext(FormContext);
+  const { register,  handleSubmit,  errors,  watch,  nextStep,  handleContacto,  reset, token } = useContext(FormContext);
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
 
