@@ -1,8 +1,8 @@
-import FormProvider from "@/context/FormContext";
 import { Inter } from "next/font/google";
+import FormProvider from "@/context/FormContext";
+import { ContainerApp } from "@/components/container/ContainerApp";
 
 import "./globals.css";
-import { ContainerApp } from "@/components/container/ContainerApp";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  // console.log({dataCache})
+  
   return (
     <html lang="es">
       <body

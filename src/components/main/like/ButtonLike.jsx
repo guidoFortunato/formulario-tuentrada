@@ -1,24 +1,40 @@
+import { FormContext } from "@/context/FormContext";
 import { getDataPrueba } from "@/helpers/getInfoTest";
+import { useContext } from "react";
 
-export const ButtonLike = ({ name, handleLike, handleDisLike, handleOpinion, result, opinion, params, like }) => {
-  
+export const ButtonLike = ({
+  name,
+  handleLike,
+  handleDisLike,
+  handleOpinion,
+  result,
+  opinion,
+  params,
+  like,
+}) => {
+  const { token } = useContext(FormContext);
+
   // console.log({params})
-  
-  const handleClick = async() => {
-    handleOpinion()
+
+  const handleClick = async () => {
+    handleOpinion();
     if (result) {
       // console.log({result})
       handleLike();
       // await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/1`);
-      await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`);
-      
+      await getDataPrueba(
+        `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`,
+        token
+      );
     }
     if (!result) {
       // console.log({result})
       handleDisLike();
       // await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/0`);
-      await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`);
-      
+      await getDataPrueba(
+        `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`,
+        token
+      );
     }
   };
   return (

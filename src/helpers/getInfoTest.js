@@ -115,7 +115,7 @@ export async function getDataPruebaStorage(url) {
   }
 }
 
-export async function sendDataEmail(url, email, token) {
+export async function sendDataEmail(url, token, email) {
 
   try {
     const res = await fetch(url, {

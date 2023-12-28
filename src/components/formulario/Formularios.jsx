@@ -1,5 +1,3 @@
-"use client";
-
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FormContext } from "@/context/FormContext";

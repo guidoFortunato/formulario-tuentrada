@@ -1,8 +1,4 @@
-import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers'
-import { Formularios } from "@/components/formulario/Formularios";
-import FormProvider from "@/context/FormContext";
-import { getDataPrueba } from "@/helpers/getInfoTest";
+import { ContainerForm } from "@/components/container/ContainerForm";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -28,19 +24,7 @@ export const generateMetadata = ({ params }) => {
 };
 
 async function FormPage({ params }) {
-  const cookieStore= cookies()
-  const token = cookieStore.get('token')
-  if (!token) redirect('/');
-  const info = await getDataPrueba( `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`, token.value);
-  const dataForm = info?.data;
-
-  // console.log({formPage: dataForm.steps})
-
-  return (
-    <FormProvider>
-      <Formularios dataForm={dataForm} params={params} />
-    </FormProvider>
-  );
+  return <ContainerForm params={params} />;
 }
 
 export default FormPage;

@@ -35,6 +35,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
     console.log("se envia form 1");
     const info = await sendDataEmail(
       "https://testapi.tuentrada.com/api/v1/atencion-cliente/search/contact",
+      token,
       data.email
     );
     // console.log({ info });
