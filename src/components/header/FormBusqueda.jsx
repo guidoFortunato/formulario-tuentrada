@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { alertaWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
+import { FormContext } from "@/context/FormContext";
 
 export const FormBusqueda = () => {
+  const { token } = useContext(FormContext);
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
@@ -18,6 +20,8 @@ export const FormBusqueda = () => {
   // console.log({ data });
   // console.log({ isOpen });
 
+
+
   useEffect(() => {
     // Lógica de búsqueda
     const search = async () => {
@@ -26,7 +30,7 @@ export const FormBusqueda = () => {
         if (value.length >= 3) {
           const res = await getDataPrueba(
             `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/article/${value}`,
-            "13288|TGXNjrG8zR3R6bykF4PQiKa7I8hGvVFW0UFOZeJz"
+            token
           );
           // console.log({ res });
           if (res.data?.articles?.length > 0) {
@@ -92,6 +96,8 @@ export const FormBusqueda = () => {
     // setValue("");
     setIsOpen(false);
   };
+
+  if(token === "") return <span></span>
 
   return (
     <form onSubmit={onSubmit} className="relative">
