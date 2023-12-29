@@ -1,8 +1,9 @@
 import { getDataPrueba } from "@/helpers/getInfoTest";
+import { getCookie } from "cookies-next";
+
 
 export const ButtonLike = ({ name, handleLike, handleDisLike, handleOpinion, result, opinion, params, like }) => {
-  
-  // console.log({params})
+  const token = getCookie("token");
   
   const handleClick = async() => {
     handleOpinion()
@@ -10,14 +11,14 @@ export const ButtonLike = ({ name, handleLike, handleDisLike, handleOpinion, res
       // console.log({result})
       handleLike();
       // await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/1`);
-      await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`);
+      await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`, token);
       
     }
     if (!result) {
       // console.log({result})
       handleDisLike();
       // await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/0`);
-      await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`);
+      await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`, token);
       
     }
   };

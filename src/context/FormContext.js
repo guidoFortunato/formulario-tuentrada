@@ -132,7 +132,6 @@ const FormProvider = ({ children }) => {
 
   useEffect(() => {
     const getDataToken = async () => {
-      console.log('entra a getDataToken')
       const { token, tokenExpires } = await getToken();
       setToken(token);
       setTokenExpires(tokenExpires);

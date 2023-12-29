@@ -50,7 +50,7 @@ const ItemSubCategorie = async ({ params }) => {
 
   if (tokenCookies) {
     const currentDate = Date.now();
-    if (currentDate < tokenExpiresCookies) {
+    if (currentDate < tokenExpiresCookies.value) {
       const info = await getDataPrueba(
         `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`,
         tokenCookies.value

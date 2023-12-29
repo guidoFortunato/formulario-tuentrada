@@ -34,7 +34,7 @@ export default async function RootLayout({ children }) {
 
   if (tokenCookies) {
     const currentDate = Date.now();
-    if (currentDate < tokenExpiresCookies) {
+    if (currentDate < tokenExpiresCookies.value) {
       const infoCache = await getDataCache(
         `https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`,
         tokenCookies.value

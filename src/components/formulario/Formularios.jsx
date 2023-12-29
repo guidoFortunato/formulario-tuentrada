@@ -8,7 +8,7 @@ import { Loader } from "../loading";
 
 export const Formularios = ({ dataForm, params }) => {
   const { subtitleArticle } = useContext(FormContext);
-  console.log(dataForm)
+  // console.log(dataForm)
  
 
   const category = params.categoria.slice(0,1).toUpperCase() + params.categoria.split('-').join(' ').slice(1).toLowerCase()

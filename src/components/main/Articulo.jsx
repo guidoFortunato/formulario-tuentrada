@@ -48,6 +48,8 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
     </tr>
   ));
 
+
+
   return (
     <>
       <div className=" container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 px-10 md:px-20 flex-1">

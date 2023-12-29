@@ -211,6 +211,7 @@ export async function getTokenServer( email = "gfortunato@tuentrada.com", passwo
     }
 
     const data = await res.json();
+    // console.log({dataTokenServer: data})
     const { token } = data;
     const tokenExpires = new Date(data.expired_at).getTime();
     return { token, tokenExpires };

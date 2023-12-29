@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { Formularios } from "@/components/formulario/Formularios";
-import FormProvider from "@/context/FormContext";
 import { getDataPrueba, getTokenServer } from "@/helpers/getInfoTest";
 
 export const generateMetadata = ({ params }) => {
@@ -31,56 +30,52 @@ async function FormPage({ params }) {
   const cookieStore = cookies();
   const tokenCookies = cookieStore.get("token");
   const tokenExpiresCookies = cookieStore.get("tokenExpires");
- 
+  // console.log({tokenCookies})
+
   // let expireCookieToken = false;
 
-
   if (!tokenCookies) {
-
-    const { token } = await getTokenServer()
-    // console.log({token})
+    const { token } = await getTokenServer();
+    // console.log('no existe token en cookies, pido uno nuevo')
     const info = await getDataPrueba(
       `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
       token
     );
-    data = info?.data
-    console.log({info})
+    data = info?.data;
+    
   }
 
   if (tokenCookies) {
-    const currentDate = Date.now(); 
-    if (currentDate < tokenExpiresCookies) {
-      
+    const currentDate = Date.now();
+    // console.log({currentDate, tokenExpiresCookies: tokenExpiresCookies.value})
+    if (currentDate < tokenExpiresCookies.value) {
+      // console.log('no expiró')
+      // console.log({tokenCookieValue: tokenCookies.value})
       const info = await getDataPrueba(
         `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
         tokenCookies.value
       );
-      data = info?.data
-      console.log({info})
-    }else{
+      // console.log({info})
+      data = info?.data;
+    } else {
       //token expiró
-      const { token } = await getTokenServer()
-      console.log({token})
+      const { token }  = await getTokenServer();
+      // console.log("token cookies expiró, pido uno nuevo");
       const info = await getDataPrueba(
-      `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form}`,
-      token
+        `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
+        token
       );
-      data = info?.data
-      console.log({info})
+      // console.log({ info });
+      data = info?.data;
     }
-    
   }
- 
-  
 
   // console.log({formPage: dataForm.steps})
 
-  return (
-    <>
-     <Formularios dataForm={data} params={params} />;
-     {/* <span>formulario</span> */}
-    </>
-  )
+  return <Formularios dataForm={data} params={params} />;
 }
 
 export default FormPage;
+
+
+

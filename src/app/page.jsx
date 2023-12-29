@@ -13,7 +13,7 @@ export default async function Home() {
   if (!tokenCookies) {
 
     const { token } = await getTokenServer()
-    console.log({token})
+   
     const info = await getDataPrueba(
       `https://testapi.tuentrada.com/api/v1/atencion-cliente/categories`,
       token
@@ -24,7 +24,7 @@ export default async function Home() {
 
   if (tokenCookies) {
     const currentDate = Date.now(); 
-    if (currentDate < tokenExpiresCookies) {
+    if (currentDate < tokenExpiresCookies.value) {
       
       const info = await getDataPrueba(
         `https://testapi.tuentrada.com/api/v1/atencion-cliente/categories`,
@@ -34,7 +34,7 @@ export default async function Home() {
     }else{
       //token expiró
       const { token } = await getTokenServer()
-      console.log({token})
+     
       const info = await getDataPrueba(
       `https://testapi.tuentrada.com/api/v1/atencion-cliente/categories`,
       token
