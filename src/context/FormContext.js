@@ -2,6 +2,8 @@
 import { createContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getToken } from "@/helpers/getToken";
+import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";
+
 export const FormContext = createContext();
 
 const FormProvider = ({ children }) => {
@@ -13,6 +15,9 @@ const FormProvider = ({ children }) => {
   const [errorInput, setErrorInput] = useState(false);
   const [token, setToken] = useState("");
   const [tokenExpires, setTokenExpires] = useState("");
+  const [dataCategories, setDataCategories] = useState([]);
+  const [dataSite, setDataSite] = useState([]);
+  const [dataCategory, setDataCategory] = useState([]);
 
   const {
     formState: { errors },
@@ -132,7 +137,7 @@ const FormProvider = ({ children }) => {
 
   useEffect(() => {
     const getDataToken = async () => {
-      // console.log('entra a getDataToken')
+      console.log("useEffect getDataToken context");
       const { token, tokenExpires } = await getToken();
       setToken(token);
       setTokenExpires(tokenExpires);
@@ -140,6 +145,42 @@ const FormProvider = ({ children }) => {
     getDataToken();
   }, []);
 
+  useEffect(() => {
+
+    if (token !== '') {
+      console.log('useEffect context getDataSite')
+      const getDataSite = async () => {  
+        const info = await getDataCache( `https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`, token );
+        const data = info?.data?.site;
+        setDataSite(data)
+      };
+      getDataSite()      
+    }
+
+  }, [token]);
+
+  useEffect(() => {
+    if (token !== "") {
+      if (dataCategories.length === 0) {
+        console.log("useEffect container main context");
+        const getDataCategories = async () => {
+          const info = await getDataPrueba(
+            "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories",
+            token
+          );
+          const { categories } = info.data;
+          setDataCategories(categories);
+        };
+        getDataCategories();
+      }
+    }
+  }, [token]);
+
+
+  const handleCategory = (category) => {
+    setDataCategory(category);
+  };
+ 
   const handleContacto = (contacto) => {
     setDataContacto(contacto);
   };
@@ -171,9 +212,11 @@ const FormProvider = ({ children }) => {
   return (
     <FormContext.Provider
       value={{
+        dataCategories,
         control,
         currentStep,
         dataContacto,
+        dataSite,
         errorInput,
         errors,
         glpiSubCategory,
@@ -194,6 +237,8 @@ const FormProvider = ({ children }) => {
         token,
         tokenExpires,
         watch,
+        handleCategory,
+        dataCategory,
       }}
     >
       {children}
