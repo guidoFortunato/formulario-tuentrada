@@ -189,14 +189,19 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
       if (glpiSubCategory === "") {
         const { categoryId } = stepNow;
-        const keyCategory = Object.keys(categoryId)[0];
+        const itilcategoriesId = Object.keys(categoryId)[0];
+
         const info = await createForm(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
           token,
-          "Prueba Formulario",
-          email,
-          content,
-          keyCategory
+          {
+            name: "Prueba Formulario",
+            email: email,
+            content: {
+              ...content,
+            },
+            itilcategoriesId,
+          }
         );
         console.log({ info });
         if (!info.status) {
@@ -213,11 +218,14 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       if (glpiSubCategory !== "") {
         const info = await createForm(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
-          token,
-          "Prueba Formulario",
-          email,
-          content,
-          glpiSubCategory.id
+          token,          
+            "Prueba Formulario",
+            email,
+           { content: {
+              ...content,
+            }},
+            glpiSubCategory.id,
+          
         );
         console.log({ info });
         if (!info.status) {
