@@ -5,6 +5,7 @@ import CardCategoria from "@/components/main/CardCategoria";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { Loader } from "@/components/loading";
 import { FormContext } from "@/context/FormContext";
+import { Skeleton } from "../main/Skeleton";
 
 const initialState = []
 
@@ -89,22 +90,29 @@ export const ContainerMain = () => {
   // }, []);
 
   if(dataCategories === undefined) return <Loader />
-  if(dataCategories.length === 0 ) return (
+  if(dataCategories.length === 0 ) 
+  return (
     <main>
-    <div className="container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 flex-1">
-      <section className="w-[80%] grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 mx-auto mt-4">
-        
-      </section>
+      <div className="container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 flex-1">
+        <section className="w-[80%] grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 mx-auto mt-4">
+          {[0,1].map((item) => (
+              <Skeleton key={item} />
+            ))}
+        </section>
 
-      <section className="w-[80%] grid grid-cols-1 justify-items-center gap-4 mx-auto mt-4">
-        
-      </section>
+        <section className="w-[100%] grid grid-cols-1 justify-items-center gap-4 mx-auto mt-4">
+          {[2].map((item) => (
+              <Skeleton key={item} width="w-[70%]" />
+            ))}
+        </section>
 
-      <section className="w-[80%] grid grid-cols-1 lg:grid-cols-3 justify-items-center gap-4 mx-auto mt-4">
-       
-      </section>
-    </div>
-  </main>
+        <section className="w-[80%] grid grid-cols-1 lg:grid-cols-3 justify-items-center gap-4 mx-auto mt-4">
+          {[5,6,7].map((item) => (
+              <Skeleton key={item} />
+            ))}
+        </section>
+      </div>
+    </main>
   )
   //! manejo de errores, cuando dataCategories es undefined enviar a pagina de error
 
