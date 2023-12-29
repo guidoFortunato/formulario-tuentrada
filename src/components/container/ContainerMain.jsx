@@ -4,7 +4,8 @@ import { useContext } from "react";
 import CardCategoria from "@/components/main/CardCategoria";
 import { Loader } from "@/components/loading";
 import { FormContext } from "@/context/FormContext";
-import { Skeleton } from "../main/Skeleton";
+import { Skeleton } from "../skeleton/Skeleton";
+
 
 export const ContainerMain = () => {
   const { dataCategories } = useContext(FormContext);

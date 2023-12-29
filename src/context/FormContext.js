@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getToken } from "@/helpers/getToken";
 import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";
@@ -18,6 +18,7 @@ const FormProvider = ({ children }) => {
   const [dataCategories, setDataCategories] = useState([]);
   const [dataSite, setDataSite] = useState([]);
   const [dataCategory, setDataCategory] = useState([]);
+  const [prevDataCategories, setPrevDataCategories] = useState("");
 
   const {
     formState: { errors },
@@ -177,6 +178,10 @@ const FormProvider = ({ children }) => {
   }, [token]);
 
 
+  const handlePrevDataCategories = (value) => {
+    setPrevDataCategories(value);
+  };
+
   const handleCategory = (category) => {
     setDataCategory(category);
   };
@@ -212,21 +217,25 @@ const FormProvider = ({ children }) => {
   return (
     <FormContext.Provider
       value={{
-        dataCategories,
         control,
         currentStep,
+        dataCategories,
+        dataCategory,
         dataContacto,
         dataSite,
         errorInput,
         errors,
         glpiSubCategory,
+        handleCategory,
         handleContacto,
         handleErrorInput,
         handleGlpiSubCategory,
+        handlePrevDataCategories,
         handleSelectDefaultValue,
         handleSubmit,
         handleSubtitleArticle,
         nextStep,
+        prevDataCategories,
         prevStep,
         register,
         reset,
@@ -237,8 +246,6 @@ const FormProvider = ({ children }) => {
         token,
         tokenExpires,
         watch,
-        handleCategory,
-        dataCategory,
       }}
     >
       {children}
