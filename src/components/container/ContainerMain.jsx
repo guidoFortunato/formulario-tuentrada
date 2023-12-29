@@ -8,8 +8,6 @@ import { FormContext } from "@/context/FormContext";
 
 const initialState = []
 
-
-
 export const ContainerMain = () => {
 
   const { token } = useContext(FormContext)
@@ -29,6 +27,8 @@ export const ContainerMain = () => {
     }
     
   }, [token]);
+
+  
 
   // useEffect(() => {
   //   const getData = async () => {
@@ -89,8 +89,23 @@ export const ContainerMain = () => {
   // }, []);
 
   if(dataCategories === undefined) return <Loader />
-  if(dataCategories.length === 0 ) return <Loader />
- 
+  if(dataCategories.length === 0 ) return (
+    <main>
+    <div className="container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 flex-1">
+      <section className="w-[80%] grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 mx-auto mt-4">
+        
+      </section>
+
+      <section className="w-[80%] grid grid-cols-1 justify-items-center gap-4 mx-auto mt-4">
+        
+      </section>
+
+      <section className="w-[80%] grid grid-cols-1 lg:grid-cols-3 justify-items-center gap-4 mx-auto mt-4">
+       
+      </section>
+    </div>
+  </main>
+  )
   //! manejo de errores, cuando dataCategories es undefined enviar a pagina de error
 
   const firstCategories = dataCategories.slice(0, 2);

@@ -22,13 +22,13 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
       // setCookie("token", token);
       // setCookie("tokenExpires", tokenExpires);
 
-      console.log('token' + token)
+      // console.log('token' + token)
       if (currentDate < tokenExpires) {
         return { token, tokenExpires };
       }
-      console.log('luego de chequear si expira')
+      // console.log('luego de chequear si expira')
     }
-    console.log('no entra a chequear localStorage')
+    // console.log('no entra a chequear localStorage')
     const res = await fetch("https://testapi.tuentrada.com/api/login", {
       method: "POST",
       headers: {
@@ -53,7 +53,7 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
     const tokenExpires = new Date(data.expired_at).getTime();
     // setCookie("token", token);
     // setCookie("tokenExpires", tokenExpires);
-    console.log(`token expiró o no hay info en localStorage, pido nuevo token: ${token}`)
+    // console.log(`token expiró o no hay info en localStorage, pido nuevo token: ${token}`)
     localStorage.setItem("token", token);
     localStorage.setItem("tokenExpires", tokenExpires);
     return { token, tokenExpires };

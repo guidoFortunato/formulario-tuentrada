@@ -189,4 +189,36 @@ export async function createForm(url, token, email, name, content, itilcategorie
   }
 }
 
+export async function getTokenServer( email = "gfortunato@tuentrada.com", password = "Correa.3030" ) {
+  try {
+    
+  
+    const res = await fetch("https://testapi.tuentrada.com/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+    // console.log({resToken: res})
+    if (!res.ok) {
+      throw new Error(
+        `Error getToken !res.ok: ${res.status}. ${res.statusText}`
+      );
+    }
+
+    //! encriptar el token
+
+    const data = await res.json();
+    const { token } = data;
+    const tokenExpires = new Date(data.expired_at).getTime();
+    return { token, tokenExpires };
+  } catch (error) {
+    throw new Error(`Error catch getToken: ${error}`);
+  }
+}
+
 

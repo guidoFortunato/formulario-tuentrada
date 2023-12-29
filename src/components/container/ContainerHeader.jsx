@@ -11,6 +11,7 @@ export const ContainerHeader = () => {
   const [dataSite, setDataSite] = useState([]);
 
   useEffect(() => {
+
     if (token !== '') {
       console.log('useEffect header')
       const getDataSite = async () => {  
@@ -18,10 +19,9 @@ export const ContainerHeader = () => {
         const data = info?.data?.site;
         setDataSite(data)
       };
-      getDataSite()
-      
+      getDataSite()      
     }
-    
+
   }, [token]);
 
   if(dataSite === undefined) return <Loader />
