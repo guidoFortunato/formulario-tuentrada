@@ -163,7 +163,7 @@ export async function getDataTickets(url, token, email, itilcategoriesId ) {
 }
 
 
-export async function createForm(url, token, email, name, content, itilcategoriesId) {
+export async function createForm(url, token, name, email, content, itilcategoriesId) {
 
   try {
     const res = await fetch(url, {
@@ -174,8 +174,8 @@ export async function createForm(url, token, email, name, content, itilcategorie
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email,
         name,
+        email,
         content,
         itilcategoriesId
       }),

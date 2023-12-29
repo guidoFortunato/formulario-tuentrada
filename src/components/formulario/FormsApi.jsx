@@ -30,7 +30,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     glpiSubCategory,
     handleErrorInput,
     selectDefaultValue,
-    token
+    token,
   } = useContext(FormContext);
 
   const { steps } = dataForm;
@@ -97,9 +97,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       return;
     }
 
-    alertPruebaTickets(keys)
-
-    return
+    const { name, email, emailConfirm, ...content } = data;
 
     if (stepNow.checkHaveTickets === 1) {
       if (glpiSubCategory === "") {
@@ -186,6 +184,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     if (currentStep + 1 === lengthSteps) {
       let numberTicket;
       // console.log({ glpiSubCategory })
+      const name = data.name;
+      const email = data.email;
 
       if (glpiSubCategory === "") {
         const { categoryId } = stepNow;
@@ -193,34 +193,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const info = await createForm(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
           token,
-          data.email,
-          "Categoria + Titulo del Articulo",
-          `<div style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;  margin: 0; padding: 0;">
-          <div style="max-width: 600px; margin: 0 auto;">
-            <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">
-              ${category} - ${subCategory}
-            </div>
-    
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <tbody>
-            <tr key={index}>
-            ${keys?.map((item, index) => (
-              <>
-                <th style="border: 1px solid #ddd; padding: 10px; background-color: #f2f2f2;">
-                  {item.slice(0, 1).toUpperCase() +
-                    item.split("_").join(" ").toLowerCase().slice(1)}
-                </th>
-                <td style="border: 1px solid #ddd; padding: 10px;">
-                  {data[item]}
-                </td>
-                    </>
-            ))}
-            </tr>
-            </tbody>
-            </table>
-
-          </div>
-        </div>`,
+          "Prueba Formulario",
+          email,
+          content,
           keyCategory
         );
         console.log({ info });
@@ -239,33 +214,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const info = await createForm(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
           token,
-          data.email,
-          "Categoria + Titulo del Articulo",
-          `<div style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;  margin: 0; padding: 0;">
-          <div style="max-width: 600px; margin: 0 auto;">
-            <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">
-              ${category} - ${subCategory}
-            </div>
-    
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <tbody>
-            ${keys?.map((item, index) => (
-              <tr key={index}>
-                <th style="border: 1px solid #ddd; padding: 10px; background-color: #f2f2f2;">
-                  {item.slice(0, 1).toUpperCase() +
-                    item.split("_").join(" ").toLowerCase().slice(1)}
-                </th>
-                <td style="border: 1px solid #ddd; padding: 10px;">
-                  {data[item]}
-                </td>
-              </tr>
-            ))}
-            </tbody>
-            
-            </table>
-
-          </div>
-        </div>`,
+          "Prueba Formulario",
+          email,
+          content,
           glpiSubCategory.id
         );
         console.log({ info });
