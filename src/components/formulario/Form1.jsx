@@ -7,17 +7,23 @@ import { BotonSiguiente, BotonVolver } from ".";
 import { sendDataEmail } from "@/helpers/getInfoTest";
 
 export const Form1 = ({ lengthSteps }) => {
-  
-  const { register,  handleSubmit,  errors,  watch,  nextStep,  handleContacto,  reset, token } = useContext(FormContext);
+  const {
+    register,
+    handleSubmit,
+    errors,
+    watch,
+    nextStep,
+    handleContacto,
+    reset,
+    token,
+  } = useContext(FormContext);
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
 
   const handleRecaptcha = (e) => {
-    setCaptcha(e)
-    setErrorRecaptcha(false)
-  }
-
-
+    setCaptcha(e);
+    setErrorRecaptcha(false);
+  };
 
   useEffect(() => {
     handleContacto(null);
@@ -27,19 +33,15 @@ export const Form1 = ({ lengthSteps }) => {
   const onSubmit = async (data, event) => {
     event.preventDefault();
     if (captcha === "") {
-      setErrorRecaptcha(true)
-      // console.log('falta clickear en el captcha')
-      return
+      setErrorRecaptcha(true);
+      return;
     }
-    
-    // console.log("se envia form 1");
+
     const info = await sendDataEmail(
       "https://testapi.tuentrada.com/api/v1/atencion-cliente/search/contact",
       token,
       data.email
     );
-    // console.log({ info });
-    // console.log({ data });
     if (info?.status) {
       handleContacto({
         id: info.data.contact.id,
@@ -120,7 +122,10 @@ export const Form1 = ({ lengthSteps }) => {
           )}
         </div>
         <div className="mx-auto md:mx-0">
-          <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} onChange={handleRecaptcha} />
+          <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            onChange={handleRecaptcha}
+          />
           {errorRecaptcha && (
             <span className="text-red-600 text-sm block mt-1">
               Este campo es obligatorio

@@ -13,7 +13,6 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
     setValue,
     handleContacto,
   } = useContext(FormContext);
-  // console.log({ dataContactoEnForm2: dataContacto });
 
   useEffect(() => {
     if (dataContacto !== null) {
@@ -34,9 +33,6 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
       email: data.email,
       email_confirm: data.emailConfirm,
     });
-    // console.log({dataContactoSubmitForm2: dataContacto})
-    // console.log("se envia form 2");
-    // console.log({ data });
     nextStep();
   };
 
