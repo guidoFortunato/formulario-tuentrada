@@ -5,6 +5,7 @@ import { Formularios } from "../formulario/Formularios";
 import { FormContext } from "@/context/FormContext";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { Loader } from "../loading";
+import { ContainerLoader } from "./ContainerLoader";
 
 const initialState = [];
 
@@ -17,19 +18,18 @@ export const ContainerForm = ({ params }) => {
       console.log("useEffect form");
       const getDataForm = async () => {
         const info = await getDataPrueba(
-            `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
+          `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
           token
         );
-        
+
         setDataForm(info?.data);
-      
       };
       getDataForm();
     }
   }, [token]);
 
   if (dataForm === undefined) return <Loader />;
-  if (dataForm.length === 0) return <Loader />;
+  if (dataForm.length === 0) return <ContainerLoader />;
 
   return <Formularios dataForm={dataForm} params={params} />;
 };

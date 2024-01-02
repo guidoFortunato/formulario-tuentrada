@@ -1,34 +1,28 @@
 "use client";
-// import { setCookie, getCookie, hasCookie } from "cookies-next";
 
-export async function getToken( email = "gfortunato@tuentrada.com", password = "Correa.3030" ) {
+import { randomsLetters } from "@/utils/randoms-letters";
+
+// import { dataDecrypt } from "@/utils/data-decrypt";
+// import { dataEncrypt } from "@/utils/data-encrypt";
+
+export async function getToken( email = "gfortunato@tuentrada.com", password = "Correa.3030") {
   try {
-    // if (hasCookie("token") && hasCookie("tokenExpires")) {
-    //   const token = getCookie("token");
-    //   const tokenExpires = getCookie("tokenExpires");
-    //   const currentDate = Date.now();
-    //   localStorage.setItem("token", token);
-    //   localStorage.setItem("tokenExpires", tokenExpires);
-
-    //   if (currentDate < tokenExpires) {
-    //     return { token, tokenExpires };
-    //   }
-    // }
-
     if (localStorage.getItem("token") && localStorage.getItem("tokenExpires")) {
       const currentDate = Date.now();
-      const token = localStorage.getItem("token")
-      const tokenExpires = localStorage.getItem("tokenExpires")
-      // setCookie("token", token);
-      // setCookie("tokenExpires", tokenExpires);
+      const token = localStorage.getItem("token");
+      const tokenExpires = localStorage.getItem("tokenExpires");
+      const firstNumbers = token.slice(0,5)
+      const indexRandomLetters = token.indexOf(token.slice(-27))
+      const newToken = firstNumbers + token.slice(11, indexRandomLetters)
+      const desconvertedToken = newToken.replace("n", "|")
+      // console.log({desconvertedToken})
 
-      // console.log('token' + token)
       if (currentDate < tokenExpires) {
-        return { token, tokenExpires };
+        
+        return { token: desconvertedToken, tokenExpires };
       }
-      // console.log('luego de chequear si expira')
     }
-    // console.log('no entra a chequear localStorage')
+
     const res = await fetch("https://testapi.tuentrada.com/api/login", {
       method: "POST",
       headers: {
@@ -39,7 +33,7 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
         password,
       }),
     });
-    // console.log({resToken: res})
+
     if (!res.ok) {
       throw new Error(
         `Error getToken !res.ok: ${res.status}. ${res.statusText}`
@@ -51,10 +45,12 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
     const data = await res.json();
     const { token } = data;
     const tokenExpires = new Date(data.expired_at).getTime();
-    // setCookie("token", token);
-    // setCookie("tokenExpires", tokenExpires);
-    // console.log(`token expiró o no hay info en localStorage, pido nuevo token: ${token}`)
-    localStorage.setItem("token", token);
+    const firstNumbers = token.slice(0,5)
+    const randomNumber = Math.floor(100000 + Math.random() * 900000);
+    const newNumbers = firstNumbers + randomNumber;
+    const newToken = newNumbers + token.slice(5) + randomsLetters(27)
+    const convertedToken = newToken.replace("|", "n")
+    localStorage.setItem("token", convertedToken);
     localStorage.setItem("tokenExpires", tokenExpires);
     return { token, tokenExpires };
   } catch (error) {

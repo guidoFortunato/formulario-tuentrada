@@ -222,9 +222,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           "Prueba Formulario",
           email,
           {
-            content: {
-              ...content,
-            },
+            content: [{...content}],
           },
           glpiSubCategory.id
         );

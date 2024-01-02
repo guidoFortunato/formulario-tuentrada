@@ -5,13 +5,12 @@ import { useContext, useEffect, useState } from "react";
 import { Loader } from "../loading";
 import Articulo from "../main/Articulo";
 import { getDataPrueba } from "@/helpers/getInfoTest";
-
-const initialState = [];
+import { ContainerLoader } from "./ContainerLoader";
 
 export const ContainerSubCategory = ({ params }) => {
   const { token } = useContext(FormContext);
-  const [dataSubCategory, setDataSubCategory] = useState(initialState);
-  const [dataMostViews, setDataMostViews] = useState(initialState);
+  const [dataSubCategory, setDataSubCategory] = useState([]);
+  const [dataMostViews, setDataMostViews] = useState([]);
   // console.log({dataCategories})
 
   useEffect(() => {
@@ -34,9 +33,10 @@ export const ContainerSubCategory = ({ params }) => {
   }, [token]);
 
   if (dataSubCategory === undefined) return <Loader />;
-  if (dataSubCategory.length === 0) return <Loader />;
+  if (dataSubCategory.length === 0) return <ContainerLoader />;
+
   if (dataMostViews === undefined) return <Loader />;
-  if (dataMostViews.length === 0) return <Loader />;
+  if (dataMostViews.length === 0) return <span></span>;
 
   return (
     <Articulo

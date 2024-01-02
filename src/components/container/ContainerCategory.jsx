@@ -6,6 +6,7 @@ import { getDataPrueba } from "@/helpers/getInfoTest";
 import SubCategoria from "../main/SubCategoria";
 import { Loader } from "../loading";
 import { Skeleton } from "../skeleton/Skeleton";
+import { ContainerLoader } from "./ContainerLoader";
 
 export const ContainerCategory = ({ params }) => {
   const { token, prevDataCategories, handlePrevDataCategories } =
@@ -34,12 +35,7 @@ export const ContainerCategory = ({ params }) => {
   }, [token]);
 
   if (dataCategory === undefined) return <Loader />;
-  if (dataCategory.length === 0)
-    return (
-      <div className="container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 flex-1">
-        <section className="w-[80%] grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 mx-auto mt-4"><Loader /></section>
-      </div>
-    );
+  if (dataCategory.length === 0) return <ContainerLoader />;
 
   return <SubCategoria category={dataCategory} params={params} />;
 };

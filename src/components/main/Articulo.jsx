@@ -5,16 +5,13 @@ import { ArticleRows } from "./ArticleRows";
 
 const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
   const dataArticleForm = dataArticle.form;
-  // console.log({dataMostViews})
-  const rows = dataArticle.rows;
-  // console.log({ rows });
-  // console.log({ dataArticle });
 
+  const rows = dataArticle.rows;
+  
   const titleCategory =
     params.categoria.slice(0, 1).toUpperCase() +
     params.categoria.split("-").join(" ").slice(1).toLowerCase();
 
-  // const titleSubCategory = params.categoria.slice(0,1).toUpperCase() + params.categoria.slice(1).toLowerCase();
   const data = {
     comentario: "a",
     dni: "37417530",
@@ -60,31 +57,6 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
 
         {rows &&
           rows.map((item) => <ArticleRows key={item.name} item={item} />)}
-
-        {/* <div>
-          <div style={{ maxidth: "600px" }}>
-            <div
-              style={{
-                fontSize: " 18px",
-                fontWeight: "bold",
-                marginBottom: "20px",
-              }}
-            >
-              prueba
-            </div>
-
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                marginTop: "20px",
-              }}
-            >
-              <tbody>{prueba}</tbody>
-             
-            </table>
-          </div>
-        </div> */}
 
         <hr />
         {dataArticle?.enableHelpful === 1 && (
