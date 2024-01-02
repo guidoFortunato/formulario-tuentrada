@@ -179,9 +179,9 @@ export const FormBusqueda = () => {
                       href={`/${item.category.slug}/${item.slug}`}
                       onClick={() => handleClick(item)}
                     >
-                      <div className=" flex items-center cursor-pointer hover:bg-blue-light hover:text-white gap-4 p-4 ">
+                      <div className="border-gray-200 border-b flex items-center cursor-pointer text-gray-700 hover:bg-blue-light hover:text-white gap-4 p-4 ">
                         <svg
-                          className="w-3 h-3 mr-4"
+                          className="w-4 h-4 mr-2"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -195,8 +195,8 @@ export const FormBusqueda = () => {
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                           />
                         </svg>
-                        <h3 className="text-sm font-semibold">
-                          {item.title} - {item.category.name}
+                        <h3 className="text-sm font-semibold ">
+                          {item.title} <br /> <span className=" text-blue-dark text-xs bold-none">Categoría: {item.category.name}</span>
                         </h3>
                       </div>
                     </Link>
