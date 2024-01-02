@@ -1,3 +1,5 @@
+import NotFound from "@/app/not-found";
+
 
 
 
@@ -14,12 +16,15 @@ export async function getDataPrueba(url, token) {
         accept: "application/json",
       },
     });
+
+    console.log({res})
     // console.log({getDataPrueba: res})
     const data = await res.json();
     // console.log({getDataPrueba: data})
     return data;
   } catch (error) {
     console.log({error}, "error prueba");
+    throw NotFound()
   }
 }
 
