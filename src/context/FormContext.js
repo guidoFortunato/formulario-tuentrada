@@ -133,11 +133,12 @@ const FormProvider = ({ children }) => {
   useEffect(() => {
     const getDataToken = async () => {
       const { token, tokenExpires } = await getToken();
+      console.log({token, tokenExpires})
       setToken(token);
       setTokenExpires(tokenExpires);
     };
     getDataToken();
-  }, [token]);
+  }, []);
 
   const handleContacto = (contacto) => {
     setDataContacto(contacto);
