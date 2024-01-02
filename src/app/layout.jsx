@@ -7,12 +7,24 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Ayuda TuEntrada - Home",
-  description: "Página de ayuda para los clientes",
+  title: "Centro de Ayuda y Consultas de TuEntrada - Home",
+  description:
+    "Bienvenido a TuEntrada, centro de ayuda para eventos. Consultá nuestras políticas y devoluciones, accedé fácilmente con nuestras guías de 'Iniciar Sesión' y 'Preguntas Frecuentes', y optimizá tu experiencia con 'TuEntrada Wallet'. ¿Querés vender tus entradas? Descubrí más en 'Trabajá con nosotros'",
+  keywords: [
+    "TuEntrada",
+    "Centro de Ayuda Argentina",
+    "Devoluciones",
+    "Política de Devolución",
+    "Iniciar Sesión",
+    "Pasos para Acceder",
+    "TuEntrada Wallet",
+    "Guía de Uso",
+    "FAQs",
+    "Trabajar con Nosotros",
+  ],
 };
 
 export default async function RootLayout({ children }) {
-  
   return (
     <html lang="es">
       <body

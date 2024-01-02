@@ -19,7 +19,21 @@ export const generateMetadata = ({ params }) => {
   }
 
   return {
-    title: title,
+    title: title + " - TuEntrada",
+    description:
+      "Artículos informativos y detallados en nuestro Centro de Ayuda TuEntrada. Obtené respuestas a preguntas comunes y encontrá soluciones para mejorar tu experiencia.",
+    keywords: [
+      "Artículos informativos",
+      "Consejos para eventos",
+      "Guías de descargas de entradas",
+      "TuEntrada Wallet",
+      "Soluciones",
+      "Experiencia en eventos",
+      "Preguntas frecuentes sobre entradas",
+      "Últimas novedades en eventos",
+      "Consejos para compras de entradas",
+      "Usuarios de TuEntrada",
+    ],
   };
 };
 

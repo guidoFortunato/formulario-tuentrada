@@ -138,7 +138,7 @@ const FormProvider = ({ children }) => {
 
   useEffect(() => {
     const getDataToken = async () => {
-      console.log("useEffect getDataToken context");
+      // console.log("useEffect getDataToken context");
       const { token, tokenExpires } = await getToken();
       setToken(token);
       setTokenExpires(tokenExpires);
@@ -149,7 +149,7 @@ const FormProvider = ({ children }) => {
   useEffect(() => {
 
     if (token !== '') {
-      console.log('useEffect context getDataSite')
+      // console.log('useEffect context getDataSite')
       const getDataSite = async () => {  
         const info = await getDataCache( `https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`, token );
         const data = info?.data?.site;
@@ -163,7 +163,7 @@ const FormProvider = ({ children }) => {
   useEffect(() => {
     if (token !== "") {
       if (dataCategories.length === 0) {
-        console.log("useEffect container main context");
+        // console.log("useEffect container main context");
         const getDataCategories = async () => {
           const info = await getDataPrueba(
             "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories",
@@ -214,6 +214,10 @@ const FormProvider = ({ children }) => {
     setCurrentStep((prev) => prev - 1);
   };
 
+  const resetStep = () => {
+    setCurrentStep(0);
+  };
+
   return (
     <FormContext.Provider
       value={{
@@ -239,6 +243,7 @@ const FormProvider = ({ children }) => {
         prevStep,
         register,
         reset,
+        resetStep,
         selectDefaultValue,
         setValue,
         stepsEstaticos,

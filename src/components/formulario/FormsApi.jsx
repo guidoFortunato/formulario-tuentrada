@@ -31,6 +31,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     handleErrorInput,
     selectDefaultValue,
     token,
+    resetStep
   } = useContext(FormContext);
 
   const { steps } = dataForm;
@@ -76,9 +77,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // console.log({glpiSubCategory})
-    // console.log({selectDefaultValue})
-    console.log({ data });
+
+    const { name, email, emailConfirm, ...contentFinal } = data;
+
     const excludedKeys = "emailConfirm";
     const keys = Object.keys(data).filter((key) => key !== excludedKeys);
     const rows = keys?.map((item, index) => (
@@ -92,12 +93,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     ));
 
     if (selectDefaultValue === "defaultValue") {
-      console.log('selectDefaultValue === "defaultValue"');
+      // console.log('selectDefaultValue === "defaultValue"');
       handleErrorInput(true);
       return;
     }
-
-    const { name, email, emailConfirm, ...content } = data;
 
     if (stepNow.checkHaveTickets === 1) {
       if (glpiSubCategory === "") {
@@ -114,9 +113,18 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           if (info?.data?.tickets[0].closeForm) {
             const ticketNumber = info?.data?.tickets[0].number;
             const status = info?.data?.tickets[0].status;
-            const fecha = new Date(
-              info?.data?.tickets[0].dateCreated
-            ).toLocaleDateString();
+            const fecha =
+              new Date(info?.data?.tickets[0].dateCreated)
+                .toLocaleDateString()
+                .split("/")[1] +
+              "/" +
+              new Date(info?.data?.tickets[0].dateCreated)
+                .toLocaleDateString()
+                .split("/")[0] +
+              "/" +
+              new Date(info?.data?.tickets[0].dateCreated)
+                .toLocaleDateString()
+                .split("/")[2];
             const time1 = new Date(info?.data?.tickets[0].dateCreated)
               .toLocaleTimeString()
               .split(" ")[0]
@@ -126,8 +134,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
               .split(" ")[0]
               .split(":")[1];
             const date = `${fecha} - ${time1}:${time2} hs`;
+            console.log({ time1, time2, date });
             alertTickets(ticketNumber, date, status);
             reset();
+            resetStep();
             router.push("/");
             return;
           }
@@ -170,6 +180,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             const date = `${fecha} - ${time1}:${time2} hs`;
             alertTickets(ticketNumber, date, status);
             reset();
+            resetStep();
             router.push("/");
             return;
           }
@@ -183,9 +194,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
     if (currentStep + 1 === lengthSteps) {
       let numberTicket;
-      // console.log({ glpiSubCategory })
-      const name = data.name;
-      const email = data.email;
+
+      const content = { ...contentFinal };
+      console.log({ content });
 
       if (glpiSubCategory === "") {
         const { categoryId } = stepNow;
@@ -196,17 +207,14 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           token,
           "Prueba Formulario",
           email,
-          {
-            content: {
-              ...content,
-            },
-          },
+          content,
           itilcategoriesId
         );
         console.log({ info });
         if (!info.status) {
           alertaWarningTickets();
           reset();
+          resetStep();
           router.push("/");
           return;
         }
@@ -221,9 +229,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           token,
           "Prueba Formulario",
           email,
-          {
-            content: [{...content}],
-          },
+          content,
           glpiSubCategory.id
         );
         console.log({ info });
@@ -231,6 +237,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           console.log({ infoFinal: info });
           alertaWarningTickets();
           reset();
+          resetStep();
           router.push("/");
           return;
         }
@@ -238,8 +245,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         alertSuccessTickets(numberTicket);
         console.log({ infoFinal: info });
       }
-
-      console.log({ dataFinal: data, message: "se envia form final" });
+      resetStep();
       reset();
       router.push("/");
     }

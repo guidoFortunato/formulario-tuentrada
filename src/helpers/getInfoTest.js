@@ -1,11 +1,6 @@
-import NotFound from "@/app/not-found";
-
-
-
 
 export async function getDataPrueba(url, token) {
   try {
-
     const res = await fetch(url, {
       next: { revalidate: 600 },
       // cache: 'no-store',
@@ -17,14 +12,13 @@ export async function getDataPrueba(url, token) {
       },
     });
 
-    console.log({res})
-    // console.log({getDataPrueba: res})
+    //! a veces la respuesta es mala pero devuelve un 200: console.log({res})
+
     const data = await res.json();
-    // console.log({getDataPrueba: data})
+
     return data;
   } catch (error) {
-    console.log({error}, "error prueba");
-    throw NotFound()
+    console.log({ error }, "error prueba");
   }
 }
 
@@ -45,10 +39,9 @@ export async function getDataCache(url, token) {
     // console.log({dataCache: data})
     return data;
   } catch (error) {
-    console.log({error}, "error prueba");
+    console.log({ error }, "error prueba");
   }
 }
-
 
 export async function getDataPruebaStorage(url) {
   const tokenStorage = localStorage.getItem("token");
@@ -116,16 +109,15 @@ export async function getDataPruebaStorage(url) {
       return data;
     }
   } catch (error) {
-    console.log({error}, "error prueba");
+    console.log({ error }, "error prueba");
   }
 }
 
 export async function sendDataEmail(url, token, email) {
-
   try {
     const res = await fetch(url, {
       method: "POST",
-      cache: 'no-store',
+      cache: "no-store",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -135,27 +127,25 @@ export async function sendDataEmail(url, token, email) {
       }),
     });
 
-    console.log({sendDataPost: res})
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log({error}, "error prueba");
+    console.log({ error }, "error prueba");
   }
 }
 
-export async function getDataTickets(url, token, email, itilcategoriesId ) {
-
+export async function getDataTickets(url, token, email, itilcategoriesId) {
   try {
     const res = await fetch(url, {
       method: "POST",
-      cache: 'no-store',
+      cache: "no-store",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email,
-        itilcategoriesId
+        itilcategoriesId,
       }),
     });
 
@@ -163,17 +153,22 @@ export async function getDataTickets(url, token, email, itilcategoriesId ) {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log({error}, "error prueba");
+    console.log({ error }, "error prueba");
   }
 }
 
-
-export async function createForm(url, token, name, email, content, itilcategoriesId) {
-
+export async function createForm(
+  url,
+  token,
+  name,
+  email,
+  content,
+  itilcategoriesId
+) {
   try {
     const res = await fetch(url, {
       method: "POST",
-      cache: 'no-store',
+      cache: "no-store",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -182,22 +177,23 @@ export async function createForm(url, token, name, email, content, itilcategorie
         name,
         email,
         content,
-        itilcategoriesId
+        itilcategoriesId,
       }),
     });
 
-    // console.log({sendDataPost: res})
+    console.log({sendDataPost: res})
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log({error}, "error prueba");
+    console.log({ error }, "error prueba");
   }
 }
 
-export async function getTokenServer( email = "gfortunato@tuentrada.com", password = "Correa.3030" ) {
+export async function getTokenServer(
+  email = "gfortunato@tuentrada.com",
+  password = "Correa.3030"
+) {
   try {
-    
-  
     const res = await fetch("https://testapi.tuentrada.com/api/login", {
       method: "POST",
       headers: {
@@ -225,5 +221,3 @@ export async function getTokenServer( email = "gfortunato@tuentrada.com", passwo
     throw new Error(`Error catch getToken: ${error}`);
   }
 }
-
-
