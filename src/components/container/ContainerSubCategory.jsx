@@ -17,7 +17,7 @@ export const ContainerSubCategory = ({ params }) => {
 
   useEffect(() => {
     if (token !== "") {
-      console.log("useEffect subcategory");
+      // console.log("useEffect subcategory");
       const getDataSubCategory = async () => {
         const info = await getDataPrueba(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`,

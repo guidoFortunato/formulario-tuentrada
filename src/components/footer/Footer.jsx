@@ -7,8 +7,8 @@ const Footer = ({ data }) => {
   // console.log({data})
   const { pages } = data;
   return (
-    <footer className="bg-gradient-image shadow relative bottom-0 w-full pb-[2px]">
-      <div className="w-full max-w-screen-xl mx-auto pt-4 md:pt-8">
+    <footer className="bg-gradient-image shadow relative bottom-0 w-full pb-[20px]">
+      <div className="w-full max-w-screen-xl mx-auto pt-4 ">
         <div className="flex items-center flex-col">
           <a
             href="https://tuentrada.com/"
@@ -26,7 +26,7 @@ const Footer = ({ data }) => {
           <span className="mb-4 text-slate-400 ">
            Todos los derechos reservados
           </span>
-          <ul className="flex flex-wrap items-center justify-center mb-6 text-base font-semibold text-gray-200 sm:mb-0 dark:text-gray-400">
+          {/* <ul className="flex flex-wrap items-center justify-center mb-6 text-base font-semibold text-gray-200 sm:mb-0 dark:text-gray-400">
             {pages.map((item) => {
               if (item.where === "footer-top") {
                 return (
@@ -39,10 +39,10 @@ const Footer = ({ data }) => {
                 );
               }
             })}
-          </ul>
+          </ul> */}
         </div>
         <SocialMedia data={data} />
-        <Accordion data={data} />
+        {/* <Accordion data={data} /> */}
       </div>
     </footer>
   );

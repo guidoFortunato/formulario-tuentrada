@@ -20,13 +20,13 @@ export const ContainerCategory = ({ params }) => {
   useEffect(() => {
     if (token !== "") {
       // if (prevDataCategories !== params.categoria) {
-      console.log("useEffect container category");
+      // console.log("useEffect container category");
       const getDataCategory = async () => {
         const info = await getDataPrueba(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`,
           token
         );
-        console.log({info})
+        // console.log({info})
         if (!info.status) {
           setError(true)
           return
