@@ -32,7 +32,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
 
     console.log("se envía form 1");
     const info = await sendDataEmail(
-      "https://testapi.tuentrada.com/api/v1/atencion-cliente/search/contact",
+      "https://api.tuentrada.com/api/v1/atencion-cliente/search/contact",
       "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4",
       data.email
     );

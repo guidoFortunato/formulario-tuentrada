@@ -21,18 +21,18 @@ export const ButtonLike = ({
     if (result) {
       // console.log({result})
       handleLike();
-      // await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/1`);
+      // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/1`);
       await getDataPrueba(
-        `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`,
+        `https://api.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`,
         token
       );
     }
     if (!result) {
       // console.log({result})
       handleDisLike();
-      // await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/0`);
+      // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/0`);
       await getDataPrueba(
-        `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`,
+        `https://api.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`,
         token
       );
     }

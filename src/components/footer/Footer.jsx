@@ -6,6 +6,8 @@ import Link from "next/link";
 const Footer = ({ data }) => {
   // console.log({data})
   const { pages } = data;
+  const newSrc = data.logoFooter.src.replace("/images/", "https://api.tuentrada.com/storage/" )
+
   return (
     <footer className="bg-gradient-image shadow relative bottom-0 w-full ">
       <div className="w-full max-w-screen-xl mx-auto pt-4 ">
@@ -15,7 +17,7 @@ const Footer = ({ data }) => {
             className="flex items-center mb-4 sm:mb-0"
           >
             <Image
-              src={data.logoFooter.src}              
+              src={newSrc}              
               alt={data.logoFooter.src}
               width={138}
               height={38}

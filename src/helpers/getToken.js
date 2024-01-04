@@ -23,7 +23,7 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
       }
     }
 
-    const res = await fetch("https://testapi.tuentrada.com/api/login", {
+    const res = await fetch("https://api.tuentrada.com/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

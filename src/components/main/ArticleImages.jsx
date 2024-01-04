@@ -6,6 +6,8 @@ export const ArticleImages = ({ itemColumn, index, item }) => {
     console.log({ index });
     console.log({ item });
   }
+  const newSrc = itemColumn.image?.src.replace("/images/", "https://api.tuentrada.com/storage/" )
+
 
   return (
     <div
@@ -21,8 +23,8 @@ export const ArticleImages = ({ itemColumn, index, item }) => {
       {itemColumn.link ? (
         <Link href={itemColumn.link} target={itemColumn.target}>
           <Image
-            key={itemColumn.image?.src}
-            src={itemColumn.image?.src}
+            key={newSrc}
+            src={newSrc}
             alt={itemColumn.alt}
             width={1100}
           height={600}
@@ -32,8 +34,8 @@ export const ArticleImages = ({ itemColumn, index, item }) => {
         </Link>
       ) : (
         <Image
-          key={itemColumn.image?.src}
-          src={itemColumn.image?.src}
+          key={newSrc}
+          src={newSrc}
           alt={itemColumn.alt}
           width={1100}
           height={600}

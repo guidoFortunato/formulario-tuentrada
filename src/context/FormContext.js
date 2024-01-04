@@ -151,7 +151,7 @@ const FormProvider = ({ children }) => {
     if (token !== '') {
       // console.log('useEffect context getDataSite')
       const getDataSite = async () => {  
-        const info = await getDataCache( `https://testapi.tuentrada.com/api/v1/site/ayuda.tuentrada.com`, token );
+        const info = await getDataCache( `https://api.tuentrada.com/api/v1/site/ayuda.tuentrada.com`, token );
         const data = info?.data?.site;
         setDataSite(data)
       };
@@ -166,7 +166,7 @@ const FormProvider = ({ children }) => {
         // console.log("useEffect container main context");
         const getDataCategories = async () => {
           const info = await getDataPrueba(
-            "https://testapi.tuentrada.com/api/v1/atencion-cliente/categories",
+            "https://api.tuentrada.com/api/v1/atencion-cliente/categories",
             token
           );
           const { categories } = info.data;

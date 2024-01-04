@@ -4,9 +4,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 export const DataContext = createContext();
 
 
-const apiGeneral = 'https://testapi.tuentrada.com/api/v1/ayuda.tuentrada.com'
-const apiCategorias = 'https://testapi.tuentrada.com/api/v1/atencion-cliente/categories'
-const apiCategoria = 'https://testapi.tuentrada.com/api/v1/atencion-cliente/category/1'
+const apiGeneral = 'https://api.tuentrada.com/api/v1/ayuda.tuentrada.com'
+const apiCategorias = 'https://api.tuentrada.com/api/v1/atencion-cliente/categories'
+const apiCategoria = 'https://api.tuentrada.com/api/v1/atencion-cliente/category/1'
 
 const dataPrueba = []
 

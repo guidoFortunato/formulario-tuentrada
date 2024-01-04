@@ -19,7 +19,7 @@ export const ContainerForm = ({ params }) => {
       // console.log("useEffect form");
       const getDataForm = async () => {
         const info = await getDataPrueba(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
+          `https://api.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
           token
         );
         if (!info.status) {

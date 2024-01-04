@@ -4,13 +4,14 @@ import Link from "next/link";
 // import { useEffect } from "react";
 
 export default function NavBar({ data }) {
-  
-  return (
+  console.log(data.logo.src)
+  const newSrc = data.logo.src.replace("/images/", "https://api.tuentrada.com/storage/" )
+   return (
     <nav className="bg-gradient-to-b from-maroon-dark to-blue-dark md:from-blue-dark md:to-maroon-dark px-[0.8rem] lg:px-[7.5rem] py-1">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/">
           <Image
-            src={data.logo.src}
+            src={newSrc}
             alt={data.logo.alt}
             width={197}
             height={89}
@@ -18,6 +19,7 @@ export default function NavBar({ data }) {
             style={{ width: "auto", height: "auto" }}
           />
         </Link>
+        
         {/* <button
           data-collapse-toggle="navbar-default"
           type="button"

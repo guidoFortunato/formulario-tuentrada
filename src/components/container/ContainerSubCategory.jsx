@@ -20,7 +20,7 @@ export const ContainerSubCategory = ({ params }) => {
       // console.log("useEffect subcategory");
       const getDataSubCategory = async () => {
         const info = await getDataPrueba(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`,
+          `https://api.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`,
           token
         );
         if (!info.status) {
@@ -28,7 +28,7 @@ export const ContainerSubCategory = ({ params }) => {
           return
         }
         const infoMostViews = await getDataPrueba(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/articles/most-view`,
+          `https://api.tuentrada.com/api/v1/atencion-cliente/articles/most-view`,
           token
         );
         setDataSubCategory(info);

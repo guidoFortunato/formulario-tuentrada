@@ -4,7 +4,7 @@ module.exports = {
   
   reactStrictMode: true,
   images: {
-    domains: ["eventos.tuentrada.com", "picsum.photos", "testapi.tuentrada.com"],
+    domains: ["eventos.tuentrada.com", "picsum.photos", "api.tuentrada.com"],
   },
 };
 

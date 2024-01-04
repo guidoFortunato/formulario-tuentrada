@@ -23,7 +23,7 @@ export const ContainerCategory = ({ params }) => {
       // console.log("useEffect container category");
       const getDataCategory = async () => {
         const info = await getDataPrueba(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`,
+          `https://api.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}`,
           token
         );
         // console.log({info})

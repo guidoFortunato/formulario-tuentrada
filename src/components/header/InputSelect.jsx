@@ -12,7 +12,7 @@ export const InputSelect = () => {
     // console.log({value})
     if (value.length >= 3) {
       // setQuery(value)
-      const res = await getDataPrueba(`https://testapi.tuentrada.com/api/v1/atencion-cliente/search-article/${value.toLowerCase()}`);
+      const res = await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/search-article/${value.toLowerCase()}`);
       const options = res.data.articles.map( item => ({value: item.title, label: item.title, slug: item.slug}) )
       // setData(res.data.articles)
       callback(options)
