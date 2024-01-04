@@ -34,7 +34,7 @@ const Footer = ({ data }) => {
                     <Link href={item.path} className="hover:underline ">
                       {item.title}
                     </Link>
-                    <span className="mx-1">.</span>
+                    <span className="mx-1"> • </span>
                   </li>
                 );
               }
