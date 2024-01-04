@@ -1,5 +1,17 @@
 import { ContainerForm } from "@/components/container/ContainerForm";
 
+export async function generateStaticParams(){
+  return [
+    { name: "/mis-entradas/punto-de-venta-fisico"},
+    { name: "/tu-entrada-wallet/que-es-tuentrada-wallet"},
+    { name: "/tu-entrada-wallet/instrucciones"},
+    { name: "/devoluciones/como-solicitar-una-devolucion"},
+    { name: "/devoluciones/requisitos-y-aspectos-legales-para-devoluciones"},
+    { name: "/mis-entradas/punto-de-venta-fisico"},
+    { name: "/devoluciones/preguntas-frecuentes"},
+  ]
+}
+
 export const generateMetadata = ({ params }) => {
   let primerLetra;
   let resto;

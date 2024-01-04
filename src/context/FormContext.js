@@ -169,6 +169,8 @@ const FormProvider = ({ children }) => {
             "https://api.tuentrada.com/api/v1/atencion-cliente/categories",
             token
           );
+          console.log({info})
+          console.log({token})
           const { categories } = info.data;
           setDataCategories(categories);
         };

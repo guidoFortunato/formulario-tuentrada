@@ -3,7 +3,7 @@ import { getDataPrueba, getTokenServer } from "@/helpers/getInfoTest";
 
 export default async function sitemap() {
     const { token } = await getTokenServer()
-    const request = await getDataPrueba("https://testapi.tuentrada.com/api/v1/atencion-cliente/sitemap/ayuda.tuentrada.com", token);
+    const request = await getDataPrueba("https://api.tuentrada.com/api/v1/atencion-cliente/sitemap/ayuda.tuentrada.com", token);
   
     const posts = request.data.urls.map( item => {
       return {
