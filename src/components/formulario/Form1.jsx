@@ -8,7 +8,7 @@ import { getDataPrueba, sendDataEmail } from "@/helpers/getInfoTest";
 
 
 export const Form1 = ({ lengthSteps, dataForm }) => {
-  const { register, handleSubmit, errors, watch, nextStep, handleContacto, reset } = useContext(FormContext);
+  const { register, handleSubmit, errors, watch, nextStep, handleContacto, reset, token } = useContext(FormContext);
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
 
@@ -33,10 +33,10 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
     console.log("se envía form 1");
     const info = await sendDataEmail(
       "https://api.tuentrada.com/api/v1/atencion-cliente/search/contact",
-      "12707|5n4wj2vZHLfXa8DcSTqW0dZErhDlZpOU5OeAuqQ4",
+      token,
       data.email
     );
-    console.log({ data });
+    // console.log({ data });
     if (info?.status) {
       handleContacto({
         id: info.data.contact.id,

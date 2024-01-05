@@ -23,7 +23,7 @@ export const ContainerCategory = ({ params }) => {
       // console.log("useEffect container category");
       const getDataCategory = async () => {
         const info = await getDataPrueba(
-          `${process.env.NEXT_PUBLIC_API}atencion-cliente/category/${params.categoria}`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}`,
           token
         );
         // console.log({info})

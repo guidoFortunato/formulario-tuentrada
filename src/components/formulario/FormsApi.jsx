@@ -103,7 +103,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const { categoryId } = stepNow;
         const keyCategory = Object.keys(categoryId)[0];
         const info = await getDataTickets(
-          `https://api.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           data.email,
           keyCategory
@@ -146,7 +146,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
       if (glpiSubCategory !== "") {
         const info = await getDataTickets(
-          `https://api.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           data.email,
           glpiSubCategory.id
@@ -203,7 +203,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const itilcategoriesId = Object.keys(categoryId)[0];
 
         const info = await createForm(
-          `https://api.tuentrada.com/api/v1/atencion-cliente/create/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           token,
           "Prueba Formulario",
           email,
@@ -225,7 +225,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
       if (glpiSubCategory !== "") {
         const info = await createForm(
-          `https://api.tuentrada.com/api/v1/atencion-cliente/create/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           token,
           "Prueba Formulario",
           email,

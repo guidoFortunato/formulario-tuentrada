@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { useRouter } from 'next/router'
 import { FormContext } from "@/context/FormContext";
 
 export const Steps = ({ dataForm }) => {
@@ -16,7 +15,7 @@ export const Steps = ({ dataForm }) => {
     <ol className="flex items-center w-[80%] mx-auto">
       {newSteps.map((item, index) => (
         <li
-          key={item.id}
+          key={index}
           className={`${
             index === lengthSteps - 1
               ? ""

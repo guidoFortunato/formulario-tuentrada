@@ -1,4 +1,5 @@
 "use client";
+
 import { createContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getToken } from "@/helpers/getToken";
@@ -151,7 +152,7 @@ const FormProvider = ({ children }) => {
     if (token !== '') {
       // console.log('useEffect context getDataSite')
       const getDataSite = async () => {  
-        const info = await getDataCache( `${process.env.NEXT_PUBLIC_API}site/ayuda.tuentrada.com`, token );
+        const info = await getDataCache( `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`, token );
         const data = info?.data?.site;
         setDataSite(data)
       };
@@ -166,9 +167,11 @@ const FormProvider = ({ children }) => {
         // console.log("useEffect container main context");
         const getDataCategories = async () => {
           const info = await getDataPrueba(
-            `${process.env.NEXT_PUBLIC_API}atencion-cliente/categories`,
+            `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`,
             token
           );
+          // console.log({token})
+          // console.log({info})
           const { categories } = info.data;
           setDataCategories(categories);
         };
