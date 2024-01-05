@@ -19,7 +19,7 @@ export const ContainerForm = ({ params }) => {
       // console.log("useEffect form");
       const getDataForm = async () => {
         const info = await getDataPrueba(
-          `https://api.tuentrada.com/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
+          `${process.env.NEXT_PUBLIC_API}atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
           token
         );
         if (!info.status) {

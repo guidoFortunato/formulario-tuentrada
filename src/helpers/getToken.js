@@ -11,11 +11,9 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
       const currentDate = Date.now();
       const token = localStorage.getItem("token");
       const tokenExpires = localStorage.getItem("tokenExpires");
-      const firstNumbers = token.slice(0,5)
       const indexRandomLetters = token.indexOf(token.slice(-27))
-      const newToken = firstNumbers + token.slice(11, indexRandomLetters)
+      const newToken = token.slice(6, indexRandomLetters)
       const desconvertedToken = newToken.replace("n", "|")
-      // console.log({desconvertedToken})
 
       if (currentDate < tokenExpires) {
         
@@ -45,10 +43,8 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
     const data = await res.json();
     const { token } = data;
     const tokenExpires = new Date(data.expired_at).getTime();
-    const firstNumbers = token.slice(0,5)
     const randomNumber = Math.floor(100000 + Math.random() * 900000);
-    const newNumbers = firstNumbers + randomNumber;
-    const newToken = newNumbers + token.slice(5) + randomsLetters(27)
+    const newToken = randomNumber + token + randomsLetters(27)
     const convertedToken = newToken.replace("|", "n")
     localStorage.setItem("token", convertedToken);
     localStorage.setItem("tokenExpires", tokenExpires);

@@ -4,7 +4,7 @@ import Link from "next/link";
 // import { useEffect } from "react";
 
 export default function NavBar({ data }) {
-  console.log(data.logo.src)
+  // console.log(data.logo.src)
   const newSrc = data.logo.src.replace("/images/", "https://api.tuentrada.com/storage/" )
    return (
     <nav className="bg-gradient-to-b from-maroon-dark to-blue-dark md:from-blue-dark md:to-maroon-dark px-[0.8rem] lg:px-[7.5rem] py-1">
