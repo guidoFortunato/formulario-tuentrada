@@ -6,4 +6,3 @@ module.exports = {
     domains: ["eventos.tuentrada.com", "picsum.photos", "api.tuentrada.com"],
   },
 };
-

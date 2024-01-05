@@ -3,6 +3,8 @@ import FormProvider from "@/context/FormContext";
 import { ContainerApp } from "@/components/container/ContainerApp";
 
 import "./globals.css";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import CookieBanner from "@/components/analytics/CookieBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,12 +29,14 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="es">
+      <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA} />
       <body
         className={`${inter.className} flex flex-col min-h-[100vh] m-0`}
         suppressHydrationWarning={true}
       >
         <FormProvider>
           <ContainerApp>{children}</ContainerApp>
+          <CookieBanner />
         </FormProvider>
       </body>
     </html>

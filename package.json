@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bufferutil": "^4.0.8",
+    "client-only": "^0.0.1",
     "cookies-next": "^4.1.0",
     "crypto-js": "^4.2.0",
     "flowbite": "^1.8.1",
