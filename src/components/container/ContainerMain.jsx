@@ -12,6 +12,7 @@ export const ContainerMain = () => {
 
   // console.log({dataCategories})
   // console.log({tokenFueraUef: token})
+  // console.log({dataCategories})
 
   if (dataCategories === undefined) return <Loader />;
   if (dataCategories.length === 0)
