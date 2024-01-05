@@ -29,7 +29,7 @@ export const FormBusqueda = () => {
         setLoading(true); // Activar indicador de carga
         if (value.length >= 3) {
           const res = await getDataPrueba(
-            `https://api.tuentrada.com/api/v1/atencion-cliente/search/article/${value}`,
+            `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
             token
           );
           // console.log({ res });
@@ -196,7 +196,6 @@ export const FormBusqueda = () => {
                           />
                         </svg>
                         <h3 className="text-sm font-semibold ">
-                          {console.log({item})}
                           {item.title} <br /> <span className=" text-blue-dark text-xs bold-none">Categoría: {item.category.name}</span>
                         </h3>
                       </div>
