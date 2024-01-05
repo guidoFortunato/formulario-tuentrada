@@ -60,7 +60,7 @@ const AccordionSubCat = ({ name = "", articles = [], params }) => {
               <p className="text-gray-500 mb-1" key={item.id}>
                 <Link
                   href={`${params.categoria}/${item.slug}`}
-                  className="text-blue-dark hover:underline text-sm"
+                  className="text-blue-dark hover:underline text-base lg:text-sm"
                   onClick={()=>handleSubtitleArticle(name)}
                 >
                   ▸{item.title}

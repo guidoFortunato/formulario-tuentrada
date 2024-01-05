@@ -99,7 +99,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
                   <li key={item.id} className="text-blue-dark mb-2">
                     ▸
                     <Link
-                      className="hover:underline text-sm"
+                      className="hover:underline text-base lg:text-sm"
                       href={`/${item.category.slug}/${item.slug}`}
                     >
                       {item.title}
@@ -118,7 +118,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
                 {dataArticle?.articleChild?.slice(0, 5).map((item) => (
                   <li key={item.id} className="text-blue-dark mb-2">
                     ▸
-                    <Link className="hover:underline text-sm " href={item.slug}>
+                    <Link className="hover:underline text-base lg:text-sm" href={item.slug}>
                       {item.title}
                     </Link>
                   </li>
