@@ -7,11 +7,6 @@ import { getLocalStorage, setLocalStorage } from "@/helpers/storageHelper";
 export default function CookieBanner() {
   const [cookieConsent, setCookieConsent] = useState(null);
 
-  useEffect(() => {
-    const storedCookieConsent = getLocalStorage("cookie_consent", null);
-
-    setCookieConsent(storedCookieConsent);
-  }, [setCookieConsent]);
 
   useEffect(() => {
     const newValue = cookieConsent ? "granted" : "denied";
