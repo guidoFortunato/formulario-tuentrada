@@ -42,7 +42,7 @@ export const TypeFormRadio = ({ item }) => {
             />
             <label
               htmlFor={option}
-              className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="w-full py-3 ms-2 text-sm font-normal text-gray-900 dark:text-gray-300"
             >
               {option}
             </label>
