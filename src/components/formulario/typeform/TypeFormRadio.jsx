@@ -31,7 +31,7 @@ export const TypeFormRadio = ({ item }) => {
               type="radio"
               value={option}
               name={name}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+              className="w-4 h-4 text-blue-dark bg-gray-100 border-gray-300 focus:ring-blue-dark"
               {...register(name, {
                 required: {
                   value: item.required === 1 ? true : false,
