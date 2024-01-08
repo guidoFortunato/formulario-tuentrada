@@ -5,7 +5,6 @@ import { RichText } from "./RichText";
 
 export const ArticleRows = ({ item }) => {
   const columns = item.columns;
-
   return (
     <section
       className={`grid 
@@ -13,8 +12,9 @@ export const ArticleRows = ({ item }) => {
         ${item.width === "50%-50%" && "grid-cols-1 md:grid-cols-2 md:gap-4"} 
         ${item.width === "33%-33%-33%" && "grid-cols-1 lg:grid-cols-3 lg:gap-6"}
         ${
-          item.width === "25%-25%-25%-25%" &&
-          "grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-4"
+          item.width === "25%-25%-25%-25%" && 
+          "grid-cols-1  lg:grid-cols-4 lg:gap-4"
+          // md:grid-cols-2
         } 
         ${
           (item.width === "25%-75%" || item.width === "75%-25%") &&
