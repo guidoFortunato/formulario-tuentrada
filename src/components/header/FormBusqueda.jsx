@@ -20,8 +20,6 @@ export const FormBusqueda = () => {
   // console.log({ data });
   // console.log({ isOpen });
 
-
-
   useEffect(() => {
     // Lógica de búsqueda
     const search = async () => {
@@ -97,7 +95,7 @@ export const FormBusqueda = () => {
     setIsOpen(false);
   };
 
-  if(token === "") return <span></span>
+  if (token === "") return <span></span>;
 
   return (
     <form onSubmit={onSubmit} className="relative">
@@ -118,27 +116,7 @@ export const FormBusqueda = () => {
         />
         {loading && <Loader />}
 
-        {/* <button
-          type="submit"
-          className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-light rounded-e-lg border border-blue-light hover:bg-blue-dark hover:border-blue-dark "
-        >
-          <svg
-            className="w-4 h-4"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 20"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-            />
-          </svg>
-          <span className="sr-only">Search</span>
-        </button> */}
+       
       </div>
       {error && (
         <span className="text-red-500 text-xs flex items-center pt-1">
@@ -196,7 +174,10 @@ export const FormBusqueda = () => {
                           />
                         </svg>
                         <h3 className="text-sm font-semibold ">
-                          {item.title} <br /> <span className=" text-blue-dark text-xs bold-none">Categoría: {item.category.name}</span>
+                          {item.title} <br />
+                          <span className=" text-blue-dark text-xs bold-none">
+                            Categoría: {item.category.name}
+                          </span>
                         </h3>
                       </div>
                     </Link>
