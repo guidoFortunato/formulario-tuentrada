@@ -39,10 +39,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const router = useRouter();
   const stepNow = newSteps[currentStep];
 
-  // console.log({stepNow})
-  // console.log({currentStep})
-  // console.log({errorInput})
-
   const renderForms =
     newSteps.length > 2 &&
     newSteps.slice(2).map((item, index) => {
@@ -79,27 +75,16 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     event.preventDefault();
 
     const { name, email, emailConfirm, ...contentFinal } = data;
-
-    const excludedKeys = "emailConfirm";
-    const keys = Object.keys(data).filter((key) => key !== excludedKeys);
-    const rows = keys?.map((item, index) => (
-      <tr key={index}>
-        <th style="border: 1px solid #ddd; padding: 10px; background-color: #f2f2f2;">
-          {item.slice(0, 1).toUpperCase() +
-            item.split("_").join(" ").toLowerCase().slice(1)}
-        </th>
-        <td style="border: 1px solid #ddd; padding: 10px;">{data[item]}</td>
-      </tr>
-    ));
+    console.log({selectDefaultValue })
 
     if (selectDefaultValue === "defaultValue") {
-      // console.log('selectDefaultValue === "defaultValue"');
+      console.log('entra a selectDefaultValue === "defaultValue"')
       handleErrorInput(true);
       return;
     }
 
     if (stepNow.checkHaveTickets === 1) {
-      if (glpiSubCategory === "") {
+      if (glpiSubCategory === "" || glpiSubCategory === undefined) {
         const { categoryId } = stepNow;
         const keyCategory = Object.keys(categoryId)[0];
         const info = await getDataTickets(
@@ -134,7 +119,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
               .split(" ")[0]
               .split(":")[1];
             const date = `${fecha} - ${time1}:${time2} hs`;
-            console.log({ time1, time2, date });
+            // console.log({ time1, time2, date });
             alertTickets(ticketNumber, date, status);
             reset();
             resetStep();
@@ -144,14 +129,13 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         }
       }
 
-      if (glpiSubCategory !== "") {
+      if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
         const info = await getDataTickets(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           data.email,
           glpiSubCategory.id
-        );
-        console.log({ infoGlpiSubCategoryId: info });
+        );        // console.log({ infoGlpiSubCategoryId: info });
 
         if (info?.data?.tickets?.length > 0) {
           if (info?.data?.tickets[0].closeForm) {
@@ -193,12 +177,13 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     }
 
     if (currentStep + 1 === lengthSteps) {
+      //Form final
       let numberTicket;
 
       const content = { ...contentFinal };
       console.log({ content });
 
-      if (glpiSubCategory === "") {
+      if (glpiSubCategory === "" || glpiSubCategory === undefined) {
         const { categoryId } = stepNow;
         const itilcategoriesId = Object.keys(categoryId)[0];
 
@@ -223,7 +208,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         console.log({ infoFinal: info });
       }
 
-      if (glpiSubCategory !== "") {
+      if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
         const info = await createForm(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           token,

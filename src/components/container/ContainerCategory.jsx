@@ -10,12 +10,17 @@ import NotFound from "@/app/not-found";
 
 
 export const ContainerCategory = ({ params }) => {
-  const { token } =  useContext(FormContext);
+  const { token, resetStep, resetDefaultValue, resetGlpiSubCategory } =  useContext(FormContext);
   const [dataCategory, setDataCategory] = useState([]);
   const [error, setError] = useState(false);
 
   // console.log({prevDataCategories, params: params.categoria})
   // console.log({dataCategory})
+  useEffect(() => {
+    resetStep()
+    resetDefaultValue()
+    resetGlpiSubCategory()
+  }, []);
 
   useEffect(() => {
     if (token !== "") {

@@ -7,41 +7,14 @@ export const TypeFormInput = ({ item }) => {
   const name = item.name.toLowerCase().split(" ").join("_");
   // console.log({ item });
 
-  // if (item.subtype === "date") {
-  //   return (
-  //     <div>
-  //       <label
-  //         htmlFor={name}
-  //         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-  //       >
-  //         {item.name}{" "}
-  //         {item.required === 1 && <span className="text-red-500">*</span>}
-  //       </label>
-  //       <Datepicker
-          
-  //         {...register(name, {
-  //           required: {
-  //             value: item.required === 1 ? true : false,
-  //             message: "Este campo es obligatorio", //`El ${item.name.toLowerCase()} es obligatorio`,
-  //           },
-  //           pattern: {
-  //             value: item.pattern,
-  //             message: item.pattern !== null && `Ingrese un texto válido`,
-  //           },
-  //         })}
-  //       />
-  //     </div>
-  //   );
-  // }
-
   return (
     <div>
       <label
         htmlFor={name}
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
-        {item.name}{" "}
-        {item.required === 1 && <span className="text-red-500">*</span>}
+        {item.name}
+        {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
       </label>
       <input
         type={item.subtype === "date" ? "datetime-local" : item.subtype}

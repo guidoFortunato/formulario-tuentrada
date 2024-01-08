@@ -10,7 +10,7 @@ export const TypeFormFile = ({ item }) => {
         htmlFor={name}
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
-        {item.name} { item.required === 1 && <span className="text-red-500">*</span> }
+        {item.name} { item.required === 1 && <span className="text-red-500 ml-1">*</span> }
       </label>
 
       <input

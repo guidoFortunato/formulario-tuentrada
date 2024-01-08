@@ -21,7 +21,7 @@ export const TypeFormSelect = ({ item }) => {
         htmlFor={name}
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
-        {item.name} { item.required === 1 && <span className="text-red-500">*</span> }
+        {item.name} { item.required === 1 && <span className="text-red-500 ml-1">*</span> }
       </label>
       <select {...register(name)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark w-full block p-2.5 mt-2">
        

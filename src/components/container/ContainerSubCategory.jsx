@@ -9,11 +9,16 @@ import { ContainerLoader } from "./ContainerLoader";
 import NotFound from "@/app/not-found";
 
 export const ContainerSubCategory = ({ params }) => {
-  const { token } = useContext(FormContext);
+  const { token, resetStep, resetDefaultValue, resetGlpiSubCategory } = useContext(FormContext);
   const [dataSubCategory, setDataSubCategory] = useState([]);
   const [dataMostViews, setDataMostViews] = useState([]);
   const [error, setError] = useState(false);
   // console.log({dataCategories})
+  useEffect(() => {
+    resetStep()
+    resetDefaultValue()
+    resetGlpiSubCategory()
+  }, []);
 
   useEffect(() => {
     if (token !== "") {
