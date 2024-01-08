@@ -14,9 +14,6 @@ export const TypeFormGlpi = ({ item }) => {
   } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
 
-  console.log({selectDefaultValue })
-  console.log({glpiSubCategory})
-
   const handleSelectChange = (e) => {
     if (e.target.value === "Selecciona una opción" && item.required === 1) {
       handleErrorInput(true);
@@ -34,8 +31,6 @@ export const TypeFormGlpi = ({ item }) => {
 
   useEffect(() => {
     if (glpiSubCategory === "" && item.required === 1) {
-      console.log({glpiSubCategory})
-      console.log('entra a glpiSubCategory === "" && item.required === 1')
       handleSelectDefaultValue("defaultValue");
     }
   }, []);
