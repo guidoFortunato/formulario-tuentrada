@@ -10,7 +10,6 @@ export const TypeFormGlpi = ({ item }) => {
     errorInput,
     handleSelectDefaultValue,
     glpiSubCategory,
-    selectDefaultValue,
   } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
 
