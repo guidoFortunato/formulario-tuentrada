@@ -5,7 +5,7 @@ import { Datepicker } from "flowbite-react";
 export const TypeFormInput = ({ item }) => {
   const { register, errors } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
-  // console.log({ item });
+  console.log({ item });
 
   return (
     <div>
@@ -17,7 +17,7 @@ export const TypeFormInput = ({ item }) => {
         {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
       </label>
       <input
-        type={item.subtype === "date" ? "datetime-local" : item.subtype}
+        type={item.subtype === "datetime" ? "datetime-local" : item.subtype}
         name={name}
         id={name}
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5"
