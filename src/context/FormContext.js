@@ -221,6 +221,14 @@ const FormProvider = ({ children }) => {
     setCurrentStep(0);
   };
 
+  const resetDefaultValue = () => {
+    setSelectDefaultValue("");
+  };
+
+  const resetGlpiSubCategory = () => {
+    setGlpiSubCategory("");
+  };
+
   return (
     <FormContext.Provider
       value={{
@@ -246,6 +254,8 @@ const FormProvider = ({ children }) => {
         prevStep,
         register,
         reset,
+        resetDefaultValue,
+        resetGlpiSubCategory,
         resetStep,
         selectDefaultValue,
         setValue,

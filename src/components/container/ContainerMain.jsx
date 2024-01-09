@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import CardCategoria from "@/components/main/CardCategoria";
 import { Loader } from "@/components/loading";
 import { FormContext } from "@/context/FormContext";
@@ -8,11 +8,15 @@ import { Skeleton } from "../skeleton/Skeleton";
 
 
 export const ContainerMain = () => {
-  const { dataCategories } = useContext(FormContext);
+  const { dataCategories, resetStep, resetDefaultValue, resetGlpiSubCategory } = useContext(FormContext);
 
   // console.log({dataCategories})
   // console.log({tokenFueraUef: token})
-  // console.log({dataCategories})
+  useEffect(() => {
+    resetStep()
+    resetDefaultValue()
+    resetGlpiSubCategory()
+  }, []);
 
   if (dataCategories === undefined) return <Loader />;
   if (dataCategories.length === 0)

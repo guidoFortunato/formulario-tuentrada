@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
-import { getDataPrueba, sendDataEmail } from "@/helpers/getInfoTest";
+import { sendDataEmail } from "@/helpers/getInfoTest";
 
 
 export const Form1 = ({ lengthSteps, dataForm }) => {
@@ -26,13 +26,11 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
     event.preventDefault();
     if (captcha === "") {
       setErrorRecaptcha(true);
-      console.log('falta clickear en el captcha');
       return;
     }
 
-    console.log("se envía form 1");
     const info = await sendDataEmail(
-      "https://api.tuentrada.com/api/v1/atencion-cliente/search/contact",
+      `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
       token,
       data.email
     );

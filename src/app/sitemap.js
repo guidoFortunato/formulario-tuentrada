@@ -8,7 +8,6 @@ export default async function sitemap() {
   );
 
   const posts = request.data.urls.map((item) => {
-    
     return {
       url: item.site,
       lastModified: item.date,
