@@ -92,7 +92,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const { categoryId } = stepNow;
         const keyCategory = Object.keys(categoryId)[0];
         const info = await getDataTickets(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           data.email,
           keyCategory
@@ -103,6 +103,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           const ticketsCloseForm = info.data.tickets.filter((ticket) => ticket.closeForm === 1);
           if (ticketsCloseForm > 0) {
             const ticketNew = ticketsCloseForm.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated))[0];
+
+            //! falta validar si tiene tickets abiertos
             
             const ticketNumber = info?.data?.tickets[0].number;
             const status = info?.data?.tickets[0].status;
@@ -141,7 +143,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
       if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
         const info = await getDataTickets(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           data.email,
           glpiSubCategory.id
@@ -201,7 +203,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const itilcategoriesId = Object.keys(categoryId)[0];
 
         const info = await createForm(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           token,
           "Prueba Formulario",
           email,
@@ -230,7 +232,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
       if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
         const info = await createForm(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           token,
           "Prueba Formulario",
           email,
