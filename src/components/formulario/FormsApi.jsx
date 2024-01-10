@@ -75,6 +75,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
+    console.log({glpiSubCategory})
 
     const { name, email, emailConfirm, ...contentFinal } = data;
     // console.log({selectDefaultValue })
@@ -195,6 +196,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       const content = { ...contentFinal };
 
       if (glpiSubCategory === "" || glpiSubCategory === undefined) {
+        console.log({stepNow})
         const { categoryId } = stepNow;
         const itilcategoriesId = Object.keys(categoryId)[0];
 
@@ -206,7 +208,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           content,
           itilcategoriesId
         );
-        // console.log({ info });
+        console.log({ info });
         if (info === undefined) {
           setFinalLoading(false)
           return;
@@ -234,7 +236,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           content,
           glpiSubCategory.id
         );
-        // console.log({ infoGlpiSubCategory: info });
+        console.log({ infoGlpiSubCategory: info });
         if (info === undefined) {
           setFinalLoading(false)
           return;
