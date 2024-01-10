@@ -145,9 +145,10 @@ export const FormBusqueda = () => {
       )}
       {isOpen && (
         <div
-          className="absolute w-[-webkit-fill-available] bg-white z-10 rounded-lg shadow-xl mt-1 overflow-hidden border border-gray-200"
+          className={`absolute w-[-webkit-fill-available] bg-white z-10 rounded-lg shadow-xl mt-1 overflow-hidden border border-gray-200 ${data.length > 5 ? "h-[292px] overflow-y-scroll": "" }` }
           ref={panelRef}
         >
+
           {data.map((item) => {
             return (
               <section key={item.id}>

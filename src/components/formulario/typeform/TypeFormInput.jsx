@@ -1,11 +1,10 @@
 import { useContext } from "react";
 import { FormContext } from "@/context/FormContext";
-import { Datepicker } from "flowbite-react";
 
 export const TypeFormInput = ({ item }) => {
   const { register, errors } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
-  console.log({ item });
+  // console.log({ item });
 
   return (
     <div>
