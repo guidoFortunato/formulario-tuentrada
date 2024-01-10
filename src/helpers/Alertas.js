@@ -42,20 +42,19 @@ export const alertTickets = (
 
 export const alertSuccessTickets = (
   numberTicket = "",
-) => {
+) => { 
   Swal.fire({
-    icon: "success",
+     icon: "success", 
     allowOutsideClick: false,
     html: ` <div style="text-align: center;">
-        <b>Gracias por contactarte<br></b><br>
-        <span>Tu número de ticket es: <span style="color: #6bbf59;">${numberTicket}</span> </span><br><br>  
-        <small style="font-size: 80%;">Toda la información te llegará por correo electrónico. Puede revisar la carpeta de spam en caso de no recibirlo.</small> </div>`,
+        <b> <span style="font-size: 25px; font-weight: bold;">Gracias por contactarte</span><br></b><br>
+        <span style="font-size: 16px; font-weight: bold;">Tu número de ticket es: <span style="color: #6bbf59; font-size: 25px; font-weight:bold "> <br> ${numberTicket}</span> </span><br><br>  
+        <small style="font-size: 80%; color:darkgray">Toda la información te llegará por correo electrónico. Puede revisar la carpeta de spam en caso de no recibirlo.</small> </div>`,
     // timer: 3000,
-    confirmButtonColor: "#444444", // dataInfoGeneral.backgroundButton
+    confirmButtonColor: "#1955A5", // dataInfoGeneral.backgroundButton
     // iconColor: "#F7AC08",
   });
 };
-
 export const alertPruebaTickets = (value) => {
   Swal.fire({
     icon: "success",
