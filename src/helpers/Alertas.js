@@ -14,7 +14,7 @@ export const alertaWarningTickets = (text = "No se pudo tomar el reclamo, intent
   Swal.fire({
     icon: "error",
     html: `<b>${text}</b>`,
-    timer: 2000,
+    allowOutsideClick: false,
     confirmButtonColor: "#444444", // dataInfoGeneral.backgroundButton
   });
 };

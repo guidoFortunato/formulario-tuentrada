@@ -93,7 +93,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const keyCategory = Object.keys(categoryId)[0];
         const info = await getDataTickets(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
-          "13481|vSr7twEqIzRgOEdfs5CV8PLOHVikNyJDkxevfZHy",
+          token,
           data.email,
           keyCategory
         );
@@ -142,7 +142,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
         const info = await getDataTickets(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
-          "13481|vSr7twEqIzRgOEdfs5CV8PLOHVikNyJDkxevfZHy",
+          token,
           data.email,
           glpiSubCategory.id
         );        // console.log({ infoGlpiSubCategoryId: info });
@@ -196,13 +196,13 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       const content = { ...contentFinal };
 
       if (glpiSubCategory === "" || glpiSubCategory === undefined) {
-        console.log({stepNow})
+        // console.log({stepNow})
         const { categoryId } = stepNow;
         const itilcategoriesId = Object.keys(categoryId)[0];
 
         const info = await createForm(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
-          "13481|vSr7twEqIzRgOEdfs5CV8PLOHVikNyJDkxevfZHy",
+          token,
           "Prueba Formulario",
           email,
           content,
@@ -210,6 +210,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         );
         console.log({ info });
         if (info === undefined) {
+          alertaWarningTickets();
           setFinalLoading(false)
           return;
         }
@@ -230,14 +231,15 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
         const info = await createForm(
           `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
-          "13481|vSr7twEqIzRgOEdfs5CV8PLOHVikNyJDkxevfZHy",
+          token,
           "Prueba Formulario",
           email,
           content,
           glpiSubCategory.id
         );
-        console.log({ infoGlpiSubCategory: info });
+        // console.log({ infoGlpiSubCategory: info });
         if (info === undefined) {
+          alertaWarningTickets();
           setFinalLoading(false)
           return;
         }
