@@ -29,6 +29,13 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="es">
+      <head>
+        <script
+          data-ad-client="ca-pub-3241865431125040"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        ></script>
+      </head>
       <body
         className={`${inter.className} flex flex-col min-h-[100vh] m-0`}
         suppressHydrationWarning={true}
