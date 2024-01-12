@@ -203,7 +203,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const itilcategoriesId = Object.keys(categoryId)[0];
 
         const info = await createForm(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
+          `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
           token,
           "Prueba Formulario",
           email,
@@ -232,7 +232,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
       if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
         const info = await createForm(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
+          `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
           token,
           "Prueba Formulario",
           email,

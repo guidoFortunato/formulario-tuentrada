@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getToken } from "@/helpers/getToken";
 import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";

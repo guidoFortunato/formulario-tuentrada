@@ -1,12 +1,16 @@
-
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 // import { useEffect } from "react";
 
 export default function NavBar({ data }) {
-  // console.log(data.logo.src)
-  const newSrc = data.logo.src.replace("/images/", "https://api.tuentrada.com/storage/" )
-   return (
+  const [open, setOpen] = useState(false);
+  const newSrc = data.logo.src.replace(
+    "/images/",
+    "https://api.tuentrada.com/storage/"
+  );
+  // console.log({data})
+  return (
     <nav className="bg-gradient-to-b from-maroon-dark to-blue-dark md:from-blue-dark md:to-maroon-dark px-[0.8rem] lg:px-[7.5rem] py-1">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/">
@@ -19,13 +23,14 @@ export default function NavBar({ data }) {
             style={{ width: "auto", height: "auto" }}
           />
         </Link>
-        
-        {/* <button
+
+        <button
           data-collapse-toggle="navbar-default"
           type="button"
           className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           aria-controls="navbar-default"
           aria-expanded="false"
+          onClick={() => setOpen((prev) => !prev)}
         >
           <span className="sr-only">Open main menu</span>
           <svg
@@ -44,7 +49,7 @@ export default function NavBar({ data }) {
             />
           </svg>
         </button>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+        <div className={`${ open ? "" : "hidden" } w-full mt-5 md:mt-0 md:block md:w-auto`} id="navbar-default">
           <ul>
             {data.pages.map((item) => {
               if (item.where === "navbar") {
@@ -61,7 +66,7 @@ export default function NavBar({ data }) {
               }
             })}
           </ul>
-        </div> */}
+        </div>
       </div>
     </nav>
   );
