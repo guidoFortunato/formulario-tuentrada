@@ -92,7 +92,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         const { categoryId } = stepNow;
         const keyCategory = Object.keys(categoryId)[0];
         const info = await getDataTickets(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           data.email,
           keyCategory
@@ -143,7 +143,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
       if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
         const info = await getDataTickets(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/search/tickets`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           data.email,
           glpiSubCategory.id
