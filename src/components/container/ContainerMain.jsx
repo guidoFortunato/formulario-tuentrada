@@ -11,7 +11,7 @@ export const ContainerMain = () => {
   const { dataCategories, resetStep, resetDefaultValue, resetGlpiSubCategory } = useContext(FormContext);
 
   // console.log({dataCategories})
-  // console.log({tokenFueraUef: token})
+  
   useEffect(() => {
     resetStep()
     resetDefaultValue()
