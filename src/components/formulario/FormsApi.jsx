@@ -102,6 +102,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
+    
 
     const { email, emailConfirm, ...content } = data;
 
@@ -221,6 +222,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
     if (currentStep + 1 === lengthSteps) {
       //Form final
+      console.log({data})
+      return
       setFinalLoading(true);
       let numberTicket;
 
