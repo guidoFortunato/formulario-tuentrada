@@ -130,7 +130,7 @@ export async function sendDataEmail(url, token, email) {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    // console.log({ error }, "error prueba");
   }
 }
 
@@ -180,6 +180,7 @@ export async function createForm(
         itilcategoriesId,
       }),
     });
+    console.log({res})
 
     // console.log({createForm: res})
     const data = await res.json();

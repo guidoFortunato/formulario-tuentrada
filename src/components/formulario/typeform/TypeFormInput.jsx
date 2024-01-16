@@ -4,7 +4,7 @@ import { FormContext } from "@/context/FormContext";
 export const TypeFormInput = ({ item }) => {
   const { register, errors } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
-  // console.log({ item });
+  console.log({ item });
 
   return (
     <div>

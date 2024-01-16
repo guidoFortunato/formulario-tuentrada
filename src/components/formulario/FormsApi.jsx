@@ -75,13 +75,12 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    console.log({glpiSubCategory})
+    // console.log({glpiSubCategory})
+    console.log({stepNow})
 
     const { name, email, emailConfirm, ...contentFinal } = data;
-    // console.log({selectDefaultValue })
 
     if (selectDefaultValue === "defaultValue") {
-      // console.log('entra a selectDefaultValue === "defaultValue"')
       handleErrorInput(true);
       return;
     }
@@ -90,18 +89,21 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       setLoadingCheckHaveTickets(true)
       if (glpiSubCategory === "" || glpiSubCategory === undefined) {
         const { categoryId } = stepNow;
+        console.log({stepNow})
         const keyCategory = Object.keys(categoryId)[0];
+        console.log(typeof keyCategory)
         const info = await getDataTickets(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           data.email,
           keyCategory
         );
-        // console.log({ infoCategoryId: info });
+        console.log({ infoCategoryId: info });
         if (info?.data?.tickets?.length > 0) {
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
           const ticketsCloseForm = info.data.tickets.filter((ticket) => ticket.closeForm === 1);
-          if (ticketsCloseForm > 0) {
+          if (ticketsCloseForm.length > 0) {
+            console.log({ticketsCloseForm})
             const ticketNew = ticketsCloseForm.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated))[0];
 
             //! falta validar si tiene tickets abiertos
@@ -147,7 +149,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           token,
           data.email,
           glpiSubCategory.id
-        );        // console.log({ infoGlpiSubCategoryId: info });
+        );        
+        console.log({ infoGlpiSubCategoryId: info });
 
         if (info?.data?.tickets?.length > 0) {
           if (info?.data?.tickets[0].closeForm) {
@@ -198,19 +201,18 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       const content = { ...contentFinal };
 
       if (glpiSubCategory === "" || glpiSubCategory === undefined) {
-        // console.log({stepNow})
         const { categoryId } = stepNow;
         const itilcategoriesId = Object.keys(categoryId)[0];
 
         const info = await createForm(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           token,
           "Prueba Formulario",
           email,
           content,
-          itilcategoriesId
+          `${itilcategoriesId}`
         );
-        console.log({ info });
+
         if (info === undefined) {
           alertaWarningTickets();
           setFinalLoading(false)
@@ -227,19 +229,21 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         }
         numberTicket = info?.data?.ticketNumber;
         alertSuccessTickets(numberTicket);
-        // console.log({ infoFinal: info });
       }
 
+      
       if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
+
+        const itilcategoriesId = glpiSubCategory.id
         const info = await createForm(
-          `https://testapi.tuentrada.com/api/v1/atencion-cliente/create/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           token,
           "Prueba Formulario",
           email,
           content,
-          glpiSubCategory.id
+          `${itilcategoriesId}`
         );
-        // console.log({ infoGlpiSubCategory: info });
+        console.log({ infoGlpiSubCategory: info });
         if (info === undefined) {
           alertaWarningTickets();
           setFinalLoading(false)
@@ -247,7 +251,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         }
 
         if (!info.status) {
-          // console.log({ infoFinal: info });
           alertaWarningTickets();
           reset();
           resetStep();
@@ -257,7 +260,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         }
         numberTicket = info?.data?.ticketNumber;
         alertSuccessTickets(numberTicket);
-        // console.log({ infoFinal: info });
       }
       resetStep();
       reset();
