@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createForm, getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
@@ -31,7 +31,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     handleErrorInput,
     selectDefaultValue,
     token,
-    resetStep
+    resetStep,
   } = useContext(FormContext);
 
   const { steps } = dataForm;
@@ -44,30 +44,57 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const renderForms =
     newSteps.length > 2 &&
     newSteps.slice(2).map((item, index) => {
-      // console.log({currentStep, index})
       if (currentStep === index + 2) {
-        return item.fields.map((itemField, index) => {
+        return item.fields.map((itemField) => {
           // console.log({itemField})
           if (itemField.type === "input") {
-            return <TypeFormInput item={itemField} key={index} />;
+            return (
+              <Fragment key={itemField.name}>
+                <TypeFormInput item={itemField} />
+              </Fragment>
+            );
           }
           if (itemField.type === "textArea") {
-            return <TypeFormTextarea item={itemField} key={index} />;
+            return (
+              <Fragment key={itemField.name}>
+                <TypeFormTextarea item={itemField} />
+              </Fragment>
+            );
           }
           if (itemField.type === "file") {
-            return <TypeFormFile item={itemField} key={index} />;
+            return (
+              <Fragment key={itemField.name}>
+                <TypeFormFile item={itemField} />
+              </Fragment>
+            );
           }
           if (itemField.type === "select") {
-            return <TypeFormSelect item={itemField} key={index} />;
+            return (
+              <Fragment key={itemField.name}>
+                <TypeFormSelect item={itemField} />
+              </Fragment>
+            );
           }
           if (itemField.type === "subCategoryGlpi") {
-            return <TypeFormGlpi item={itemField} key={index} />;
+            return (
+              <Fragment key={itemField.name}>
+                <TypeFormGlpi item={itemField} />
+              </Fragment>
+            );
           }
           if (itemField.type === "radio") {
-            return <TypeFormRadio item={itemField} key={index} />;
+            return (
+              <Fragment key={itemField.name}>
+                <TypeFormRadio item={itemField} />
+              </Fragment>
+            );
           }
           if (itemField.type === "checkbox") {
-            return <TypeFormCheckbox item={itemField} key={index} />;
+            return (
+              <Fragment key={itemField.name}>
+                <TypeFormCheckbox item={itemField} />
+              </Fragment>
+            );
           }
         });
       }
@@ -75,10 +102,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // console.log({glpiSubCategory})
-    console.log({stepNow})
 
-    const { name, email, emailConfirm, ...contentFinal } = data;
+    const { email, emailConfirm, ...content } = data;
 
     if (selectDefaultValue === "defaultValue") {
       handleErrorInput(true);
@@ -86,28 +111,30 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     }
 
     if (stepNow.checkHaveTickets === 1) {
-      setLoadingCheckHaveTickets(true)
+      setLoadingCheckHaveTickets(true);
       if (glpiSubCategory === "" || glpiSubCategory === undefined) {
         const { categoryId } = stepNow;
-        console.log({stepNow})
         const keyCategory = Object.keys(categoryId)[0];
-        console.log(typeof keyCategory)
         const info = await getDataTickets(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           data.email,
           keyCategory
         );
-        console.log({ infoCategoryId: info });
+        // console.log({ infoCategoryId: info });
         if (info?.data?.tickets?.length > 0) {
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
-          const ticketsCloseForm = info.data.tickets.filter((ticket) => ticket.closeForm === 1);
+          const ticketsCloseForm = info.data.tickets.filter(
+            (ticket) => ticket.closeForm === 1
+          );
           if (ticketsCloseForm.length > 0) {
-            console.log({ticketsCloseForm})
-            const ticketNew = ticketsCloseForm.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated))[0];
+            console.log({ ticketsCloseForm });
+            const ticketNew = ticketsCloseForm.sort(
+              (a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)
+            )[0];
 
             //! falta validar si tiene tickets abiertos
-            
+
             const ticketNumber = info?.data?.tickets[0].number;
             const status = info?.data?.tickets[0].status;
             const fecha =
@@ -136,11 +163,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             reset();
             resetStep();
             router.push("/");
-            setLoadingCheckHaveTickets(false)
+            setLoadingCheckHaveTickets(false);
             return;
           }
         }
-        
       }
 
       if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
@@ -149,7 +175,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           token,
           data.email,
           glpiSubCategory.id
-        );        
+        );
         console.log({ infoGlpiSubCategoryId: info });
 
         if (info?.data?.tickets?.length > 0) {
@@ -181,12 +207,12 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             reset();
             resetStep();
             router.push("/");
-            setLoadingCheckHaveTickets(false)
+            setLoadingCheckHaveTickets(false);
             return;
           }
         }
       }
-      setLoadingCheckHaveTickets(false)
+      setLoadingCheckHaveTickets(false);
     }
 
     if (!(currentStep + 1 === lengthSteps)) {
@@ -195,10 +221,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
     if (currentStep + 1 === lengthSteps) {
       //Form final
-      setFinalLoading(true)
+      setFinalLoading(true);
       let numberTicket;
-
-      const content = { ...contentFinal };
 
       if (glpiSubCategory === "" || glpiSubCategory === undefined) {
         const { categoryId } = stepNow;
@@ -215,7 +239,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
         if (info === undefined) {
           alertaWarningTickets();
-          setFinalLoading(false)
+          setFinalLoading(false);
           return;
         }
 
@@ -224,17 +248,15 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           reset();
           resetStep();
           router.push("/");
-          setFinalLoading(false)
+          setFinalLoading(false);
           return;
         }
         numberTicket = info?.data?.ticketNumber;
         alertSuccessTickets(numberTicket);
       }
 
-      
       if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
-
-        const itilcategoriesId = glpiSubCategory.id
+        const itilcategoriesId = glpiSubCategory.id;
         const info = await createForm(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           token,
@@ -246,7 +268,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         console.log({ infoGlpiSubCategory: info });
         if (info === undefined) {
           alertaWarningTickets();
-          setFinalLoading(false)
+          setFinalLoading(false);
           return;
         }
 
@@ -255,7 +277,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           reset();
           resetStep();
           router.push("/");
-          setFinalLoading(false)
+          setFinalLoading(false);
           return;
         }
         numberTicket = info?.data?.ticketNumber;
@@ -264,7 +286,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       resetStep();
       reset();
       router.push("/");
-      setFinalLoading(false)
+      setFinalLoading(false);
     }
   };
 
@@ -273,7 +295,11 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       <div className="grid gap-4 mb-4 sm:grid-cols-2">{renderForms}</div>
       <div className="justify-center flex pb-10">
         <BotonVolver />
-        <BotonSiguiente lengthSteps={lengthSteps} finalLoading={finalLoading} loadingCheckHaveTickets={loadingCheckHaveTickets} />
+        <BotonSiguiente
+          lengthSteps={lengthSteps}
+          finalLoading={finalLoading}
+          loadingCheckHaveTickets={loadingCheckHaveTickets}
+        />
       </div>
     </form>
   );

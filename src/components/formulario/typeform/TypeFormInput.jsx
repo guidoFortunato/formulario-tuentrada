@@ -4,7 +4,7 @@ import { FormContext } from "@/context/FormContext";
 export const TypeFormInput = ({ item }) => {
   const { register, errors } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
-  console.log({ item });
+  console.log({item, errors})
 
   return (
     <div>
@@ -30,6 +30,15 @@ export const TypeFormInput = ({ item }) => {
             value: item.pattern,
             message: item.pattern !== null && `Ingrese un texto válido`,
           },
+          minLength: {
+            value: item.min ? item.min : 0,
+            message: item.helperText ? item.helperText : ""
+          },
+          maxLength: {
+            value: item.max ? item.min : 50,
+            message: item.helperText ? item.helperText : ""
+          },
+          
         })}
       />
       {errors[name] && (

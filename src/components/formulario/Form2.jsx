@@ -16,20 +16,20 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
 
   useEffect(() => {
     if (dataContacto !== null) {
-      setValue("name", dataContacto.first_name);
-      setValue("lastname", dataContacto.last_name);
-      setValue("phone", dataContacto.phone_number1);
-      setValue("dni", dataContacto.document);
+      setValue("nombre", dataContacto.first_name);
+      setValue("apellido", dataContacto.last_name);
+      setValue("telefono", dataContacto.phone_number1);
+      setValue("DNI", dataContacto.document);
     }
   }, [dataContacto]);
 
   const onSubmit = (data, event) => {
     event.preventDefault();
     handleContacto({
-      first_name: data.name,
-      last_name: data.lastname,
-      phone_number1: data.phone,
-      document: data.dni,
+      first_name: data.nombre,
+      last_name: data.apellido,
+      phone_number1: data.telefono,
+      document: data.DNI,
       email: data.email,
       email_confirm: data.emailConfirm,
     });
@@ -41,18 +41,18 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
       <div className="grid gap-4 mb-4 sm:grid-cols-2">
         <div>
           <label
-            htmlFor="name"
+            htmlFor="nombre"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Nombre <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            name="name"
-            id="name"
+            name="nombre"
+            id="nombre"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5"
             placeholder="Ingrese su nombre"
-            {...register("name", {
+            {...register("nombre", {
               required: {
                 value: true,
                 message: "El nombre es obligatorio",
@@ -67,27 +67,27 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
         </div>
         <div>
           <label
-            htmlFor="lastname"
+            htmlFor="apellido"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Apellido <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            name="lastname"
-            id="lastname"
+            name="apellido"
+            id="apellido"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Ingrese su apellido"
-            {...register("lastname", {
+            {...register("apellido", {
               required: {
                 value: true,
                 message: "El apellido es obligatorio",
               },
             })}
           />
-          {errors.lastname && (
+          {errors.apellido && (
             <span className="text-red-600 text-sm block mt-1">
-              {errors.lastname.message}
+              {errors.apellido.message}
             </span>
           )}
         </div>
@@ -109,18 +109,18 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
         </div> */}
         <div>
           <label
-            htmlFor="dni"
+            htmlFor="DNI"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             DNI <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            name="dni"
-            id="dni"
+            name="DNI"
+            id="DNI"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Ingrese su número de documento"
-            {...register("dni", {
+            {...register("DNI", {
               required: {
                 value: true,
                 message: "El DNI es obligatorio",

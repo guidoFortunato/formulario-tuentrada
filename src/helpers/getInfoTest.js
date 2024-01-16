@@ -18,7 +18,7 @@ export async function getDataPrueba(url, token) {
 
     return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
@@ -39,7 +39,7 @@ export async function getDataCache(url, token) {
     // console.log({dataCache: data})
     return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
@@ -130,7 +130,7 @@ export async function sendDataEmail(url, token, email) {
     const data = await res.json();
     return data;
   } catch (error) {
-    // console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
@@ -153,7 +153,7 @@ export async function getDataTickets(url, token, email, itilcategoriesId) {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
@@ -180,13 +180,13 @@ export async function createForm(
         itilcategoriesId,
       }),
     });
-    console.log({res})
+
 
     // console.log({createForm: res})
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
@@ -212,13 +212,11 @@ export async function getTokenServer(
       );
     }
 
-    //! encriptar el token
-
     const data = await res.json();
     const { token } = data;
     const tokenExpires = new Date(data.expired_at).getTime();
     return { token, tokenExpires };
   } catch (error) {
-    throw new Error(`Error catch getToken: ${error}`);
+    throw new Error({error});
   }
 }
