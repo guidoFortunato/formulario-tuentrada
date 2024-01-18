@@ -50,7 +50,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="nombre"
             id="nombre"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5"
+            className={`bg-gray-50 border ${errors.nombre ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su nombre"
             {...register("nombre", {
               required: {
@@ -59,9 +59,9 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
               },
             })}
           />
-          {errors.name && (
-            <span className="text-red-600 text-sm block mt-1">
-              {errors.name.message}
+          {errors.nombre && (
+            <span className="text-red-600 text-xs block mt-1">
+              {errors.nombre.message}
             </span>
           )}
         </div>
@@ -76,7 +76,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="apellido"
             id="apellido"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className={`bg-gray-50 border ${errors.apellido ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su apellido"
             {...register("apellido", {
               required: {
@@ -86,27 +86,11 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             })}
           />
           {errors.apellido && (
-            <span className="text-red-600 text-sm block mt-1">
+            <span className="text-red-600 text-xs block mt-1">
               {errors.apellido.message}
             </span>
           )}
         </div>
-        {/* <div>
-          <label
-            htmlFor="phone"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Teléfono
-          </label>
-          <input
-            type="text"
-            name="phone"
-            id="phone"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Ingrese su teléfono"
-            {...register("phone")}
-          />
-        </div> */}
         <div>
           <label
             htmlFor="DNI"
@@ -118,7 +102,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="DNI"
             id="DNI"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className={`bg-gray-50 border ${errors.DNI ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su número de documento"
             {...register("DNI", {
               required: {
@@ -127,9 +111,9 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
               },
             })}
           />
-          {errors.dni && (
-            <span className="text-red-600 text-sm block mt-1">
-              {errors.dni.message}
+          {errors.DNI && (
+            <span className="text-red-600 text-xs block mt-1">
+              {errors.DNI.message}
             </span>
           )}
         </div>

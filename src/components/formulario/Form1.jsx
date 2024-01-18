@@ -62,7 +62,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="email"
             id="email"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 block w-full p-2.5"
+            className={`bg-gray-50 border ${errors.email ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su email"
             {...register("email", {
               required: {
@@ -77,7 +77,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             })}
           />
           {errors.email && (
-            <span className="text-red-600 text-sm block mt-1">
+            <span className="text-red-600 text-xs block mt-1">
               {errors.email.message}
             </span>
           )}
@@ -93,7 +93,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5"
+            className={`bg-gray-50 border ${errors.emailConfirm ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Repita su email"
             {...register("emailConfirm", {
               required: {
@@ -109,7 +109,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
           />
 
           {errors.emailConfirm && (
-            <span className="text-red-600 text-sm block mt-1">
+            <span className="text-red-600 text-xs block mt-1">
               {errors.emailConfirm.message}
             </span>
           )}

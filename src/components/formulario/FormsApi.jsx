@@ -102,27 +102,35 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    
-
     const { email, emailConfirm, ...content } = data;
 
     if (selectDefaultValue === "defaultValue") {
       handleErrorInput(true);
       return;
     }
+   
 
     if (stepNow.checkHaveTickets === 1) {
-      setLoadingCheckHaveTickets(true);
-      if (glpiSubCategory === "" || glpiSubCategory === undefined) {
-        const { categoryId } = stepNow;
-        const keyCategory = Object.keys(categoryId)[0];
+      let id;
+      
+      try {
+        setLoadingCheckHaveTickets(true);
+        if (glpiSubCategory === "" || glpiSubCategory === undefined) {
+          const { categoryId } = stepNow;
+          console.log({stepNow})
+          id = Object.keys(categoryId)[0];
+        }
+    
+        if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
+          id = glpiSubCategory.id;
+        }
         const info = await getDataTickets(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
-          data.email,
-          keyCategory
+          email,
+          id
         );
-        // console.log({ infoCategoryId: info });
+        // tickets abiertos
         if (info?.data?.tickets?.length > 0) {
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
           const ticketsCloseForm = info.data.tickets.filter(
@@ -168,52 +176,12 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             return;
           }
         }
-      }
 
-      if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
-        const info = await getDataTickets(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
-          token,
-          data.email,
-          glpiSubCategory.id
-        );
-        console.log({ infoGlpiSubCategoryId: info });
-
-        if (info?.data?.tickets?.length > 0) {
-          if (info?.data?.tickets[0].closeForm) {
-            const ticketNumber = info?.data?.tickets[0].number;
-            const status = info?.data?.tickets[0].status;
-            const fecha =
-              new Date(info?.data?.tickets[0].dateCreated)
-                .toLocaleDateString()
-                .split("/")[1] +
-              "/" +
-              new Date(info?.data?.tickets[0].dateCreated)
-                .toLocaleDateString()
-                .split("/")[0] +
-              "/" +
-              new Date(info?.data?.tickets[0].dateCreated)
-                .toLocaleDateString()
-                .split("/")[2];
-            const time1 = new Date(info?.data?.tickets[0].dateCreated)
-              .toLocaleTimeString()
-              .split(" ")[0]
-              .split(":")[0];
-            const time2 = new Date(info?.data?.tickets[0].dateCreated)
-              .toLocaleTimeString()
-              .split(" ")[0]
-              .split(":")[1];
-            const date = `${fecha} - ${time1}:${time2} hs`;
-            alertTickets(ticketNumber, date, status);
-            reset();
-            resetStep();
-            router.push("/");
-            setLoadingCheckHaveTickets(false);
-            return;
-          }
-        }
+      } catch (error) {
+        console.log({ error });
+      } finally {
+        setLoadingCheckHaveTickets(false);
       }
-      setLoadingCheckHaveTickets(false);
     }
 
     if (!(currentStep + 1 === lengthSteps)) {
@@ -222,74 +190,54 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
     if (currentStep + 1 === lengthSteps) {
       //Form final
-      console.log({data})
-      return
-      setFinalLoading(true);
-      let numberTicket;
-
-      if (glpiSubCategory === "" || glpiSubCategory === undefined) {
-        const { categoryId } = stepNow;
-        const itilcategoriesId = Object.keys(categoryId)[0];
-
+      let id;
+      try {
+        setFinalLoading(true);
+        if (glpiSubCategory === "" || glpiSubCategory === undefined) {
+          const { categoryId } = stepNow;
+          console.log({stepNow})
+          id = Object.keys(categoryId)[0];
+        }
+    
+        if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
+          id = glpiSubCategory.id;
+        }
         const info = await createForm(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           token,
           "Prueba Formulario",
           email,
           content,
-          `${itilcategoriesId}`
+          `${id}`
         );
+        console.log({info})
 
         if (info === undefined) {
-          alertaWarningTickets();
+          // alertaWarningTickets();
+          alertTickets("111", "18/01/2024", "pendiente de respuesta del operador");
           setFinalLoading(false);
           return;
         }
 
         if (!info.status) {
-          alertaWarningTickets();
-          reset();
-          resetStep();
-          router.push("/");
+          // alertaWarningTickets();
+          alertTickets("111", "18/01/2024", "pendiente de respuesta del operador");
+          // reset();
+          // resetStep();
+          // router.push("/");
           setFinalLoading(false);
           return;
         }
-        numberTicket = info?.data?.ticketNumber;
+        const numberTicket = info.data?.ticketNumber;
         alertSuccessTickets(numberTicket);
+      } catch (error) {
+        console.log({ error });
+      } finally {
+        // reset();
+        // resetStep();
+        setFinalLoading(false);
+        // router.push("/");
       }
-
-      if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
-        const itilcategoriesId = glpiSubCategory.id;
-        const info = await createForm(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
-          token,
-          "Prueba Formulario",
-          email,
-          content,
-          `${itilcategoriesId}`
-        );
-        console.log({ infoGlpiSubCategory: info });
-        if (info === undefined) {
-          alertaWarningTickets();
-          setFinalLoading(false);
-          return;
-        }
-
-        if (!info.status) {
-          alertaWarningTickets();
-          reset();
-          resetStep();
-          router.push("/");
-          setFinalLoading(false);
-          return;
-        }
-        numberTicket = info?.data?.ticketNumber;
-        alertSuccessTickets(numberTicket);
-      }
-      resetStep();
-      reset();
-      router.push("/");
-      setFinalLoading(false);
     }
   };
 

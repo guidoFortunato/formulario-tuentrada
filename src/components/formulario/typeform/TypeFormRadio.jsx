@@ -70,7 +70,7 @@ export const TypeFormRadio = ({ item }) => {
               })}
             />
             {errors["otra"] && (
-              <span className="text-red-600 text-sm block mt-1">
+              <span className="text-red-600 text-xs block mt-1">
                 {errors["otra"].message}
               </span>
             )}
@@ -78,7 +78,7 @@ export const TypeFormRadio = ({ item }) => {
         ) : null
       ) : null}
       {errors[name] && (
-        <span className="text-red-600 text-sm block mt-1">
+        <span className="text-red-600 text-xs block mt-1">
           {errors[name].message}
         </span>
       )}
