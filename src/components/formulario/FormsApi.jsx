@@ -221,7 +221,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
         if (!info.status) {
           // alertaWarningTickets();
-          alertTickets("111", "18/01/2024", "pendiente de respuesta del operador");
+           alertTickets("28434", "18/01/2024", "Pendiente de respuesta del operador");
+          // alertSuccessTickets("28434");
           // reset();
           // resetStep();
           // router.push("/");

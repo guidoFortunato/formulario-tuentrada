@@ -36,3 +36,7 @@
     text-align: left!important;
   
   }
+
+  body {
+    min-height: 101vh;
+  }
