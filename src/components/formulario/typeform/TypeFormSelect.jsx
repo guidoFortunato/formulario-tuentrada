@@ -40,7 +40,7 @@ export const TypeFormSelect = ({ item }) => {
               type="text"
               name="otra"
               id="otra"
-              className={`bg-gray-50 border ${errors[name] ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-2`}
+              className={`bg-gray-50 border ${errors[name] ? "border-red-500 focus:ring-red-500 focus:border-red-dark" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-2`}
               placeholder={item.helperText}
               {...register("otra", {
                 required: {

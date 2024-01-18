@@ -14,6 +14,7 @@ module.exports = {
       },
       gradientColorStops: {
         "blue-dark": "#1955A5",
+        "red-dark": "#a51919",
         "maroon-dark": "#220D16",
         "blue-light": "#0893DD",
         "card-blue-light": "#1F83BF",
@@ -25,6 +26,7 @@ module.exports = {
       },
       colors: {
         "blue-dark": "#1955A5",
+        "red-dark": "#a51919",
         "blue-light": "#0893DD",
         "hover-button-card": "#1C6CB2",
       },

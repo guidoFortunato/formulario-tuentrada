@@ -19,7 +19,7 @@ export const TypeFormInput = ({ item }) => {
         type={item.subtype === "datetime" ? "datetime-local" : item.subtype}
         name={name}
         id={name}
-        className={`bg-gray-50 border ${errors[name] ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
+        className={`bg-gray-50 border ${errors[name] ? "border-red-500 focus:ring-red-500 focus:border-red-dark" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
         placeholder={item.placeholder}
         {...register(name, {
           required: {

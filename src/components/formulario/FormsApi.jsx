@@ -46,7 +46,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     newSteps.slice(2).map((item, index) => {
       if (currentStep === index + 2) {
         return item.fields.map((itemField) => {
-          // console.log({itemField})
           if (itemField.type === "input") {
             return (
               <Fragment key={itemField.name}>
