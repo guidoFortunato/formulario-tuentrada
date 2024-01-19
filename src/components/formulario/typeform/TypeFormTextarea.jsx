@@ -23,11 +23,11 @@ export const TypeFormTextarea = ({ item }) => {
         {...register(name, {
           required: {
             value: item.required === 1 ? true : false,
-            message: "Este campo es obligatorio" //`El ${item.name.toLowerCase()} es obligatorio`,
+            message: "Este campo es obligatorio"
           },
           maxLength: {
             value: 900,
-            message: "No debe poseer mas de 900 caracteres" //`El ${item.name.toLowerCase()} es obligatorio`,
+            message: "No debe poseer mas de 900 caracteres"
           }
           
         })}

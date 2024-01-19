@@ -162,8 +162,9 @@ export async function createForm(
   token,
   name,
   email,
-  content,
-  itilcategoriesId
+  fecha,
+  itilcategoriesId,
+  formData,
 ) {
   try {
     const res = await fetch(url, {
@@ -176,8 +177,9 @@ export async function createForm(
       body: JSON.stringify({
         name,
         email,
-        content,
+        fecha,
         itilcategoriesId,
+        formData,
       }),
     });
 
