@@ -47,7 +47,7 @@ export const TypeFormFile = ({ item }) => {
               const isFileSizeValid = value[0]?.size <= maxFileSize;
 
               if (!isValidFormat) {
-                return "Formato de archivo no permitido. Se admiten formatos: jpg, jpeg, png y webp";
+                return "Formato de archivo no permitido. Se admiten formatos: jpg, jpeg, png, webp, pdf, gif,svg y docx";
               } else if (!isFileSizeValid) {
                 return "El archivo debe pesar menos de 500 KB";
               } else {
