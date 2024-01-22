@@ -19,6 +19,7 @@ import {
 } from "./typeform";
 import { BotonSiguiente } from "./BotonSiguiente";
 import { BotonVolver } from "./BotonVolver";
+import { addPrefixes } from "@/utils/addPrefixes";
 
 export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const {
@@ -107,19 +108,18 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       handleErrorInput(true);
       return;
     }
-   
 
     if (stepNow.checkHaveTickets === 1) {
       let id;
-      
+
       try {
         setLoadingCheckHaveTickets(true);
         if (glpiSubCategory === "" || glpiSubCategory === undefined) {
           const { categoryId } = stepNow;
-          console.log({stepNow})
+          console.log({ stepNow });
           id = Object.keys(categoryId)[0];
         }
-    
+
         if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
           id = glpiSubCategory.id;
         }
@@ -137,45 +137,46 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           );
           if (ticketsCloseForm.length > 0) {
             console.log({ ticketsCloseForm });
-            const ticketNew = ticketsCloseForm.sort(
-              (a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)
-            )[0];
+            // const ticketNew = ticketsCloseForm.sort(
+            //   (a, b) => new Date(b.dateCreated) - new Date(a.dateCreated)
+            // )[0];
 
             //! falta validar si tiene tickets abiertos
 
-            const ticketNumber = info?.data?.tickets[0].number;
-            const status = info?.data?.tickets[0].status;
+            const ticketNumber = ticketsCloseForm[0].number;
+            const status = ticketsCloseForm[0].status;
+            const message = ticketsCloseForm[0].message;
             const fecha =
-              new Date(info?.data?.tickets[0].dateCreated)
-                .toLocaleDateString()
-                .split("/")[1] +
-              "/" +
-              new Date(info?.data?.tickets[0].dateCreated)
+              new Date(ticketsCloseForm[0].dateCreated)
                 .toLocaleDateString()
                 .split("/")[0] +
               "/" +
-              new Date(info?.data?.tickets[0].dateCreated)
+              new Date(ticketsCloseForm[0].dateCreated)
+                .toLocaleDateString()
+                .split("/")[1] +
+              "/" +
+              new Date(ticketsCloseForm[0].dateCreated)
                 .toLocaleDateString()
                 .split("/")[2];
-            const time1 = new Date(info?.data?.tickets[0].dateCreated)
+            const time1 = new Date(ticketsCloseForm[0].dateCreated)
               .toLocaleTimeString()
               .split(" ")[0]
               .split(":")[0];
-            const time2 = new Date(info?.data?.tickets[0].dateCreated)
+            const time2 = new Date(ticketsCloseForm[0].dateCreated)
               .toLocaleTimeString()
               .split(" ")[0]
               .split(":")[1];
+            console.log({ fecha });
             const date = `${fecha} - ${time1}:${time2} hs`;
             // console.log({ time1, time2, date });
-            alertTickets(ticketNumber, date, status);
-            reset();
-            resetStep();
-            router.push("/");
+            alertTickets(ticketNumber, date, status, message);
+            // reset();
+            // resetStep();
+            // router.push("/");
             setLoadingCheckHaveTickets(false);
             return;
           }
         }
-
       } catch (error) {
         console.log({ error });
       } finally {
@@ -190,37 +191,100 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     if (currentStep + 1 === lengthSteps) {
       //Form final
       let id;
+
+      // Modificar las claves del objeto
+      const objectModified = {};
+
+      // Crear un nuevo FormData
+      const formData = new FormData();
+
       try {
         setFinalLoading(true);
+
         if (glpiSubCategory === "" || glpiSubCategory === undefined) {
           const { categoryId } = stepNow;
-          console.log({stepNow})
+          // console.log({ stepNow });
           id = Object.keys(categoryId)[0];
+          itilcategoriesId;
+          formData.append("itilcategoriesId", id);
         }
-    
+
         if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
           id = glpiSubCategory.id;
-        }
-        const info = await createForm(
+          formData.append("itilcategoriesId", id);
+        }        
+
+        Object.keys(content).forEach((key) => {
+          const newKey = addPrefixes(key, content[key]);
+          objectModified[newKey] = content[key];
+        });
+        
+        // Agregar cada propiedad al FormData
+        Object.keys(objectModified).forEach((key) => {
+          // Si la propiedad es un archivo, agregarlo al FormData
+          if (objectModified[key] instanceof FileList) {
+            formData.append(key, objectModified[key][0]);
+          } else {
+            // Si no es un archivo, agregar el valor normalmente
+            formData.append(key, objectModified[key]);
+          }
+        });
+        formData.append("email", email);
+        formData.append("name", `${category} - ${subCategory}`);
+
+        const info = await fetch(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
-          token,
-          "Prueba Formulario",
-          email,
-          content,
-          `${id}`
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          }
         );
-        console.log({info})
+        console.log(await info.json())
+        
+      
+
+        // const res = await fetch(url, {
+        //   method: "POST",
+        //   cache: "no-store",
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        //   body: formData,
+        // });
+
+        // console.log({createForm: res})
+        // const data = await res.json();
+        // return data;
+
+        // const info = await createForm(
+        //   `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
+        //   token,
+        //   formData
+        // );
+        // console.log({ info });
 
         if (info === undefined) {
-          // alertaWarningTickets();
-          alertTickets("111", "18/01/2024", "pendiente de respuesta del operador");
+          alertaWarningTickets();
+          // alertTickets(
+          //   "111",
+          //   "18/01/2024",
+          //   "pendiente de respuesta del operador"
+          // );
           setFinalLoading(false);
           return;
         }
 
         if (!info.status) {
-          // alertaWarningTickets();
-           alertTickets("28434", "18/01/2024", "Pendiente de respuesta del operador");
+          alertaWarningTickets();
+          // alertTickets(
+          //   "28434",
+          //   "18/01/2024",
+          //   "Pendiente de respuesta del operador"
+          // );
           // alertSuccessTickets("28434");
           // reset();
           // resetStep();

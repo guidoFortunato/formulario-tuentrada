@@ -22,16 +22,17 @@ export const alertaWarningTickets = (text = "No se pudo tomar el reclamo, intent
 export const alertTickets = (
   numberTicket = "",
   dateCreated="",
-  status=""
+  status="",
+  message="",
 ) => {
   Swal.fire({
     icon: "warning",
     iconColor: "#F78408",
     allowOutsideClick: false,
     html: ` <div style="text-align: center;"> 
-        <b> <span style="font-size: 25px; font-weight: bold;">Consulta Pendiente: Número  <span style="color: #F78408">   ${numberTicket} </span></span><br></b><br>
-        <small style="font-size: 80%; color:#6C6C6C">Tu consulta ya fué respondida. Por favor, revisá tu correo electrónico o tu casilla de spam. <br> Tu consulta fue creada el día: ${dateCreated}</small><br><br>
-        <span style="color: #F78408; font-size: 15px; font-weight: semi-bold">  <b> Estado:    ${status} </b></span>
+        <b> <span style="font-size: 25px; font-weight: bold;">${status} </span><br><br><span style="font-size: 22px; font-weight: bold;">Número de reclamo: </span> <span style="font-size: 22px; color: #F78408">${numberTicket} </span></span><br></b><br>
+        <small style="font-size: 80%; color:#6C6C6C">Tu consulta fue creada el día: ${dateCreated} <br> ${message}</small><br><br>
+     
          </div>`,
     // timer: 3000,
     confirmButtonColor: "#1955A5", // dataInfoGeneral.backgroundButton

@@ -36,15 +36,15 @@ export const TypeFormInput = ({ item }) => {
           },
           maxLength: {
             value: item.max,
-            message: item.max && `El número mínimo de caracteres es ${item.max}`,
+            message: item.max && `El número máximo de caracteres es ${item.max}`,
           },
         })}
       />
-      {/* {item.helperText && (
+      {item.helperText && (!errors[name]) && (
         <span className="text-gray-500 text-xs block mt-1">
           {item.helperText}
         </span>
-      )} */}
+      )}
       {errors[name] && (
         <span className="text-red-600 text-xs block mt-1">
           {errors[name].message}
