@@ -93,7 +93,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
-            className={`bg-gray-50 border ${errors.emailConfirm ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
+            className={`bg-gray-50 border ${errors.emailConfirm ? "border-red-500 focus:ring-red-300 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Repita su email"
             {...register("emailConfirm", {
               required: {

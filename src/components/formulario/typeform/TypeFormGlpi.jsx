@@ -50,7 +50,7 @@ export const TypeFormGlpi = ({ item }) => {
             message: "Este campo es obligatorio", //`El ${item.name.toLowerCase()} es obligatorio`,
           },
         })}
-        className={`bg-gray-50 border ${errorInput ? "border-red-500 focus:ring-red-500 focus:border-red-dark" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg w-full block p-2.5 mt-2`}
+        className={`bg-gray-50 border ${errorInput ? "border-red-500 focus:ring-red-300 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg w-full block p-2.5 mt-2`}
         onChange={handleSelectChange}
       >
         <option>Selecciona una opción</option>
