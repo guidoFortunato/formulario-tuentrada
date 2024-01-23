@@ -245,6 +245,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         );
         console.log(await info.json());
 
+
         if (info === undefined) {
           alertaWarningTickets();
           // alertTickets(
