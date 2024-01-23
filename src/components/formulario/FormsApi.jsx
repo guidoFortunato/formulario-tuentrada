@@ -212,13 +212,14 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
           id = glpiSubCategory.id;
           formData.append("itilcategoriesId", id);
-        }        
+        }
 
+        // agregar prefijos
         Object.keys(content).forEach((key) => {
           const newKey = addPrefixes(key, content[key]);
           objectModified[newKey] = content[key];
         });
-        
+
         // Agregar cada propiedad al FormData
         Object.keys(objectModified).forEach((key) => {
           // Si la propiedad es un archivo, agregarlo al FormData
@@ -242,30 +243,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
-        console.log(await info.json())
-        
-      
-
-        // const res = await fetch(url, {
-        //   method: "POST",
-        //   cache: "no-store",
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //     "Content-Type": "multipart/form-data",
-        //   },
-        //   body: formData,
-        // });
-
-        // console.log({createForm: res})
-        // const data = await res.json();
-        // return data;
-
-        // const info = await createForm(
-        //   `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
-        //   token,
-        //   formData
-        // );
-        // console.log({ info });
+        console.log(await info.json());
 
         if (info === undefined) {
           alertaWarningTickets();
