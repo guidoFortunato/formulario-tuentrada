@@ -242,6 +242,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
+        console.log(info)
         console.log(await info.json())
         
       
