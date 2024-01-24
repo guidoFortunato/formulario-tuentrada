@@ -11,6 +11,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
   const { register, handleSubmit, errors, watch, nextStep, handleContacto, reset, token } = useContext(FormContext);
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRecaptcha = (e) => {
     setCaptcha(e);
@@ -24,28 +25,37 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // if (captcha === "") {
-    //   setErrorRecaptcha(true);
-    //   return;
-    // }
-
-    const info = await sendDataEmail(
-      `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
-      token,
-      data.email
-    );
-    // console.log({ data });
-    if (info?.status) {
-      handleContacto({
-        id: info.data.contact.id,
-        document: info.data.contact.document,
-        first_name: info.data.contact.first_name,
-        last_name: info.data.contact.last_name,
-        phone_number1: info.data.contact.phone_number1,
-      });
+    setIsLoading(true)
+    try {
+      // if (captcha === "") {
+      //   setErrorRecaptcha(true);
+      //   return;
+      // }
+      console.log('llama')
+  
+      const info = await sendDataEmail(
+        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
+        token,
+        data.email
+      );
+      // console.log({ data });
+      if (info?.status) {
+        handleContacto({
+          id: info.data.contact.id,
+          document: info.data.contact.document,
+          first_name: info.data.contact.first_name,
+          last_name: info.data.contact.last_name,
+          phone_number1: info.data.contact.phone_number1,
+        });
+      }
+  
+      nextStep();
+      
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setIsLoading(false)
     }
-
-    nextStep();
   };
 
   return (
@@ -127,7 +137,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       </div>
       <div className="justify-center flex pb-10">
         <BotonVolver />
-        <BotonSiguiente lengthSteps={lengthSteps} />
+        <BotonSiguiente lengthSteps={lengthSteps} isLoading={isLoading} />
       </div>
     </form>
   );

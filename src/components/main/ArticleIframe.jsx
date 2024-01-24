@@ -1,10 +1,10 @@
 "use client";
 
 export const ArticleIframe = ({ itemColumn }) => {
-  console.log({ itemColumn });
+  // console.log({ itemColumn });
   
-  const title = itemColumn.titleOrLabel;
-  const iframe = itemColumn.iframe;
+  const title = itemColumn?.titleOrLabel;
+  const iframe = itemColumn?.iframe;
 
   return (
     <div className="w-full ">
