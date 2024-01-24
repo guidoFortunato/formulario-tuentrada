@@ -1,4 +1,3 @@
-
 export async function getDataPrueba(url, token) {
   try {
     const res = await fetch(url, {
@@ -18,7 +17,7 @@ export async function getDataPrueba(url, token) {
 
     return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
@@ -39,7 +38,7 @@ export async function getDataCache(url, token) {
     // console.log({dataCache: data})
     return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
@@ -130,7 +129,7 @@ export async function sendDataEmail(url, token, email) {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
@@ -153,39 +152,45 @@ export async function getDataTickets(url, token, email, itilcategoriesId) {
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
-export async function createForm(
-  url,
-  token,
-  name,
-  email,
-  content,
-  itilcategoriesId
-) {
+export async function createForm(url, token) {
   try {
-    const res = await fetch(url, {
+    const formData = new FormData();
+    formData.append("name", "daiana vanoni");
+    formData.append("email", "test@test.com");
+    formData.append("itilcategoriesId", "4");
+    console.log({formData})
+
+    fetch(url, {
       method: "POST",
-      cache: "no-store",
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        content,
-        itilcategoriesId,
-      }),
-    });
+            Authorization: `Bearer ${token}`,
+           
+          },
+      body: formData,
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        console.log(data);
+      });
+    // const res = await fetch(url, {
+    //   method: "POST",
+    //   cache: "no-store",
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    //   body: formData,
+    // });
 
     // console.log({createForm: res})
-    const data = await res.json();
-    return data;
+    // const data = await res.json();
+    // return data;
   } catch (error) {
-    console.log({ error }, "error prueba");
+    console.log({ error });
   }
 }
 
@@ -211,13 +216,11 @@ export async function getTokenServer(
       );
     }
 
-    //! encriptar el token
-
     const data = await res.json();
     const { token } = data;
     const tokenExpires = new Date(data.expired_at).getTime();
     return { token, tokenExpires };
   } catch (error) {
-    throw new Error(`Error catch getToken: ${error}`);
+    throw new Error({ error });
   }
 }

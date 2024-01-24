@@ -31,7 +31,7 @@ export const TypeFormCheckbox = ({ item }) => {
               type="checkbox"
               value={option}
               name={name}
-              className="w-4 h-4 text-blue-dark bg-gray-100 border-gray-300 focus:ring-blue-dark"
+              className={`w-4 h-4 text-blue-dark bg-gray-100 border-gray-300 focus:ring-blue-dark`}
               {...register(name, {
                 required: {
                   value: item.required === 1 ? true : false,
@@ -78,7 +78,7 @@ export const TypeFormCheckbox = ({ item }) => {
         ) : null
       ) : null} */}
       {errors[name] && (
-        <span className="text-red-600 text-sm block mt-1">
+        <span className="text-red-600 text-xs block mt-1">
           {errors[name].message}
         </span>
       )}

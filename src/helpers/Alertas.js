@@ -20,21 +20,22 @@ export const alertaWarningTickets = (text = "No se pudo tomar el reclamo, intent
 };
 
 export const alertTickets = (
-  ticket = "",
+  numberTicket = "",
   dateCreated="",
-  status=""
+  status="",
+  message="",
 ) => {
   Swal.fire({
     icon: "warning",
+    iconColor: "#F78408",
     allowOutsideClick: false,
-    html: ` <div style="text-align: center;">
-        <b>Tenes consultas pendientes aún no respondidas<br></b><br>
-        <span>Tu número de ticket es: <span style="color: #6bbf59;">${ticket}</span> </span><br><br>        
-        <span style="color: #000;">Fue creado el <b>${dateCreated}</b><br></span><br>
-        <span style="color: #000;">El estado es: <b style="color: #c88449;">${status}</b><br></span><br>
+    html: ` <div style="text-align: center;"> 
+        <b> <span style="font-size: 25px; font-weight: bold;">${status} </span><br><br><span style="font-size: 22px; font-weight: bold;">Número de reclamo: </span> <span style="font-size: 22px; color: #F78408">${numberTicket} </span></span><br></b><br>
+        <small style="font-size: 80%; color:#6C6C6C">Tu consulta fue creada el día: ${dateCreated} <br> ${message}</small><br><br>
+     
          </div>`,
     // timer: 3000,
-    confirmButtonColor: "#444444", // dataInfoGeneral.backgroundButton
+    confirmButtonColor: "#1955A5", // dataInfoGeneral.backgroundButton
     // iconColor: "#F7AC08",
   });
 };
@@ -45,11 +46,12 @@ export const alertSuccessTickets = (
 ) => { 
   Swal.fire({
      icon: "success", 
+     iconColor: "#6bbf59",
     allowOutsideClick: false,
     html: ` <div style="text-align: center;">
         <b> <span style="font-size: 25px; font-weight: bold;">Gracias por contactarte</span><br></b><br>
-        <span style="font-size: 16px; font-weight: bold;">Tu número de ticket es: <span style="color: #6bbf59; font-size: 25px; font-weight:bold "> <br> ${numberTicket}</span> </span><br><br>  
-        <small style="font-size: 80%; color:darkgray">Toda la información te llegará por correo electrónico. Puede revisar la carpeta de spam en caso de no recibirlo.</small> </div>`,
+        <span style="font-size: 16px; font-weight: bold;">Tu número de ticket es: <span style="color: #6bbf59; font-size: 16px; font-weight:bold ">  ${numberTicket}</span> </span><br><br>  
+        <small style="font-size: 80%; color:#6C6C6C">Toda la información te llegará por correo electrónico. Puede revisar la carpeta de spam en caso de no recibirlo.</small> </div>`,
     // timer: 3000,
     confirmButtonColor: "#1955A5", // dataInfoGeneral.backgroundButton
     // iconColor: "#F7AC08",

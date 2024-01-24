@@ -18,22 +18,22 @@ export const TypeFormTextarea = ({ item }) => {
         type={item.subtype}
         name={name}
         id={name}
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5"
+        className={`bg-gray-50 border ${errors[name] ? "border-red-500 focus:ring-red-300 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
         placeholder={item.placeholder}
         {...register(name, {
           required: {
             value: item.required === 1 ? true : false,
-            message: "Este campo es obligatorio" //`El ${item.name.toLowerCase()} es obligatorio`,
+            message: "Este campo es obligatorio"
           },
           maxLength: {
             value: 900,
-            message: "No debe poseer mas de 900 caracteres" //`El ${item.name.toLowerCase()} es obligatorio`,
+            message: "No debe poseer mas de 900 caracteres"
           }
           
         })}
       />
       {errors[name] && (
-        <span className="text-red-600 text-sm block mt-1">
+        <span className="text-red-600 text-xs block mt-1">
           {errors[name].message}
         </span>
       )}

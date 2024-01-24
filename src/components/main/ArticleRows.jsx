@@ -1,5 +1,6 @@
 import { ArticleAccordion } from "./ArticleAccordion";
 import { ArticleButtons } from "./ArticleButtons";
+import { ArticleIframe } from "./ArticleIframe";
 import { ArticleImages } from "./ArticleImages";
 import { RichText } from "./RichText";
 
@@ -59,6 +60,15 @@ export const ArticleRows = ({ item }) => {
                 key={itemColumn.order_column}
                 itemColumn={itemColumn}
               />
+            );
+          }
+          if (itemColumn.type === "iframe") {
+            return (
+              <ArticleIframe
+              key={itemColumn.order_column}
+              itemColumn={itemColumn}
+             
+            />
             );
           }
           if (itemColumn.type === "botones") {

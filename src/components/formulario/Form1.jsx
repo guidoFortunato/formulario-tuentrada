@@ -24,10 +24,10 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    if (captcha === "") {
-      setErrorRecaptcha(true);
-      return;
-    }
+    // if (captcha === "") {
+    //   setErrorRecaptcha(true);
+    //   return;
+    // }
 
     const info = await sendDataEmail(
       `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
@@ -62,7 +62,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="email"
             id="email"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 block w-full p-2.5"
+            className={`bg-gray-50 border ${errors.email ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su email"
             {...register("email", {
               required: {
@@ -77,7 +77,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             })}
           />
           {errors.email && (
-            <span className="text-red-600 text-sm block mt-1">
+            <span className="text-red-600 text-xs block mt-1">
               {errors.email.message}
             </span>
           )}
@@ -93,7 +93,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark block w-full p-2.5"
+            className={`bg-gray-50 border ${errors.emailConfirm ? "border-red-500 focus:ring-red-300 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Repita su email"
             {...register("emailConfirm", {
               required: {
@@ -109,20 +109,20 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
           />
 
           {errors.emailConfirm && (
-            <span className="text-red-600 text-sm block mt-1">
+            <span className="text-red-600 text-xs block mt-1">
               {errors.emailConfirm.message}
             </span>
           )}
         </div>
         <div className="outer-container">
-      <div className="inner-container">
+      {/* <div className="inner-container">
         <ReCAPTCHA  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} onChange={handleRecaptcha} />
         {errorRecaptcha && (
           <span className="text-red-600 text-sm block mt-1">
             Este campo es obligatorio
           </span>
         )}
-      </div>
+      </div> */}
     </div>
       </div>
       <div className="justify-center flex pb-10">
