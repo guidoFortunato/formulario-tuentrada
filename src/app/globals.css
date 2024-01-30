@@ -40,3 +40,9 @@
   body {
     min-height: 101vh;
   }
+
+
+  strong {
+    font-weight: 600!important;
+  }
+  

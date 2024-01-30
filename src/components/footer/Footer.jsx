@@ -30,23 +30,24 @@ const Footer = ({ data }) => {
             />
           </a>
           <span className="mb-4 text-slate-400">Todos los derechos reservados</span>
-          {/* Lista de enlaces en la sección superior del pie de página */}
-          <ul className="flex flex-wrap items-center justify-center mb-6 text-base font-semibold text-gray-200 sm:mb-0 dark:text-gray-400">
-            {pages.map((item) => {
-              // Filtrar solo las páginas en la sección superior del pie de página
-              if (item.where === "footer-top") {
-                return (
-                  // Elemento de la lista para cada página
-                  <li key={item.id}>
-                    <Link href={item.path} className="hover:underline">
-                      {item.title}
-                    </Link>
-                    <span className="mx-1"> • </span>
-                  </li>
-                );
-              }
-            })}
-          </ul>
+         {/* Lista de enlaces en la sección superior del pie de página */}
+<ul className="flex flex-wrap items-center justify-center mb-6 text-base font-semibold text-gray-200 sm:mb-0 dark:text-gray-400">
+  {pages.map((item, index) => {
+    // Filtrar solo las páginas en la sección superior del pie de página
+    if (item.where === "footer-top") {
+      return (
+        // Elemento de la lista para cada página
+        <li key={item.id}>
+          <Link href={item.path} className="hover:underline">
+            {item.title}
+          </Link>
+          {index < pages.length - 1 && <span className="mx-1">.</span>}
+        </li>
+      );
+    }
+  })}
+</ul>
+
         </div>
         {/* Sección de redes sociales y acordeón */}
         <SocialMedia data={data} />
