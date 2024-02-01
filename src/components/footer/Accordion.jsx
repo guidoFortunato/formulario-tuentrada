@@ -46,11 +46,11 @@ const Accordion = ({ data }) => {
         {/* Lista de tipos de páginas con enlaces */}
         <div className="py-5 border-[#8d858959] flex justify-evenly flex-col md:flex-row text-gray-200 mb-2 text-lg font-semibold">
           {typeNames.map((item) => (
-            <div className="text-center mt-5 md:mt-0" key={item}>
+            <div className="text-center mt-5 md:mt-0 md:w-[33%] w-[100%]" key={item}>
               {/* Nombre del tipo de página */}
               <p>{item}</p>
               {/* Lista de enlaces para cada página del tipo actual */}
-              <ul className="text-[12px] font-normal leading-relaxed text-gray-400">
+              <ul className="text-[12px] font-normal leading-relaxed text-gray-400  ">
                 {pages.map((page) =>
                   item === page.type.name ? (
                     <li key={page.id}>
