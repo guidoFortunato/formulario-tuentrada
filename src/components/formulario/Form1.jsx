@@ -125,14 +125,14 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
           )}
         </div>
         <div className="outer-container">
-      <div className="inner-container">
+      {/* <div className="inner-container">
         <ReCAPTCHA  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} onChange={handleRecaptcha} />
         {errorRecaptcha && (
           <span className="text-red-600 text-sm block mt-1">
             Este campo es obligatorio
           </span>
         )}
-      </div>
+      </div> */}
     </div>
       </div>
       <div className="justify-center flex pb-10">

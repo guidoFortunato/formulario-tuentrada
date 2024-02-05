@@ -162,14 +162,13 @@ export async function createForm(url, token) {
     formData.append("name", "daiana vanoni");
     formData.append("email", "test@test.com");
     formData.append("itilcategoriesId", "4");
-    console.log({formData})
+    console.log({ formData });
 
     fetch(url, {
       method: "POST",
       headers: {
-            Authorization: `Bearer ${token}`,
-           
-          },
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     })
       .then((r) => r.json())
@@ -194,10 +193,7 @@ export async function createForm(url, token) {
   }
 }
 
-export async function getTokenServer(
-  email = "gfortunato@tuentrada.com",
-  password = "Correa.3030"
-) {
+export async function getTokenServer(email, password) {
   try {
     const res = await fetch("https://api.tuentrada.com/api/login", {
       method: "POST",

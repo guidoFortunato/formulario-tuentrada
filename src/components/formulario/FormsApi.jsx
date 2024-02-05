@@ -243,11 +243,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
-        // console.log({info})
+        console.log({info})
         // console.log(await info.json())
-
-
-
 
         if (info === undefined) {
           alertaWarningTickets();
@@ -260,7 +257,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           return;
         }
 
-        if (!info.status) {
+        if (!info.ok) {
           alertaWarningTickets();
           // alertTickets(
           //   "28434",
