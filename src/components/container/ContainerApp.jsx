@@ -1,5 +1,5 @@
 
-import AdSense2 from "../adsense/Adsense2";
+import AdSense from "../adsense/Adsense";
 import { ContainerFooter } from "./ContainerFooter";
 import { ContainerHeader } from "./ContainerHeader";
 
@@ -8,7 +8,7 @@ export const ContainerApp = ({ children }) => {
     <>
       <ContainerHeader />
       {children}
-      {/* <AdSense2 /> */}
+      {/* <AdSense /> */}
       <ContainerFooter />
     </>
   );

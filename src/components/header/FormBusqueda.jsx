@@ -3,7 +3,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getDataPrueba } from "@/helpers/getInfoTest";
-import { alertaWarning } from "@/helpers/Alertas";
+import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
 import { FormContext } from "@/context/FormContext";
 
@@ -88,7 +88,7 @@ export const FormBusqueda = () => {
     e.preventDefault();
     // console.log("enter");
     if (!value.trim()) {
-      alertaWarning();
+      alertWarning();
       return;
     }
     // setValue("");

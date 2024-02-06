@@ -3,10 +3,9 @@ import { useRouter } from "next/navigation";
 import { createForm, getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
 import {
-  alertPruebaTickets,
   alertSuccessTickets,
-  alertTickets,
-  alertaWarningTickets,
+  alertWarningTickets,
+  alertErrorTickets,
 } from "@/helpers/Alertas";
 import {
   TypeFormCheckbox,
@@ -168,7 +167,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             // console.log({ fecha });
             const date = `${fecha} - ${time1}:${time2} hs`;
             // console.log({ time1, time2, date });
-            alertTickets(ticketNumber, date, status, message);
+            alertWarningTickets(ticketNumber, date, status, message);
             // reset();
             // resetStep();
             // router.push("/");
@@ -189,7 +188,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
     if (currentStep + 1 === lengthSteps) {
 
-      alertSuccessTickets("123456");
+    alertSuccessTickets("123456");
+      //  alertWarningTickets("123456", "12/02/2024", "En proceso de devolución","Por favor no envíes otro ticket",);
+      // alertErrorTickets()
       return
 
       //Form final
@@ -255,7 +256,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         );
 
         if (info === undefined || !info.ok) {
-          alertaWarningTickets();
+          alertErrorTickets();
           setFinalLoading(false);
           return;
         }
