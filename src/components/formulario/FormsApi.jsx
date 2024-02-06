@@ -103,7 +103,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-
+    // console.log({data})
     const { email, emailConfirm, ...content } = data;
 
     if (selectDefaultValue === "defaultValue") {
@@ -188,11 +188,12 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     }
 
     if (currentStep + 1 === lengthSteps) {
+
+      alertSuccessTickets("123456");
+      return
+
       //Form final
       let id;
-
-      // Modificar las claves del objeto
-      const objectModified = {};
 
       // Crear un nuevo FormData
       const formData = new FormData();
