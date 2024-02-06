@@ -1,7 +1,22 @@
-import React from 'react'
+"use client"
 
-export const Adsense = () => {
+import { useEffect } from "react";
+
+const AdSense = () => {
+  useEffect(() => {
+    if (window) {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
+  }, []);
+
   return (
-    <div className="flex justify-center mb-10">< img className="w-[80%] h-[120px] rounded-lg object-cover border border-gray-200" src="https://www.tuentrada.com/images/1703280825.webp" alt="" /></div>
-  )
-}
+    <ins className="adsbygoogle"
+    style={{ display: "block", textAlign: "center" }}
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-3241865431125040"
+    data-ad-slot="4322497970"></ins>
+  );
+};
+
+export default AdSense;

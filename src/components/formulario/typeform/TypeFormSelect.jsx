@@ -4,16 +4,6 @@ import { FormContext } from "@/context/FormContext";
 export const TypeFormSelect = ({ item }) => {
   const { register, errors, watch } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
-  // const optionsSelect = item.options.map((item) => ({
-  //   value: item,
-  //   label: item,
-  // }));
-
-  // const { field } = useController({ name: name, control });
-
-  // const handleSelectChange = (option) => {
-  //   field.onChange(option.value);
-  // };
 
   return (
     <div>

@@ -2,9 +2,6 @@
 
 import { randomsLetters } from "@/utils/randoms-letters";
 
-// import { dataDecrypt } from "@/utils/data-decrypt";
-// import { dataEncrypt } from "@/utils/data-encrypt";
-
 export async function getToken(email, password) {
   try {
     if (localStorage.getItem("token") && localStorage.getItem("tokenExpires")) {

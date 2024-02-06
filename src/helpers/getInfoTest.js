@@ -175,19 +175,6 @@ export async function createForm(url, token) {
       .then((data) => {
         console.log(data);
       });
-    // const res = await fetch(url, {
-    //   method: "POST",
-    //   cache: "no-store",
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    //   body: formData,
-    // });
-
-    // console.log({createForm: res})
-    // const data = await res.json();
-    // return data;
   } catch (error) {
     console.log({ error });
   }

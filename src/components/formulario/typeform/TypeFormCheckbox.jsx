@@ -4,17 +4,6 @@ import { FormContext } from "@/context/FormContext";
 export const TypeFormCheckbox = ({ item }) => {
   const { register, errors, watch } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
-  // const optionsSelect = item.options.map((item) => ({
-  //   value: item,
-  //   label: item,
-  // }));
-  // console.log({item})
-
-  // const { field } = useController({ name: name, control });
-
-  // const handleSelectChange = (option) => {
-  //   field.onChange(option.value);
-  // };
 
   return (
     <div>
@@ -53,30 +42,6 @@ export const TypeFormCheckbox = ({ item }) => {
        
       </ul>
 
-      {/* {watch(name) ? (
-        watch(name).slice(0, 2).toLowerCase() === "ot" ? (
-          <>
-            <input
-              type="text"
-              name="otra"
-              id="otra"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-300 focus:border-blue-dark  block w-full p-2.5 mt-2"
-              placeholder={item.helperText}
-              {...register("otra", {
-                required: {
-                  value: item.required === 1 ? true : false,
-                  message: "Este campo es obligatorio",
-                },
-              })}
-            />
-            {errors["otra"] && (
-              <span className="text-red-600 text-sm block mt-1">
-                {errors["otra"].message}
-              </span>
-            )}
-          </>
-        ) : null
-      ) : null} */}
       {errors[name] && (
         <span className="text-red-600 text-xs block mt-1">
           {errors[name].message}
