@@ -140,7 +140,7 @@ const FormProvider = ({ children }) => {
   useEffect(() => {
     const getDataToken = async () => {
       // console.log("useEffect getDataToken context");
-      const { token, tokenExpires } = await getToken();
+      const { token, tokenExpires } = await getToken(process.env.NEXT_PUBLIC_EMAIL, process.env.NEXT_PUBLIC_PASSWORD);
       setToken(token);
       setTokenExpires(tokenExpires);
     };

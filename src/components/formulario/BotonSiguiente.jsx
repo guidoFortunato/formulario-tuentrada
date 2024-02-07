@@ -3,8 +3,9 @@ import { useContext } from "react";
 
 export const BotonSiguiente = ({
   lengthSteps,
-  loadingCheckHaveTickets,
-  finalLoading,
+  loadingCheckHaveTickets = false,
+  finalLoading = false,
+  isLoading = false
 }) => {
   const { currentStep } = useContext(FormContext);
 
@@ -45,7 +46,7 @@ export const BotonSiguiente = ({
             Enviar
           </button>
         )
-      ) : loadingCheckHaveTickets ? (
+      ) : loadingCheckHaveTickets || isLoading ? (
         <button
             disabled
             type="button"

@@ -2,10 +2,7 @@
 
 import { randomsLetters } from "@/utils/randoms-letters";
 
-// import { dataDecrypt } from "@/utils/data-decrypt";
-// import { dataEncrypt } from "@/utils/data-encrypt";
-
-export async function getToken( email = "gfortunato@tuentrada.com", password = "Correa.3030") {
+export async function getToken(email, password) {
   try {
     if (localStorage.getItem("token") && localStorage.getItem("tokenExpires")) {
       const currentDate = Date.now();
@@ -31,6 +28,7 @@ export async function getToken( email = "gfortunato@tuentrada.com", password = "
         password,
       }),
     });
+    // console.log({res})
 
     if (!res.ok) {
       throw new Error(

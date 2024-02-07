@@ -5,12 +5,22 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
 import { sendDataEmail } from "@/helpers/getInfoTest";
-
+import { Recaptcha } from "./Recaptcha";
 
 export const Form1 = ({ lengthSteps, dataForm }) => {
-  const { register, handleSubmit, errors, watch, nextStep, handleContacto, reset, token } = useContext(FormContext);
+  const {
+    register,
+    handleSubmit,
+    errors,
+    watch,
+    nextStep,
+    handleContacto,
+    reset,
+    token,
+  } = useContext(FormContext);
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRecaptcha = (e) => {
     setCaptcha(e);
@@ -24,28 +34,56 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // if (captcha === "") {
-    //   setErrorRecaptcha(true);
-    //   return;
-    // }
+    setIsLoading(true);
 
-    const info = await sendDataEmail(
-      `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
-      token,
-      data.email
-    );
-    // console.log({ data });
-    if (info?.status) {
-      handleContacto({
-        id: info.data.contact.id,
-        document: info.data.contact.document,
-        first_name: info.data.contact.first_name,
-        last_name: info.data.contact.last_name,
-        phone_number1: info.data.contact.phone_number1,
+    try {
+      // if (captcha === "") {
+      //   setErrorRecaptcha(true);
+      //   return;
+      // }
+      // console.log('llama')
+
+      const tokenCF = window.turnstile.getResponse();
+      console.log({ tokenCF });
+      const serverValidation = await fetch("/api/cf", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tokenCF }),
       });
-    }
 
-    nextStep();
+      const { success } = await serverValidation.json();
+      console.log({ success });
+
+      if (!success) {
+        setErrorRecaptcha(true);
+        window.turnstile.reset();
+        return;
+      }
+
+      const info = await sendDataEmail(
+        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
+        token,
+        data.email
+      );
+      // console.log({ data });
+      if (info?.status) {
+        handleContacto({
+          id: info.data.contact.id,
+          document: info.data.contact.document,
+          first_name: info.data.contact.first_name,
+          last_name: info.data.contact.last_name,
+          phone_number1: info.data.contact.phone_number1,
+        });
+      }
+
+      nextStep();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -62,7 +100,11 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="email"
             id="email"
-            className={`bg-gray-50 border ${errors.email ? "border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
+            className={`bg-gray-50 border ${
+              errors.email
+                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
+            } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su email"
             {...register("email", {
               required: {
@@ -93,7 +135,11 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
-            className={`bg-gray-50 border ${errors.emailConfirm ? "border-red-500 focus:ring-red-300 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
+            className={`bg-gray-50 border ${
+              errors.emailConfirm
+                ? "border-red-500 focus:ring-red-300 focus:border-red-500"
+                : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
+            } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Repita su email"
             {...register("emailConfirm", {
               required: {
@@ -115,7 +161,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
           )}
         </div>
         <div className="outer-container">
-      {/* <div className="inner-container">
+          {/* <div className="inner-container">
         <ReCAPTCHA  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} onChange={handleRecaptcha} />
         {errorRecaptcha && (
           <span className="text-red-600 text-sm block mt-1">
@@ -123,11 +169,19 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
           </span>
         )}
       </div> */}
-    </div>
+          <div className="inner-container">
+            <Recaptcha />
+            {errorRecaptcha && (
+              <span className="text-red-600 text-sm block mt-1">
+                Este campo es obligatorio
+              </span>
+            )}
+          </div>
+        </div>
       </div>
       <div className="justify-center flex pb-10">
         <BotonVolver />
-        <BotonSiguiente lengthSteps={lengthSteps} />
+        <BotonSiguiente lengthSteps={lengthSteps} isLoading={isLoading} />
       </div>
     </form>
   );

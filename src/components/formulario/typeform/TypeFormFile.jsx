@@ -41,7 +41,7 @@ export const TypeFormFile = ({ item }) => {
                 "application/pdf",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
               ];
-              const maxFileSize = 3000 * 1024; // 3000 KB
+              const maxFileSize = 500 * 1024; // 500 KB
 
               const isValidFormat = allowedFormats.includes(value[0]?.type);
               const isFileSizeValid = value[0]?.size <= maxFileSize;
