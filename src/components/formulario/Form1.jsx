@@ -51,7 +51,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       });
 
       if (!serverValidation.ok) {
-        setErrorRecaptcha(true);
+        console.log({serverValidation})
         window.turnstile.reset();
         return;
       }
@@ -60,7 +60,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       const { success } = dataServer
 
       if (!success) {
-        setErrorRecaptcha(true);
+        console.log({dataServer})
         window.turnstile.reset();
         return;
       }
