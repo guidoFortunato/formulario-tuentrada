@@ -19,6 +19,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  window.turnstile.reset();
 
   const handleRecaptcha = (e) => {
     setCaptcha(e);
