@@ -12,6 +12,7 @@ export const Recaptcha = () => {
       <div
         className="cf-turnstile"
         data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+        data-callback="javascriptCallback"
         data-language="es"
       ></div>
     </>

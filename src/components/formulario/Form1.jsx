@@ -4,6 +4,7 @@ import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
 import { sendDataEmail } from "@/helpers/getInfoTest";
 import { Recaptcha } from "./Recaptcha";
+import { useRouter } from "next/navigation";
 
 export const Form1 = ({ lengthSteps, dataForm }) => {
   const {
@@ -19,7 +20,6 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  window.turnstile.reset();
 
   const handleRecaptcha = (e) => {
     setCaptcha(e);
@@ -43,6 +43,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       // console.log('llama')
 
       const tokenCF = window.turnstile.getResponse();
+      // console.log({ tokenCF });
       const serverValidation = await fetch("/api/cf", {
         method: "POST",
         headers: {
@@ -50,18 +51,18 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
         },
         body: JSON.stringify({ tokenCF }),
       });
-
+      // console.log({ serverValidation });
       if (!serverValidation.ok) {
-        console.log({serverValidation})
+        // console.log({ serverValidation });
         window.turnstile.reset();
         return;
       }
 
-      const { data: dataServer }  = await serverValidation.json();
-      const { success } = dataServer
-
+      const { data: dataServer } = await serverValidation.json();
+      const { success } = dataServer;
+      // console.log({ dataServer });
       if (!success) {
-        console.log({dataServer})
+        // console.log({ dataServer });
         window.turnstile.reset();
         return;
       }
@@ -175,11 +176,6 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       </div> */}
           <div className="inner-container">
             <Recaptcha />
-            {errorRecaptcha && (
-              <span className="text-red-600 text-sm block mt-1">
-                Intente nuevamente mas tarde
-              </span>
-            )}
           </div>
         </div>
       </div>
