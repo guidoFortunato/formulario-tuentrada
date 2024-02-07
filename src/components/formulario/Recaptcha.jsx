@@ -2,9 +2,6 @@ import Script from 'next/script'
 import React from 'react'
 
 export const Recaptcha = () => {
-    const handleClick = (e)=>{
-        console.log({e})
-    }
   return (
     <>
         <Script
@@ -12,7 +9,7 @@ export const Recaptcha = () => {
             async
             defer
         ></Script>
-        <div className="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-language="es" onClick={ handleClick }></div>
+        <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} data-language="es"></div>
     </>
   )
 }
