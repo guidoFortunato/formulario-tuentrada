@@ -8,7 +8,7 @@ import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";
 export const FormContext = createContext();
 
 const FormProvider = ({ children }) => {
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(2);
   const [dataContacto, setDataContacto] = useState(null);
   const [glpiSubCategory, setGlpiSubCategory] = useState("");
   const [subtitleArticle, setSubtitleArticle] = useState("");

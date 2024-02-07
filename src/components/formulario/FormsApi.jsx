@@ -102,7 +102,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // console.log({data})
+    console.log({data})
     const { email, emailConfirm, ...content } = data;
 
     if (selectDefaultValue === "defaultValue") {
@@ -187,11 +187,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     }
 
     if (currentStep + 1 === lengthSteps) {
-
-    alertSuccessTickets("123456");
+      alertSuccessTickets("123456");
       //  alertWarningTickets("123456", "12/02/2024", "En proceso de devolución","Por favor no envíes otro ticket",);
       // alertErrorTickets()
-      return
+      return;
 
       //Form final
       let id;
@@ -217,7 +216,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           formData.append("itilcategoriesId", id);
         }
 
-        
         // Agregar cada propiedad al FormData
         Object.keys(content).forEach((key) => {
           const newKey = addPrefixes(key, content[key]);
@@ -230,7 +228,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           // Si la propiedad es un archivo, agregarlo al FormData
           if (content[key] instanceof FileList) {
             if (content[key].length > 0) {
-              formData.append(newKey, content[key][0]);              
+              formData.append(newKey, content[key][0]);
             }
           } else {
             // Si no es un archivo, agregar el valor normalmente
@@ -242,7 +240,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         //   console.log(`${clave}: ${valor}`);
         // }
         // return;
-        
 
         const info = await fetch(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,

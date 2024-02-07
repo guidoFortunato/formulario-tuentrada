@@ -1,9 +1,10 @@
 import { useContext } from "react";
-import { FormContext } from "@/context/FormContext";
+import { Controller } from "react-hook-form";
 import { Datepicker } from "flowbite-react";
+import { FormContext } from "@/context/FormContext";
 
 export const TypeFormInput = ({ item }) => {
-  const { register, errors } = useContext(FormContext);
+  const { register, errors, control } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
 
   return (
@@ -47,23 +48,29 @@ export const TypeFormInput = ({ item }) => {
         })}
       />
       {/* {item.subtype === "datetime" || item.subtype === "date" ? (
-        <Datepicker
-          type="text"
-          maxDate={new Date()}
-          weekStart={3}
-          language="es-ES"
-          labelTodayButton="Hoy"
-          labelClearButton="Limpiar"
-          className=" focus:ring-blue-300 focus:border-blue-dark"
-          // {...register(name, {
-          //   required: {
-          //     value: item.required === 1 ? true : false,
-          //     message: "Este campo es obligatorio",
-          //   },
-
-          // })}
+        <Controller
+          name="date"
+          control={control}
+          rules={{ required: "Date is required" }}
+          render={({ field }) => (
+            <Datepicker
+              value={field.value}
+              onSelectedDateChanged={(date) => field.onChange(date)}
+              dateformat="yyyy-MM-dd"
+              className="border rounded px-4 py-2 w-full"
+            />
+          )}
         />
       ) : (
+        // <Datepicker
+        //   type="text"
+        //   maxDate={new Date()}
+        //   weekStart={3}
+        //   language="es-ES"
+        //   labelTodayButton="Hoy"
+        //   labelClearButton="Limpiar"
+        //   className=" focus:ring-blue-300 focus:border-blue-dark"
+        // />
         <input
           type={item.subtype}
           name={name}
