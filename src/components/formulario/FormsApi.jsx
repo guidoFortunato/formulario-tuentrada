@@ -130,7 +130,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           email,
           id
         );
-        // console.log({ infoGetDataTickets: info });
+        console.log({ infoGetDataTickets: info });
         // tickets abiertos
         if (info?.data?.tickets?.length > 0) {
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
