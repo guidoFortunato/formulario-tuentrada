@@ -1,5 +1,3 @@
-// Form1.jsx
-
 import { useContext, useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormContext } from "@/context/FormContext";
@@ -44,7 +42,6 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       // console.log('llama')
 
       const tokenCF = window.turnstile.getResponse();
-      console.log({ tokenCF });
       const serverValidation = await fetch("/api/cf", {
         method: "POST",
         headers: {
@@ -53,8 +50,14 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
         body: JSON.stringify({ tokenCF }),
       });
 
-      const { success } = await serverValidation.json();
-      console.log({ success });
+      if (!serverValidation.ok) {
+        setErrorRecaptcha(true);
+        window.turnstile.reset();
+        return;
+      }
+
+      const { data: dataServer }  = await serverValidation.json();
+      const { success } = dataServer
 
       if (!success) {
         setErrorRecaptcha(true);
@@ -173,7 +176,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             <Recaptcha />
             {errorRecaptcha && (
               <span className="text-red-600 text-sm block mt-1">
-                Este campo es obligatorio
+                Intente nuevamente mas tarde
               </span>
             )}
           </div>

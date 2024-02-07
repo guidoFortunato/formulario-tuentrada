@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server";
 
 export async function POST(req){
-    const { token } = await req.json()
+    const { tokenCF } = await req.json()
     const secret = process.env.RECAPTCHA_SECRET_KEY
 
-    if (!secret || !token) {
+    if (!secret || !tokenCF) {
         return NextResponse.json({ error: "Missing required parameters" }, { status: 400 })
     }
 
 
     let formData = new FormData();
 	formData.append('secret', secret);
-	formData.append('response', token);
+	formData.append('response', tokenCF);
 	// formData.append('remoteip', ip);
 
 	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
@@ -20,6 +20,6 @@ export async function POST(req){
 		method: 'POST',
 	});
 
-	const { success } = await result.json();
-    return NextResponse.json({ success })
+	const data = await result.json();
+    return NextResponse.json({ data })
 }
