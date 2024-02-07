@@ -1,9 +1,9 @@
 import { getDataPrueba, getTokenServer } from "@/helpers/getInfoTest";
 
 export default async function sitemap() {
-  const { token } = await getTokenServer(process.env.NEXT_PUBLIC_EMAIL, process.env.NEXT_PUBLIC_PASSWORD);
+  const { token } = await getTokenServer("gfortunato@tuentrada.com", "Correa.3030");
   const request = await getDataPrueba(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/sitemap/ayuda.tuentrada.com`,
+    `https://api.tuentrada.com/api/v1/atencion-cliente/sitemap/ayuda.tuentrada.com`,
     token
   );
 
