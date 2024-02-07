@@ -53,7 +53,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       });
       // console.log({ serverValidation });
       if (!serverValidation.ok) {
-        // console.log({ serverValidation });
+        console.log({ serverValidation });
         window.turnstile.reset();
         return;
       }
@@ -62,7 +62,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       const { success } = dataServer;
       // console.log({ dataServer });
       if (!success) {
-        // console.log({ dataServer });
+        console.log({ dataServer });
         window.turnstile.reset();
         return;
       }
