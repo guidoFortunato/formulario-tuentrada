@@ -2,6 +2,15 @@ import { useContext } from "react";
 import { Controller } from "react-hook-form";
 import { Datepicker } from "flowbite-react";
 import { FormContext } from "@/context/FormContext";
+import { Flowbite } from "flowbite-react";
+
+const customTheme = {
+  Datepicker: {
+    background: {
+      primary: "bg-red-500 hover:bg-red-600",
+    },
+  },
+};
 
 // Meses en español
 const meses = [
@@ -70,29 +79,31 @@ export const TypeFormInput = ({ item }) => {
           defaultValue=""
           rules={{ required: "Este campo es obligatorio" }}
           render={({ field }) => (
-            <Datepicker
-              value={field.value}
-              // onSelectedDateChanged={(date) => field.onChange(date)}
-              onSelectedDateChanged={(date) => {
-                // Obtener día, mes y año
-                const dia = date.getDate();
-                const mes = meses[date.getMonth()];
-                const anio = date.getFullYear();
-                return field.onChange(`${dia} de ${mes}, ${anio}`);
-              }}
-              dateformat="yyyy-MM-dd"
-              maxDate={new Date()}
-              // className="border rounded px-4 py-2 w-full"
-              weekStart={3}
-              language="es-ES"
-              labelTodayButton="Hoy"
-              labelClearButton="Limpiar"
-              className=" focus:ring-blue-300 focus:border-blue-dark"
-            />
+            <Flowbite theme={{ theme: customTheme }}>
+              <Datepicker
+                type="text"
+                value={field.value}
+                onSelectedDateChanged={(date) => {
+                  // Obtener día, mes y año
+                  const dia = date.getDate();
+                  const mes = meses[date.getMonth()];
+                  const anio = date.getFullYear();
+                  return field.onChange(`${dia} de ${mes}, ${anio}`);
+                }}
+                maxDate={new Date()}
+                // className="border rounded px-4 py-2 w-full"
+                weekStart={3}
+                language="es-ES"
+                labelTodayButton="Hoy"
+                labelClearButton="Limpiar"
+                background="primary"
+                className="block flex-1 cursor-pointer rounded-lg border-0 text-center text-sm font-semibold leading-9 bg-red-700 text-white hover:bg-cyan-600"
+               
+              />
+            </Flowbite>
           )}
         />
       ) : (
-        
         <input
           type={item.subtype}
           name={name}
