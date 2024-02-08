@@ -41,6 +41,11 @@ export const TypeFormCheckbox = ({ item }) => {
        }
        
       </ul>
+      {item.helperText && !errors[name] && (
+        <span className="text-gray-500 text-xs block mt-1">
+          {item.helperText}
+        </span>
+      )}
 
       {errors[name] && (
         <span className="text-red-600 text-xs block mt-1">

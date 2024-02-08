@@ -60,7 +60,11 @@ export const TypeFormGlpi = ({ item }) => {
           </option>
         ))}
       </select>
-
+      {item.helperText && !errors[name] && (
+        <span className="text-gray-500 text-xs block mt-1">
+          {item.helperText}
+        </span>
+      )}
       {errorInput && item.required === 1 && (
         <span className="text-red-600 text-xs block mt-1">
           Este campo es obligatorio

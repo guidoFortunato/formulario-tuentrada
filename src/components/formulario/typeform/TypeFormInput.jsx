@@ -3,6 +3,22 @@ import { Controller } from "react-hook-form";
 import { Datepicker } from "flowbite-react";
 import { FormContext } from "@/context/FormContext";
 
+// Meses en español
+const meses = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+
 export const TypeFormInput = ({ item }) => {
   const { register, errors, control } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
@@ -16,7 +32,7 @@ export const TypeFormInput = ({ item }) => {
         {item.name}
         {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
       </label>
-      <input
+      {/* <input
         type={item.subtype === "datetime" ? "datetime-local" : item.subtype}
         name={name}
         id={name}
@@ -46,31 +62,37 @@ export const TypeFormInput = ({ item }) => {
               item.max && `El número máximo de caracteres es ${item.max}`,
           },
         })}
-      />
-      {/* {item.subtype === "datetime" || item.subtype === "date" ? (
+      /> */}
+      {item.subtype === "datetime" || item.subtype === "date" ? (
         <Controller
-          name="date"
+          name={name}
           control={control}
-          rules={{ required: "Date is required" }}
+          defaultValue=""
+          rules={{ required: "Este campo es obligatorio" }}
           render={({ field }) => (
             <Datepicker
               value={field.value}
-              onSelectedDateChanged={(date) => field.onChange(date)}
+              // onSelectedDateChanged={(date) => field.onChange(date)}
+              onSelectedDateChanged={(date) => {
+                // Obtener día, mes y año
+                const dia = date.getDate();
+                const mes = meses[date.getMonth()];
+                const anio = date.getFullYear();
+                return field.onChange(`${dia} de ${mes}, ${anio}`);
+              }}
               dateformat="yyyy-MM-dd"
-              className="border rounded px-4 py-2 w-full"
+              maxDate={new Date()}
+              // className="border rounded px-4 py-2 w-full"
+              weekStart={3}
+              language="es-ES"
+              labelTodayButton="Hoy"
+              labelClearButton="Limpiar"
+              className=" focus:ring-blue-300 focus:border-blue-dark"
             />
           )}
         />
       ) : (
-        // <Datepicker
-        //   type="text"
-        //   maxDate={new Date()}
-        //   weekStart={3}
-        //   language="es-ES"
-        //   labelTodayButton="Hoy"
-        //   labelClearButton="Limpiar"
-        //   className=" focus:ring-blue-300 focus:border-blue-dark"
-        // />
+        
         <input
           type={item.subtype}
           name={name}
@@ -102,7 +124,7 @@ export const TypeFormInput = ({ item }) => {
             },
           })}
         />
-      )} */}
+      )}
 
       {item.helperText && !errors[name] && (
         <span className="text-gray-500 text-xs block mt-1">

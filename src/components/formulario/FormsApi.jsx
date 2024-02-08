@@ -187,10 +187,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     }
 
     if (currentStep + 1 === lengthSteps) {
-      alertSuccessTickets("123456");
+      // alertSuccessTickets("123456");
       //  alertWarningTickets("123456", "12/02/2024", "En proceso de devolución","Por favor no envíes otro ticket",);
       // alertErrorTickets()
-      return;
+      // return;
 
       //Form final
       let id;
@@ -221,9 +221,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           const newKey = addPrefixes(key, content[key]);
 
           // Verificar si el valor es una fecha y formatearlo
-          const formattedValue = isDateFormat(content[key])
-            ? formatDateString(content[key])
-            : content[key];
+          // const formattedValue = isDateFormat(content[key])
+          //   ? formatDateString(content[key])
+          //   : content[key];
 
           // Si la propiedad es un archivo, agregarlo al FormData
           if (content[key] instanceof FileList) {
@@ -232,7 +232,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             }
           } else {
             // Si no es un archivo, agregar el valor normalmente
-            formData.append(newKey, formattedValue);
+            formData.append(newKey, content[key]);
           }
           // objectModified[newKey] = content[key];
         });
