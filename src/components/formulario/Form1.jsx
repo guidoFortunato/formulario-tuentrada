@@ -104,7 +104,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             id="email"
             className={`bg-gray-50 border ${
               errors.email
-                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                 : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
             } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su email"
