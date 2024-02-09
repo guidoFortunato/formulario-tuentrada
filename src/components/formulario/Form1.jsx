@@ -36,36 +36,33 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
     setIsLoading(true);
 
     try {
-      // if (captcha === "") {
-      //   setErrorRecaptcha(true);
+      if (captcha === "") {
+        setErrorRecaptcha(true);
+        return;
+      }
+      // catpcha cloudflare
+
+      // const tokenCF = window.turnstile.getResponse();
+      // const serverValidation = await fetch("/api/cf", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ tokenCF }),
+      // });
+      // if (!serverValidation.ok) {
+      //   console.log({ serverValidation });
+      //   window.turnstile.reset();
       //   return;
       // }
-      // console.log('llama')
 
-      const tokenCF = window.turnstile.getResponse();
-      // console.log({ tokenCF });
-      const serverValidation = await fetch("/api/cf", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ tokenCF }),
-      });
-      // console.log({ serverValidation });
-      if (!serverValidation.ok) {
-        console.log({ serverValidation });
-        window.turnstile.reset();
-        return;
-      }
-
-      const { data: dataServer } = await serverValidation.json();
-      const { success } = dataServer;
-      // console.log({ dataServer });
-      if (!success) {
-        console.log({ dataServer });
-        window.turnstile.reset();
-        return;
-      }
+      // const { data: dataServer } = await serverValidation.json();
+      // const { success } = dataServer;
+      // if (!success) {
+      //   console.log({ dataServer });
+      //   window.turnstile.reset();
+      //   return;
+      // }
 
       const info = await sendDataEmail(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
@@ -166,16 +163,17 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
           )}
         </div>
         <div className="outer-container">
-          {/* <div className="inner-container">
-        <ReCAPTCHA  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} onChange={handleRecaptcha} />
-        {errorRecaptcha && (
-          <span className="text-red-600 text-sm block mt-1">
-            Este campo es obligatorio
-          </span>
-        )}
-      </div> */}
           <div className="inner-container">
-            <Recaptcha />
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+              onChange={handleRecaptcha}
+            />
+            {errorRecaptcha && (
+              <span className="text-red-600 text-sm block mt-1">
+                Este campo es obligatorio
+              </span>
+            )}
+            {/* <Recaptcha /> */}
           </div>
         </div>
       </div>
