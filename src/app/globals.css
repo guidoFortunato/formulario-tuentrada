@@ -51,6 +51,6 @@
   /* .datepicker button:hover{
     background: rgb(247, 246, 246);
   } */
-  .datepicker button[type="number"]::selection{
-    background-color: red
+  .datepicker button:active{
+    background: blue
   }
