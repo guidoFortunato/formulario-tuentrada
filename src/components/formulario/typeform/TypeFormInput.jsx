@@ -27,11 +27,11 @@ export const TypeFormInput = ({ item }) => {
 
   return (
     <>
-      <Script
+      {/* <Script
         src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js"
         async
         defer
-      ></Script>
+      ></Script> */}
       <div>
         <label
           htmlFor={name}
@@ -41,7 +41,10 @@ export const TypeFormInput = ({ item }) => {
           {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
         </label>
 
-        <div className="relative max-w-sm">
+        {/* Datepicker flowbite */}
+
+
+        {/* <div className="relative max-w-sm">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg
               className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -62,9 +65,11 @@ export const TypeFormInput = ({ item }) => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 "
             placeholder="Select date"
           />
-        </div>
+        </div> */}
 
-        {/* <input
+        {/* Datepicker html */}
+
+        <input
         type={item.subtype === "datetime" ? "datetime-local" : item.subtype}
         name={name}
         id={name}
@@ -94,7 +99,10 @@ export const TypeFormInput = ({ item }) => {
             item.max && `El número máximo de caracteres es ${item.max}`,
           },
         })}
-      /> */}
+      />
+
+      {/* Datepicker flowbite-react */}
+
         {/* {item.subtype === "datetime" || item.subtype === "date" ? (
         <Controller
         name={name}

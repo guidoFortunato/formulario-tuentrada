@@ -36,10 +36,10 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
     setIsLoading(true);
 
     try {
-      if (captcha === "") {
-        setErrorRecaptcha(true);
-        return;
-      }
+      // if (captcha === "") {
+      //   setErrorRecaptcha(true);
+      //   return;
+      // }
       // catpcha cloudflare
 
       // const tokenCF = window.turnstile.getResponse();
@@ -162,7 +162,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             </span>
           )}
         </div>
-        <div className="outer-container">
+        {/* <div className="outer-container">
           <div className="inner-container">
             <ReCAPTCHA
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
@@ -173,9 +173,9 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
                 Este campo es obligatorio
               </span>
             )}
-            {/* <Recaptcha /> */}
+            <Recaptcha />
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="justify-center flex pb-10">
         <BotonVolver />

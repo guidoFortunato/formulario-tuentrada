@@ -6,36 +6,32 @@ export const Dni = () => {
   return (
     <div>
       <label
-        htmlFor="email"
+        htmlFor="dni"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
-        Email <span className="text-red-500">*</span>
+        DNI <span className="text-red-500">*</span>
       </label>
       <input
         type="text"
-        name="email"
-        id="email"
+        name="dni"
+        id="dni"
         className={`bg-gray-50 border ${
-          errors.email
+          errors.dni
             ? "border-red-500 focus:ring-red-500 focus:border-red-500"
             : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
         } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
-        placeholder="Ingrese su email"
-        {...register("email", {
+        placeholder="Ingrese su DNI"
+        {...register("dni", {
           required: {
             value: true,
-            message: "El email es obligatorio",
+            message: "El DNI es obligatorio",
           },
-          pattern: {
-            value:
-              /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/,
-            message: "Ingrese un email válido",
-          },
+          
         })}
       />
-      {errors.email && (
+      {errors.dni && (
         <span className="text-red-600 text-xs block mt-1">
-          {errors.email.message}
+          {errors.dni.message}
         </span>
       )}
     </div>
