@@ -1,42 +1,36 @@
 import React, { useContext } from "react";
 import { FormContext } from "@/context/FormContext";
 
-export const Dni = () => {
+export const Name = () => {
   const { register, errors } = useContext(FormContext);
   return (
     <div>
       <label
-        htmlFor="dni"
+        htmlFor="name"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
-        Número de Documento de Identidad (DNI) <span className="text-red-500">*</span>
+        Nombre(s) <span className="text-red-500">*</span>
       </label>
       <input
         type="text"
-        name="dni"
-        id="dni"
+        name="name"
+        id="name"
         className={`bg-gray-50 border ${
-          errors.dni
+          errors.name
             ? "border-red-500 focus:ring-red-500 focus:border-red-500"
             : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
         } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
-        placeholder="Ingrese su DNI"
-        {...register("dni", {
+        placeholder="Ingrese su nombre"
+        {...register("name", {
           required: {
             value: true,
-            message: "El DNI es obligatorio",
+            message: "El nombre es obligatorio",
           },
-          
         })}
       />
-       {!errors.dni && (
-        <span className="text-gray-500 text-xs block mt-1">
-           Ingresa el número sin puntos (.) ni espacios. Ejemplo: 12345678
-        </span>
-      )}
-      {errors.dni && (
+      {errors.name && (
         <span className="text-red-600 text-xs block mt-1">
-          {errors.dni.message}
+          {errors.name.message}
         </span>
       )}
     </div>

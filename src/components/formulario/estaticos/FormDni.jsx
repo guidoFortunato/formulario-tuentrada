@@ -12,9 +12,8 @@ import { Name } from "./Name";
 import { Lastname } from "./Lastname";
 import { FileDniFrente } from "./FileDniFrente";
 import { FileDniDorso } from "./FileDniDorso";
-import { FileTarjeta } from "./FileTarjeta";
 
-export const FormTarjeta = ({ params }) => {
+export const FormDni = ({ params }) => {
   const {
     handleSubmit,
     reset,
@@ -70,7 +69,6 @@ export const FormTarjeta = ({ params }) => {
           <ConfirmEmail />
           <FileDniFrente />
           <FileDniDorso />
-          <FileTarjeta />
         
           {/* <div className="outer-container">
           <div className="inner-container">

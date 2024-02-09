@@ -9,7 +9,7 @@ export const Email = () => {
         htmlFor="email"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
-        Email <span className="text-red-500">*</span>
+        Correo electrónico (Email) <span className="text-red-500">*</span>
       </label>
       <input
         type="text"
@@ -33,6 +33,11 @@ export const Email = () => {
           },
         })}
       />
+      {!errors.email && (
+        <span className="text-gray-500 text-xs block mt-1">
+           Ingresá tu dirección de correo electrónico completa. Ejemplo: ejemplo@ejemplo.com
+        </span>
+      )}
       {errors.email && (
         <span className="text-red-600 text-xs block mt-1">
           {errors.email.message}
