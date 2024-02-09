@@ -4,9 +4,9 @@ import { FormTarjeta } from "@/components/formulario/estaticos/FormTarjeta";
 export const generateMetadata = ({ params }) => {
  
   return {
-    title: "Verificación datos - TuEntrada",
+    title: "Verificación datos del DNI - TuEntrada",
     description:
-      "Completá nuestro formulario de contacto para obtener asistencia personalizada en nuestro Centro de Ayuda y consultas de TuEntrada.",
+      "Completá nuestro formulario de contacto verificar datos del DNI.",
     keywords: [
       "Formulario de contacto",
       "Asistencia personalizada",

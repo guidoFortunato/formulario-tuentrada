@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
 import { useContext, useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormContext } from "@/context/FormContext";
-import { useRouter } from "next/navigation";
 import { Email } from "./Email";
 import { ConfirmEmail } from "./ConfirmEmail";
 import { Dni } from "./Dni";
@@ -13,13 +12,10 @@ import { Lastname } from "./Lastname";
 import { FileDniFrente } from "./FileDniFrente";
 import { FileDniDorso } from "./FileDniDorso";
 import { FileTarjeta } from "./FileTarjeta";
+import { addPrefixes } from "@/utils/addPrefixes";
 
 export const FormTarjeta = ({ params }) => {
-  const {
-    handleSubmit,
-    reset,
-    token,
-  } = useContext(FormContext);
+  const { handleSubmit, reset, token } = useContext(FormContext);
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,15 +31,38 @@ export const FormTarjeta = ({ params }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    setIsLoading(true);
-    console.log({data})
+    const { confirmEmail, ...content } = data;
+
+    // Crear un nuevo FormData
+    const formData = new FormData();
 
     try {
       //   if (captcha === "") {
       //     setErrorRecaptcha(true);
       //     return;
       //   }
+      setIsLoading(true);
 
+      // Agregar cada propiedad al FormData
+      Object.keys(content).forEach((key) => {
+        const newKey = addPrefixes(key, content[key]);
+
+        // Si la propiedad es un archivo y no está vacío, agregarlo al FormData
+        if (content[key] instanceof FileList) {
+          if (content[key].length > 0) {
+            formData.append(newKey, content[key][0]);
+          }
+        } else {
+          // Si no es un archivo, agregar el valor normalmente
+          formData.append(newKey, content[key]);
+        }
+        // objectModified[newKey] = content[key];
+      });
+
+      for (const [clave, valor] of formData.entries()) {
+        console.log(`${clave}: ${valor}`);
+      }
+      return;
     } catch (error) {
       console.log(error);
     } finally {
@@ -71,7 +90,7 @@ export const FormTarjeta = ({ params }) => {
           <FileDniFrente />
           <FileDniDorso />
           <FileTarjeta />
-        
+
           {/* <div className="outer-container">
           <div className="inner-container">
             <ReCAPTCHA
@@ -88,7 +107,7 @@ export const FormTarjeta = ({ params }) => {
         </div> */}
         </div>
         <div className="justify-center flex pb-10">
-         <BotonEnviar isLoading={isLoading} />
+          <BotonEnviar isLoading={isLoading} />
         </div>
       </form>
     </div>

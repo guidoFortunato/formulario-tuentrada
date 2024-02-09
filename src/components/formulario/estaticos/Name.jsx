@@ -6,31 +6,31 @@ export const Name = () => {
   return (
     <div>
       <label
-        htmlFor="name"
+        htmlFor="nombre"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
         Nombre(s) <span className="text-red-500">*</span>
       </label>
       <input
         type="text"
-        name="name"
-        id="name"
+        nombre="nombre"
+        id="nombre"
         className={`bg-gray-50 border ${
-          errors.name
+          errors.nombre
             ? "border-red-500 focus:ring-red-500 focus:border-red-500"
             : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
         } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
         placeholder="Ingrese su nombre"
-        {...register("name", {
+        {...register("nombre", {
           required: {
             value: true,
             message: "El nombre es obligatorio",
           },
         })}
       />
-      {errors.name && (
+      {errors.nombre && (
         <span className="text-red-600 text-xs block mt-1">
-          {errors.name.message}
+          {errors.nombre.message}
         </span>
       )}
     </div>

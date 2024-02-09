@@ -4,9 +4,9 @@ import React from 'react'
 export const generateMetadata = ({ params }) => {
  
   return {
-    title: "Verificación datos - TuEntrada",
+    title: "Verificación datos de la tarjeta - TuEntrada",
     description:
-      "Completá nuestro formulario de contacto para obtener asistencia personalizada en nuestro Centro de Ayuda y consultas de TuEntrada.",
+      "Completá nuestro formulario de de verificación de la tarjeta.",
     keywords: [
       "Formulario de contacto",
       "Asistencia personalizada",
