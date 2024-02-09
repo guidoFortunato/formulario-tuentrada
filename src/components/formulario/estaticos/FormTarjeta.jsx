@@ -13,6 +13,7 @@ import { FileDniFrente } from "./FileDniFrente";
 import { FileDniDorso } from "./FileDniDorso";
 import { FileTarjeta } from "./FileTarjeta";
 import { addPrefixes } from "@/utils/addPrefixes";
+import { alertSuccessTickets } from "@/helpers/Alertas";
 
 export const FormTarjeta = ({ params }) => {
   const { handleSubmit, reset, token } = useContext(FormContext);
@@ -31,10 +32,13 @@ export const FormTarjeta = ({ params }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    const { confirmEmail, ...content } = data;
+    const { email, emailConfirm, ...content } = data;
 
     // Crear un nuevo FormData
     const formData = new FormData();
+    formData.append("email", email);
+    formData.append("itilcategoriesId", "13");
+    formData.append("name", "Prueba verificación datos");
 
     try {
       //   if (captcha === "") {
@@ -59,10 +63,33 @@ export const FormTarjeta = ({ params }) => {
         // objectModified[newKey] = content[key];
       });
 
-      for (const [clave, valor] of formData.entries()) {
-        console.log(`${clave}: ${valor}`);
+      // for (const [clave, valor] of formData.entries()) {
+      //   console.log(`${clave}: ${valor}`);
+      // }
+      // return;
+
+      const info = await fetch(
+        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+      console.log({info})
+
+      if (info === undefined || !info.ok) {
+        alertErrorTickets();
+        setIsLoading(false);
+        return;
       }
-      return;
+
+      const { data } = await info.json();
+      console.log({data})
+      const numberTicket = data?.ticketNumber;
+      alertSuccessTickets(numberTicket);
     } catch (error) {
       console.log(error);
     } finally {

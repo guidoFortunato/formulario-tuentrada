@@ -6,21 +6,21 @@ export const FileDniDorso = () => {
   return (
     <div>
       <label
-        htmlFor="dniDorso"
+        htmlFor="dorso_dni"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
         Adjuntar reverso del DNI <span className="text-red-500">*</span>
       </label>
       <input
         type="file"
-        name="dniDorso"
-        id="dniDorso"
+        name="dorso_dni"
+        id="dorso_dni"
         className={`bg-gray-50 border ${
-          errors["dniDorso"]
+          errors["dorso_dni"]
             ? "border-red-500 focus:ring-red-300 focus:border-red-500"
             : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
         } text-gray-900 text-sm rounded-lg block w-full`}
-        {...register("dniDorso", {
+        {...register("dorso_dni", {
           required: {
             value: true,
             message: "Este campo es obligatorio",
@@ -50,14 +50,14 @@ export const FileDniDorso = () => {
           },
         })}
       />
-      {!errors.dniDorso && (
+      {!errors.dorso_dni && (
         <span className="text-gray-500 text-xs block mt-1">
           Los formatos de archivo permitidos son: jpg, jpeg, png y webp. Deben pesar menos de 500kb
         </span>
       )}
-      {errors.dniDorso && (
+      {errors.dorso_dni && (
         <span className="text-red-600 text-xs block mt-1">
-          {errors.dniDorso.message}
+          {errors.dorso_dni.message}
         </span>
       )}
     </div>

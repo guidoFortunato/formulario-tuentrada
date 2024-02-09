@@ -6,21 +6,21 @@ export const FileDniFrente = () => {
   return (
     <div>
       <label
-        htmlFor="dniFrente"
+        htmlFor="frente_dni"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
         Adjuntar frente del DNI <span className="text-red-500">*</span>
       </label>
       <input
         type="file"
-        name="dniFrente"
-        id="dniFrente"
+        name="frente_dni"
+        id="frente_dni"
         className={`bg-gray-50 border ${
-          errors["dniFrente"]
+          errors["frente_dni"]
             ? "border-red-500 focus:ring-red-300 focus:border-red-500"
             : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
         } text-gray-900 text-sm rounded-lg block w-full`}
-        {...register("dniFrente", {
+        {...register("frente_dni", {
           required: {
             value: true,
             message: "Este campo es obligatorio",
@@ -50,14 +50,14 @@ export const FileDniFrente = () => {
           },
         })}
       />
-      {!errors.dniFrente && (
+      {!errors.frente_dni && (
         <span className="text-gray-500 text-xs block mt-1">
           Los formatos de archivo permitidos son: jpg, jpeg, png y webp. Deben pesar menos de 500kb
         </span>
       )}
-      {errors.dniFrente && (
+      {errors.frente_dni && (
         <span className="text-red-600 text-xs block mt-1">
-          {errors.dniFrente.message}
+          {errors.frente_dni.message}
         </span>
       )}
     </div>
