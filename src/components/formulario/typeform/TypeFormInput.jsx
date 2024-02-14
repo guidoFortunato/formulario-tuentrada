@@ -72,7 +72,7 @@ export const TypeFormInput = ({ item }) => {
           type={
             item.subtype === "datetime"
               ? "datetime-local"
-              : item.subtype === "emailConfirm"
+              : item.subtype === "emailConfirm" || item.subtype === "email"
               ? "text"
               : item.subtype
           }
@@ -83,7 +83,7 @@ export const TypeFormInput = ({ item }) => {
               : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
           } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
           placeholder={item.placeholder}
-          {...register(item.subtype === "email" ? item.subtype : nameInput, {
+          {...register(item.subtype === "email" || item.subtype === "emailConfirm" ? item.subtype : nameInput, {
             required: {
               value: item.required === 1 ? true : false,
               message: "Este campo es obligatorio",
@@ -96,7 +96,7 @@ export const TypeFormInput = ({ item }) => {
               }
             },
             pattern: {
-              value: item.pattern,
+              value: item.subtype === "email" && /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/,
               message: `Ingrese un texto válido`,
             },
             minLength: {
@@ -187,6 +187,12 @@ export const TypeFormInput = ({ item }) => {
             {errors[nameInput].message}
           </span>
         )}
+        {errors[item.subtype] && (
+          <span className="text-red-600 text-xs block mt-1">
+            {errors[item.subtype].message}
+          </span>
+        )}
+        
       </div>
     </>
   );

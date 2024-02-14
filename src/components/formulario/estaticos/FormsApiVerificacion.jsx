@@ -13,10 +13,8 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-//   console.log({dataForm})
-
+  const subcategory = params?.datos?.at(0).toUpperCase() + params?.datos?.slice(1).split("-").join(" ")
   const renderForms = dataForm.steps[0].fields.map((item) => {
-    console.log({item})
     if (item.type === "input") {
       return (
         <Fragment key={item.name}>
@@ -70,8 +68,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    console.log({ data });
+    // console.log({ dataFormsDniTarjeta: data });
     const { email, emailConfirm, ...content } = data;
+
 
     if (dataForm.steps[0].checkHaveTickets === 1) {
       let id;
@@ -85,7 +84,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
           email,
           "13"
         );
-        // console.log({ infoGetDataTickets: info });
+        console.log({ infoGetDataTickets: info });
         // tickets abiertos
         if (info?.data?.tickets?.length > 0) {
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
@@ -93,20 +92,22 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
             (ticket) => ticket.closeForm === 1
           );
           if (ticketsCloseForm.length > 0) {
-            // console.log({ ticketsCloseForm });
+            console.log({ ticketsCloseForm });
 
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
             const message = ticketsCloseForm[0].message;
 
+            // console.log(new Date(ticketsCloseForm[0].dateCreated).toLocaleDateString().split("/"))
+
             const fecha =
               new Date(ticketsCloseForm[0].dateCreated)
                 .toLocaleDateString()
-                .split("/")[1] +
+                .split("/")[0] +
               "/" +
               new Date(ticketsCloseForm[0].dateCreated)
                 .toLocaleDateString()
-                .split("/")[0] +
+                .split("/")[1] +
               "/" +
               new Date(ticketsCloseForm[0].dateCreated)
                 .toLocaleDateString()
@@ -137,8 +138,6 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
       }
     }
 
-    console.log({ dataFormsDniTarjeta: data });
-    return;
     // alertSuccessTickets("123456");
     //  alertWarningTickets("123456", "12/02/2024", "En proceso de devolución","Por favor no envíes otro ticket",);
     // alertErrorTickets()
@@ -150,10 +149,23 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     // Crear un nuevo FormData
     const formData = new FormData();
     formData.append("email", email);
-    formData.append("name", `Verificación datos - ${params.datos}`);
+    formData.append("name", `Verificación datos - ${subcategory}`);
+    formData.append("itilcategoriesId", "13");
 
     try {
       setIsLoading(true);
+
+    //   if (glpiSubCategory === "" || glpiSubCategory === undefined) {
+    //     const { categoryId } = stepNow;
+    //     id = Object.keys(categoryId)[0];
+    //     itilcategoriesId;
+    //     formData.append("itilcategoriesId", id);
+    //   }
+
+    //   if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
+    //     id = glpiSubCategory.id;
+    //     formData.append("itilcategoriesId", id);
+    //   }
 
       // Agregar cada propiedad al FormData
       Object.keys(content).forEach((key) => {
@@ -175,10 +187,10 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
         }
         // objectModified[newKey] = content[key];
       });
-      // for (const [clave, valor] of formData.entries()) {
-      //   console.log(`${clave}: ${valor}`);
-      // }
-      // return;
+    //   for (const [clave, valor] of formData.entries()) {
+    //     console.log(`${clave}: ${valor}`);
+    //   }
+    //   return;
 
       const info = await fetch(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
