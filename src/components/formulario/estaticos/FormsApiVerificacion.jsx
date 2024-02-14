@@ -216,7 +216,6 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
       console.log({ error });
     } finally {
       // reset();
-      // resetStep();
       setIsLoading(false);
       // router.push("/");
     }
