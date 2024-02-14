@@ -155,6 +155,7 @@ const FormProvider = ({ children }) => {
         const info = await getDataCache( `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`, token );
         const data = info?.data?.site;
         setDataSite(data)
+        // console.log({data})
       };
       getDataSite()      
     }

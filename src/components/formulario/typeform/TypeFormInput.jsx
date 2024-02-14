@@ -22,8 +22,8 @@ const meses = [
 ];
 
 export const TypeFormInput = ({ item }) => {
-  const { register, errors, control } = useContext(FormContext);
-  const name = item.name.toLowerCase().split(" ").join("_");
+  const { register, errors, control, watch } = useContext(FormContext);
+  const nameInput = item.name.toLowerCase().split(" ").join("_");
 
   return (
     <>
@@ -34,7 +34,7 @@ export const TypeFormInput = ({ item }) => {
       ></Script> */}
       <div>
         <label
-          htmlFor={name}
+          htmlFor={item.subtype === "email" ? item.subtype : nameInput}
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           {item.name}
@@ -42,7 +42,6 @@ export const TypeFormInput = ({ item }) => {
         </label>
 
         {/* Datepicker flowbite */}
-
 
         {/* <div className="relative max-w-sm">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -70,38 +69,48 @@ export const TypeFormInput = ({ item }) => {
         {/* Datepicker html */}
 
         <input
-        type={item.subtype === "datetime" ? "datetime-local" : item.subtype}
-        name={name}
-        id={name}
-        className={`bg-gray-50 border ${
-          errors[name]
-          ? "border-red-500 focus:ring-red-300 focus:border-red-500"
-          : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
-        } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
-        placeholder={item.placeholder}
-        {...register(name, {
-          required: {
-            value: item.required === 1 ? true : false,
-            message: "Este campo es obligatorio",
-          },
-          pattern: {
-            value: item.pattern,
-            message: item.pattern !== null && `Ingrese un texto válido`,
-          },
-          minLength: {
-            value: item.min,
-            message:
-            item.min && `El número mínimo de caracteres es ${item.min}`,
-          },
-          maxLength: {
-            value: item.max,
-            message:
-            item.max && `El número máximo de caracteres es ${item.max}`,
-          },
-        })}
-      />
+          type={
+            item.subtype === "datetime"
+              ? "datetime-local"
+              : item.subtype === "emailConfirm"
+              ? "text"
+              : item.subtype
+          }
+          id={nameInput}
+          className={`bg-gray-50 border ${
+            errors[nameInput]
+              ? "border-red-500 focus:ring-red-300 focus:border-red-500"
+              : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
+          } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
+          placeholder={item.placeholder}
+          {...register(item.subtype === "email" ? item.subtype : nameInput, {
+            required: {
+              value: item.required === 1 ? true : false,
+              message: "Este campo es obligatorio",
+            },
+            validate: (value) => {
+              if (item.subtype === "emailConfirm") {
+                return (
+                  value === watch("email") || "Los emails deben ser iguales"
+                );
+              }
+            },
+            pattern: {
+              value: item.pattern,
+              message: `Ingrese un texto válido`,
+            },
+            minLength: {
+              value: item.min,
+              message: `El número mínimo de caracteres es ${item.min}`,
+            },
+            maxLength: {
+              value: item.max,
+              message: `El número máximo de caracteres es ${item.max}`,
+            },
+          })}
+        />
 
-      {/* Datepicker flowbite-react */}
+        {/* Datepicker flowbite-react */}
 
         {/* {item.subtype === "datetime" || item.subtype === "date" ? (
         <Controller
@@ -168,14 +177,14 @@ export const TypeFormInput = ({ item }) => {
         />
       )} */}
 
-        {item.helperText && !errors[name] && (
+        {item.helperText && !errors[nameInput] && (
           <span className="text-gray-500 text-xs block mt-1">
             {item.helperText}
           </span>
         )}
-        {errors[name] && (
+        {errors[nameInput] && (
           <span className="text-red-600 text-xs block mt-1">
-            {errors[name].message}
+            {errors[nameInput].message}
           </span>
         )}
       </div>
