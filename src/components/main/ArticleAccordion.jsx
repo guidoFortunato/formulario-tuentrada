@@ -69,7 +69,7 @@ export const ArticleAccordion = ({ itemColumn }) => {
               {/* <div className="py-5 border-b border-gray-200">
                   {item.descripcion}
                 </div> */}
-              <div
+              <div className="text-base text-gray-700 py-5"
                 dangerouslySetInnerHTML={{
                   __html: sanitizer(item.descripcion),
                 }}

@@ -21,7 +21,7 @@ export const RichText = ({ itemColumn, item, index, colSpan }) => {
     `}
     >
       <h3 className="text-blue-dark font-semibold mb-2">{title}</h3>
-      <div
+      <div className="text-base text-gray-700"
         dangerouslySetInnerHTML={{
           __html: sanitizer(description),
         }}

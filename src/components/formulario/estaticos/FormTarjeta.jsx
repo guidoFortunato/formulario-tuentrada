@@ -103,9 +103,9 @@ export const FormTarjeta = ({ params }) => {
         <h2 className="text-2xl text-blue-dark font-semibold">
           Completá la información
         </h2>
-        <span className="text-sm text-gray-500   italic">
-          {/* {category} » {subtitleArticle.length > 0 && ` » ${subtitleArticle}`} {subCategory} */}
-        </span>
+        <p className="text-base text-gray-700 pt-5  ">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus rerum nobis velit, sint repudiandae aliquid labore pariatur itaque debitis placeat ad ullam ratione explicabo omnis natus accusamus voluptatibus ipsam quas.
+        </p>
       </div>
       <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4 mb-4 grid-cols-1 sm:grid-cols-2">
