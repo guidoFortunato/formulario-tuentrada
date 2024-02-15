@@ -9,11 +9,9 @@ const VERIFICAR_DATOS = "Verificar Datos";
 const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
   const dataArticleForm = dataArticle.form;
 
-  const rows = dataArticle.rows;
-  const articleType = dataArticle.type;
-  const titleCategory =
-    params.categoria.slice(0, 1).toUpperCase() +
-    params.categoria.split("-").join(" ").slice(1).toLowerCase();
+  const rows = dataArticle?.rows;
+  const articleType = dataArticle?.type;
+  const titleCategory = params.categoria.slice(0, 1).toUpperCase() + params.categoria.split("-").join(" ").slice(1).toLowerCase();
 
   return (
     <>
@@ -25,8 +23,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
           {/* <ArticleSubtitle titleCategory={titleCategory} /> */}
         </div>
 
-        {rows &&
-          rows.map((item) => <ArticleRows key={item.name} item={item} />)}
+        {rows && rows.map((item) => <ArticleRows key={item.name} item={item} />)}
 
         <hr />
 
