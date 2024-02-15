@@ -5,7 +5,6 @@ import { FormContext } from "@/context/FormContext";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { ContainerLoader } from "./ContainerLoader";
 import { useRouter } from "next/navigation";
-import { FormStep } from "../formulario";
 import { FormsApiVerificacion } from "../formulario/estaticos/FormsApiVerificacion";
 
 const initialState = [];
@@ -14,13 +13,14 @@ export const ContainerDatosPage = ({ params }) => {
   const router = useRouter();
   const { token } = useContext(FormContext);
   const [dataForm, setDataForm] = useState(initialState);
+  console.log({params})
 
   useEffect(() => {
     if (token !== "") {
       // console.log("useEffect form");
       const getDataForm = async () => {
         const info = await getDataPrueba(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/verificacion-datos/article/${params.datos}/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/verificacion-datos/article/${params.subcategoria}/form`,
           token
         );
 
