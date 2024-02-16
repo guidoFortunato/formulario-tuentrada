@@ -67,7 +67,7 @@ export const TypeFormInput = ({ item }) => {
         </div> */}
 
         {/* Datepicker html */}
-        {console.log({errors})}
+
         <input
           type={
             item.subtype === "datetime"
