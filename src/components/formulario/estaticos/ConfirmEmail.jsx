@@ -27,7 +27,7 @@ export const ConfirmEmail = () => {
             message: "El email es obligatorio",
           },
           validate: (value) => {
-            return value === watch("email") || "Los emails deben ser iguales";
+            return value === watch("email") || "Los emails deben ser iguales"; 
           },
         })}
       />
