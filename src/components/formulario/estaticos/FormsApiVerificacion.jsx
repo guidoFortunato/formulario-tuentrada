@@ -139,11 +139,6 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
       }
     }
 
-    // alertSuccessTickets("123456");
-    //  alertWarningTickets("123456", "12/02/2024", "En proceso de devolución","Por favor no envíes otro ticket",);
-    // alertErrorTickets()
-    // return;
-
     //Form final
     let id;
 
