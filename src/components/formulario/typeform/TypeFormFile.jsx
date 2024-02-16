@@ -41,7 +41,7 @@ export const TypeFormFile = ({ item }) => {
                 "application/pdf",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
               ];
-              const maxFileSize = 500 * 1024; // 500 KB
+              const maxFileSize = 2000 * 1024; // 2000 KB
 
               const isValidFormat = allowedFormats.includes(value[0]?.type);
               const isFileSizeValid = value[0]?.size <= maxFileSize;
@@ -49,7 +49,7 @@ export const TypeFormFile = ({ item }) => {
               if (!isValidFormat) {
                 return "Formato de archivo no permitido. Se admiten formatos: jpg, jpeg, png, webp, pdf, gif,svg y docx";
               } else if (!isFileSizeValid) {
-                return "El archivo debe pesar menos de 500 KB";
+                return "El archivo debe pesar menos de 2MB";
               } else {
                 return true; // La validación pasa
               }

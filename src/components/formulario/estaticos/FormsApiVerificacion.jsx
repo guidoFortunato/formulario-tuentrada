@@ -12,8 +12,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const router = useRouter();
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const subcategory = params?.datos?.at(0).toUpperCase() + params?.datos?.slice(1).split("-").join(" ")
+ 
+  const subcategory = params?.subcategoria?.at(0).toUpperCase() + params?.subcategoria?.slice(1).split("-").join(" ")
+ 
   const renderForms = dataForm.steps[0].fields.map((item) => {
     if (item.type === "input") {
       return (
