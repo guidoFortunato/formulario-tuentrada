@@ -43,7 +43,7 @@ export const ContainerDatosPage = ({ params }) => {
 
   return (
     <div>
-      <FormsApiVerificacion dataForm={dataForm} params={params} />
+      <FormsApiVerificacion dataForm={dataForm.form} params={params} />
     </div>
   );
 };

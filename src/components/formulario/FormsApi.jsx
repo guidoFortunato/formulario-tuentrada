@@ -35,7 +35,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     resetStep,
   } = useContext(FormContext);
 
-  const { steps } = dataForm.form;
+  const { steps } = dataForm;
   const newSteps = [...stepsEstaticos, ...steps];
   const router = useRouter();
   const stepNow = newSteps[currentStep];

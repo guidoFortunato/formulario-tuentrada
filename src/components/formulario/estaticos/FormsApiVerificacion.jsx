@@ -2,21 +2,36 @@ import { Fragment, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
-import { alertSuccessTickets, alertWarningTickets, alertErrorTickets } from "@/helpers/Alertas";
+import {
+  alertSuccessTickets,
+  alertWarningTickets,
+  alertErrorTickets,
+} from "@/helpers/Alertas";
 import { addPrefixes } from "@/utils/addPrefixes";
 import { BotonEnviar } from "./BotonEnviar";
-import { TypeFormCheckbox, TypeFormFile, TypeFormGlpi, TypeFormInput, TypeFormRadio, TypeFormSelect, TypeFormTextarea } from "../typeform";
+import {
+  TypeFormCheckbox,
+  TypeFormFile,
+  TypeFormGlpi,
+  TypeFormInput,
+  TypeFormRadio,
+  TypeFormSelect,
+  TypeFormTextarea,
+} from "../typeform";
 
 export const FormsApiVerificacion = ({ dataForm, params }) => {
   const { handleSubmit, reset, token } = useContext(FormContext);
   const router = useRouter();
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  console.log({dataForm})
- 
-  const subcategory = params?.subcategoria?.at(0).toUpperCase() + params?.subcategoria?.slice(1).split("-").join(" ")
- 
-  const renderForms = dataForm.form.steps[0].fields.map((item) => {
+  const fields = dataForm?.steps[0]?.fields;
+  const firstSubject = dataForm?.primeraParteSubject;
+  const secondSubject = dataForm?.segundaParteSubject;
+
+  // console.log({ dataForm });
+  // console.log({ fields });
+
+  const renderForms = dataForm.steps[0].fields.map((item) => {
     if (item.type === "input") {
       return (
         <Fragment key={item.name}>
@@ -72,9 +87,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     event.preventDefault();
     // console.log({ dataFormsDniTarjeta: data });
     const { email, emailConfirm, ...content } = data;
+    
 
-
-    if (dataForm.form.steps[0].checkHaveTickets === 1) {
+    if (dataForm.steps[0].checkHaveTickets === 1) {
       let id;
 
       try {
@@ -97,15 +112,19 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
             const message = ticketsCloseForm[0].message;
-            const date = ticketsCloseForm[0].dateCreated.split(" ")[0].split("-")
-            const day = date[2]
-            const month = date[1]
-            const year = date[0]
-            const time = ticketsCloseForm[0].dateCreated.split(" ")[1].split(":")
-            const hours = time[0]
-            const minutes = time[1]
+            const date = ticketsCloseForm[0].dateCreated
+              .split(" ")[0]
+              .split("-");
+            const day = date[2];
+            const month = date[1];
+            const year = date[0];
+            const time = ticketsCloseForm[0].dateCreated
+              .split(" ")[1]
+              .split(":");
+            const hours = time[0];
+            const minutes = time[1];
             const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
-            
+
             alertWarningTickets(ticketNumber, finalDate, status, message);
             // reset();
             // resetStep();
@@ -123,27 +142,43 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
 
     //Form final
     let id;
+    const subject = [];
+    
+
+    secondSubject?.map((id) => {
+      // console.log({id})
+      fields?.map((item) => {
+        // console.log({item})
+        if (id === String(item.id)) {
+          // console.log(`id: ${id} == item.id: ${item.id}`)
+          subject.push(item.name);
+        }
+      });
+    });
+    const finalSubject = subject.join(" - ");
+    // console.log({finalSubject})
+    // return
 
     // Crear un nuevo FormData
     const formData = new FormData();
     formData.append("email", email);
-    formData.append("name", `Verificación datos - ${subcategory}`);
+    formData.append("name", `${firstSubject}: ${finalSubject}`);
     formData.append("itilcategoriesId", "13");
 
     try {
       setIsLoading(true);
 
-    //   if (glpiSubCategory === "" || glpiSubCategory === undefined) {
-    //     const { categoryId } = stepNow;
-    //     id = Object.keys(categoryId)[0];
-    //     itilcategoriesId;
-    //     formData.append("itilcategoriesId", id);
-    //   }
+      //   if (glpiSubCategory === "" || glpiSubCategory === undefined) {
+      //     const { categoryId } = stepNow;
+      //     id = Object.keys(categoryId)[0];
+      //     itilcategoriesId;
+      //     formData.append("itilcategoriesId", id);
+      //   }
 
-    //   if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
-    //     id = glpiSubCategory.id;
-    //     formData.append("itilcategoriesId", id);
-    //   }
+      //   if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
+      //     id = glpiSubCategory.id;
+      //     formData.append("itilcategoriesId", id);
+      //   }
 
       // Agregar cada propiedad al FormData
       Object.keys(content).forEach((key) => {
@@ -165,10 +200,10 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
         }
         // objectModified[newKey] = content[key];
       });
-    //   for (const [clave, valor] of formData.entries()) {
-    //     console.log(`${clave}: ${valor}`);
-    //   }
-    //   return;
+      //   for (const [clave, valor] of formData.entries()) {
+      //     console.log(`${clave}: ${valor}`);
+      //   }
+      //   return;
 
       const info = await fetch(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
@@ -180,14 +215,17 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
           body: formData,
         }
       );
+      console.log({info})
 
       if (info === undefined || !info.ok) {
+        console.log({info})
         alertErrorTickets();
         setIsLoading(false);
         return;
       }
 
       const { data } = await info.json();
+      console.log({data})
       const numberTicket = data?.ticketNumber;
       alertSuccessTickets(numberTicket);
     } catch (error) {

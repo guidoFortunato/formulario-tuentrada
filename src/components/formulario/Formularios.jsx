@@ -38,9 +38,9 @@ export const Formularios = ({ dataForm, params }) => {
           {/* {category} » {subtitleArticle.length > 0 && ` » ${subtitleArticle}`} {subCategory} */}
         </span>
       </div>
-      <Steps dataForm={dataForm} />
+      <Steps dataForm={dataForm.form} />
       <FormStep
-        dataForm={dataForm}
+        dataForm={dataForm.form}
         category={category}
         subCategory={subCategory}
       />

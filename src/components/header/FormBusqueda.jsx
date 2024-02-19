@@ -6,7 +6,6 @@ import { getDataPrueba } from "@/helpers/getInfoTest";
 import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
 import { FormContext } from "@/context/FormContext";
-import { Recaptcha } from "../formulario/Recaptcha";
 
 export const FormBusqueda = () => {
   const { token } = useContext(FormContext);
@@ -190,7 +189,6 @@ export const FormBusqueda = () => {
           })}
         </div>
       )}
-      <Recaptcha /> 
     </form>
   );
 };

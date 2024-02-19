@@ -10,11 +10,19 @@ import { useRouter } from "next/navigation";
 const initialState = [];
 
 export const ContainerForm = ({ params }) => {
-  const router = useRouter()
+  const router = useRouter();
   const { token } = useContext(FormContext);
-  const [ dataForm, setDataForm ] = useState(initialState);
+  const [dataForm, setDataForm] = useState(initialState);
 
   useEffect(() => {
+    if (params.categoria === "verificacion-datos") {
+      router.push("/verificacion-datos");
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
+
     if (token !== "") {
       // console.log("useEffect form");
       const getDataForm = async () => {
@@ -23,8 +31,8 @@ export const ContainerForm = ({ params }) => {
           token
         );
         if (!info.status) {
-          router.push('/')
-          return
+          router.push("/");
+          return;
         }
         setDataForm(info?.data);
       };
@@ -32,8 +40,8 @@ export const ContainerForm = ({ params }) => {
     }
   }, [token]);
 
-  
-  if (dataForm !== undefined && dataForm.length === 0) return <ContainerLoader />;
+  if (dataForm !== undefined && dataForm.length === 0)
+    return <ContainerLoader />;
 
   return <Formularios dataForm={dataForm} params={params} />;
 };
