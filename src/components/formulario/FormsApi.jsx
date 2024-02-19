@@ -35,7 +35,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     resetStep,
   } = useContext(FormContext);
 
-  const { steps } = dataForm;
+  const { steps } = dataForm.form;
   const newSteps = [...stepsEstaticos, ...steps];
   const router = useRouter();
   const stepNow = newSteps[currentStep];
@@ -138,36 +138,19 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             (ticket) => ticket.closeForm === 1
           );
           if (ticketsCloseForm.length > 0) {
-            console.log({ ticketsCloseForm });
-
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
             const message = ticketsCloseForm[0].message;
+            const date = ticketsCloseForm[0].dateCreated.split(" ")[0].split("-")
+            const day = date[2]
+            const month = date[1]
+            const year = date[0]
+            const time = ticketsCloseForm[0].dateCreated.split(" ")[1].split(":")
+            const hours = time[0]
+            const minutes = time[1]
+            const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
 
-            const fecha =
-              new Date(ticketsCloseForm[0].dateCreated)
-                .toLocaleDateString()
-                .split("/")[1] +
-              "/" +
-              new Date(ticketsCloseForm[0].dateCreated)
-                .toLocaleDateString()
-                .split("/")[0] +
-              "/" +
-              new Date(ticketsCloseForm[0].dateCreated)
-                .toLocaleDateString()
-                .split("/")[2];
-            const time1 = new Date(ticketsCloseForm[0].dateCreated)
-              .toLocaleTimeString()
-              .split(" ")[0]
-              .split(":")[0];
-            const time2 = new Date(ticketsCloseForm[0].dateCreated)
-              .toLocaleTimeString()
-              .split(" ")[0]
-              .split(":")[1];
-            // console.log({ fecha });
-            const date = `${fecha} - ${time1}:${time2} hs`;
-            // console.log({ time1, time2, date });
-            alertWarningTickets(ticketNumber, date, status, message);
+            alertWarningTickets(ticketNumber, finalDate, status, message);
             // reset();
             // resetStep();
             // router.push("/");

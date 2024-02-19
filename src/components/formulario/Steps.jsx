@@ -4,7 +4,7 @@ import { FormContext } from "@/context/FormContext";
 export const Steps = ({ dataForm }) => {
   const { currentStep, stepsEstaticos } = useContext(FormContext);
 
-  const { steps } = dataForm;
+  const { steps } = dataForm.form;
   const newSteps = [...stepsEstaticos, ...steps];
   const lengthSteps = newSteps.length;
   // console.log({ currentStep, lengthSteps, dataForm });

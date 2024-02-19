@@ -7,8 +7,8 @@ import { ContainerDatosPage } from "../container/ContainerDatosPage";
 const VERIFICAR_DATOS = "Verificar Datos";
 
 const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
+  
   const dataArticleForm = dataArticle.form;
-
   const rows = dataArticle?.rows;
   const articleType = dataArticle?.type;
   const titleCategory = params.categoria.slice(0, 1).toUpperCase() + params.categoria.split("-").join(" ").slice(1).toLowerCase();
@@ -25,8 +25,6 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
 
         {rows && rows.map((item) => <ArticleRows key={item.name} item={item} />)}
 
-     
-
         {articleType === VERIFICAR_DATOS && (
           <ContainerDatosPage params={params} />
         )}
@@ -34,7 +32,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
         {dataArticle?.enableHelpful === 1 &&
           articleType !== VERIFICAR_DATOS && (
             <>
-               <hr />
+              <hr />
               <div className="flex justify-center items-center flex-col mb-5">
                 <h4 className="font-semibold text-center text-blue-dark mt-10 mb-2">
                   {" "}

@@ -5,7 +5,7 @@ import { Form1, Form2, FormsApi } from "./";
 export const FormStep = ({dataForm, category, subCategory}) => {
   const { currentStep, stepsEstaticos } = useContext(FormContext);
   
-  const { steps } = dataForm;
+  const { steps } = dataForm.form;
 
   const newSteps = [...stepsEstaticos, ...steps];
   const lengthSteps = newSteps.length;
