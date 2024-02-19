@@ -34,7 +34,7 @@ export const TypeFormInput = ({ item }) => {
       ></Script> */}
       <div>
         <label
-          htmlFor={item.subtype === "email" ? item.subtype : nameInput}
+          htmlFor={item.subtype === "email" || item.subtype === "emailConfirm" ? item.subtype : nameInput}
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           {item.name}
@@ -76,9 +76,9 @@ export const TypeFormInput = ({ item }) => {
               ? "text"
               : item.subtype
           }
-          id={nameInput}
+          id={item.subtype === "email" || item.subtype === "emailConfirm" ? item.subtype : nameInput}
           className={`bg-gray-50 border ${
-            errors[nameInput]
+            errors[nameInput] || errors[item.subtype]
               ? "border-red-500 focus:ring-red-300 focus:border-red-500"
               : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
           } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
