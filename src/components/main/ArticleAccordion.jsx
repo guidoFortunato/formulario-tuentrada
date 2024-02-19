@@ -9,13 +9,10 @@ export const ArticleAccordion = ({ itemColumn }) => {
   );
   const sanitizer = dompurify.sanitize;
 
-  // console.log({ itemColumn: itemColumn.acordion[0] });
-
   const handleClick = (index) => {
     setOpenStates((prevStates) => {
       const newStates = [...prevStates];
       newStates[index] = !newStates[index];
-
       return newStates;
     });
   };
@@ -36,7 +33,7 @@ export const ArticleAccordion = ({ itemColumn }) => {
                 type="button"
                 className="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200"
                 data-accordion-target={`#accordion-flush-body-${index}`}
-                aria-expanded="true"
+                aria-expanded={openStates[index]}
                 aria-controls={`accordion-flush-body-${index}`}
                 onClick={() => handleClick(index)}
               >
@@ -45,7 +42,9 @@ export const ArticleAccordion = ({ itemColumn }) => {
                 </span>
                 <svg
                   data-accordion-icon
-                  className="w-3 h-3 rotate-180 shrink-0"
+                  className={`w-3 h-3 transition-transform transform ${
+                    openStates[index] ? "rotate-180" : ""
+                  }`}
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -63,13 +62,12 @@ export const ArticleAccordion = ({ itemColumn }) => {
             </h2>
             <div
               id={`accordion-flush-body-${index}`}
-              className={openStates[index] ? "" : "hidden"}
+              className={`overflow-hidden transition-max-height ease-in-out duration-300 ${
+                openStates[index] ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+              }`}
               aria-labelledby={`accordion-flush-heading-${index}`}
             >
-              {/* <div className="py-5 border-b border-gray-200">
-                  {item.descripcion}
-                </div> */}
-              <div className="text-base text-gray-700 py-5"
+              <div className="text-base text-gray-700 py-5 pl-2"
                 dangerouslySetInnerHTML={{
                   __html: sanitizer(item.descripcion),
                 }}
