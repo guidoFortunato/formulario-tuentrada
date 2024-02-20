@@ -25,8 +25,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const fields = dataForm?.steps[0]?.fields;
-  const firstSubject = dataForm?.primeraParteSubject;
-  const secondSubject = dataForm?.segundaParteSubject;
+  const firstSubject = dataForm?.firstPartSubject;
+  const secondSubject = dataForm?.secondPartSubject;
+//  console.log({firstSubject, secondSubject})
 
   // console.log({ dataForm });
   // console.log({ fields });
@@ -86,9 +87,17 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const onSubmit = async (data, event) => {
     event.preventDefault();
     // console.log({ dataFormsDniTarjeta: data });
-    const { email, emailConfirm, ...content } = data;
-    
+    const { emailConfirm, ...content } = data;
+    const valueEmail = []
 
+    Object.keys(content).map(key => {
+      if (key.toLowerCase().includes("email") || key.toLowerCase().includes("correo")) {
+        valueEmail.push(content[key]);
+      }
+    })
+    const email = valueEmail.join("")
+    
+    // return 
     if (dataForm.steps[0].checkHaveTickets === 1) {
       let id;
 
@@ -151,10 +160,21 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
         // console.log({item})
         if (id === String(item.id)) {
           // console.log(`id: ${id} == item.id: ${item.id}`)
-          subject.push(item.name);
+          Object.keys(data).map(key => {
+            // console.log({key})
+            if (key === item.name) {
+              // console.log(`key: ${key} == item.name: ${item.name}`)
+              subject.push(data[key]);
+              return 
+            }
+          })
+          
         }
       });
     });
+
+    
+    // console.log({subject})
     const finalSubject = subject.join(" - ");
     // console.log({finalSubject})
     // return

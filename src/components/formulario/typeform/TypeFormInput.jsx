@@ -23,7 +23,8 @@ const meses = [
 
 export const TypeFormInput = ({ item }) => {
   const { register, errors, control, watch } = useContext(FormContext);
-  const nameInput = item.name.toLowerCase().split(" ").join("_");
+  const nameInput = item.name;
+  // const nameInput = item.name.toLowerCase().split(" ").join("_");
 
   return (
     <>
@@ -34,10 +35,10 @@ export const TypeFormInput = ({ item }) => {
       ></Script> */}
       <div>
         <label
-          htmlFor={item.subtype === "email" || item.subtype === "emailConfirm" ? item.subtype : nameInput}
+          htmlFor={item.subtype === "emailConfirm" ? item.subtype : nameInput}
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          {item.name}
+          {nameInput}
           {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
         </label>
 
@@ -76,38 +77,58 @@ export const TypeFormInput = ({ item }) => {
               ? "text"
               : item.subtype
           }
-          id={item.subtype === "email" || item.subtype === "emailConfirm" ? item.subtype : nameInput}
+          id={item.subtype === "emailConfirm" ? item.subtype : nameInput}
           className={`bg-gray-50 border ${
             errors[nameInput] || errors[item.subtype]
               ? "border-red-500 focus:ring-red-300 focus:border-red-500"
               : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
           } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
           placeholder={item.placeholder}
-          {...register(item.subtype === "email" || item.subtype === "emailConfirm" ? item.subtype : nameInput, {
-            required: {
-              value: item.required === 1 ? true : false,
-              message: "Este campo es obligatorio",
-            },
-            validate: (value) => {
-              if (item.subtype === "emailConfirm") {
-                return (
-                  value === watch("email") || "Los emails deben ser iguales"
+          {...register(
+            item.subtype === "emailConfirm" ? item.subtype : nameInput,
+            {
+              required: {
+                value: item.required === 1 ? true : false,
+                message: "Este campo es obligatorio",
+              },
+              validate: (value) => {
+                // console.log({value: item.subtype})
+                // Filtra los campos que contienen la palabra "email" pero no son "emailConfirm"
+                const objectFields = watch()
+                const fields = Object.keys(objectFields).filter(
+                  (field) =>
+                    (field.toLowerCase().includes("correo") ||
+                      field.toLowerCase().includes("email")) &&
+                    field.toLowerCase() !== "emailconfirm"
                 );
-              }
-            },
-            pattern: {
-              value: item.subtype === "email" && /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/,
-              message: `Ingrese un texto válido`,
-            },
-            minLength: {
-              value: item.min,
-              message: `El número mínimo de caracteres es ${item.min}`,
-            },
-            maxLength: {
-              value: item.max,
-              message: `El número máximo de caracteres es ${item.max}`,
-            },
-          })}
+                // Obtiene los valores correspondientes a esos campos
+                const valueFieldEmail = fields.map(
+                  (field) => objectFields[field]
+                );
+              
+                if (item.subtype === "emailConfirm") {
+
+                  return (
+                    value === valueFieldEmail[0] || "Los emails deben ser iguales"
+                  );
+                }
+              },
+              pattern: {
+                value:
+                  item.subtype === "email" &&
+                  /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/,
+                message: `Ingrese un texto válido`,
+              },
+              minLength: {
+                value: item.min,
+                message: `El número mínimo de caracteres es ${item.min}`,
+              },
+              maxLength: {
+                value: item.max,
+                message: `El número máximo de caracteres es ${item.max}`,
+              },
+            }
+          )}
         />
 
         {/* Datepicker flowbite-react */}
@@ -176,7 +197,6 @@ export const TypeFormInput = ({ item }) => {
           })}
         />
       )} */}
-
         {item.helperText && !errors[nameInput] && (
           <span className="text-gray-500 text-xs block mt-1">
             {item.helperText}
@@ -192,7 +212,6 @@ export const TypeFormInput = ({ item }) => {
             {errors[item.subtype].message}
           </span>
         )}
-        
       </div>
     </>
   );
