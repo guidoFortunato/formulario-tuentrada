@@ -1,5 +1,5 @@
 import { Fragment, useContext, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
 import {
@@ -27,7 +27,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const fields = dataForm?.steps[0]?.fields;
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
-//  console.log({firstSubject, secondSubject})
+  const contact_id = useSearchParams().get('contact_id') 
+  console.log({contact_id})
+  //  console.log({firstSubject, secondSubject})
 
   // console.log({ dataForm });
   // console.log({ fields });
@@ -88,16 +90,16 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     event.preventDefault();
     // console.log({ dataFormsDniTarjeta: data });
     const { emailConfirm, ...content } = data;
-    const valueEmail = []
+    const valueEmail = [];
 
-    Object.keys(content).map(key => {
-      if (key.toLowerCase().includes("email") || key.toLowerCase().includes("correo")) {
+    Object.keys(content).map((key) => {
+      if ( key.toLowerCase().includes("email") || key.toLowerCase().includes("correo") ) {
         valueEmail.push(content[key]);
       }
-    })
-    const email = valueEmail.join("")
-    
-    // return 
+    });
+    const email = valueEmail.join("");
+
+    // return
     if (dataForm.steps[0].checkHaveTickets === 1) {
       let id;
 
@@ -152,7 +154,6 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     //Form final
     let id;
     const subject = [];
-    
 
     secondSubject?.map((id) => {
       // console.log({id})
@@ -160,20 +161,18 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
         // console.log({item})
         if (id === String(item.id)) {
           // console.log(`id: ${id} == item.id: ${item.id}`)
-          Object.keys(data).map(key => {
+          Object.keys(data).map((key) => {
             // console.log({key})
             if (key === item.name) {
               // console.log(`key: ${key} == item.name: ${item.name}`)
               subject.push(data[key]);
-              return 
+              return;
             }
-          })
-          
+          });
         }
       });
     });
 
-    
     // console.log({subject})
     const finalSubject = subject.join(" - ");
     // console.log({finalSubject})
@@ -184,6 +183,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     formData.append("email", email);
     formData.append("name", `${firstSubject}: ${finalSubject}`);
     formData.append("itilcategoriesId", "13");
+    formData.append("info_contact_id", contact_id);
 
     try {
       setIsLoading(true);
@@ -235,17 +235,17 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
           body: formData,
         }
       );
-      console.log({info})
+      console.log({ info });
 
       if (info === undefined || !info.ok) {
-        console.log({info})
+        console.log({ info });
         alertErrorTickets();
         setIsLoading(false);
         return;
       }
 
       const { data } = await info.json();
-      console.log({data})
+      console.log({ data });
       const numberTicket = data?.ticketNumber;
       alertSuccessTickets(numberTicket);
     } catch (error) {
