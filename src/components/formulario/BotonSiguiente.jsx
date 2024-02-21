@@ -70,7 +70,7 @@ export const BotonSiguiente = ({
                 fill="#1C64F2"
               />
             </svg>
-            Loading...
+            cargando...
           </button>
       ) : (
         <button

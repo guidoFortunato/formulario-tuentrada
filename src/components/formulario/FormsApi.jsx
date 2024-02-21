@@ -41,6 +41,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const stepNow = newSteps[currentStep];
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [finalLoading, setFinalLoading] = useState(false);
+  console.log({stepNow, steps})
 
   const renderForms =
     newSteps.length > 2 &&
@@ -116,6 +117,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       try {
         setLoadingCheckHaveTickets(true);
         if (glpiSubCategory === "" || glpiSubCategory === undefined) {
+          console.log({stepNow})
           const { categoryId } = stepNow;
           // console.log({ stepNow });
           id = Object.keys(categoryId)[0];
@@ -234,14 +236,15 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
+        console.log({info})
 
         if (info === undefined || !info.ok) {
           alertErrorTickets();
           setFinalLoading(false);
           return;
         }
-
         const { data } = await info.json();
+        console.log({data})
         const numberTicket = data?.ticketNumber;
         alertSuccessTickets(numberTicket);
       } catch (error) {
