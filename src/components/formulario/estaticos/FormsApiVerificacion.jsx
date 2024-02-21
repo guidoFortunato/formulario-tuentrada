@@ -28,7 +28,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
   const contact_id = useSearchParams().get('contact_id') 
-  console.log({contact_id})
+  // console.log({contact_id})
   //  console.log({firstSubject, secondSubject})
 
   // console.log({ dataForm });
