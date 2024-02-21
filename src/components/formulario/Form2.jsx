@@ -44,7 +44,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             htmlFor="nombre"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Nombre <span className="text-red-500">*</span>
+            Nombre(s) <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -55,7 +55,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             {...register("nombre", {
               required: {
                 value: true,
-                message: "El nombre es obligatorio",
+                message: "Este campo es obligatorio",
               },
             })}
           />
@@ -70,7 +70,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             htmlFor="apellido"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Apellido <span className="text-red-500">*</span>
+            Apellido(s) <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -81,7 +81,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             {...register("apellido", {
               required: {
                 value: true,
-                message: "El apellido es obligatorio",
+                message: "Este campo es obligatorio",
               },
             })}
           />
@@ -96,7 +96,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             htmlFor="DNI"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            DNI <span className="text-red-500">*</span>
+            Número de Documento de Identidad (DNI) <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -107,7 +107,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             {...register("DNI", {
               required: {
                 value: true,
-                message: "El DNI es obligatorio",
+                message: "Este campo es obligatorio",
               },
             })}
           />

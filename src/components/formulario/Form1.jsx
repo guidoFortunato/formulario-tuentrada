@@ -96,7 +96,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             htmlFor="email"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Email <span className="text-red-500">*</span>
+            Correo electrónico (Email) <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -107,16 +107,16 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                 : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
             } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
-            placeholder="Ingrese su email"
+            placeholder="Correo electrónico (Email)"
             {...register("email", {
               required: {
                 value: true,
-                message: "El email es obligatorio",
+                message: "Este campo es obligatorio",
               },
               pattern: {
                 value:
                   /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "Ingrese un email válido",
+                message: "Ingrese un correo electrónico válido",
               },
             })}
           />
@@ -131,7 +131,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             htmlFor="emailConfirm"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Confirmación de Email <span className="text-red-500">*</span>
+            Confirmación de Correo Electrónico <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -142,15 +142,15 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                 : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
             } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
-            placeholder="Repita su email"
+            placeholder="Repita su correo electrónico"
             {...register("emailConfirm", {
               required: {
                 value: true,
-                message: "El email es obligatorio",
+                message: "Este campo es obligatorio",
               },
               validate: (value) => {
                 return (
-                  value === watch("email") || "Los emails deben ser iguales"
+                  value === watch("email") || "Los correo electrónicos deben ser iguales"
                 );
               },
             })}

@@ -41,7 +41,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const stepNow = newSteps[currentStep];
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [finalLoading, setFinalLoading] = useState(false);
-  console.log({stepNow, steps})
+  const categoryId = dataForm?.categoryId
+  const firstSubject = dataForm?.firstPartSubject;
+  const secondSubject = dataForm?.secondPartSubject;
+  console.log({dataForm})
 
   const renderForms =
     newSteps.length > 2 &&
@@ -103,7 +106,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    console.log({data})
+    // console.log({data})
     const { email, emailConfirm, ...content } = data;
 
     if (selectDefaultValue === "defaultValue") {
@@ -117,10 +120,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       try {
         setLoadingCheckHaveTickets(true);
         if (glpiSubCategory === "" || glpiSubCategory === undefined) {
-          console.log({stepNow})
-          const { categoryId } = stepNow;
-          // console.log({ stepNow });
-          id = Object.keys(categoryId)[0];
+          id = categoryId;
         }
 
         if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
@@ -189,10 +189,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         setFinalLoading(true);
 
         if (glpiSubCategory === "" || glpiSubCategory === undefined) {
-          const { categoryId } = stepNow;
-          // console.log({ stepNow });
-          id = Object.keys(categoryId)[0];
-          itilcategoriesId;
+          id = categoryId;
           formData.append("itilcategoriesId", id);
         }
 
