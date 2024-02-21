@@ -1,4 +1,3 @@
-import { ContainerApp } from "@/components/container/ContainerApp";
 import Link from "next/link";
 
 export default function NotFound() {

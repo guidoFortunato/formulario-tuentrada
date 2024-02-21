@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useContext } from "react";
 import NavBar from "../header/Navbar";
 import InputBusqueda2 from "../header/InputBusqueda2";
@@ -6,11 +6,10 @@ import { Loader } from "../loading";
 import { FormContext } from "@/context/FormContext";
 
 export const ContainerHeader = () => {
-  const { dataSite } = useContext(FormContext)
+  const { dataSite } = useContext(FormContext);
 
-  if(dataSite === undefined) return <Loader />
-  if(dataSite.length === 0 ) return <Loader />
-
+  if (dataSite === undefined) return <Loader />;
+  if (dataSite.length === 0) return <Loader />;
 
   //! manejo de errores, cuando dataSite es undefined enviar a pagina de error
 

@@ -42,7 +42,7 @@ export default async function RootLayout({ children }) {
       >
         <GoogleAnalytics />
         <FormProvider>
-          <ContainerApp>{children}</ContainerApp>
+          {children}
           {/* <CookieBanner /> */}
         </FormProvider>
       </body>
