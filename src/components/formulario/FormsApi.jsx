@@ -1,6 +1,6 @@
 import { Fragment, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createForm, getDataTickets } from "@/helpers/getInfoTest";
+import { getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
 import {
   alertSuccessTickets,
@@ -44,7 +44,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const categoryId = dataForm?.categoryId
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
-  console.log({dataForm})
+  const fields = steps.flatMap( item => item.fields )
+  // console.log({dataForm})
+
 
   const renderForms =
     newSteps.length > 2 &&
@@ -179,11 +181,34 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
       //Form final
       let id;
+      const subject = [];
+      // console.log({data})
+
+      secondSubject?.map((id) => {
+        // console.log({id})
+        fields?.map((item) => {
+          // console.log({item})
+          if (id === String(item.id)) {
+            // console.log(`id: ${id} == item.id: ${item.id}`)
+            Object.keys(data).map((key) => {
+              // console.log({key})
+              if (key === item.name) {
+                // console.log(`key: ${key} == item.name: ${item.name}`)
+                subject.push(data[key]);
+                return;
+              }
+            });
+          }
+        });
+      });
+  
+      // console.log({subject})
+      const finalSubject = subject.join(" - ");
 
       // Crear un nuevo FormData
       const formData = new FormData();
       formData.append("email", email);
-      formData.append("name", `${category} - ${subCategory}`);
+      formData.append("name", `${firstSubject}: ${finalSubject}`);
 
       try {
         setFinalLoading(true);
