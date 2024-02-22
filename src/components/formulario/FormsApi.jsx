@@ -41,12 +41,11 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const stepNow = newSteps[currentStep];
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [finalLoading, setFinalLoading] = useState(false);
-  const categoryId = dataForm?.categoryId
+  const categoryId = dataForm?.categoryId;
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
-  const fields = steps.flatMap( item => item.fields )
+  const fields = steps.flatMap((item) => item.fields);
   // console.log({dataForm})
-
 
   const renderForms =
     newSteps.length > 2 &&
@@ -108,7 +107,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // console.log({data})
+    console.log({ data });
     const { email, emailConfirm, ...content } = data;
 
     if (selectDefaultValue === "defaultValue") {
@@ -145,13 +144,17 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
             const message = ticketsCloseForm[0].message;
-            const date = ticketsCloseForm[0].dateCreated.split(" ")[0].split("-")
-            const day = date[2]
-            const month = date[1]
-            const year = date[0]
-            const time = ticketsCloseForm[0].dateCreated.split(" ")[1].split(":")
-            const hours = time[0]
-            const minutes = time[1]
+            const date = ticketsCloseForm[0].dateCreated
+              .split(" ")[0]
+              .split("-");
+            const day = date[2];
+            const month = date[1];
+            const year = date[0];
+            const time = ticketsCloseForm[0].dateCreated
+              .split(" ")[1]
+              .split(":");
+            const hours = time[0];
+            const minutes = time[1];
             const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
 
             alertWarningTickets(ticketNumber, finalDate, status, message);
@@ -201,7 +204,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           }
         });
       });
-  
+
       // console.log({subject})
       const finalSubject = subject.join(" - ");
 
@@ -237,7 +240,11 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             if (content[key].length > 0) {
               formData.append(newKey, content[key][0]);
             }
-          } else {
+          }
+          // if (Array.isArray(content[key])) {
+          //   formData.append(newKey, content[key].join(" - "));
+          // } 
+          else {
             // Si no es un archivo, agregar el valor normalmente
             formData.append(newKey, content[key]);
           }
@@ -258,7 +265,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
-        console.log({info})
+        console.log({ info });
 
         if (info === undefined || !info.ok) {
           alertErrorTickets();
@@ -266,7 +273,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           return;
         }
         const { data } = await info.json();
-        console.log({data})
+        console.log({ data });
         const numberTicket = data?.ticketNumber;
         alertSuccessTickets(numberTicket);
       } catch (error) {
