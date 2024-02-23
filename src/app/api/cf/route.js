@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  const { tokenCF } = await req.json();
-  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  const tokenCF  = await req.json();
+  const secret = process.env.RECAPTCHA_SECRET_KEY_CLOUDFLARE;
 
   if (!secret || !tokenCF) {
     return NextResponse.json(

@@ -33,6 +33,10 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
+    // window.turnstile.reset()
+    const formData = new FormData(event.target)
+    const turnstileRes = formData.get('cf-turnstile-response')
+    console.log(turnstileRes)
     setIsLoading(true);
 
     try {
@@ -43,26 +47,34 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       // catpcha cloudflare
 
       // const tokenCF = window.turnstile.getResponse();
-      // const serverValidation = await fetch("/api/cf", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ tokenCF }),
-      // });
-      // if (!serverValidation.ok) {
-      //   console.log({ serverValidation });
-      //   window.turnstile.reset();
-      //   return;
-      // }
 
-      // const { data: dataServer } = await serverValidation.json();
-      // const { success } = dataServer;
-      // if (!success) {
-      //   console.log({ dataServer });
-      //   window.turnstile.reset();
-      //   return;
-      // }
+      if (turnstileRes) {
+        const serverValidation = await fetch("/api/cf", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(turnstileRes),
+        });
+        if (!serverValidation.ok) {
+          console.log({ serverValidation });
+          window.turnstile.reset();
+          return;
+        }
+  
+        const { data: dataServer } = await serverValidation.json();
+        console.log({dataServer})
+        const { success } = dataServer;
+        if (!success) {
+          console.log({ dataServer });
+          window.turnstile.reset();
+          return;
+        }
+        
+      }
+      // return
+      // window.turnstile.remove()
+
 
       const info = await sendDataEmail(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
@@ -79,7 +91,6 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
           phone_number1: info.data.contact.phone_number1,
         });
       }
-
       nextStep();
     } catch (error) {
       console.log(error);
@@ -162,9 +173,9 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             </span>
           )}
         </div>
-        {/* <div className="outer-container">
+        <div className="outer-container">
           <div className="inner-container">
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
               onChange={handleRecaptcha}
             />
@@ -172,10 +183,10 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
               <span className="text-red-600 text-sm block mt-1">
                 Este campo es obligatorio
               </span>
-            )}
+            )} */}
             <Recaptcha />
           </div>
-        </div> */}
+        </div>
       </div>
       <div className="justify-center flex pb-10">
         <BotonVolver />
