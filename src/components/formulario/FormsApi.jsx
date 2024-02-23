@@ -1,6 +1,6 @@
 import { Fragment, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createForm, getDataTickets } from "@/helpers/getInfoTest";
+import { getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
 import {
   alertSuccessTickets,
@@ -41,10 +41,11 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const stepNow = newSteps[currentStep];
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [finalLoading, setFinalLoading] = useState(false);
-  const categoryId = dataForm?.categoryId
+  const categoryId = dataForm?.categoryId;
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
-  console.log({dataForm})
+  const fields = steps.flatMap((item) => item.fields);
+  // console.log({dataForm})
 
   const renderForms =
     newSteps.length > 2 &&
@@ -106,7 +107,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // console.log({data})
+    console.log({ data });
     const { email, emailConfirm, ...content } = data;
 
     if (selectDefaultValue === "defaultValue") {
@@ -143,13 +144,17 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
             const message = ticketsCloseForm[0].message;
-            const date = ticketsCloseForm[0].dateCreated.split(" ")[0].split("-")
-            const day = date[2]
-            const month = date[1]
-            const year = date[0]
-            const time = ticketsCloseForm[0].dateCreated.split(" ")[1].split(":")
-            const hours = time[0]
-            const minutes = time[1]
+            const date = ticketsCloseForm[0].dateCreated
+              .split(" ")[0]
+              .split("-");
+            const day = date[2];
+            const month = date[1];
+            const year = date[0];
+            const time = ticketsCloseForm[0].dateCreated
+              .split(" ")[1]
+              .split(":");
+            const hours = time[0];
+            const minutes = time[1];
             const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
 
             alertWarningTickets(ticketNumber, finalDate, status, message);
@@ -179,11 +184,34 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
       //Form final
       let id;
+      const subject = [];
+      // console.log({data})
+
+      secondSubject?.map((id) => {
+        // console.log({id})
+        fields?.map((item) => {
+          // console.log({item})
+          if (id === String(item.id)) {
+            // console.log(`id: ${id} == item.id: ${item.id}`)
+            Object.keys(data).map((key) => {
+              // console.log({key})
+              if (key === item.name) {
+                // console.log(`key: ${key} == item.name: ${item.name}`)
+                subject.push(data[key]);
+                return;
+              }
+            });
+          }
+        });
+      });
+
+      // console.log({subject})
+      const finalSubject = subject.join(" - ");
 
       // Crear un nuevo FormData
       const formData = new FormData();
       formData.append("email", email);
-      formData.append("name", `${category} - ${subCategory}`);
+      formData.append("name", `${firstSubject}: ${finalSubject}`);
 
       try {
         setFinalLoading(true);
@@ -212,7 +240,11 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             if (content[key].length > 0) {
               formData.append(newKey, content[key][0]);
             }
-          } else {
+          }
+          // if (Array.isArray(content[key])) {
+          //   formData.append(newKey, content[key].join(" - "));
+          // } 
+          else {
             // Si no es un archivo, agregar el valor normalmente
             formData.append(newKey, content[key]);
           }
@@ -233,7 +265,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
-        console.log({info})
+        console.log({ info });
 
         if (info === undefined || !info.ok) {
           alertErrorTickets();
@@ -241,7 +273,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           return;
         }
         const { data } = await info.json();
-        console.log({data})
+        console.log({ data });
         const numberTicket = data?.ticketNumber;
         alertSuccessTickets(numberTicket);
       } catch (error) {

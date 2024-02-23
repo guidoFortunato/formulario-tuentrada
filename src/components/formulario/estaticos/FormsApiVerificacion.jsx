@@ -1,5 +1,5 @@
 import { Fragment, useContext, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
 import {
