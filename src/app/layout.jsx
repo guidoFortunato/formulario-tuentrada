@@ -5,7 +5,6 @@ import { ContainerApp } from "@/components/container/ContainerApp";
 import "./globals.css";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import CookieBanner from "@/components/analytics/CookieBanner";
-import { Recaptcha } from "@/components/formulario/Recaptcha";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,7 +45,6 @@ export default async function RootLayout({ children }) {
           <ContainerApp>{children}</ContainerApp>
           {/* <CookieBanner /> */}
         </FormProvider>
-        <Recaptcha />
       </body>
     </html>
   );

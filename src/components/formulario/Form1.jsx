@@ -36,7 +36,6 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
     // window.turnstile.reset()
     const formData = new FormData(event.target)
     const turnstileRes = formData.get('cf-turnstile-response')
-    console.log(turnstileRes)
     setIsLoading(true);
 
     try {
@@ -63,7 +62,6 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
         }
   
         const { data: dataServer } = await serverValidation.json();
-        console.log({dataServer})
         const { success } = dataServer;
         if (!success) {
           console.log({ dataServer });

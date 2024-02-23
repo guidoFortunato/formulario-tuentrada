@@ -2,11 +2,6 @@ import Script from "next/script";
 import React from "react";
 
 export const Recaptcha = () => {
-
-  const handleError = (error)=>{
-    console.log('error')
-    console.log({error})
-  }
    
   return (
     <>
