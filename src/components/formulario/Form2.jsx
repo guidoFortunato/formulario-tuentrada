@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 
 import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
+import { Recaptcha } from "./Recaptcha";
 
 export const Form2 = ({ lengthSteps, dataForm }) => {
   const {

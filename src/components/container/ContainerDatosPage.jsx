@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
+import Script from "next/script";
 import { FormContext } from "@/context/FormContext";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { ContainerLoader } from "./ContainerLoader";

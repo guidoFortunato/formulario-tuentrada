@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@marsidev/react-turnstile": "^0.5.3",
     "bufferutil": "^4.0.8",
     "client-only": "^0.0.1",
     "cookies-next": "^4.1.0",

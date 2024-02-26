@@ -20,7 +20,6 @@ export async function POST(req) {
     body: formData,
     method: "POST",
   });
-
   const data = await result.json();
   return NextResponse.json({ data });
 }

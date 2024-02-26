@@ -5,6 +5,7 @@ import { BotonSiguiente, BotonVolver } from ".";
 import { sendDataEmail } from "@/helpers/getInfoTest";
 import { Recaptcha } from "./Recaptcha";
 import { useRouter } from "next/navigation";
+import { Recaptcha2 } from "./Recaptcha2";
 
 export const Form1 = ({ lengthSteps, dataForm }) => {
   const {
@@ -21,6 +22,8 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // console.log({turnstile: window.turnstile})
+
   const handleRecaptcha = (e) => {
     setCaptcha(e);
     setErrorRecaptcha(false);
@@ -36,6 +39,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
     // window.turnstile.reset()
     const formData = new FormData(event.target)
     const turnstileRes = formData.get('cf-turnstile-response')
+    console.log({turnstileRes})
     setIsLoading(true);
 
     try {
@@ -48,6 +52,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
       // const tokenCF = window.turnstile.getResponse();
 
       if (turnstileRes) {
+
         const serverValidation = await fetch("/api/cf", {
           method: "POST",
           headers: {
@@ -55,20 +60,23 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
           },
           body: JSON.stringify(turnstileRes),
         });
+
         if (!serverValidation.ok) {
           console.log({ serverValidation });
           window.turnstile.reset();
           return;
         }
-  
+
         const { data: dataServer } = await serverValidation.json();
         const { success } = dataServer;
+
         if (!success) {
           console.log({ dataServer });
           window.turnstile.reset();
           return;
         }
-        
+
+        window.turnstile.remove()
       }
       // return
       // window.turnstile.remove()
@@ -182,7 +190,8 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
                 Este campo es obligatorio
               </span>
             )} */}
-            <Recaptcha />
+            {/* <Recaptcha /> */}
+            <Recaptcha2 />
           </div>
         </div>
       </div>

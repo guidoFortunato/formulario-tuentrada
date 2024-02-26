@@ -2,7 +2,6 @@ import Script from "next/script";
 import React from "react";
 
 export const Recaptcha = () => {
-   
   return (
     <>
       <Script
@@ -14,9 +13,7 @@ export const Recaptcha = () => {
       <div
         className="cf-turnstile"
         data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_CLOUDFLARE}
-        data-callback="javascriptCallback"
         data-language="es"
-        // data-error-callback={ handleError }
       ></div>
     </>
   );

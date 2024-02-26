@@ -1,4 +1,5 @@
 import { Fragment, useContext, useState } from "react";
+import Script from "next/script";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
@@ -18,6 +19,7 @@ import {
   TypeFormSelect,
   TypeFormTextarea,
 } from "../typeform";
+import { Recaptcha } from "../Recaptcha";
 
 export const FormsApiVerificacion = ({ dataForm, params }) => {
   const { handleSubmit, reset, token } = useContext(FormContext);
@@ -27,7 +29,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const fields = dataForm?.steps[0]?.fields;
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
-  const contact_id = useSearchParams().get('contact_id') 
+  const contact_id = useSearchParams().get("contact_id");
   // console.log({contact_id})
   //  console.log({firstSubject, secondSubject})
 
@@ -91,9 +93,55 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     // console.log({ dataFormsDniTarjeta: data });
     const { emailConfirm, ...content } = data;
     const valueEmail = [];
+    const formDataTurnstile = new FormData(event.target)
+    const turnstileRes = formDataTurnstile.get('cf-turnstile-response')
+
+    try {
+      if (turnstileRes) {
+
+        const serverValidation = await fetch("/api/cf", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(turnstileRes),
+        });
+
+        if (!serverValidation.ok) {
+          console.log({ serverValidation });
+          window.turnstile.reset();
+          return;
+        }
+
+        const { data: dataServer } = await serverValidation.json();
+        console.log({dataServer})
+        const { success } = dataServer;
+
+
+        if (!success) {
+          console.log({ dataServer });
+          window.turnstile.reset();
+          return;
+        }
+                
+        // window.turnstile.remove()
+      }
+      
+    } catch (error) {
+      console.log({
+        error,
+        message: "turnstile error"
+      })
+    }
+
+    return
+    
 
     Object.keys(content).map((key) => {
-      if ( key.toLowerCase().includes("email") || key.toLowerCase().includes("correo") ) {
+      if (
+        key.toLowerCase().includes("email") ||
+        key.toLowerCase().includes("correo")
+      ) {
         valueEmail.push(content[key]);
       }
     });
@@ -260,6 +308,11 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
       <div className="grid gap-4 mb-4 sm:grid-cols-2">{renderForms}</div>
+      <div className="outer-container">
+        <div className="inner-container">
+          <Recaptcha />
+        </div>
+      </div>
       <div className="justify-center flex pb-10">
         <BotonEnviar
           loadingCheckHaveTickets={loadingCheckHaveTickets}
