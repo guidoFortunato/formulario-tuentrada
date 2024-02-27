@@ -37,9 +37,9 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
   const onSubmit = async (data, event) => {
     event.preventDefault();
     // window.turnstile.reset()
-    const formData = new FormData(event.target)
-    const turnstileRes = formData.get('cf-turnstile-response')
-    console.log({turnstileRes})
+    // const formData = new FormData(event.target)
+    // const turnstileRes = formData.get('cf-turnstile-response')
+    // console.log({turnstileRes})
     setIsLoading(true);
 
     try {
@@ -51,33 +51,33 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
 
       // const tokenCF = window.turnstile.getResponse();
 
-      if (turnstileRes) {
+      // if (turnstileRes) {
 
-        const serverValidation = await fetch("/api/cf", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(turnstileRes),
-        });
+      //   const serverValidation = await fetch("/api/cf", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(turnstileRes),
+      //   });
 
-        if (!serverValidation.ok) {
-          console.log({ serverValidation });
-          window.turnstile.reset();
-          return;
-        }
+      //   if (!serverValidation.ok) {
+      //     console.log({ serverValidation });
+      //     window.turnstile.reset();
+      //     return;
+      //   }
 
-        const { data: dataServer } = await serverValidation.json();
-        const { success } = dataServer;
+      //   const { data: dataServer } = await serverValidation.json();
+      //   const { success } = dataServer;
 
-        if (!success) {
-          console.log({ dataServer });
-          window.turnstile.reset();
-          return;
-        }
+      //   if (!success) {
+      //     console.log({ dataServer });
+      //     window.turnstile.reset();
+      //     return;
+      //   }
 
-        window.turnstile.remove()
-      }
+      //   window.turnstile.remove()
+      // }
       // return
       // window.turnstile.remove()
 
@@ -191,7 +191,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
               </span>
             )} */}
             {/* <Recaptcha /> */}
-            <Recaptcha2 />
+            {/* <Recaptcha2 /> */}
           </div>
         </div>
       </div>

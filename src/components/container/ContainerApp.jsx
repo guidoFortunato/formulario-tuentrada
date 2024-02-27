@@ -6,6 +6,7 @@ import { ContainerFooter } from "./ContainerFooter";
 import { ContainerHeader } from "./ContainerHeader";
 
 export const ContainerApp = ({ children }) => {
+  
   return (
     <>
       <ContainerHeader />
@@ -13,7 +14,7 @@ export const ContainerApp = ({ children }) => {
       {/* <AdSense /> */}
       <ContainerFooter />
       {/* <Recaptcha />  */}
-      {/* <Recaptcha2 />  */}
+      <Recaptcha2 /> 
     </>
   );
 };

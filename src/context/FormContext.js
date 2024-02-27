@@ -16,6 +16,8 @@ const FormProvider = ({ children }) => {
   const [errorInput, setErrorInput] = useState(false);
   const [token, setToken] = useState("");
   const [tokenExpires, setTokenExpires] = useState("");
+  const [tokenCloud, setTokenCloud] = useState("");
+  const [statusCloud, setStatusCloud] = useState("");
   const [dataCategories, setDataCategories] = useState([]);
   const [dataSite, setDataSite] = useState([]);
   const [dataCategory, setDataCategory] = useState([]);
@@ -186,6 +188,14 @@ const FormProvider = ({ children }) => {
     setPrevDataCategories(value);
   };
 
+  const handleTokenCloud = (value) => {
+    setTokenCloud(value);
+  };
+
+  const handleStatusCloud = (value) => {
+    setStatusCloud(value);
+  };
+
   const handleCategory = (category) => {
     setDataCategory(category);
   };
@@ -248,8 +258,10 @@ const FormProvider = ({ children }) => {
         handleGlpiSubCategory,
         handlePrevDataCategories,
         handleSelectDefaultValue,
+        handleStatusCloud,
         handleSubmit,
         handleSubtitleArticle,
+        handleTokenCloud,
         nextStep,
         prevDataCategories,
         prevStep,
@@ -260,9 +272,11 @@ const FormProvider = ({ children }) => {
         resetStep,
         selectDefaultValue,
         setValue,
+        statusCloud,
         stepsEstaticos,
         subtitleArticle,
         token,
+        tokenCloud,
         tokenExpires,
         watch,
       }}
