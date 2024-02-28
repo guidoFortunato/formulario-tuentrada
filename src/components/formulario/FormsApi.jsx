@@ -108,6 +108,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const onSubmit = async (data, event) => {
     event.preventDefault();
     console.log({ data });
+    return
     const { email, emailConfirm, ...content } = data;
 
     if (selectDefaultValue === "defaultValue") {
