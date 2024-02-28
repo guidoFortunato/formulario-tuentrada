@@ -15,6 +15,12 @@ export const ContainerForm = ({ params }) => {
   const [dataForm, setDataForm] = useState(initialState);
 
   useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+  }, []);
+
+  useEffect(() => {
     if (params.categoria === "verificacion-datos") {
       router.push("/verificacion-datos");
       return;
@@ -40,8 +46,7 @@ export const ContainerForm = ({ params }) => {
     }
   }, [token]);
 
-  if (dataForm !== undefined && dataForm.length === 0)
-    return <ContainerLoader />;
+  if (dataForm !== undefined && dataForm.length === 0) return <ContainerLoader />;
 
   return <Formularios dataForm={dataForm} params={params} />;
 };

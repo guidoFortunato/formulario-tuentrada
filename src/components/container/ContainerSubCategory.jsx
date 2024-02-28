@@ -13,7 +13,13 @@ export const ContainerSubCategory = ({ params }) => {
   const [dataSubCategory, setDataSubCategory] = useState([]);
   const [dataMostViews, setDataMostViews] = useState([]);
   const [error, setError] = useState(false);
-  // console.log({dataCategories})
+
+   useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+  }, []);
+  
   useEffect(() => {
     resetStep()
     resetDefaultValue()

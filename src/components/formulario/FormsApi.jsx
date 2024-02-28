@@ -177,26 +177,16 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     }
 
     if (currentStep + 1 === lengthSteps) {
-      // alertSuccessTickets("123456");
-      //  alertWarningTickets("123456", "12/02/2024", "En proceso de devolución","Por favor no envíes otro ticket",);
-      // alertErrorTickets()
-      // return;
 
       //Form final
       let id;
       const subject = [];
-      // console.log({data})
 
       secondSubject?.map((id) => {
-        // console.log({id})
         fields?.map((item) => {
-          // console.log({item})
           if (id === String(item.id)) {
-            // console.log(`id: ${id} == item.id: ${item.id}`)
             Object.keys(data).map((key) => {
-              // console.log({key})
               if (key === item.name) {
-                // console.log(`key: ${key} == item.name: ${item.name}`)
                 subject.push(data[key]);
                 return;
               }
@@ -204,8 +194,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           }
         });
       });
-
-      // console.log({subject})
       const finalSubject = subject.join(" - ");
 
       // Crear un nuevo FormData

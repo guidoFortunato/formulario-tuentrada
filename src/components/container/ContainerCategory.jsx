@@ -14,8 +14,12 @@ export const ContainerCategory = ({ params }) => {
   const [dataCategory, setDataCategory] = useState([]);
   const [error, setError] = useState(false);
 
-  // console.log({prevDataCategories, params: params.categoria})
-  // console.log({dataCategory})
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+  }, []);
+  
   useEffect(() => {
     resetStep()
     resetDefaultValue()
