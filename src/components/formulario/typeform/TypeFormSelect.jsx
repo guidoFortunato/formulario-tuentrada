@@ -5,7 +5,9 @@ import { FormContext } from "@/context/FormContext";
 
 export const TypeFormSelect = ({ item }) => {
   const { register, errors, watch, control } = useContext(FormContext);
-  const name = item.name.toLowerCase().split(" ").join("_");
+  const name = item.name;
+  // const name = item.name.toLowerCase().split(" ").join("_");
+
 
   const options = item.options.map((option) => ({
     label: option,
@@ -36,15 +38,22 @@ export const TypeFormSelect = ({ item }) => {
         name={name}
         control={control}
         defaultValue=""
-        placeholder="Seleccione una opción..."
         // rules={{ required: item.required === 1 && "Este campo es obligatorio" }}
+          rules={{
+            required: {
+               value: item.required === 1 ? true : false,
+               message: "Este campo es obligatorio",
+            },
+         }}
         render={({ field }) => {
-          console.log({field} )
+          // console.log({ field });
           return (
             <Select
               options={options}
               isSearchable={false}
-              value={field.value}
+              placeholder="Seleccione una opción..."
+              value={options.find((c) => c.value === field.value)}
+              onChange={val => field.onChange(val.value)}
               styles={{
                 control: (styles, state) => {
                   return {
@@ -52,12 +61,21 @@ export const TypeFormSelect = ({ item }) => {
                     borderRadius: "0.5rem",
                     minHeight: "42px",
                     marginBottom: "10px",
+                    backgroundColor: "#f7f7f7",
 
                     "&:hover": {
-                      borderColor: state.isFocused ? "#1955A5" : "#D1D5DB",
+                      borderColor: state.isFocused
+                        ? "#1955A5"
+                        : errors[name]
+                        ? "#ff4040"
+                        : "#D1D5DB",
                       borderWidth: state.isFocused ? "1px" : "1px",
                     },
-                    borderColor: state.menuIsOpen ? "#1955A5" : "#D1D5DB",
+                    borderColor: state.menuIsOpen
+                      ? "#1955A5"
+                      : errors[name]
+                      ? "#ff4040"
+                      : "#D1D5DB",
                   };
                 },
                 option: (styles, state) => {
@@ -82,7 +100,7 @@ export const TypeFormSelect = ({ item }) => {
       />
 
       {watch(name) ? (
-        watch(name).slice(0, 2).toLowerCase() === "ot" ? (
+        watch(name).includes("otro") || watch(name).includes("otra") ? (
           <>
             <input
               type="text"

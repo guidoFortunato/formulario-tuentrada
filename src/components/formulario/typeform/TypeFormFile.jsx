@@ -3,7 +3,7 @@ import { FormContext } from "@/context/FormContext";
 
 export const TypeFormFile = ({ item }) => {
   const { register, errors } = useContext(FormContext);
-  const name = item.name.toLowerCase().split(" ").join("_");
+  const name = item.name
   return (
     <div>
       <label
