@@ -93,49 +93,47 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     // console.log({ dataFormsDniTarjeta: data });
     const { emailConfirm, ...content } = data;
     const valueEmail = [];
-    const formDataTurnstile = new FormData(event.target)
-    const turnstileRes = formDataTurnstile.get('cf-turnstile-response')
+    const formDataTurnstile = new FormData(event.target);
+    const turnstileRes = formDataTurnstile.get("cf-turnstile-response");
 
-    try {
-      if (turnstileRes) {
+    // try {
+    //   if (turnstileRes) {
 
-        const serverValidation = await fetch("/api/cf", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(turnstileRes),
-        });
+    //     const serverValidation = await fetch("/api/cf", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(turnstileRes),
+    //     });
 
-        if (!serverValidation.ok) {
-          console.log({ serverValidation });
-          window.turnstile.reset();
-          return;
-        }
+    //     if (!serverValidation.ok) {
+    //       console.log({ serverValidation });
+    //       window.turnstile.reset();
+    //       return;
+    //     }
 
-        const { data: dataServer } = await serverValidation.json();
-        console.log({dataServer})
-        const { success } = dataServer;
+    //     const { data: dataServer } = await serverValidation.json();
+    //     console.log({dataServer})
+    //     const { success } = dataServer;
 
+    //     if (!success) {
+    //       console.log({ dataServer });
+    //       window.turnstile.reset();
+    //       return;
+    //     }
 
-        if (!success) {
-          console.log({ dataServer });
-          window.turnstile.reset();
-          return;
-        }
-                
-        // window.turnstile.remove()
-      }
-      
-    } catch (error) {
-      console.log({
-        error,
-        message: "turnstile error"
-      })
-    }
+    //     // window.turnstile.remove()
+    //   }
 
-    return
-    
+    // } catch (error) {
+    //   console.log({
+    //     error,
+    //     message: "turnstile error"
+    //   })
+    // }
+
+    // return
 
     Object.keys(content).map((key) => {
       if (
@@ -185,10 +183,10 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
             const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
 
             alertWarningTickets(ticketNumber, finalDate, status, message);
+            // setLoadingCheckHaveTickets(false);
             // reset();
             // resetStep();
             // router.push("/");
-            setLoadingCheckHaveTickets(false);
             return;
           }
         }
@@ -196,6 +194,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
         console.log({ error });
       } finally {
         setLoadingCheckHaveTickets(false);
+        reset();
+        resetStep();
+        router.push("/");
       }
     }
 
@@ -299,9 +300,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     } catch (error) {
       console.log({ error });
     } finally {
-      // reset();
       setIsLoading(false);
-      // router.push("/");
+      reset();
+      router.push("/");
     }
   };
 

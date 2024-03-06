@@ -1,20 +1,16 @@
-
 import AdSense from "../adsense/Adsense";
-import { Recaptcha2 } from "../formulario/Recaptcha2";
-// import { Recaptcha } from "../formulario/Recaptcha";
+import { Recaptcha } from "../formulario/Recaptcha";
 import { ContainerFooter } from "./ContainerFooter";
 import { ContainerHeader } from "./ContainerHeader";
 
 export const ContainerApp = ({ children }) => {
-  
   return (
     <>
       <ContainerHeader />
       {children}
-      {/* <AdSense /> */}
+      <AdSense />
       <ContainerFooter />
-      {/* <Recaptcha />  */}
-      <Recaptcha2 /> 
+      <Recaptcha />
     </>
   );
 };

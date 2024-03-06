@@ -15,7 +15,9 @@ export default function CookieBanner() {
     performance: true,
   };
 
-  const [acceptedCategories, setAcceptedCategories] = useState(initialAcceptedCategories);
+  const [acceptedCategories, setAcceptedCategories] = useState(
+    initialAcceptedCategories
+  );
 
   useEffect(() => {
     const newValue = cookieConsent ? "granted" : "denied";
@@ -46,7 +48,8 @@ export default function CookieBanner() {
     {
       id: "advertising",
       label: "Cookies publicitarias",
-      description: "Estas cookies se utilizan con fines publicitarios, incluyendo Google AdSense.",
+      description:
+        "Estas cookies se utilizan con fines publicitarios, incluyendo Google AdSense.",
     },
     {
       id: "performance",
@@ -57,7 +60,7 @@ export default function CookieBanner() {
   ];
 
   const handleCategoryToggle = (categoryId) => {
-    if (categoryId === 'required') {
+    if (categoryId === "required") {
       return; // Las cookies requeridas deben estar siempre activas
     }
 
@@ -88,13 +91,13 @@ export default function CookieBanner() {
         cookieConsent !== null ? "hidden" : "flex"
       } p-4 justify-between items-center bg-white rounded-t-md shadow-md max-w-max md:max-w-screen-sm`}
     >
-      <div className="text-center text-xs text-gray-700">
-
-          <p className="text-start">
-            Este sitio utiliza cookies para mejorar su experiencia.
-            <Link href="/info/cookies"> <span className="font-semibold text-blue-dark">Más información</span>     </Link>
-
-   </p>
+      <div className="text-start text-xs text-gray-700">
+        <p className="text-start">
+          Este sitio utiliza cookies para mejorar su experiencia.
+        </p>
+        <Link href="/info/cookies">
+          <span className="font-semibold text-blue-dark">Más información</span>
+        </Link>
       </div>
 
       <div className="flex gap-2 text-sm">
@@ -111,14 +114,14 @@ export default function CookieBanner() {
         >
           Aceptar
         </button>
-
       </div>
 
       {showModal && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-md">
-
-            <h3 className="text-lg font-semibold mb-4 text-blue-dark">Preferencias de Cookies</h3>
+            <h3 className="text-lg font-semibold mb-4 text-blue-dark">
+              Preferencias de Cookies
+            </h3>
 
             <div className="space-y-4 text-sm">
               {cookieCategories.map((category) => (
@@ -130,13 +133,18 @@ export default function CookieBanner() {
                     <input
                       type="checkbox"
                       className={`w-4 h-4 text-blue-dark bg-gray-100 border-gray-300 focus:ring-blue-dark ${
-                        (category.id === 'required') && 'text-gray-400 pointer-events-none'
+                        category.id === "required" &&
+                        "text-gray-400 pointer-events-none"
                       }`}
                       checked={acceptedCategories[category.id]}
                       onChange={() => handleCategoryToggle(category.id)}
                     />
                   </div>
-                  <p className={`text-gray-700 w-[95%] ${(category.id === 'required') && 'text-gray-200'}`}>
+                  <p
+                    className={`text-gray-700 w-[95%] ${
+                      category.id === "required" && "text-gray-200"
+                    }`}
+                  >
                     {category.description}
                   </p>
                 </div>

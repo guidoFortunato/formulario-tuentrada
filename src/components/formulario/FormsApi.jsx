@@ -107,7 +107,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    
+
     const { email, emailConfirm, ...content } = data;
 
     if (selectDefaultValue === "defaultValue") {
@@ -158,10 +158,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
 
             alertWarningTickets(ticketNumber, finalDate, status, message);
+            // setLoadingCheckHaveTickets(false);
             // reset();
             // resetStep();
             // router.push("/");
-            setLoadingCheckHaveTickets(false);
             return;
           }
         }
@@ -169,6 +169,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         console.log({ error });
       } finally {
         setLoadingCheckHaveTickets(false);
+        reset();
+        resetStep();
+        router.push("/");
       }
     }
 
@@ -177,7 +180,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     }
 
     if (currentStep + 1 === lengthSteps) {
-
       //Form final
       let id;
       const subject = [];
@@ -231,7 +233,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           }
           // if (Array.isArray(content[key])) {
           //   formData.append(newKey, content[key].join(" - "));
-          // } 
+          // }
           else {
             // Si no es un archivo, agregar el valor normalmente
             formData.append(newKey, content[key]);
@@ -267,10 +269,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       } catch (error) {
         console.log({ error });
       } finally {
-        // reset();
-        // resetStep();
         setFinalLoading(false);
-        // router.push("/");
+        reset();
+        resetStep();
+        router.push("/");
       }
     }
   };

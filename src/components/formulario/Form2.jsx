@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 
 import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
-import { Recaptcha } from "./Recaptcha";
+// import { Recaptcha } from "./Recaptcha";
 
 export const Form2 = ({ lengthSteps, dataForm }) => {
   const {
@@ -51,7 +51,11 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="nombre"
             id="nombre"
-            className={`bg-gray-50 border ${errors.nombre ? "border-red-500 focus:ring-red-300 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
+            className={`bg-gray-50 border ${
+              errors.nombre
+                ? "border-red-500 focus:ring-red-300 focus:border-red-500"
+                : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
+            } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su nombre"
             {...register("nombre", {
               required: {
@@ -77,7 +81,11 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="apellido"
             id="apellido"
-            className={`bg-gray-50 border ${errors.apellido ? "border-red-500 focus:ring-red-300 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
+            className={`bg-gray-50 border ${
+              errors.apellido
+                ? "border-red-500 focus:ring-red-300 focus:border-red-500"
+                : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
+            } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su apellido"
             {...register("apellido", {
               required: {
@@ -97,13 +105,18 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             htmlFor="DNI"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Número de Documento de Identidad (DNI) <span className="text-red-500">*</span>
+            Número de Documento de Identidad (DNI){" "}
+            <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             name="DNI"
             id="DNI"
-            className={`bg-gray-50 border ${errors.DNI ? "border-red-500 focus:ring-red-300 focus:border-red-500" : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"} text-gray-900 text-sm rounded-lg block w-full p-2.5`}
+            className={`bg-gray-50 border ${
+              errors.DNI
+                ? "border-red-500 focus:ring-red-300 focus:border-red-500"
+                : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
+            } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
             placeholder="Ingrese su número de documento"
             {...register("DNI", {
               required: {

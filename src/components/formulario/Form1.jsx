@@ -5,7 +5,6 @@ import { BotonSiguiente, BotonVolver } from ".";
 import { sendDataEmail } from "@/helpers/getInfoTest";
 import { Recaptcha } from "./Recaptcha";
 import { useRouter } from "next/navigation";
-import { Recaptcha2 } from "./Recaptcha2";
 
 export const Form1 = ({ lengthSteps, dataForm }) => {
   const {
