@@ -7,12 +7,12 @@ export const TypeFormSelect = ({ item }) => {
   const { register, errors, watch, control } = useContext(FormContext);
   const name = item.name;
   // const name = item.name.toLowerCase().split(" ").join("_");
-  console.log({item})
+  // console.log({itemSelect: item})
 
 
   const options =  item.subCategoryId ? item.subCategoryId.map((option) => ({
-    label: option,
-    value: option,
+    label: option.name,
+    value: option.name,
   })) : item.options.map((option) => ({
     label: option,
     value: option,

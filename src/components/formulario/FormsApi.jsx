@@ -73,20 +73,20 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
               </Fragment>
             );
           }
-          if (itemField.type === "select") {
+          if (itemField.type === "select" || itemField.type === "subCategoryGlpi") {
             return (
               <Fragment key={itemField.name}>
                 <TypeFormSelect item={itemField} />
               </Fragment>
             );
           }
-          if (itemField.type === "subCategoryGlpi") {
-            return (
-              <Fragment key={itemField.name}>
-                <TypeFormGlpi item={itemField} />
-              </Fragment>
-            );
-          }
+          // if (itemField.type === "subCategoryGlpi") {
+          //   return (
+          //     <Fragment key={itemField.name}>
+          //       <TypeFormGlpi item={itemField} />
+          //     </Fragment>
+          //   );
+          // }
           if (itemField.type === "radio") {
             return (
               <Fragment key={itemField.name}>
@@ -110,10 +110,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
     const { email, emailConfirm, ...content } = data;
 
-    if (selectDefaultValue === "defaultValue") {
-      handleErrorInput(true);
-      return;
-    }
+    // if (selectDefaultValue === "defaultValue") {
+    //   handleErrorInput(true);
+    //   return;
+    // }
 
     if (stepNow.checkHaveTickets === 1) {
       let id;
@@ -133,7 +133,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           email,
           id
         );
-        console.log({ infoGetDataTickets: info });
         // tickets abiertos
         if (info?.data?.tickets?.length > 0) {
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
@@ -141,6 +140,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             (ticket) => ticket.closeForm === 1
           );
           if (ticketsCloseForm.length > 0) {
+            console.log('tiene tickets sin cerrar', {ticketsCloseForm})
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
             const message = ticketsCloseForm[0].message;
@@ -158,7 +158,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
 
             alertWarningTickets(ticketNumber, finalDate, status, message);
-            // setLoadingCheckHaveTickets(false);
             // reset();
             // resetStep();
             // router.push("/");
@@ -169,9 +168,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         console.log({ error });
       } finally {
         setLoadingCheckHaveTickets(false);
-        reset();
-        resetStep();
-        router.push("/");
       }
     }
 
@@ -270,9 +266,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         console.log({ error });
       } finally {
         setFinalLoading(false);
-        reset();
-        resetStep();
-        router.push("/");
+        // reset();
+        // resetStep();
+        // router.push("/");
       }
     }
   };
