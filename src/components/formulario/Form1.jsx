@@ -44,12 +44,12 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
         data.email
       );
       // console.log({ data });
-      console.log({info})
+      // console.log({info})
       if (info?.status) {
         handleContacto({
           nombre: info.data.contact.first_name,
           apellido: info.data.contact.last_name,
-          DNI: info.data.contact.document,
+          DNI_Cliente_Original: info.data.contact.document,
         });
       }
       nextStep();

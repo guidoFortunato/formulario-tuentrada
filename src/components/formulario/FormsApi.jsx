@@ -73,7 +73,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
               </Fragment>
             );
           }
-          if (itemField.type === "select" || itemField.type === "subCategoryGlpi") {
+          if (
+            itemField.type === "select" ||
+            itemField.type === "subCategoryGlpi"
+          ) {
             return (
               <Fragment key={itemField.name}>
                 <TypeFormSelect item={itemField} />
@@ -107,8 +110,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    console.log({data})
-    return
+    console.log({ data });
+    return;
 
     const { email, emailConfirm, ...content } = data;
 
@@ -142,7 +145,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             (ticket) => ticket.closeForm === 1
           );
           if (ticketsCloseForm.length > 0) {
-            console.log('tiene tickets sin cerrar', {ticketsCloseForm})
+            console.log("tiene tickets sin cerrar", { ticketsCloseForm });
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
             const message = ticketsCloseForm[0].message;
