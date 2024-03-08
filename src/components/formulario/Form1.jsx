@@ -35,65 +35,21 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // window.turnstile.reset()
-    // const formData = new FormData(event.target)
-    // const turnstileRes = formData.get('cf-turnstile-response')
-    // console.log({turnstileRes})
     setIsLoading(true);
 
     try {
-      // if (captcha === "") {
-      //   setErrorRecaptcha(true);
-      //   return;
-      // }
-      // catpcha cloudflare
-
-      // const tokenCF = window.turnstile.getResponse();
-
-      // if (turnstileRes) {
-
-      //   const serverValidation = await fetch("/api/cf", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify(turnstileRes),
-      //   });
-
-      //   if (!serverValidation.ok) {
-      //     console.log({ serverValidation });
-      //     window.turnstile.reset();
-      //     return;
-      //   }
-
-      //   const { data: dataServer } = await serverValidation.json();
-      //   const { success } = dataServer;
-
-      //   if (!success) {
-      //     console.log({ dataServer });
-      //     window.turnstile.reset();
-      //     return;
-      //   }
-
-      //   window.turnstile.remove()
-      // }
-      // return
-      // window.turnstile.remove()
-
-
       const info = await sendDataEmail(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
         token,
         data.email
       );
       // console.log({ data });
+      console.log({info})
       if (info?.status) {
         handleContacto({
-          id: info.data.contact.id,
-          document: info.data.contact.document,
-          first_name: info.data.contact.first_name,
-          last_name: info.data.contact.last_name,
-          phone_number1: info.data.contact.phone_number1,
+          nombre: info.data.contact.first_name,
+          apellido: info.data.contact.last_name,
+          DNI: info.data.contact.document,
         });
       }
       nextStep();
