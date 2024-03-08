@@ -23,6 +23,7 @@ const FormProvider = ({ children }) => {
   const [dataCategory, setDataCategory] = useState([]);
   const [prevDataCategories, setPrevDataCategories] = useState("");
   const [isEditDNI, setIsEditDNI] = useState(false);
+  const [dni, setDni] = useState("");
 
   const {
     formState: { errors },
@@ -189,6 +190,10 @@ const FormProvider = ({ children }) => {
     setPrevDataCategories(value);
   };
 
+  const handleDni = (value) => {
+    setDni(value);
+  };
+
   const handleEditDni = (value) => {
     setIsEditDNI(value);
   };
@@ -254,11 +259,13 @@ const FormProvider = ({ children }) => {
         dataCategory,
         dataContacto,
         dataSite,
+        dni,
         errorInput,
         errors,
         glpiSubCategory,
         handleCategory,
         handleContacto,
+        handleDni,
         handleEditDni,
         handleErrorInput,
         handleGlpiSubCategory,

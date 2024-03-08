@@ -17,23 +17,37 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
     control,
     isEditDNI,
     handleEditDni,
+    dni,
+    handleDni,
   } = useContext(FormContext);
 
-  console.log({ isEditDNI });
+  // console.log({ isEditDNI });
 
   useEffect(() => {
-    console.log({ dataContacto });
+    // console.log({ dataContacto });
     if (dataContacto !== null) {
       setValue("nombre", dataContacto.nombre);
       setValue("apellido", dataContacto.apellido);
-      setValue("DNI", dataContacto.DNI);
+      console.log({dni})
+      if (dni === "") {
+        setValue("DNI", dataContacto.DNI);        
+      }else{
+        setValue("DNI", dni);
+      }
     }
   }, [dataContacto]);
 
   const handleEditButton = () => {
     handleEditDni(true);
     setValue("DNI", "");
+    handleDni("")
   };
+  const handleOriginalButton = () => {
+    handleEditDni(false);
+    setValue("DNI", dataContacto.DNI);
+    handleDni("")
+  };
+  
 
   const onSubmit = (data, event) => {
     event.preventDefault();
@@ -126,7 +140,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                 name="DNI"
                 id="DNI"
                 className={`bg-gray-50 border ${
-                  errors
+                  errors.DNI
                     ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                     : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
                 } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
@@ -153,7 +167,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
               }}
               render={({ field: { value }, fieldState: { error } }) => (
                 <>
-                {console.log({ value })}
+                  {/* {console.log({ value1: value })} */}
                   <label
                     htmlFor="DNI"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -171,9 +185,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                         : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
                     } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
                     placeholder="Ingrese su número de documento"
-                    value={
-                      value && "*".repeat(value.length - 3) + value.slice(-3)
-                    }
+                    value={ value && "*".repeat(value.length - 3) + value.slice(-3) }
                     onChange={() => {}}
                   />
                   <button
@@ -203,7 +215,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                 fieldState: { error },
               }) => (
                 <>
-                  {console.log({ value })}
+                  {/* {console.log({ value2: value })} */}
                   <label
                     htmlFor="DNI"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -221,11 +233,18 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                         : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
                     } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
                     placeholder="Ingrese su número de documento"
-                    onChange={onChange}
+                    onChange={(e) => {
+                      onChange(e);
+                      handleDni(e.target.value);
+                    }}
                   />
-                  <div className="text-white cursor-default bg-gradient-to-r from-gray-300 to-gray-500 opacity-70 font-medium rounded-md text-sm  py-1.5 text-center mt-2 w-[100px] whitespace-nowrap">
-                    Editar DNI
-                  </div>
+                   <button
+                    type="button"
+                    className="text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm  py-1.5 text-center mt-2 w-[120px] whitespace-nowrap"
+                    onClick={() => handleOriginalButton()}
+                  >
+                    Ver DNI original
+                  </button>
                 </>
               )}
             />
