@@ -51,6 +51,30 @@
   /* .datepicker button:hover{
     background: rgb(247, 246, 246);
   } */
-  .datepicker button:active{
-    background: blue
-  }
+  .css-170ovzl-control {
+    background-color: #F9FAFB!important;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #D1D5DB;
+    color: #000;
+    font-size: 0.875rem!important;
+    border-radius: 0.5rem;
+    display: block;
+
+
+}
+
+.css-170ovzl-control:focus {
+ 
+ opacity: 1;
+  outline: none!important;
+  border-color: rgb(164, 202, 254)!important; 
+  box-shadow: 0 0 0 1px rgba(164, 202, 254, 0.192)!important;
+}
+
+.css-170ovzl-control:hover {
+  opacity: 1;
+  outline: none!important;
+  border-color: rgb(164, 202, 254)!important; 
+  box-shadow: 0 0 0 1px rgba(164, 202, 254, 0.192)!important;
+}
