@@ -49,7 +49,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
         handleContacto({
           nombre: info.data.contact.first_name,
           apellido: info.data.contact.last_name,
-          DNI_Cliente_Original: info.data.contact.document,
+          DNI_STX: info.data.contact.document,
         });
       }
       nextStep();
@@ -74,6 +74,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="email"
             id="email"
+            autoComplete="email"
             className={`bg-gray-50 border ${
               errors.email
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
@@ -109,6 +110,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
+            autoComplete="email"
             className={`bg-gray-50 border ${
               errors.emailConfirm
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
