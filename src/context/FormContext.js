@@ -9,7 +9,7 @@ export const FormContext = createContext();
 
 const FormProvider = ({ children }) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [dataContacto, setDataContacto] = useState(null);
+  const [dataContacto, setDataContacto] = useState("");
   const [glpiSubCategory, setGlpiSubCategory] = useState("");
   const [subtitleArticle, setSubtitleArticle] = useState("");
   const [selectDefaultValue, setSelectDefaultValue] = useState("");
@@ -22,6 +22,8 @@ const FormProvider = ({ children }) => {
   const [dataSite, setDataSite] = useState([]);
   const [dataCategory, setDataCategory] = useState([]);
   const [prevDataCategories, setPrevDataCategories] = useState("");
+  const [isEditDNI, setIsEditDNI] = useState(false);
+  const [dni, setDni] = useState("");
 
   const {
     formState: { errors },
@@ -188,6 +190,14 @@ const FormProvider = ({ children }) => {
     setPrevDataCategories(value);
   };
 
+  const handleDni = (value) => {
+    setDni(value);
+  };
+
+  const handleEditDni = (value) => {
+    setIsEditDNI(value);
+  };
+
   const handleTokenCloud = (value) => {
     setTokenCloud(value);
   };
@@ -249,11 +259,14 @@ const FormProvider = ({ children }) => {
         dataCategory,
         dataContacto,
         dataSite,
+        dni,
         errorInput,
         errors,
         glpiSubCategory,
         handleCategory,
         handleContacto,
+        handleDni,
+        handleEditDni,
         handleErrorInput,
         handleGlpiSubCategory,
         handlePrevDataCategories,
@@ -262,6 +275,7 @@ const FormProvider = ({ children }) => {
         handleSubmit,
         handleSubtitleArticle,
         handleTokenCloud,
+        isEditDNI,
         nextStep,
         prevDataCategories,
         prevStep,

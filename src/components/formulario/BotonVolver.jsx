@@ -2,8 +2,7 @@ import { useContext } from "react";
 import { FormContext } from "@/context/FormContext";
 
 export const BotonVolver = () => {
-  const { currentStep, prevStep, handleSelectDefaultValue } =
-    useContext(FormContext);
+  const { currentStep, prevStep, handleSelectDefaultValue } = useContext(FormContext);
 
   const handleClick = () => {
     handleSelectDefaultValue("");
