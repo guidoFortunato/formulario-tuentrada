@@ -110,8 +110,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    console.log({ data });
-    return;
+    // console.log({ data });
+    // return;
 
     const { email, emailConfirm, ...content } = data;
 
@@ -163,9 +163,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
 
             alertWarningTickets(ticketNumber, finalDate, status, message);
-            // reset();
-            // resetStep();
-            // router.push("/");
+            reset();
+            resetStep();
+            router.push("/");
             return;
           }
         }
@@ -256,7 +256,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
-        console.log({ info });
+        // console.log({ info });
 
         if (info === undefined || !info.ok) {
           alertErrorTickets();
@@ -264,16 +264,16 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           return;
         }
         const { data } = await info.json();
-        console.log({ data });
+        // console.log({ data });
         const numberTicket = data?.ticketNumber;
         alertSuccessTickets(numberTicket);
       } catch (error) {
         console.log({ error });
       } finally {
         setFinalLoading(false);
-        // reset();
-        // resetStep();
-        // router.push("/");
+        reset();
+        resetStep();
+        router.push("/");
       }
     }
   };

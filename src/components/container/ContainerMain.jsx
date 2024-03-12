@@ -6,7 +6,6 @@ import { Loader } from "@/components/loading";
 import { FormContext } from "@/context/FormContext";
 import { Skeleton } from "../skeleton/Skeleton";
 
-
 export const ContainerMain = () => {
   const { dataCategories, resetStep, resetDefaultValue, resetGlpiSubCategory } = useContext(FormContext);
 
@@ -15,11 +14,11 @@ export const ContainerMain = () => {
       window.scrollTo(0, 0);
     }, 100);
   }, []);
-  
+
   useEffect(() => {
-    resetStep()
-    resetDefaultValue()
-    resetGlpiSubCategory()
+    resetStep();
+    resetDefaultValue();
+    resetGlpiSubCategory();
   }, []);
 
   if (dataCategories === undefined) return <Loader />;
@@ -55,8 +54,8 @@ export const ContainerMain = () => {
     );
 
   //! manejo de errores, cuando dataCategories es undefined enviar a pagina de error
-  
-  const infoCategories = (categories) => (
+
+  const infoCategories = (categories) =>
     categories.length > 0 &&
     categories.map((item) => (
       <CardCategoria
@@ -67,36 +66,29 @@ export const ContainerMain = () => {
         description={item.reference}
         icon={item.svg}
       />
-    ))
-  );
+    ));
   const firstCategories = dataCategories.slice(0, 2);
   const thirdCategory = dataCategories.slice(2, 3);
-  const restCategories = dataCategories.slice(3,6);
+  const restCategories = dataCategories.slice(3, 6);
   const twoCategories = dataCategories.slice(6);
   return (
     <main>
       <div className="container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 flex-1">
-        
-      
         <section className="w-[80%] grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 mx-auto mt-4">
           {infoCategories(firstCategories)}
         </section>
 
-      
         <section className="w-[80%] grid grid-cols-1 justify-items-center gap-4 mx-auto mt-4">
           {infoCategories(thirdCategory)}
         </section>
-
 
         <section className="w-[80%] grid grid-cols-1 lg:grid-cols-3 justify-items-center gap-4 mx-auto mt-4">
           {infoCategories(restCategories)}
         </section>
 
-    
         <section className="w-[80%] grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 mx-auto mt-4">
           {infoCategories(twoCategories)}
         </section>
-
       </div>
     </main>
   );

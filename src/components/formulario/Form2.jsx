@@ -19,7 +19,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
     handleEditDni,
   } = useContext(FormContext);
 
-  console.log({ dataContacto });
+  // console.log({ dataContacto });
   // console.log({ errors });
 
   useEffect(() => {

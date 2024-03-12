@@ -63,7 +63,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
   return (
     <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-4 mb-4 grid-cols-1 sm:grid-cols-2">
-        <div>
+        <div className="user-select: none; ">
           <label
             htmlFor="email"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -75,7 +75,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             name="email"
             id="email"
             autoComplete="email"
-            className={`bg-gray-50 border ${
+            className={`bg-gray-50 border  ${
               errors.email
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                 : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
@@ -110,7 +110,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
-            autoComplete="email"
+            autoComplete="off"
             className={`bg-gray-50 border ${
               errors.emailConfirm
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
