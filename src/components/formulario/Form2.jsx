@@ -121,8 +121,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                 htmlFor="DNI"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Número de Documento de Identidad (DNI)
-                <span className="text-red-500">*</span>
+                Número de Documento de Identidad (DNI) <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -165,8 +164,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                     htmlFor="DNI_STX"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Número de Documento de Identidad (DNI)
-                    <span className="text-red-500">*</span>
+                    Número de Documento de Identidad (DNI) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -205,8 +203,7 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                 htmlFor="DNI_editado"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Número de Documento de Identidad (DNI)
-                <span className="text-red-500">*</span>
+                Número de Documento de Identidad (DNI) <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"

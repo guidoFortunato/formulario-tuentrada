@@ -1,30 +1,30 @@
 import { useContext } from "react";
-import Script from "next/script";
-import { Controller } from "react-hook-form";
+// import Script from "next/script";
+// import { Controller } from "react-hook-form";
 // import { Datepicker } from "flowbite-react";
 import { FormContext } from "@/context/FormContext";
-import { Flowbite } from "flowbite-react";
+// import { Flowbite } from "flowbite-react";
 
 // Meses en español
-const meses = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre",
-];
+// const meses = [
+//   "Enero",
+//   "Febrero",
+//   "Marzo",
+//   "Abril",
+//   "Mayo",
+//   "Junio",
+//   "Julio",
+//   "Agosto",
+//   "Septiembre",
+//   "Octubre",
+//   "Noviembre",
+//   "Diciembre",
+// ];
 
 export const TypeFormInput = ({ item }) => {
   const { register, errors, control, watch } = useContext(FormContext);
   const nameInput = item.name;
-  // const nameInput = item.name.toLowerCase().split(" ").join("_");
+  // console.log({item})
 
   return (
     <>
@@ -33,7 +33,7 @@ export const TypeFormInput = ({ item }) => {
         async
         defer
       ></Script> */}
-      <div>
+      <div className={ item.subtype === "hidden" ? "hidden" : "" }>
         <label
           htmlFor={item.subtype === "emailConfirm" ? item.subtype : nameInput}
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
