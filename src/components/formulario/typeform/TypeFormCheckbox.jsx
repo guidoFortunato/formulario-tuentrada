@@ -6,7 +6,7 @@ export const TypeFormCheckbox = ({ item }) => {
   const name = item.name.toLowerCase().split(" ").join("_");
 
   return (
-    <div>
+    <div className={ item.subtype === "hidden" ? "hidden" : "" }>
       <span className="mb-4 text-sm font-medium text-gray-900 dark:text-white">
         {item.name} {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
       </span>
