@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
@@ -20,6 +20,9 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const inputEmail = useRef(null)
+  // console.log({inputEmail: inputEmail})
 
   // console.log({turnstile: window.turnstile})
 
@@ -74,6 +77,8 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="email"
             id="email"
+            ref={inputEmail}
+            style={{ userSelect: 'none' }} // Desactiva la selección de texto
             autoComplete="email"
             className={`bg-gray-50 border  ${
               errors.email
