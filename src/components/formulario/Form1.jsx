@@ -15,11 +15,19 @@ export const Form1 = ({ lengthSteps }) => {
     token,
   } = useContext(FormContext);
   const [isLoading, setIsLoading] = useState(false);
-
+  
   useEffect(() => {
     handleContacto(null);
     reset();
   }, []);
+
+  const handleCopy = (e)=>{
+    e.preventDefault();
+  }
+
+
+
+  //Boton OnSubmit
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
@@ -62,8 +70,7 @@ export const Form1 = ({ lengthSteps }) => {
             type="text"
             name="email"
             id="email"
-            ref={inputEmail}
-            style={{ userSelect: 'none' }} // Desactiva la selección de texto
+            onCopy={ handleCopy }
             autoComplete="email"
             className={`bg-gray-50 border  ${
               errors.email
@@ -100,6 +107,7 @@ export const Form1 = ({ lengthSteps }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
+            onCopy={ handleCopy }
             autoComplete="off"
             className={`bg-gray-50 border ${
               errors.emailConfirm

@@ -6,6 +6,7 @@ import { RichText } from "./RichText";
 
 export const ArticleRows = ({ item }) => {
   const columns = item.columns;
+  // console.log({columns})
 
   return (
     <section
