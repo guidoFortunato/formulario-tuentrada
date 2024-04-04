@@ -141,23 +141,17 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         // tickets abiertos
         if (info?.data?.tickets?.length > 0) {
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
-          const ticketsCloseForm = info.data.tickets.filter(
-            (ticket) => ticket.closeForm === 1
-          );
+          const ticketsCloseForm = info.data.tickets.filter( (ticket) => ticket.closeForm === 1 );
           if (ticketsCloseForm.length > 0) {
             console.log("tiene tickets sin cerrar", { ticketsCloseForm });
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
             const message = ticketsCloseForm[0].message;
-            const date = ticketsCloseForm[0].dateCreated
-              .split(" ")[0]
-              .split("-");
+            const date = ticketsCloseForm[0].dateCreated.split(" ")[0].split("-");
             const day = date[2];
             const month = date[1];
             const year = date[0];
-            const time = ticketsCloseForm[0].dateCreated
-              .split(" ")[1]
-              .split(":");
+            const time = ticketsCloseForm[0].dateCreated.split(" ")[1].split(":");
             const hours = time[0];
             const minutes = time[1];
             const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
@@ -172,6 +166,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       } catch (error) {
         console.log({ error });
       } finally {
+        console.log("primer finally")
         setLoadingCheckHaveTickets(false);
       }
     }
@@ -259,10 +254,12 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         // console.log({ info });
 
         if (info === undefined || !info.ok) {
+          console.log("info === undefined || !info.ok")
           alertErrorTickets();
           setFinalLoading(false);
           return;
         }
+        console.log("info !== undefined || info.ok")
         const { data } = await info.json();
         // console.log({ data });
         const numberTicket = data?.ticketNumber;
@@ -270,6 +267,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       } catch (error) {
         console.log({ error });
       } finally {
+        console.log("último finally")
         setFinalLoading(false);
         reset();
         resetStep();
