@@ -1,12 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
 import { sendDataEmail } from "@/helpers/getInfoTest";
-import { Recaptcha } from "./Recaptcha";
-import { useRouter } from "next/navigation";
 
-export const Form1 = ({ lengthSteps, dataForm }) => {
+export const Form1 = ({ lengthSteps }) => {
   const {
     register,
     handleSubmit,
@@ -17,21 +14,20 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
     reset,
     token,
   } = useContext(FormContext);
-  const [captcha, setCaptcha] = useState("");
-  const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // console.log({turnstile: window.turnstile})
-
-  const handleRecaptcha = (e) => {
-    setCaptcha(e);
-    setErrorRecaptcha(false);
-  };
-
+  
   useEffect(() => {
     handleContacto(null);
     reset();
   }, []);
+
+  const handleCopy = (e)=>{
+    e.preventDefault();
+  }
+
+
+
+  //Boton OnSubmit
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
@@ -49,7 +45,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
         handleContacto({
           nombre: info.data.contact.first_name,
           apellido: info.data.contact.last_name,
-          DNI_Cliente_Original: info.data.contact.document,
+          DNI_STX: info.data.contact.document,
         });
       }
       nextStep();
@@ -63,7 +59,7 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
   return (
     <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-4 mb-4 grid-cols-1 sm:grid-cols-2">
-        <div>
+        <div className="user-select: none; ">
           <label
             htmlFor="email"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -74,7 +70,9 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="email"
             id="email"
-            className={`bg-gray-50 border ${
+            onCopy={ handleCopy }
+            autoComplete="email"
+            className={`bg-gray-50 border  ${
               errors.email
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                 : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
@@ -109,6 +107,8 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
+            onCopy={ handleCopy }
+            autoComplete="off"
             className={`bg-gray-50 border ${
               errors.emailConfirm
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
@@ -122,7 +122,8 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
               },
               validate: (value) => {
                 return (
-                  value === watch("email") || "Los correo electrónicos deben ser iguales"
+                  value === watch("email") ||
+                  "Los correo electrónicos deben ser iguales"
                 );
               },
             })}
@@ -134,21 +135,11 @@ export const Form1 = ({ lengthSteps, dataForm }) => {
             </span>
           )}
         </div>
-        <div className="outer-container">
+        {/* <div className="outer-container">
           <div className="inner-container">
-            {/* <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-              onChange={handleRecaptcha}
-            />
-            {errorRecaptcha && (
-              <span className="text-red-600 text-sm block mt-1">
-                Este campo es obligatorio
-              </span>
-            )} */}
-            {/* <Recaptcha /> */}
-            {/* <Recaptcha2 /> */}
+            <Recaptcha />
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="justify-center flex pb-10">
         <BotonVolver />

@@ -19,17 +19,20 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
     handleEditDni,
   } = useContext(FormContext);
 
+  // console.log({ dataContacto });
+  // console.log({ errors });
+
   useEffect(() => {
     if (dataContacto !== null) {
       setValue("nombre", dataContacto.nombre);
       setValue("apellido", dataContacto.apellido);
-      setValue("DNI_Cliente_Original", dataContacto.DNI_Cliente_Original);
+      setValue("DNI_STX", dataContacto.DNI_STX);
     }
-  }, [dataContacto]);
+  }, []);
 
   const handleOriginalButton = () => {
     handleEditDni(false);
-    setValue("DNI", dataContacto.DNI);
+    setValue("DNI", dataContacto?.DNI);
     // handleDni("");
   };
 
@@ -60,8 +63,9 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="nombre"
             id="nombre"
+            autoComplete="given-name"
             className={`bg-gray-50 border ${
-              errors.nombre
+              errors?.nombre
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                 : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
             } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
@@ -73,9 +77,9 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
               },
             })}
           />
-          {errors.nombre && (
+          {errors?.nombre && (
             <span className="text-red-600 text-xs block mt-1">
-              {errors.nombre.message}
+              {errors.nombre?.message}
             </span>
           )}
         </div>
@@ -90,8 +94,9 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
             type="text"
             name="apellido"
             id="apellido"
+            autoComplete="family-name"
             className={`bg-gray-50 border ${
-              errors.apellido
+              errors?.apellido
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                 : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
             } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
@@ -103,9 +108,9 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
               },
             })}
           />
-          {errors.apellido && (
+          {errors?.apellido && (
             <span className="text-red-600 text-xs block mt-1">
-              {errors.apellido.message}
+              {errors?.apellido?.message}
             </span>
           )}
         </div>
@@ -116,15 +121,14 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                 htmlFor="DNI"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Número de Documento de Identidad (DNI)
-                <span className="text-red-500">*</span>
+                Número de Documento de Identidad (DNI) <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 name="DNI"
                 id="DNI"
                 className={`bg-gray-50 border ${
-                  errors.DNI
+                  errors?.DNI
                     ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                     : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
                 } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
@@ -136,11 +140,16 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                   },
                 })}
               />
+              {errors?.DNI && (
+                <span className="text-red-600 text-xs block mt-1">
+                  {errors?.DNI?.message}
+                </span>
+              )}
             </>
           )}
           {dataContacto !== null && !isEditDNI && (
             <Controller
-              name="DNI_Cliente_Original"
+              name="DNI_STX"
               control={control}
               defaultValue=""
               rules={{
@@ -152,16 +161,15 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
               render={({ field: { value }, fieldState: { error } }) => (
                 <>
                   <label
-                    htmlFor="DNI_Cliente_Original"
+                    htmlFor="DNI_STX"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Número de Documento de Identidad (DNI){" "}
-                    <span className="text-red-500">*</span>
+                    Número de Documento de Identidad (DNI) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
-                    name="DNI_Cliente_Original"
-                    id="DNI_Cliente_Original"
+                    name="DNI_STX"
+                    id="DNI_STX"
                     className={`bg-gray-50 border ${
                       error
                         ? "border-red-500 focus:ring-red-300 focus:border-red-500"
@@ -173,12 +181,17 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
                     }
                     onChange={() => {}}
                   />
+                  {errors?.DNI_STX && (
+                    <span className="text-red-600 text-xs block mt-1">
+                      {errors?.DNI_STX?.message}
+                    </span>
+                  )}
                   <button
                     type="button"
                     className="text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm  py-1.5 text-center mt-2 w-[100px] whitespace-nowrap"
                     onClick={() => handleEditDni(true)}
                   >
-                    Editar DNI
+                    Editar
                   </button>
                 </>
               )}
@@ -187,54 +200,41 @@ export const Form2 = ({ lengthSteps, dataForm }) => {
           {dataContacto !== null && isEditDNI && (
             <>
               <label
-                htmlFor="DNI_Cliente_Nuevo"
+                htmlFor="DNI_editado"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Número de Documento de Identidad (DNI)
-                <span className="text-red-500">*</span>
+                Número de Documento de Identidad (DNI) <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                name="DNI_Cliente_Nuevo"
-                id="DNI_Cliente_Nuevo"
+                name="DNI_editado"
+                id="DNI_editado"
                 className={`bg-gray-50 border ${
-                  errors.DNI_Cliente_Nuevo
+                  errors?.DNI_editado
                     ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                     : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
                 } text-gray-900 text-sm rounded-lg block w-full p-2.5`}
                 placeholder="Ingrese su número de documento"
-                {...register("DNI_Cliente_Nuevo", {
+                {...register("DNI_editado", {
                   required: {
                     value: true,
                     message: "Este campo es obligatorio",
                   },
                 })}
               />
+              {errors?.DNI_editado && (
+                <span className="text-red-600 text-xs block mt-1">
+                  {errors?.DNI_editado?.message}
+                </span>
+              )}
               <button
-                
                 type="button"
                 className="text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm  py-1.5 text-center mt-2 w-[120px] whitespace-nowrap"
                 onClick={() => handleOriginalButton()}
               >
-                Ver DNI original
+                Cancelar
               </button>
             </>
-          )}
-
-          {errors.DNI_Cliente_Original && (
-            <span className="text-red-600 text-xs block mt-1">
-              {errors.DNI_Cliente_Original.message}
-            </span>
-          )}
-          {errors.DNI_Cliente_Nuevo && (
-            <span className="text-red-600 text-xs block mt-1">
-              {errors.DNI_Cliente_Nuevo.message}
-            </span>
-          )}
-          {errors.DNI && (
-            <span className="text-red-600 text-xs block mt-1">
-              {errors.DNI}
-            </span>
           )}
         </div>
       </div>
