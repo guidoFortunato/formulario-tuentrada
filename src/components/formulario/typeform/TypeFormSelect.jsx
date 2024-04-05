@@ -105,7 +105,7 @@ export const TypeFormSelect = ({ item }) => {
       />
 
       {watch(name) ? (
-        watch(name).includes("otro") || watch(name).includes("otra") ? (
+        watch(name).toLowerCase() === "otro" || watch(name).toLowerCase() === "otra" ? (
           <>
             <input
               type="text"
@@ -116,7 +116,7 @@ export const TypeFormSelect = ({ item }) => {
                   ? "border-red-500 focus:ring-red-300 focus:border-red-500"
                   : "border-gray-300 focus:ring-blue-300 focus:border-blue-dark"
               } text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-2`}
-              placeholder={item.helperText}
+              placeholder={"Detalle la opción seleccionada..."}
               {...register("otra", {
                 required: {
                   value: item.required === 1 ? true : false,

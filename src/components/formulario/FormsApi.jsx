@@ -143,6 +143,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
           const ticketsCloseForm = info.data.tickets.filter( (ticket) => ticket.closeForm === 1 );
           if (ticketsCloseForm.length > 0) {
+            
             console.log("tiene tickets sin cerrar", { ticketsCloseForm });
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
