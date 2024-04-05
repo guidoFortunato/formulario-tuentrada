@@ -1,12 +1,13 @@
 import dompurify from "isomorphic-dompurify";
+// import ReactMarkdown from 'react-markdown'
 
-export const RichText = ({ itemColumn, item, index, colSpan }) => {
+export const RichText = ({ itemColumn, item, index }) => {
   const sanitizer = dompurify.sanitize;
   // console.log({index})
 
   const title = itemColumn.titleOrLabel;
   const description = itemColumn.description;
-  // console.log({index})
+  // console.log({description})
 
   return (
     <div
@@ -21,11 +22,13 @@ export const RichText = ({ itemColumn, item, index, colSpan }) => {
     `}
     >
       <h3 className="text-blue-dark font-semibold mb-2">{title}</h3>
+      
       <div className="text-base text-gray-700"
         dangerouslySetInnerHTML={{
           __html: sanitizer(description),
         }}
       ></div>
+     {/* <ReactMarkdown  rehypePlugins={[[rehypeExternalLinks, {target: '_blank'}]]}   children={description} /> */}
     </div>
   );
 };

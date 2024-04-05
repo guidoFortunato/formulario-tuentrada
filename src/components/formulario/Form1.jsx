@@ -15,17 +15,19 @@ export const Form1 = ({ lengthSteps }) => {
     token,
   } = useContext(FormContext);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   useEffect(() => {
     handleContacto(null);
     reset();
   }, []);
 
-  const handleCopy = (e)=>{
+  const handleCopy = (e) => {
     e.preventDefault();
-  }
+  };
 
-
+  const handlePaste = (e) => {
+    e.preventDefault();
+  };
 
   //Boton OnSubmit
 
@@ -70,7 +72,8 @@ export const Form1 = ({ lengthSteps }) => {
             type="text"
             name="email"
             id="email"
-            onCopy={ handleCopy }
+            onCopy={handleCopy}
+            onPaste={handlePaste}
             autoComplete="email"
             className={`bg-gray-50 border  ${
               errors.email
@@ -101,13 +104,15 @@ export const Form1 = ({ lengthSteps }) => {
             htmlFor="emailConfirm"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Confirmación de Correo Electrónico <span className="text-red-500">*</span>
+            Confirmación de Correo Electrónico{" "}
+            <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             name="emailConfirm"
             id="emailConfirm"
-            onCopy={ handleCopy }
+            onCopy={handleCopy}
+            onPaste={handlePaste}
             autoComplete="off"
             className={`bg-gray-50 border ${
               errors.emailConfirm
