@@ -95,9 +95,9 @@ export default function CookieBanner() {
         <p className="text-start">
           Este sitio utiliza cookies para mejorar su experiencia.
         </p>
-        <Link href="/info/cookies">
+        {/* <Link href="/info/cookies">
           <span className="font-semibold text-blue-dark">Más información</span>
-        </Link>
+        </Link> */}
       </div>
 
       <div className="flex gap-2 text-sm">
