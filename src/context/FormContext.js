@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { getToken } from "@/helpers/getToken";
 import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";
@@ -8,6 +9,8 @@ import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";
 export const FormContext = createContext();
 
 const FormProvider = ({ children }) => {
+  const router = useRouter();
+
   const [currentStep, setCurrentStep] = useState(0);
   const [dataContacto, setDataContacto] = useState("");
   const [glpiSubCategory, setGlpiSubCategory] = useState("");
@@ -175,8 +178,12 @@ const FormProvider = ({ children }) => {
             `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`,
             token
           );
+          if (!info.status) {
+            router.push('/error')
+            return
+          }
           // console.log({token})
-          console.log({info})
+          // console.log({info})
           const { categories } = info?.data;
           setDataCategories(categories);
         };
