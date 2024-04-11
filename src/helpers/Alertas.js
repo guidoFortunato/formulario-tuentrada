@@ -54,7 +54,7 @@ export const alertSuccessTickets = (numberTicket = "") => {
     html: ` <div style="text-align: center;">
         <b> <span style="font-size: 25px; font-weight: bold;">Gracias por contactarte</span><br></b><br>
         <span style="font-size: 16px; font-weight: bold;">Tu número de ticket es: <span style="color: #6bbf59; font-size: 16px; font-weight:bold ">  ${numberTicket}</span> </span><br><br>  
-        <small style="font-size: 80%; color:#6C6C6C">Toda la información te llegará por correo electrónico. Puede revisar la carpeta de spam en caso de no recibirlo.</small> </div>`,
+        <small style="font-size: 80%; color:#6C6C6C">La copia de la información que completaste te llegará por correo electrónico. Revisá la carpeta de spam en caso de no verlo en tu bandeja de entrada.</small> </div>`,
 
     confirmButtonColor: "#1955A5",
   });

@@ -176,8 +176,8 @@ const FormProvider = ({ children }) => {
             token
           );
           // console.log({token})
-          // console.log({info})
-          const { categories } = info.data;
+          console.log({info})
+          const { categories } = info?.data;
           setDataCategories(categories);
         };
         getDataCategories();

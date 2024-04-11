@@ -63,7 +63,7 @@ export const ArticleAccordion = ({ itemColumn }) => {
             <div
               id={`accordion-flush-body-${index}`}
               className={`overflow-hidden transition-max-height ease-in-out duration-300 ${
-                openStates[index] ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+                openStates[index] ? "opacity-100" : "max-h-0 opacity-0"
               }`}
               aria-labelledby={`accordion-flush-heading-${index}`}
             >
