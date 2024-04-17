@@ -40,7 +40,7 @@ export const FormBusqueda = () => {
             setError(true);
           }
 
-          setData(res.data.articles);
+          setData(res?.data?.articles);
         }
       } catch (err) {
         // console.error({
