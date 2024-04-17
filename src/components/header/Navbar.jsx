@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function NavBar({ data }) {
   const [open, setOpen] = useState(false);
-  const newSrc = data.logo.src.replace(
+  const newSrc = data.logo?.src.replace(
     "/images/",
     "https://api.tuentrada.com/storage/"
   );
@@ -51,7 +51,7 @@ export default function NavBar({ data }) {
         </button>
         <div className={`${ open ? "" : "hidden" } w-full mt-5 md:mt-0 md:block md:w-auto`} id="navbar-default">
           <ul>
-            {data.pages.map((item) => {
+            {data.pages?.map((item) => {
               if (item.where === "navbar") {
                 return (
                   <li key={item.id}>

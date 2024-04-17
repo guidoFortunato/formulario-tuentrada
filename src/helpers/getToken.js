@@ -31,6 +31,7 @@ export async function getToken(email, password) {
     // console.log({res})
 
     if (!res.ok) {
+      console.log({res})
       throw new Error(
         `Error getToken !res.ok: ${res.status}. ${res.statusText}`
       );

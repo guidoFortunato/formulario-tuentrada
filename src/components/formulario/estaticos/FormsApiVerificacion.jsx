@@ -93,47 +93,6 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     // console.log({ dataFormsDniTarjeta: data });
     const { emailConfirm, ...content } = data;
     const valueEmail = [];
-    const formDataTurnstile = new FormData(event.target);
-    const turnstileRes = formDataTurnstile.get("cf-turnstile-response");
-
-    // try {
-    //   if (turnstileRes) {
-
-    //     const serverValidation = await fetch("/api/cf", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(turnstileRes),
-    //     });
-
-    //     if (!serverValidation.ok) {
-    //       console.log({ serverValidation });
-    //       window.turnstile.reset();
-    //       return;
-    //     }
-
-    //     const { data: dataServer } = await serverValidation.json();
-    //     console.log({dataServer})
-    //     const { success } = dataServer;
-
-    //     if (!success) {
-    //       console.log({ dataServer });
-    //       window.turnstile.reset();
-    //       return;
-    //     }
-
-    //     // window.turnstile.remove()
-    //   }
-
-    // } catch (error) {
-    //   console.log({
-    //     error,
-    //     message: "turnstile error"
-    //   })
-    // }
-
-    // return
 
     Object.keys(content).map((key) => {
       if (
