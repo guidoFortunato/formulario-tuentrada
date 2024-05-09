@@ -5,7 +5,9 @@ import { useEffect } from "react";
 const AdSense = () => {
   useEffect(() => {
     if (window) {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      if (window.adsbygoogle && !window.adsbygoogle.loaded){
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      }
     }
   }, []);
 
