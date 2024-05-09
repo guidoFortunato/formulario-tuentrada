@@ -10,7 +10,7 @@ const AdSense = () => {
   }, []);
 
   return (
-   <div className="mx-5 mb-5 ">
+   <div className="px-5 pb-5 ">
      <ins
       className="adsbygoogle"
       style={{ display: "block", textAlign: "center", marginBottom:"20px" }}
