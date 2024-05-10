@@ -8,7 +8,7 @@ export const Recaptcha = () => {
   const ref = useRef();
   const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } = useContext(FormContext);
   const router = useRouter();
-  console.log({tokenCloud, statusCloud})
+  // console.log({tokenCloud, statusCloud})
 
   useEffect(() => {
     if (tokenCloud !== "" || statusCloud !== "") {
