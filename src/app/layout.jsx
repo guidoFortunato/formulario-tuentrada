@@ -7,6 +7,7 @@ import "./globals.css";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import CookieBanner from "@/components/analytics/CookieBanner";
 import Script from "next/script";
+import { TagManager } from "@/components/tagmanager/TagManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }) {
       >
         <GoogleAnalytics />
         <FormProvider>
+          <TagManager />
           <ContainerApp>{children}</ContainerApp>
           <CookieBanner />
         </FormProvider>
