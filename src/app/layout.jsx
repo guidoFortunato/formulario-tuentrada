@@ -4,9 +4,10 @@ import FormProvider from "@/context/FormContext";
 import { ContainerApp } from "@/components/container/ContainerApp";
 
 import "./globals.css";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import GoogleAnalyticsContainer from "@/components/analytics/GoogleAnalyticsContainer";
 import CookieBanner from "@/components/analytics/CookieBanner";
 import Script from "next/script";
+import { TagManager } from "@/components/tagmanager/TagManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -48,8 +49,9 @@ export default async function RootLayout({ children }) {
         className={`${inter.className} flex flex-col min-h-[100vh] m-0`}
         suppressHydrationWarning={true}
       >
-        <GoogleAnalytics />
+        <GoogleAnalyticsContainer />
         <FormProvider>
+          <TagManager />
           <ContainerApp>{children}</ContainerApp>
           <CookieBanner />
         </FormProvider>

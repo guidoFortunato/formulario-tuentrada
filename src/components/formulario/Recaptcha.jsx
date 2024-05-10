@@ -14,9 +14,10 @@ export const Recaptcha = () => {
   useEffect(() => {
     if (tokenCloud !== "" || statusCloud !== "") {
       if (statusCloud === "error") {
-        router.push(
-          "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
-        );
+        console.log({statusCloud})
+        // router.push(
+        //   "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+        // );
         return;
       }
       if (statusCloud === "solved") {
