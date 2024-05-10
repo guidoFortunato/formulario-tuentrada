@@ -7,7 +7,8 @@ import { FormContext } from "@/context/FormContext";
 import { Skeleton } from "../skeleton/Skeleton";
 
 export const ContainerMain = () => {
-  const { dataCategories, resetStep, resetDefaultValue, resetGlpiSubCategory } = useContext(FormContext);
+  const { dataCategories, resetStep, resetDefaultValue, resetGlpiSubCategory } =
+    useContext(FormContext);
 
   useEffect(() => {
     setTimeout(() => {
@@ -22,20 +23,16 @@ export const ContainerMain = () => {
   }, []);
 
   if (dataCategories === undefined) return <Loader />;
- 
+
   if (dataCategories.length === 0)
     return (
       <main>
         <div className="flex justify-center items-center h-screen">
-      
-  
           <section>
             {[2].map((item) => (
-              <Skeleton key={item}   />
+              <Skeleton key={item} />
             ))}
           </section>
-  
-         
         </div>
       </main>
     );

@@ -8,8 +8,8 @@ import { FormContext } from "@/context/FormContext";
 export const ContainerHeader = () => {
   const { dataSite } = useContext(FormContext)
 
-  if(dataSite === undefined) return <Loader />
-  if(dataSite.length === 0 ) return <Loader />
+  if(dataSite === undefined) return <span />
+  if(dataSite.length === 0 ) return <span />
 
 
   //! manejo de errores, cuando dataSite es undefined enviar a pagina de error
