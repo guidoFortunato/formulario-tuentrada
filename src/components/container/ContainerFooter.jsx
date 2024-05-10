@@ -8,8 +8,8 @@ import { Loader } from "../loading";
 export const ContainerFooter = () => {
   const { dataSite } = useContext(FormContext);
 
-  if (dataSite === undefined) return <Loader />;
-  if (dataSite.length === 0) return <Loader />;
+  if (dataSite === undefined) return <span />;
+  if (dataSite.length === 0) return <span />;
 
   return <Footer data={dataSite} />;
 };
