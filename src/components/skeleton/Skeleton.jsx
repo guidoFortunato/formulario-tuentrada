@@ -4,9 +4,7 @@ export const Skeleton = ({ width }) => {
   return (
     <div
       role="status"
-      className={`${
-        width ? width : "max-w-sm"
-      } p-4 animate-pulse md:p-6 dark:border-gray-700 flex flex-col justify-center items-center  h-screen`}
+      className="p-4 animate-pulse md:p-6 dark:border-gray-700 flex flex-col justify-center items-center  "
     >
       <div className="flex items-center justify-center" >
         <img

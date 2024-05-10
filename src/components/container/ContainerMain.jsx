@@ -22,18 +22,19 @@ export const ContainerMain = () => {
   }, []);
 
   if (dataCategories === undefined) return <Loader />;
+ 
   if (dataCategories.length === 0)
     return (
       <main>
-        <div className="container">
+        <div className="flex justify-center items-center h-screen">
       
-
-          <section className="w-[100%] grid grid-cols-1 justify-items-center gap-4 mx-auto mt-4">
+  
+          <section>
             {[2].map((item) => (
-              <Skeleton key={item} width="w-[70%]" />
+              <Skeleton key={item}   />
             ))}
           </section>
-
+  
          
         </div>
       </main>
