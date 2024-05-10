@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
 import { sendDataEmail } from "@/helpers/getInfoTest";
+import { Recaptcha } from "./Recaptcha";
 
 export const Form1 = ({ lengthSteps }) => {
   const {
@@ -145,6 +146,7 @@ export const Form1 = ({ lengthSteps }) => {
             <Recaptcha />
           </div>
         </div> */}
+        <Recaptcha />
       </div>
       <div className="justify-center flex pb-10">
         <BotonVolver />

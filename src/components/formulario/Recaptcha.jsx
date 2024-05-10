@@ -6,18 +6,17 @@ import { useRouter } from "next/navigation";
 
 export const Recaptcha = () => {
   const ref = useRef();
-  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } =
-    useContext(FormContext);
+  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } = useContext(FormContext);
   const router = useRouter();
-  // console.log({tokenCloud, statusCloud})
+  console.log({tokenCloud, statusCloud})
 
   useEffect(() => {
     if (tokenCloud !== "" || statusCloud !== "") {
       if (statusCloud === "error") {
-        console.log({statusCloud})
-        // router.push(
-        //   "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
-        // );
+        // console.log({statusCloud})
+        router.push(
+          "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+        );
         return;
       }
       if (statusCloud === "solved") {
@@ -47,7 +46,7 @@ export const Recaptcha = () => {
             window.turnstile.reset();
             return;
           }
-          // console.log('recaptcha exitoso')
+          // console.log({success})
 
           window.turnstile.remove();
         };
@@ -60,7 +59,10 @@ export const Recaptcha = () => {
     <Turnstile
       ref={ref}
       siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_CLOUDFLARE}
-      onError={() => handleStatusCloud("error")}
+      onError={(e) => {
+        console.log({e})
+        handleStatusCloud("error")
+      }}
       onExpire={() => ref.current?.reset()}
       onSuccess={(e) => {
         handleStatusCloud("solved");
@@ -69,7 +71,7 @@ export const Recaptcha = () => {
       options={{
         theme: "light",
         language: "es",
-        refreshExpired: "manual",
+        refreshExpired: "auto",
         size: "invisible",
       }}
     />

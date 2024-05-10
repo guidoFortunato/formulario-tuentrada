@@ -10,7 +10,7 @@ export const ContainerApp = ({ children }) => {
       {children}
       <AdSense />
       <ContainerFooter />
-      <Recaptcha />
+      {/* <Recaptcha /> */}
     </>
   );
 };
