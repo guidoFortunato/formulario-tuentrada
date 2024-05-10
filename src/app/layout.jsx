@@ -6,6 +6,7 @@ import { ContainerApp } from "@/components/container/ContainerApp";
 import "./globals.css";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import CookieBanner from "@/components/analytics/CookieBanner";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,11 +32,17 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="es">
       <head>
-        <script
+        {/* <script
           data-ad-client="ca-pub-3241865431125040"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-        ></script>
+        ></script> */}
+        <Script
+          id="gscript-ads"
+          strategy="lazyOnload" // CANNOT Omit!!!
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3241865431125040"
+          crossOrigin="anonymous"
+        />
       </head>
       <body
         className={`${inter.className} flex flex-col min-h-[100vh] m-0`}
