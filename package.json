@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ctrl/react-adsense": "^1.7.0",
     "@marsidev/react-turnstile": "^0.5.3",
     "@next/third-parties": "^14.2.3",
     "bufferutil": "^4.0.8",
