@@ -43,6 +43,7 @@ export default async function RootLayout({ children }) {
           strategy="lazyOnload" // CANNOT Omit!!!
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3241865431125040"
           crossOrigin="anonymous"
+          async
         />
       </head>
       <body
