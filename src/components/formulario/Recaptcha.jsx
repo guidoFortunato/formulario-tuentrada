@@ -60,11 +60,13 @@ export const Recaptcha = () => {
       ref={ref}
       siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_CLOUDFLARE}
       onError={(e) => {
+        console.log({recaptcha: "error"})
         console.log({e})
         handleStatusCloud("error")
       }}
       onExpire={() => ref.current?.reset()}
       onSuccess={(e) => {
+        console.log({recaptcha: "success"})
         handleStatusCloud("solved");
         handleTokenCloud(e);
       }}

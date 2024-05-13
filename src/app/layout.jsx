@@ -37,13 +37,14 @@ export default async function RootLayout({ children }) {
           data-ad-client="ca-pub-3241865431125040"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          
         ></script> */}
         <Script
-          id="gscript-ads"
-          strategy="lazyOnload" // CANNOT Omit!!!
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3241865431125040"
-          crossOrigin="anonymous"
+          // id="gscript-ads"
           async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE}`}
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
         />
       </head>
       <body
