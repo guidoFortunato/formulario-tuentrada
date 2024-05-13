@@ -2,6 +2,9 @@
 
 import { Adsense } from "@ctrl/react-adsense";
 import { useEffect } from "react";
+import { GoogleAdSense } from "next-google-adsense";
+import { AdUnit } from "next-google-adsense";
+import { LayoutAdsense } from "./LayoutAdsense";
 
 const AdSense = () => {
   useEffect(() => {
@@ -14,13 +17,19 @@ const AdSense = () => {
 
   return (
     <div className="px-5 pb-5 ">
-      <Adsense
+      <AdUnit
+        publisherId="pub-3241865431125040"  
+        slotId="4322497970"                 
+        layout="custom"
+        customLayout={<LayoutAdsense />}
+        />
+      {/* <GoogleAdSense
         client={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE}
         slot="4322497970"
         style={{ display: "block", textAlign: "center", marginBottom:"20px" }}
         layout="in-article"
         format="fluid"
-      />
+      /> */}
       {/* <ins
       className="adsbygoogle"
       style={{ display: "block", textAlign: "center", marginBottom:"20px" }}
