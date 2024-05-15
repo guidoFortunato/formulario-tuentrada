@@ -6,17 +6,30 @@ import { useRouter } from "next/navigation";
 
 export const Recaptcha = () => {
   const ref = useRef();
-  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } = useContext(FormContext);
+  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } =
+    useContext(FormContext);
   const router = useRouter();
   // console.log({tokenCloud, statusCloud})
+
+  const handleEvent = async (e, response) => {
+    const form = new FormData()
+    form.set('status', e)
+    const res = await fetch("/api/recaptcha", {
+      method: "POST",
+      body: form,
+    });
+    console.log({res})
+    console.log({e, message: "entra"})
+    handleStatusCloud(response);
+  };
 
   useEffect(() => {
     if (tokenCloud !== "" || statusCloud !== "") {
       if (statusCloud === "error") {
         // console.log({statusCloud})
-        router.push(
-          "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
-        );
+        // router.push(
+        //   "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+        // );
         return;
       }
       if (statusCloud === "solved") {
@@ -59,20 +72,17 @@ export const Recaptcha = () => {
     <Turnstile
       ref={ref}
       siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_CLOUDFLARE}
-      onError={(e) => {
-        console.log({e})
-        handleStatusCloud("error")
+      onError={async (e) => handleEvent(e, "error")}
+      onExpire={(e) => {
+        ref.current?.reset();
+        handleEvent(e, "expired");
       }}
-      onExpire={() => ref.current?.reset()}
-      onSuccess={(e) => {
-        handleStatusCloud("solved");
-        handleTokenCloud(e);
-      }}
+      onSuccess={(e) => handleEvent(e, "success")}
       options={{
         theme: "light",
         language: "es",
         refreshExpired: "auto",
-        size: "invisible",
+        size: "normal",
       }}
     />
   );
