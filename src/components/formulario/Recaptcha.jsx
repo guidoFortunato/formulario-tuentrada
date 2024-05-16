@@ -14,12 +14,10 @@ export const Recaptcha = () => {
   const handleEvent = async (e, response) => {
     const form = new FormData()
     form.set('status', e)
-    const res = await fetch("/api/recaptcha", {
+    await fetch("/api/recaptcha", {
       method: "POST",
       body: form,
     });
-    console.log({res})
-    console.log({e, message: "entra"})
     handleStatusCloud(response);
   };
 
