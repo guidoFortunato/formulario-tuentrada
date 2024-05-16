@@ -6,8 +6,7 @@ import { useRouter } from "next/navigation";
 
 export const Recaptcha = () => {
   const ref = useRef();
-  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } =
-    useContext(FormContext);
+  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } = useContext(FormContext);
   const router = useRouter();
   // console.log({tokenCloud, statusCloud})
 
