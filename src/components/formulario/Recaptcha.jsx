@@ -17,16 +17,17 @@ export const Recaptcha = () => {
       method: "POST",
       body: form,
     });
+    console.log({response})
     handleStatusCloud(response);
   };
 
   useEffect(() => {
     if (tokenCloud !== "" || statusCloud !== "") {
       if (statusCloud === "error") {
-        // console.log({statusCloud})
-        // router.push(
-        //   "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
-        // );
+        console.log({statusCloud})
+        router.push(
+          "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+        );
         return;
       }
       if (statusCloud === "solved") {

@@ -1,9 +1,10 @@
 {
-  "success": "1",
+  "success": "0",
   "error": [
     {
       "code": "600010",
-      "quantity": "1"
+      "quantity": "0",
+      "message": "Fallo en la ejecución del desafío: Un visitante no pudo resolver un desafío de Turnstile. Visitante potencialmente automatizado. Reintente el desafío. Después de múltiples fallos consecutivos, verifique al visitante de otra manera."
     }
   ]
 }
