@@ -30,9 +30,9 @@ export const Recaptcha = () => {
     if (tokenCloud !== "" || statusCloud !== "") {
       if (statusCloud === "error") {
         console.log({statusCloud})
-        // router.push(
-        //   "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
-        // );
+        router.push(
+          "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+        );
         return;
       }
       if (statusCloud === "solved") {
