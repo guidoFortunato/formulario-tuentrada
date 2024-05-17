@@ -82,6 +82,8 @@ export async function POST(request) {
       const initialData = {
         success: "0",
         error: [],
+        time: new Date().toLocaleDateString(),
+        ip: ""
       };
       fs.writeFileSync(filePath, JSON.stringify(initialData, null, 2), "utf8");
     }
