@@ -6,30 +6,35 @@ import { useRouter } from "next/navigation";
 
 export const Recaptcha = () => {
   const ref = useRef();
-  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } = useContext(FormContext);
+  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } =
+    useContext(FormContext);
   const router = useRouter();
   // console.log({tokenCloud, statusCloud})
 
   const handleEvent = async (e, response) => {
-    const form = new FormData()
-    form.set('status', e)
-    try {
-      const res = await fetch("/api/recaptcha", {
-        method: "POST",
-        body: form,
-      });
-      console.log({res})
-    } catch (error) {
-      console.log({error})
+
+    if (process.env.NEXT_PUBLIC_RECAPTCHA_ACTIVE === "true") {
+      const form = new FormData();
+      form.set("status", e);
+      try {
+        const res = await fetch("/api/recaptcha", {
+          method: "POST",
+          body: form,
+        });
+        console.log({ res });
+      } catch (error) {
+        console.log({ error });
+      }
     }
-    console.log({status: response})
+
+    console.log({ status: response });
     handleStatusCloud(response);
   };
 
   useEffect(() => {
     if (tokenCloud !== "" || statusCloud !== "") {
       if (statusCloud === "error") {
-        console.log({statusCloud})
+        console.log({ statusCloud });
         router.push(
           "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
         );

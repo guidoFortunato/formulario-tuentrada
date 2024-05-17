@@ -25,7 +25,8 @@ export async function POST(request) {
     "300",
     "600",
   ];
-   // Mapa de códigos de error a mensajes
+  // Mapa de códigos de error a mensajes
+
   const errorMessages = {
     "100": "Problemas de inicialización de la familia de códigos de error: Hubo un problema al inicializar Turnstile antes de que pudiera comenzar un desafío. Esto podría deberse a una instancia anterior del desafío que fue resuelta. Se recomienda recargar la página y reiniciar Turnstile. En fallos continuos, esto indica un dispositivo automatizado.",
     "102": "Familia de códigos de error Parámetros inválidos: El visitante envió un parámetro inválido como parte del desafío hacia Turnstile. Se recomienda reintentar el desafío. En fallos continuos, esto indica un dispositivo automatizado.",
@@ -52,21 +53,37 @@ export async function POST(request) {
   try {
     const captchaResponse = await request.formData();
     const status = captchaResponse.get("status");
+    const date = new Date().toLocaleString().split(",")[0].split("/").join("_");
 
     // Ruta del archivo logs.json
-    const filePath = path.join(process.cwd(), "public/logs", "logs.json");
+    const filePath = path.join(
+      process.cwd(),
+      "public/logs",
+      `recaptcha_${date}.json`
+    );
 
-     // Verificar si el archivo existe
-     if (!fs.existsSync(filePath)) {
+    // Verificar si el archivo existe y su antigüedad
+    if (fs.existsSync(filePath)) {
+      const stats = fs.statSync(filePath);
+      const createdAt = new Date(stats.birthtime);
+      const now = new Date();
+      const daysOld = Math.floor((now - createdAt) / (1000 * 60 * 60 * 24));
+
+      if (daysOld > 7) {
+        fs.unlinkSync(filePath);
+      }
+    }
+   
+
+    // Verificar si el archivo existe
+    if (!fs.existsSync(filePath)) {
       // Si el archivo no existe, crear un archivo con estructura inicial
       const initialData = {
         success: "0",
-        error: []
+        error: [],
       };
       fs.writeFileSync(filePath, JSON.stringify(initialData, null, 2), "utf8");
     }
-
-    
 
     // Leer y parsear el archivo logs.json
     let data = fs.readFileSync(filePath, "utf8");
@@ -85,9 +102,15 @@ export async function POST(request) {
         errorLog.quantity = (parseInt(errorLog.quantity) + 1).toString();
       } else {
         // Si el código de error no existe, añadir un nuevo objeto de error
-        const errorMessage = Object.keys(errorMessages).find(key => status.startsWith(key));
+        const errorMessage = Object.keys(errorMessages).find((key) =>
+          status.startsWith(key)
+        );
 
-        logs.error.push({ code: status, quantity: "1", message: errorMessages[errorMessage] });
+        logs.error.push({
+          code: status,
+          quantity: "1",
+          message: errorMessages[errorMessage],
+        });
       }
     } else {
       // Si el status es un token, incrementar el contador de success
@@ -102,7 +125,7 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log({error})
+    console.log({ error });
     return NextResponse.json({ error }, { status: 500 });
   }
 }
