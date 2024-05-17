@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 
-public/logs
+public/logs/logs.json
 
 # testing
 /coverage

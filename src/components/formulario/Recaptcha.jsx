@@ -13,11 +13,16 @@ export const Recaptcha = () => {
   const handleEvent = async (e, response) => {
     const form = new FormData()
     form.set('status', e)
-    await fetch("/api/recaptcha", {
-      method: "POST",
-      body: form,
-    });
-    console.log({response})
+    try {
+      const res = await fetch("/api/recaptcha", {
+        method: "POST",
+        body: form,
+      });
+      console.log({res})
+    } catch (error) {
+      console.log({error})
+    }
+    console.log({status: response})
     handleStatusCloud(response);
   };
 
@@ -25,9 +30,9 @@ export const Recaptcha = () => {
     if (tokenCloud !== "" || statusCloud !== "") {
       if (statusCloud === "error") {
         console.log({statusCloud})
-        router.push(
-          "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
-        );
+        // router.push(
+        //   "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+        // );
         return;
       }
       if (statusCloud === "solved") {

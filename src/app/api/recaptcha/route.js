@@ -56,6 +56,16 @@ export async function POST(request) {
     // Ruta del archivo logs.json
     const filePath = path.join(process.cwd(), "public/logs", "logs.json");
 
+     // Verificar si el archivo existe
+     if (!fs.existsSync(filePath)) {
+      // Si el archivo no existe, crear un archivo con estructura inicial
+      const initialData = {
+        success: "0",
+        error: []
+      };
+      fs.writeFileSync(filePath, JSON.stringify(initialData, null, 2), "utf8");
+    }
+
     
 
     // Leer y parsear el archivo logs.json
@@ -76,7 +86,7 @@ export async function POST(request) {
       } else {
         // Si el código de error no existe, añadir un nuevo objeto de error
         const errorMessage = Object.keys(errorMessages).find(key => status.startsWith(key));
-        
+
         logs.error.push({ code: status, quantity: "1", message: errorMessages[errorMessage] });
       }
     } else {
@@ -92,6 +102,7 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
+    console.log({error})
     return NextResponse.json({ error }, { status: 500 });
   }
 }
