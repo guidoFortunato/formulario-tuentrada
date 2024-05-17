@@ -55,12 +55,14 @@ export async function POST(request) {
     const status = captchaResponse.get("status");
     const date = new Date().toLocaleString().split(",")[0].split("/").join("_");
 
-    // Ruta del archivo logs.json
-    const filePath = path.join(
-      process.cwd(),
-      "public/logs",
-      `recaptcha_${date}.json`
-    );
+    // Ruta de la carpeta logs y el archivo recaptcha_*.json
+    const logsDir = path.join(process.cwd(), "public/logs");
+    const filePath = path.join(logsDir, `recaptcha_${date}.json`);
+
+    // Crear la carpeta logs si no existe
+    if (!fs.existsSync(logsDir)) {
+      fs.mkdirSync(logsDir, { recursive: true });
+    }
 
     // Verificar si el archivo existe y su antigüedad
     if (fs.existsSync(filePath)) {
@@ -73,7 +75,6 @@ export async function POST(request) {
         fs.unlinkSync(filePath);
       }
     }
-   
 
     // Verificar si el archivo existe
     if (!fs.existsSync(filePath)) {
