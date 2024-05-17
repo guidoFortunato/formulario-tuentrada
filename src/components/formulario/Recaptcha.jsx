@@ -80,7 +80,7 @@ export const Recaptcha = () => {
         theme: "light",
         language: "es",
         refreshExpired: "auto",
-        size: "normal",
+        size: "invisible",
       }}
     />
   );
