@@ -6,10 +6,9 @@ import { useRouter } from "next/navigation";
 
 export const Recaptcha = () => {
   const ref = useRef();
-  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } =
-    useContext(FormContext);
+  const { handleTokenCloud, handleStatusCloud, tokenCloud, statusCloud } = useContext(FormContext);
   const router = useRouter();
-  // console.log({tokenCloud, statusCloud})
+  // console.log({statusCloud})
 
   const handleEvent = async (e, response) => {
 
@@ -17,30 +16,31 @@ export const Recaptcha = () => {
       const form = new FormData();
       form.set("status", e);
       try {
-        const res = await fetch("/api/recaptcha", {
+        await fetch("/api/recaptcha", {
           method: "POST",
           body: form,
         });
-        console.log({ res });
+        // console.log({ res });
       } catch (error) {
         console.log({ error });
       }
     }
 
-    console.log({ status: response });
+    // console.log({ status: response });
     handleStatusCloud(response);
+    handleTokenCloud(e);
   };
 
   useEffect(() => {
     if (tokenCloud !== "" || statusCloud !== "") {
       if (statusCloud === "error") {
         console.log({ statusCloud });
-        router.push(
-          "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
-        );
+        // router.push(
+        //   "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+        // );
         return;
       }
-      if (statusCloud === "solved") {
+      if (statusCloud === "success") {
         const resultRecaptcha = async () => {
           const serverValidation = await fetch("/api/cf", {
             method: "POST",
@@ -62,7 +62,6 @@ export const Recaptcha = () => {
           const { success } = dataServer;
           // console.log({success})
           if (!success) {
-            // console.log("!serverValidation.ok");
             // console.log({ dataServer });
             window.turnstile.reset();
             return;
@@ -82,8 +81,8 @@ export const Recaptcha = () => {
       siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_CLOUDFLARE}
       onError={async (e) => handleEvent(e, "error")}
       onExpire={(e) => {
-        ref.current?.reset();
         handleEvent(e, "expired");
+        ref.current?.reset();
       }}
       onSuccess={(e) => handleEvent(e, "success")}
       options={{
