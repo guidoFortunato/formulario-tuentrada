@@ -16,11 +16,11 @@ export const Recaptcha = () => {
       const form = new FormData();
       form.set("status", e);
       try {
-        await fetch("/api/recaptcha", {
+        const res = await fetch("/api/recaptcha", {
           method: "POST",
           body: form,
         });
-        // console.log({ res });
+        console.log({ recaptchaResponse: res});
       } catch (error) {
         console.log({ error });
       }
@@ -35,9 +35,9 @@ export const Recaptcha = () => {
     if (tokenCloud !== "" || statusCloud !== "") {
       if (statusCloud === "error") {
         console.log({ statusCloud });
-        // router.push(
-        //   "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
-        // );
+        router.push(
+          "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+        );
         return;
       }
       if (statusCloud === "success") {
@@ -49,9 +49,8 @@ export const Recaptcha = () => {
             },
             body: JSON.stringify(tokenCloud),
           });
-          // console.log({ serverValidation });
+          console.log({ resCf: serverValidation });
           if (!serverValidation.ok) {
-            // console.log("!serverValidation.ok")
             // console.log({ serverValidation });
             window.turnstile.reset();
             return;
