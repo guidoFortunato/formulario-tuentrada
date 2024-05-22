@@ -78,3 +78,10 @@
   border-color: rgb(164, 202, 254)!important; 
   box-shadow: 0 0 0 1px rgba(164, 202, 254, 0.192)!important;
 }
+
+@media (max-width: 350px) {
+  .grecaptcha-badge {
+visibility: hidden;
+   }
+  
+}
