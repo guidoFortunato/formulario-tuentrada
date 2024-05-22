@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { useRouter } from "next/navigation";
 
-export const Recaptcha = () => {
+export const Recaptcha = ({ id }) => {
   const [statusCloud, setStatusCloud] = useState("");
   const [tokenCloud, setTokenCloud] = useState("");
   const ref = useRef();
@@ -14,7 +14,21 @@ export const Recaptcha = () => {
   const handleEvent = async (e, response) => {
     console.log("entra");
     console.log({ statusCloud });
-    // console.log({ response, e });
+    console.log({ response, e });
+
+    if (process.env.NEXT_PUBLIC_RECAPTCHA_ACTIVE === "true") {
+      const form = new FormData();
+      form.set("status", e);
+      try {
+        const res = await fetch("/api/recaptcha", {
+          method: "POST",
+          body: form,
+        });
+        console.log({ recaptchaResponse: res });
+      } catch (error) {
+        console.log({ error });
+      }
+    }
 
     setStatusCloud(response);
     setTokenCloud(e);
@@ -25,6 +39,8 @@ export const Recaptcha = () => {
       console.log({ statusCloud });
       if (statusCloud === "error") {
         setStatusCloud("error");
+        // console.log(window.turnstile)
+        // window.turnstile.remove();
         window.turnstile.reset();
         // console.log({ statusCloud });
         // router.push(
@@ -51,19 +67,7 @@ export const Recaptcha = () => {
           const { data: dataServer } = await serverValidation.json();
           console.log({ dataServer });
 
-          if (process.env.NEXT_PUBLIC_RECAPTCHA_ACTIVE === "true") {
-            const form = new FormData();
-            form.set("status", dataServer["error-codes"]);
-            try {
-              const res = await fetch("/api/recaptcha", {
-                method: "POST",
-                body: form,
-              });
-              console.log({ recaptchaResponse: res});
-            } catch (error) {
-              console.log({ error });
-            }
-          }
+         
           const { success } = dataServer;
           console.log({ success });
           if (!success) {
@@ -87,6 +91,7 @@ export const Recaptcha = () => {
 
   return (
     <Turnstile
+      
       ref={ref}
       siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_CLOUDFLARE}
       onError={async (e) => handleEvent(e, "error")}

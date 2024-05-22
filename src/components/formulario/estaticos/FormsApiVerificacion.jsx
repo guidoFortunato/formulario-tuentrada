@@ -30,10 +30,10 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
   const contact_id = useSearchParams().get("contact_id");
-  // console.log({contact_id})
+  console.log({ contact_id });
   //  console.log({firstSubject, secondSubject})
 
-  // console.log({ dataForm });
+  console.log({ dataForm });
   // console.log({ fields });
 
   const renderForms = dataForm.steps[0].fields.map((item) => {
@@ -142,10 +142,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
             const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
 
             alertWarningTickets(ticketNumber, finalDate, status, message);
-            // setLoadingCheckHaveTickets(false);
-            // reset();
-            // resetStep();
-            // router.push("/");
+            reset();
+            resetStep();
+            router.push("/");
             return;
           }
         }
@@ -153,9 +152,6 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
         console.log({ error });
       } finally {
         setLoadingCheckHaveTickets(false);
-        reset();
-        resetStep();
-        router.push("/");
       }
     }
 
@@ -253,7 +249,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
       }
 
       const { data } = await info.json();
-      console.log({ data });
+      // console.log({ data });
       const numberTicket = data?.ticketNumber;
       alertSuccessTickets(numberTicket);
     } catch (error) {
@@ -261,6 +257,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     } finally {
       setIsLoading(false);
       reset();
+      resetStep();
       router.push("/");
     }
   };
@@ -268,11 +265,11 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
       <div className="grid gap-4 mb-4 sm:grid-cols-2">{renderForms}</div>
-      <div className="outer-container">
+      {/* <div className="outer-container">
         <div className="inner-container">
-          <Recaptcha />
+          <Recaptcha id="widget-2" />
         </div>
-      </div>
+      </div> */}
       <div className="justify-center flex pb-10">
         <BotonEnviar
           loadingCheckHaveTickets={loadingCheckHaveTickets}

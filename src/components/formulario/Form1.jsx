@@ -3,6 +3,8 @@ import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
 import { sendDataEmail } from "@/helpers/getInfoTest";
 import { Recaptcha } from "./Recaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 export const Form1 = ({ lengthSteps }) => {
   const {
@@ -15,7 +17,17 @@ export const Form1 = ({ lengthSteps }) => {
     reset,
     token,
   } = useContext(FormContext);
+  const [captcha, setCaptcha] = useState("");
+  const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { executeRecaptcha } = useGoogleReCaptcha()
+
+  const handleRecaptcha = (e) => {
+    console.log({e})
+    setCaptcha(e);
+    setErrorRecaptcha(false);
+  };
 
   useEffect(() => {
     handleContacto(null);
@@ -34,9 +46,19 @@ export const Form1 = ({ lengthSteps }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    setIsLoading(true);
+    
+    if(!executeRecaptcha) {
+      console.log('not available to execute recaptcha')
+      return 
+    }
 
+    const gRecaptchaToken = await executeRecaptcha('iniquirySubmit')
+
+    
+
+    
     try {
+      setIsLoading(true);
       const info = await sendDataEmail(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
         token,
@@ -112,9 +134,9 @@ export const Form1 = ({ lengthSteps }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
-            onCopy={handleCopy}
-            onPaste={handlePaste}
-            autoComplete="off"
+            // onCopy={handleCopy}
+            // onPaste={handlePaste}
+            // autoComplete="off"
             className={`bg-gray-50 border ${
               errors.emailConfirm
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
@@ -141,12 +163,21 @@ export const Form1 = ({ lengthSteps }) => {
             </span>
           )}
         </div>
-        {/* <div className="outer-container">
+        <div className="outer-container">
           <div className="inner-container">
-            <Recaptcha />
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_GOOGLE}
+              onChange={handleRecaptcha}
+            />
+            {errorRecaptcha && (
+              <span className="text-red-600 text-sm block mt-1">
+                Este campo es obligatorio
+              </span>
+            )}
+          
           </div>
-        </div> */}
-        <Recaptcha />
+        </div>
+        {/* <Recaptcha id="widget-1" /> */}
       </div>
       <div className="justify-center flex pb-10">
         <BotonVolver />

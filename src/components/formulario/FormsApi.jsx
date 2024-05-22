@@ -260,7 +260,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           setFinalLoading(false);
           return;
         }
-        console.log("info !== undefined || info.ok")
+        // console.log("info !== undefined || info.ok")
         const { data } = await info.json();
         // console.log({ data });
         const numberTicket = data?.ticketNumber;
