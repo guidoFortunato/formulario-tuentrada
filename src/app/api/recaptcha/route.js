@@ -84,7 +84,7 @@ export async function POST(request) {
     fs.writeFileSync(filePath, JSON.stringify(logs, null, 2), "utf8");
 
     return NextResponse.json(
-      { ok: true, message: "Recaptcha realizado con éxito" },
+      { ok: true, message: "Realizado con éxito" },
       { status: 200 }
     );
   } catch (error) {

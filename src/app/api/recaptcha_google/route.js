@@ -53,23 +53,31 @@ export async function POST(req) {
       },
       body: formData,
     });
-    const data = await response.json()
+    const data = await response.json();
+    console.log({data})
 
     if (data?.success && data?.score > 0.5) {
       // console.log("ReCaptcha score:", data?.score);
-  
+
       return NextResponse.json({
         success: true,
         score: data.score,
       });
     } else {
-      console.error("ReCaptcha verification failed:", {data, response});
-      return NextResponse.json({ success: false },  { error: "ReCaptcha verification failed" }, { status: 403 });
+      console.error("ReCaptcha verification failed:", { data, response });
+      return NextResponse.json(
+        { success: false, errorCodes: data['error-codes'] ? data['error-codes'] : [] },
+        { error: "ReCaptcha verification failed" },
+        { status: 403 },
+    
+      );
     }
   } catch (error) {
     console.error("Error during ReCaptcha verification:", error);
-    return NextResponse.json({ success: false }, { error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { success: false },
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
-
-
 }
