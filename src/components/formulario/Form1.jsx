@@ -95,9 +95,8 @@ export const Form1 = ({ lengthSteps }) => {
       nextStep();
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   return (
