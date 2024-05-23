@@ -13,6 +13,7 @@ export async function POST(req) {
   }
 
   const secretKey = process.env.RECAPTCHA_SECRET_KEY_GOOGLE;
+  const score = process.env.RECAPTCHA_SCORE;
 
   if (!secretKey) {
     // If the secret key is not found, log an error and return an appropriate response.
@@ -56,7 +57,7 @@ export async function POST(req) {
     const data = await response.json();
     console.log({data})
 
-    if (data?.success && data?.score > 0.5) {
+    if (data?.success && data?.score > score) {
       // console.log("ReCaptcha score:", data?.score);
 
       return NextResponse.json({

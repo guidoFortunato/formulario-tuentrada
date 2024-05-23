@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { useGoogleReCaptcha, GoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useRouter } from "next/navigation";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormContext } from "@/context/FormContext";
 import { sendDataEmail } from "@/helpers/getInfoTest";
 import { BotonSiguiente, BotonVolver } from ".";
@@ -16,6 +17,7 @@ export const Form1 = ({ lengthSteps }) => {
     reset,
     token,
   } = useContext(FormContext);
+  const router = useRouter();
   const [captcha, setCaptcha] = useState("");
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,13 +73,17 @@ export const Form1 = ({ lengthSteps }) => {
           console.log(`Success with score: ${data?.score}`);
         } else {
           console.log(`Failure with score: ${data?.score}`);
+          router.push(
+            "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+          );
+          return
         }
       } catch (error) {
         console.error("Error submitting form:", error);
       }
     }
 
-    try {      
+    try {
       const info = await sendDataEmail(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
         token,
