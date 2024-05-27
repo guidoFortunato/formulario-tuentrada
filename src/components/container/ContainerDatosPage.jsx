@@ -7,6 +7,7 @@ import { getDataPrueba } from "@/helpers/getInfoTest";
 import { ContainerLoader } from "./ContainerLoader";
 import { useRouter } from "next/navigation";
 import { FormsApiVerificacion } from "../formulario/estaticos/FormsApiVerificacion";
+import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
 
 const initialState = [];
 
@@ -43,8 +44,10 @@ export const ContainerDatosPage = ({ params }) => {
   }
 
   return (
-    <div>
-      <FormsApiVerificacion dataForm={dataForm.form} params={params} />
-    </div>
+    <GoogleCaptchaWrapper>
+      <div>
+        <FormsApiVerificacion dataForm={dataForm.form} params={params} />
+      </div>
+    </GoogleCaptchaWrapper>
   );
 };

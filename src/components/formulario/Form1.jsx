@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import ReCAPTCHA from "react-google-recaptcha";
 import { FormContext } from "@/context/FormContext";
 import { sendDataEmail } from "@/helpers/getInfoTest";
 import { BotonSiguiente, BotonVolver } from ".";
-import ReCAPTCHA from "react-google-recaptcha";
-// import { Recaptcha } from "./Recaptcha";
 
 export const Form1 = ({ lengthSteps }) => {
   const {
@@ -47,9 +46,7 @@ export const Form1 = ({ lengthSteps }) => {
   const handlePaste = (e) => {
     e.preventDefault();
   };
-
-  //Boton OnSubmit
-
+  
   const onSubmit = async (data, event) => {
     event.preventDefault();
     setIsLoading(true);
