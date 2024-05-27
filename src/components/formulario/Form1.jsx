@@ -4,6 +4,7 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormContext } from "@/context/FormContext";
 import { sendDataEmail } from "@/helpers/getInfoTest";
 import { BotonSiguiente, BotonVolver } from ".";
+import ReCAPTCHA from "react-google-recaptcha";
 // import { Recaptcha } from "./Recaptcha";
 
 export const Form1 = ({ lengthSteps }) => {
@@ -18,9 +19,13 @@ export const Form1 = ({ lengthSteps }) => {
     token,
   } = useContext(FormContext);
   const router = useRouter();
-  const [captcha, setCaptcha] = useState("");
+  const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
+  const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // // console.log({ score });
+  // console.log({ tokenRecaptchaV2 });
 
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -49,41 +54,66 @@ export const Form1 = ({ lengthSteps }) => {
     event.preventDefault();
     setIsLoading(true);
     if (process.env.NEXT_PUBLIC_RECAPTCHA_ACTIVE === "true") {
-      if (!executeRecaptcha) {
-        console.log("not available to execute recaptcha");
-        return;
+      if (score === null) {
+        if (!executeRecaptcha) {
+          console.log("not available to execute recaptcha");
+          return;
+        }
+
+        const gRecaptchaToken = await executeRecaptcha("loginForm");
+
+        try {
+          const response = await fetch("/api/recaptcha_google", {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ gRecaptchaToken }),
+          });
+          const data = await response.json();
+
+          console.log({ data });
+
+          if (data?.success === true) {
+            console.log(`Success with score: ${data?.score}`);
+            setScore(true);
+          } else {
+            console.log(`Failure with score: ${data?.score}`);
+            setScore(false);
+            setIsLoading(false);
+            return;
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+        }
       }
 
-      const gRecaptchaToken = await executeRecaptcha("loginForm");
-
-      try {
-        const response = await fetch("/api/recaptcha_google", {
+      if (score === false) {
+        setIsLoading(false);
+        setErrorRecaptcha(false);
+        const response = await fetch("/api/recaptcha_google_v2", {
           method: "POST",
           headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ gRecaptchaToken }),
+          body: JSON.stringify({ tokenRecaptchaV2 }),
         });
-        const data = await response.json();
-
-        console.log({ data });
-
-        if (data?.success === true) {
-          console.log(`Success with score: ${data?.score}`);
-        } else {
-          console.log(`Failure with score: ${data?.score}`);
-          router.push(
-            "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
-          );
-          return
+        const { success } = await response.json();
+        console.log({ success });
+        if (!success) {
+          setErrorRecaptcha(true);
+          // router.push(
+          //   "https://www.tuentrada.com/experiencia/ayuda-consulta/bot.html"
+          // );
+          return;
         }
-      } catch (error) {
-        console.error("Error submitting form:", error);
       }
     }
 
     try {
+      setIsLoading(true);
       const info = await sendDataEmail(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
         token,
@@ -101,8 +131,9 @@ export const Form1 = ({ lengthSteps }) => {
       nextStep();
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -119,9 +150,9 @@ export const Form1 = ({ lengthSteps }) => {
             type="text"
             name="email"
             id="email"
-            onCopy={handleCopy}
-            onPaste={handlePaste}
-            autoComplete="email"
+            // onCopy={handleCopy}
+            // onPaste={handlePaste}
+            // autoComplete="email"
             className={`bg-gray-50 border  ${
               errors.email
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
@@ -158,9 +189,9 @@ export const Form1 = ({ lengthSteps }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
-            onCopy={handleCopy}
-            onPaste={handlePaste}
-            autoComplete="off"
+            // onCopy={handleCopy}
+            // onPaste={handlePaste}
+            // autoComplete="off"
             className={`bg-gray-50 border ${
               errors.emailConfirm
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
@@ -187,9 +218,31 @@ export const Form1 = ({ lengthSteps }) => {
             </span>
           )}
         </div>
-        <div className="outer-container">
-          <div className="inner-container"></div>
-        </div>
+        {score === false && (
+          <div className="outer-container">
+            <div className="inner-container">
+              <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY_GOOGLE_V2}
+                onChange={(e) => {
+                  setErrorRecaptcha(false);
+                  setTokenRecaptchaV2(e);
+                }}
+              />
+
+              {errorRecaptcha ? (
+                <span className="text-red-600 text-xs block mt-1">
+                  Debe completar el recaptcha
+                </span>
+              ) : (
+                <span className="text-gray-600 text-xs block mt-1">
+                  Se ha encontrado actividad sospechosa, complete el recaptcha
+                  por favor
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* <Recaptcha id="widget-1" /> */}
       </div>
       <div className="justify-center flex pb-10">
