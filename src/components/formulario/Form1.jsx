@@ -150,9 +150,9 @@ export const Form1 = ({ lengthSteps }) => {
             type="text"
             name="email"
             id="email"
-            // onCopy={handleCopy}
-            // onPaste={handlePaste}
-            // autoComplete="email"
+            onCopy={handleCopy}
+            onPaste={handlePaste}
+            autoComplete="email"
             className={`bg-gray-50 border  ${
               errors.email
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
@@ -189,9 +189,9 @@ export const Form1 = ({ lengthSteps }) => {
             type="text"
             name="emailConfirm"
             id="emailConfirm"
-            // onCopy={handleCopy}
-            // onPaste={handlePaste}
-            // autoComplete="off"
+            onCopy={handleCopy}
+            onPaste={handlePaste}
+            autoComplete="off"
             className={`bg-gray-50 border ${
               errors.emailConfirm
                 ? "border-red-500 focus:ring-red-300 focus:border-red-500"
