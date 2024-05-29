@@ -55,7 +55,7 @@ export async function POST(req) {
       body: formData,
     });
     const data = await response.json();
-    console.log({data})
+    // console.log({data})
 
     if (data?.success && data?.score > score) {
       // console.log("ReCaptcha score:", data?.score);
