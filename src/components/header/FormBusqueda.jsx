@@ -20,7 +20,7 @@ export const FormBusqueda = () => {
   const [error, setError] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  console.log({ data });
+  // console.log({ data });
   // console.log({ isOpen });
 
   useEffect(() => {
@@ -147,7 +147,7 @@ export const FormBusqueda = () => {
               d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
             />
           </svg>{" "}
-          {disabled ? <Timer /> : " No se encontraron coincidencias"}
+          {disabled ? <Timer /> : "No se encontraron coincidencias"}
         </span>
       )}
       {isOpen && (
