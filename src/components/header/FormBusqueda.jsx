@@ -7,6 +7,7 @@ import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
 import { FormContext } from "@/context/FormContext";
 import clsx from "clsx";
+import { Timer } from "./Timer";
 
 export const FormBusqueda = () => {
   const { token } = useContext(FormContext);
@@ -19,7 +20,7 @@ export const FormBusqueda = () => {
   const [error, setError] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  // console.log({ data });
+  console.log({ data });
   // console.log({ isOpen });
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export const FormBusqueda = () => {
             setTimeout(() => {
               setDisabled(false);
               setError(false);
-            }, 5000);
+            }, 61000);
             return;
           }
           if (res.data?.articles?.length > 0) {
@@ -85,11 +86,9 @@ export const FormBusqueda = () => {
     setError(false);
   };
 
-  const handleClick = (item) => {
-    // console.log({ item });
+  const handleClick = () => {
     setIsOpen(false);
     setValue("");
-    // setSlug(item.category.slug);
   };
 
   const onSubmit = (e) => {
@@ -99,7 +98,6 @@ export const FormBusqueda = () => {
       alertWarning();
       return;
     }
-    // setValue("");
     setIsOpen(false);
   };
 
@@ -109,11 +107,6 @@ export const FormBusqueda = () => {
     <form onSubmit={onSubmit} className="relative">
       <div className="relative">
         <input
-          // className={`block w-full p-4 text-sm ${
-          //   loading
-          //     ? "text-gray-300 border-gray-100"
-          //     : "text-gray-900 border-gray-300"
-          // } border rounded-lg bg-white focus:ring-blue-light`}
           className={clsx(
             "block w-full p-4 text-sm border rounded-lg focus:ring-blue-light",
             {
@@ -154,9 +147,7 @@ export const FormBusqueda = () => {
               d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
             />
           </svg>{" "}
-          {disabled
-            ? "Ha realizado demasiados intentos, intente más tarde"
-            : " No se encontraron coincidencias"}
+          {disabled ? <Timer /> : " No se encontraron coincidencias"}
         </span>
       )}
       {isOpen && (

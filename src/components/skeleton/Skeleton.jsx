@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Skeleton = ({ width }) => {
+export const Skeleton = () => {
   return (
     <div
       role="status"
