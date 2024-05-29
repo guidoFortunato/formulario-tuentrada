@@ -10,12 +10,15 @@ export async function getDataPrueba(url, token) {
         accept: "application/json",
       },
     });
-
-    //! a veces la respuesta es mala pero devuelve un 200: console.log({res})
+    // console.log({res})
 
     const data = await res.json();
 
-    return data;
+    return {
+      status: res.status,
+      ...data
+    };
+
   } catch (error) {
     console.log({ error });
   }

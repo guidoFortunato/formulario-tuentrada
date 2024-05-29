@@ -6,6 +6,7 @@ import { getDataPrueba } from "@/helpers/getInfoTest";
 import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
 import { FormContext } from "@/context/FormContext";
+import clsx from "clsx";
 
 export const FormBusqueda = () => {
   const { token } = useContext(FormContext);
@@ -16,6 +17,7 @@ export const FormBusqueda = () => {
   const [loading, setLoading] = useState(false);
   const searchTimer = useRef(null);
   const [error, setError] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   // console.log({ data });
   // console.log({ isOpen });
@@ -31,6 +33,15 @@ export const FormBusqueda = () => {
             token
           );
           // console.log({ res });
+          if (res.status === 429) {
+            setDisabled(true);
+            setError(true);
+            setTimeout(() => {
+              setDisabled(false);
+              setError(false);
+            }, 5000);
+            return;
+          }
           if (res.data?.articles?.length > 0) {
             setIsOpen(true);
             setError(false);
@@ -43,10 +54,7 @@ export const FormBusqueda = () => {
           setData(res?.data?.articles);
         }
       } catch (err) {
-        // console.error({
-        //   err,
-        //   message: "No se encontraron datos",
-        // });
+        console.log({ error });
       } finally {
         setLoading(false); // Desactivar indicador de carga
       }
@@ -101,22 +109,28 @@ export const FormBusqueda = () => {
     <form onSubmit={onSubmit} className="relative">
       <div className="relative">
         <input
-          className={`block w-full p-4 text-sm ${
-            loading ? "text-gray-300" : "text-gray-900"
-          } border ${
-            loading ? "border-gray-100" : "border-gray-300"
-          } rounded-lg bg-white focus:ring-blue-light`}
+          // className={`block w-full p-4 text-sm ${
+          //   loading
+          //     ? "text-gray-300 border-gray-100"
+          //     : "text-gray-900 border-gray-300"
+          // } border rounded-lg bg-white focus:ring-blue-light`}
+          className={clsx(
+            "block w-full p-4 text-sm border rounded-lg focus:ring-blue-light",
+            {
+              "bg-gray-100 text-gray-300 border-gray-300": disabled && !loading,
+              "bg-gray-100 text-gray-300 border-gray-100": !disabled && loading,
+              "text-gray-900 bg-white border-gray-300": !disabled && !loading,
+            }
+          )}
           name="search"
           type="text"
           placeholder="¿Qué estás buscando?..."
           value={value}
           onChange={handleChange}
           autoComplete="off"
-          disabled={loading}
+          disabled={disabled === false ? loading : disabled}
         />
         {loading && <Loader />}
-
-       
       </div>
       {error && (
         <span className="text-red-500 text-xs flex items-center pt-1">
@@ -140,15 +154,18 @@ export const FormBusqueda = () => {
               d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
             />
           </svg>{" "}
-          No se encontraron coincidencias
+          {disabled
+            ? "Ha realizado demasiados intentos, intente más tarde"
+            : " No se encontraron coincidencias"}
         </span>
       )}
       {isOpen && (
         <div
-          className={`absolute w-[-webkit-fill-available] bg-white z-10 rounded-lg shadow-xl mt-1 overflow-hidden border border-gray-200 ${data.length > 5 ? "h-[292px] overflow-y-scroll": "" }` }
+          className={`absolute w-[-webkit-fill-available] bg-white z-10 rounded-lg shadow-xl mt-1 overflow-hidden border border-gray-200 ${
+            data.length > 5 ? "h-[292px] overflow-y-scroll" : ""
+          }`}
           ref={panelRef}
         >
-
           {data.map((item) => {
             return (
               <section key={item.id}>
