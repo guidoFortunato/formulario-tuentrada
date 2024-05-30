@@ -3,9 +3,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getLocalStorage, setLocalStorage } from "@/helpers/storageHelper";
 
+const COOKIE_CONSENT_VALIDITY_DURATION = 24 * 60 * 60 * 1000; // 1 minuto en milisegundos para pruebas, cambia a 24 * 60 * 60 * 1000 para 24 horas
+
 export default function CookieBanner() {
   const [cookieConsent, setCookieConsent] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [isConsentLoaded, setIsConsentLoaded] = useState(false);
 
   // Inicializar las categorías aceptadas por defecto
   const initialAcceptedCategories = {
@@ -20,16 +23,37 @@ export default function CookieBanner() {
   );
 
   useEffect(() => {
-    const newValue = cookieConsent ? "granted" : "denied";
+    const storedConsent = getLocalStorage("cookie_consent");
+    const consentTimestamp = getLocalStorage("consent_timestamp");
+    const now = new Date().getTime();
 
-    window.gtag("consent", "update", {
-      analytics_storage: newValue,
-    });
+    if (storedConsent && consentTimestamp) {
+      if (now - parseInt(consentTimestamp, 10) < COOKIE_CONSENT_VALIDITY_DURATION) {
+        setCookieConsent(storedConsent === "true");
+      } else {
+        setCookieConsent(null); // Expirar consentimiento
+        setLocalStorage("cookie_consent", "false");
+        setLocalStorage("consent_timestamp", "");
+      }
+    } else {
+      setCookieConsent(null);
+    }
+    setIsConsentLoaded(true); // Marcar que el consentimiento se ha cargado
+  }, []);
 
-    setLocalStorage("cookie_consent", cookieConsent);
+  useEffect(() => {
+    if (cookieConsent !== null) {
+      const newValue = cookieConsent ? "granted" : "denied";
 
-    // Test cookies
-    // console.log("Cookie Consent: ", cookieConsent);
+      window.gtag("consent", "update", {
+        analytics_storage: newValue,
+      });
+
+      if (!getLocalStorage("cookie_consent") || getLocalStorage("cookie_consent") !== cookieConsent.toString()) {
+        setLocalStorage("cookie_consent", cookieConsent.toString());
+        setLocalStorage("consent_timestamp", new Date().getTime().toString());
+      }
+    }
   }, [cookieConsent]);
 
   const cookieCategories = [
@@ -75,6 +99,7 @@ export default function CookieBanner() {
       const allAccepted = { ...initialAcceptedCategories };
       return allAccepted;
     });
+    setCookieConsent(true);
   };
 
   const handleCustomizeClick = () => {
@@ -85,10 +110,14 @@ export default function CookieBanner() {
     setShowModal(false);
   };
 
+  if (!isConsentLoaded) {
+    return null; // No renderizar nada hasta que el consentimiento esté cargado
+  }
+
   return (
     <div
       className={`my-10 mx-auto max-w-max md:max-w-screen-sm fixed bottom-0 left-0 right-0 border border-gray-300 rounded-lg ${
-        cookieConsent !== null ? "hidden" : "flex"
+        cookieConsent === true ? "hidden" : "flex"
       } p-4 justify-between items-center bg-white rounded-t-md shadow-md max-w-max md:max-w-screen-sm`}
     >
       <div className="text-start text-xs text-gray-700">
@@ -157,7 +186,7 @@ export default function CookieBanner() {
                   className="py-2 text-blue-dark underline ml-3 text-sm"
                   onClick={handleAcceptAll}
                 >
-                  Aceptar todas las categorías
+                  Aceptar Categorías
                 </button>
 
                 <button
