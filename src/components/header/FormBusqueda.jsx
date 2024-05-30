@@ -19,6 +19,8 @@ export const FormBusqueda = () => {
   const searchTimer = useRef(null);
   const [error, setError] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [timeDifference, setTimeDifference] = useState("");
+  const [existClientDate, setExistClientDate] = useState(false);
 
   // console.log({ data });
   // console.log({ isOpen });
@@ -33,16 +35,40 @@ export const FormBusqueda = () => {
             `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
             token
           );
-          // console.log({ res });
           if (res.status === 429) {
-            setDisabled(true);
-            setError(true);
-            setTimeout(() => {
-              setDisabled(false);
-              setError(false);
-            }, 61000);
+            // Si ocurre un error 429, guardar la hora actual en localStorage
+            const clientDate = Number(localStorage.getItem("clientDate"));
+
+            if (!clientDate) {
+              // console.log("entra a !clientDate");
+              setExistClientDate(false);
+              localStorage.setItem("clientDate", Date.now());
+              setTimeDifference(61000);
+              setDisabled(true);
+              setError(true);
+              setTimeout(() => {
+                setDisabled(false);
+                setError(false);
+                localStorage.removeItem("clientDate");
+              }, 61000); // 60 segundos
+            } else {
+              // console.log("entra a clientDate");
+              const currentDate = Date.now();
+              const timeLeft = 61000 - (currentDate - clientDate);
+              // console.log({ timeLeft });
+              setExistClientDate(true);
+              setTimeDifference(currentDate - clientDate);
+              setDisabled(true);
+              setError(true);
+              setTimeout(() => {
+                setDisabled(false);
+                setError(false);
+                localStorage.removeItem("clientDate");
+              }, timeLeft);
+            }
             return;
           }
+
           if (res.data?.articles?.length > 0) {
             setIsOpen(true);
             setError(false);
@@ -147,7 +173,14 @@ export const FormBusqueda = () => {
               d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
             />
           </svg>{" "}
-          {disabled ? <Timer /> : "No se encontraron coincidencias"}
+          {disabled ? (
+            <Timer
+              timeDifference={timeDifference}
+              existClientDate={existClientDate}
+            />
+          ) : (
+            "No se encontraron coincidencias"
+          )}
         </span>
       )}
       {isOpen && (
