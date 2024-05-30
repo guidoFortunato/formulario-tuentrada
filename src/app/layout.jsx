@@ -33,14 +33,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="es">
       <head>
-        {/* <script
-          data-ad-client="ca-pub-3241865431125040"
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-          
-        ></script> */}
         <Script
-          // id="gscript-ads"
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE}`}
           strategy="afterInteractive"

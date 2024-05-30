@@ -35,7 +35,7 @@ export const ContainerCategory = ({ params }) => {
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}`,
           token
         );
-        console.log({info})
+        // console.log({info})
         if (!info.status) {
           setError(true)
           return

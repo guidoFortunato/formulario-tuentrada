@@ -40,7 +40,7 @@ export const FormBusqueda = () => {
             const clientDate = Number(localStorage.getItem("clientDate"));
 
             if (!clientDate) {
-              console.log("entra a !clientDate");
+              // console.log("entra a !clientDate");
               setExistClientDate(false);
               localStorage.setItem("clientDate", Date.now());
               setTimeDifference(61000);
@@ -52,10 +52,10 @@ export const FormBusqueda = () => {
                 localStorage.removeItem("clientDate");
               }, 61000); // 60 segundos
             } else {
-              console.log("entra a clientDate");
+              // console.log("entra a clientDate");
               const currentDate = Date.now();
               const timeLeft = 61000 - (currentDate - clientDate);
-              console.log({ timeLeft });
+              // console.log({ timeLeft });
               setExistClientDate(true);
               setTimeDifference(currentDate - clientDate);
               setDisabled(true);
