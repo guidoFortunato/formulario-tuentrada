@@ -8,7 +8,7 @@ export const ContainerApp = ({ children }) => {
     <>
       <ContainerHeader />
       {children}
-      <AdSense />
+      {/* <AdSense /> */}
       <ContainerFooter />
       {/* <Recaptcha /> */}
     </>
