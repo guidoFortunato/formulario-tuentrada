@@ -28,12 +28,6 @@ export const Form1 = ({ lengthSteps }) => {
 
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  // const handleRecaptcha = (e) => {
-  //   console.log({ e });
-  //   setCaptcha(e);
-  //   setErrorRecaptcha(false);
-  // };
-
   useEffect(() => {
     handleContacto(null);
     reset();
@@ -70,13 +64,13 @@ export const Form1 = ({ lengthSteps }) => {
           });
           const data = await response.json();
 
-          console.log({ data });
+          // console.log({ data });
 
           if (data?.success === true) {
-            console.log(`Success with score: ${data?.score}`);
+            // console.log(`Success with score: ${data?.score}`);
             setScore(true);
           } else {
-            console.log(`Failure with score: ${data?.score}`);
+            // console.log(`Failure with score: ${data?.score}`);
             setScore(false);
             setIsLoading(false);
             return;
