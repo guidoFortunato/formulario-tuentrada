@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getLocalStorage, setLocalStorage } from "@/helpers/storageHelper";
 
-// const COOKIE_CONSENT_VALIDITY_DURATION = 1 * 60 * 1000; // 1 minuto en milisegundos para pruebas, cambia a 24 * 60 * 60 * 1000 para 24 horas
+const COOKIE_CONSENT_VALIDITY_DURATION = 24 * 60 * 60 * 1000; // 1 minuto en milisegundos para pruebas, cambia a 24 * 60 * 60 * 1000 para 24 horas
 
 export default function CookieBanner() {
   const [cookieConsent, setCookieConsent] = useState(null);
