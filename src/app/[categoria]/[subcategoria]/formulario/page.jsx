@@ -1,4 +1,3 @@
-import AdSense from "@/components/adsense/Adsense";
 import { ContainerForm } from "@/components/container/ContainerForm";
 
 export async function generateStaticParams() {
@@ -52,12 +51,7 @@ export const generateMetadata = ({ params }) => {
 };
 
 async function FormPage({ params }) {
-  return (
-    <>
-      <ContainerForm params={params} />
-      <AdSense />
-    </>
-  );
+  return <ContainerForm params={params} />;
 }
 
 export default FormPage;
