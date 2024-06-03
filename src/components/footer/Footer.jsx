@@ -2,18 +2,22 @@ import Image from "next/image";
 import Accordion from "./Accordion";
 import SocialMedia from "./SocialMedia";
 import Link from "next/link";
+import AdSense from "../adsense/Adsense";
 
 const Footer = ({ data }) => {
   // Extraer las páginas de los datos proporcionados
   const { pages } = data;
-
+  
   // Generar la URL completa
   const newSrc = data.logoFooter.src.replace(
     "/images/",
     "https://api.tuentrada.com/storage/"
   );
-
+  
   return (
+    <>
+    
+    <AdSense />
     <footer className="bg-gradient-image shadow relative bottom-0 w-full">
       <div className="w-full max-w-screen-xl mx-auto pt-4">
         <div className="flex items-center flex-col">
@@ -58,6 +62,7 @@ const Footer = ({ data }) => {
         <Accordion data={data} />
       </div>
     </footer>
+    </>
   );
 };
 

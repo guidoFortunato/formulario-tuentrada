@@ -50,7 +50,7 @@ export default async function RootLayout({ children }) {
           <TagManager />
           <ContainerApp>{children}</ContainerApp>
           <CookieBanner />
-          <AdSense />
+          
         </FormProvider>
       </body>
     </html>
