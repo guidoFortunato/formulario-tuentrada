@@ -1,15 +1,16 @@
+import AdSense from "@/components/adsense/Adsense";
 import { ContainerForm } from "@/components/container/ContainerForm";
 
-export async function generateStaticParams(){
+export async function generateStaticParams() {
   return [
-    { name: "/mis-entradas/punto-de-venta-fisico"},
-    { name: "/tu-entrada-wallet/que-es-tuentrada-wallet"},
-    { name: "/tu-entrada-wallet/instrucciones"},
-    { name: "/devoluciones/como-solicitar-una-devolucion"},
-    { name: "/devoluciones/requisitos-y-aspectos-legales-para-devoluciones"},
-    { name: "/mis-entradas/punto-de-venta-fisico"},
-    { name: "/devoluciones/preguntas-frecuentes"},
-  ]
+    { name: "/mis-entradas/punto-de-venta-fisico" },
+    { name: "/tu-entrada-wallet/que-es-tuentrada-wallet" },
+    { name: "/tu-entrada-wallet/instrucciones" },
+    { name: "/devoluciones/como-solicitar-una-devolucion" },
+    { name: "/devoluciones/requisitos-y-aspectos-legales-para-devoluciones" },
+    { name: "/mis-entradas/punto-de-venta-fisico" },
+    { name: "/devoluciones/preguntas-frecuentes" },
+  ];
 }
 
 export const generateMetadata = ({ params }) => {
@@ -51,7 +52,12 @@ export const generateMetadata = ({ params }) => {
 };
 
 async function FormPage({ params }) {
-  return <ContainerForm params={params} />;
+  return (
+    <>
+      <ContainerForm params={params} />
+      <AdSense />
+    </>
+  );
 }
 
 export default FormPage;

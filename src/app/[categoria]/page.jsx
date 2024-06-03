@@ -1,3 +1,4 @@
+import AdSense from "@/components/adsense/Adsense";
 import { ContainerCategory } from "@/components/container/ContainerCategory";
 
 export const generateMetadata = ({ params }) => {
@@ -39,7 +40,12 @@ export const generateMetadata = ({ params }) => {
 };
 
 const Subcategoria = async ({ params }) => {
-  return <ContainerCategory params={params} />;
+  return (
+    <>
+      <ContainerCategory params={params} />
+      <AdSense />
+    </>
+  );
 };
 
 export default Subcategoria;

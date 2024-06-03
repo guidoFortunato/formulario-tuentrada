@@ -118,10 +118,10 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
           console.log({ data });
 
           if (data?.success === true) {
-            console.log(`Success with score: ${data?.score}`);
+            // console.log(`Success with score: ${data?.score}`);
             setScore(true);
           } else {
-            console.log(`Failure with score: ${data?.score}`);
+            // console.log(`Failure with score: ${data?.score}`);
             setScore(false);
             setIsLoading(false);
             return;
@@ -143,7 +143,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
           body: JSON.stringify({ tokenRecaptchaV2 }),
         });
         const { success } = await response.json();
-        console.log({ success });
+        // console.log({ success });
         if (!success) {
           setErrorRecaptcha(true);
           // router.push(

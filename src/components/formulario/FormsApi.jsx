@@ -144,7 +144,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           const ticketsCloseForm = info.data.tickets.filter( (ticket) => ticket.closeForm === 1 );
           if (ticketsCloseForm.length > 0) {
             
-            console.log("tiene tickets sin cerrar", { ticketsCloseForm });
+            // console.log("tiene tickets sin cerrar", { ticketsCloseForm });
             const ticketNumber = ticketsCloseForm[0].number;
             const status = ticketsCloseForm[0].status;
             const message = ticketsCloseForm[0].message;
@@ -167,7 +167,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       } catch (error) {
         console.log({ error });
       } finally {
-        console.log("primer finally")
         setLoadingCheckHaveTickets(false);
       }
     }
@@ -255,7 +254,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         // console.log({ info });
 
         if (info === undefined || !info.ok) {
-          console.log("info === undefined || !info.ok")
+          // console.log("info === undefined || !info.ok")
           alertErrorTickets();
           setFinalLoading(false);
           return;
@@ -268,7 +267,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       } catch (error) {
         console.log({ error });
       } finally {
-        console.log("último finally")
+        // console.log("último finally")
         setFinalLoading(false);
         reset();
         resetStep();
