@@ -9,6 +9,7 @@ import CookieBanner from "@/components/analytics/CookieBanner";
 import Script from "next/script";
 import { TagManager } from "@/components/tagmanager/TagManager";
 import AdSense from "@/components/adsense/Adsense";
+import GoogleAdsense from "@/components/adsense/GoogleAdsense";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,7 +38,7 @@ export default async function RootLayout({ children }) {
         <Script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           crossOrigin="anonymous"
         />
       </head>
@@ -50,9 +51,9 @@ export default async function RootLayout({ children }) {
           <TagManager />
           <ContainerApp>{children}</ContainerApp>
           <CookieBanner />
-          
         </FormProvider>
       </body>
+      <GoogleAdsense />
     </html>
   );
 }
