@@ -45,8 +45,8 @@ const AdBanner = (props) => {
           textAlign: "center",
           marginBottom: "20px",
           overflow: "hidden",
-          border: process.env.NODE_ENV_ADSENSE === "development" ? "1px solid red" : "none",
-          background: process.env.NODE_ENV_ADSENSE === "development" ? "rgba(255, 0, 0, 0.1)" : "none",
+          // border: process.env.NODE_ENV_ADSENSE === "development" ? "1px solid red" : "none",
+          // background: process.env.NODE_ENV_ADSENSE === "development" ? "rgba(255, 0, 0, 0.1)" : "none",
         }}
         data-adtest="on"
         data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE}
