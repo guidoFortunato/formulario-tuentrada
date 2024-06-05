@@ -37,7 +37,8 @@ const AdBanner = (props) => {
 
   return (
     <>
-      <h2 className="text-center">Anuncio Publicitario:</h2>
+      <div>
+      <h2 className="text-center text-gray-400 pb-1">ANUNCIO PUBLICITARIO:</h2>
       <ins
         className="adsbygoogle"
         style={{
@@ -45,6 +46,7 @@ const AdBanner = (props) => {
           textAlign: "center",
           marginBottom: "20px",
           overflow: "hidden",
+          height: "100px"
           // border: process.env.NODE_ENV_ADSENSE === "development" ? "1px solid red" : "none",
           // background: process.env.NODE_ENV_ADSENSE === "development" ? "rgba(255, 0, 0, 0.1)" : "none",
         }}
@@ -52,6 +54,7 @@ const AdBanner = (props) => {
         data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE}
         {...props}
       />
+      </div>
     </>
   );
 };
