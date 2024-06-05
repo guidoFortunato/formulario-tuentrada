@@ -38,7 +38,7 @@ const AdBanner = (props) => {
   return (
     <>
       <div>
-      <h2 className="text-center text-gray-400 pb-1">ANUNCIO PUBLICITARIO:</h2>
+      <h2 className="text-center text-gray-400 pb-1 text-xs">ANUNCIO PUBLICITARIO</h2>
       <ins
         className="adsbygoogle"
         style={{

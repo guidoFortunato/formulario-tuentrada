@@ -13,9 +13,10 @@ export const ContainerApp = ({ children }) => {
       {children}
       <AdBanner
         data-ad-slot="4322497970"
-        data-full-width-responsive="true"
+        data-full-width-responsive="false"
         data-ad-layout="in-article"
         data-ad-format="fluid"
+        
       />
       <ContainerFooter />
     </>
