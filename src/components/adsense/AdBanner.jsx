@@ -46,7 +46,6 @@ const AdBanner = (props) => {
           textAlign: "center",
           marginBottom: "20px",
           overflow: "hidden",
-          height: "100px"
           // border: process.env.NODE_ENV_ADSENSE === "development" ? "1px solid red" : "none",
           // background: process.env.NODE_ENV_ADSENSE === "development" ? "rgba(255, 0, 0, 0.1)" : "none",
         }}
