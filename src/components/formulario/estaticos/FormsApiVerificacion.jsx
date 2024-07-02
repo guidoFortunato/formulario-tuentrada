@@ -16,6 +16,7 @@ import {
   TypeFormGlpi,
   TypeFormInput,
   TypeFormRadio,
+  TypeFormScanner,
   TypeFormSelect,
   TypeFormTextarea,
 } from "../typeform";
@@ -39,11 +40,20 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
 
 
+
+
   const renderForms = dataForm.steps[0].fields.map((item) => {
     if (item.type === "input") {
       return (
         <Fragment key={item.name}>
           <TypeFormInput item={item} />
+        </Fragment>
+      );
+    }
+    if (item.type === "scanner") {
+      return (
+        <Fragment key={item.name}>
+          <TypeFormScanner item={item} />
         </Fragment>
       );
     }

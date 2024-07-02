@@ -1,6 +1,6 @@
 {
   "name": "my-app-formulario",
-  "version": "2.5.0",
+  "version": "1.5.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -29,6 +29,7 @@
     "react-input-mask": "^2.0.4",
     "react-scroll": "^1.9.0",
     "react-select": "^5.8.0",
+    "react-webcam": "^7.2.0",
     "sweetalert2": "^11.9.0",
     "utf-8-validate": "^6.0.3"
   },
