@@ -28,10 +28,12 @@ export const TypeFormScanner = ({ item }) => {
       >
         {item.name}{" "}
         {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
+        
       </label>
+      
       <button
         className={clsx(
-          "btn-primary bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5",
+          " bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full py-6 ",
           {
             "border-red-500 focus:ring-red-300 focus:border-red-500":
               errors[name],
@@ -44,12 +46,17 @@ export const TypeFormScanner = ({ item }) => {
         id={name}
         type="button"
       >
+      Debe adjuntar frente DNI, como figura en la imagen:
+   <div className="flex justify-center">
+   <img className="w-[350px] " src="https://tuentrada.com/experiencia/ayuda-consulta/dni.png" alt="" />
+   </div>
         {scan ? (
-          <span className="whitespace-nowrap">Cancelar scaneo</span>
+          <span className="whitespace-nowrap btn-primary">Cancelar Cámara</span>
         ) : (
-          <span className="whitespace-nowrap">Scanear DNI</span>
+          <span className="whitespace-nowrap btn-primary">Activar Cámara</span>
         )}
       </button>
+      
       {item.helperText && !errors[name] && (
         <span className="text-gray-500 text-xs block mt-1">
           {item.helperText}
@@ -60,24 +67,21 @@ export const TypeFormScanner = ({ item }) => {
           {errors[name].message}
         </span>
       )}
+      
       {scan && (
         <>
+        
           <Webcam
+            className="rounded-lg"
             ref={webcamRef}
             height={160}
             width={720}
             videoConstraints={{ facingMode: facingMode }}
           />
-          <button
-            className="btn-primary mt-3"
-            type="button"
-            onClick={capturePhoto}
-          >
-            Tomar foto
-          </button>
-         
-          <button
-            className="btn-primary mt-3 ml-2"
+          
+          {imageSrc && <img src={imageSrc} alt="" className="mt-2 rounded-lg" />}
+       <div style={{background:"linear-gradient(0deg, rgba(0,0,0,0.99) 0%, rgba(0,0,0,0) 100%)"}} className="flex justify-evenly items-center p-3 relative -top-[72px] rounded-lg">   <button
+            className="w-8 "
             type="button"
             onClick={() =>
               setFacingMode((prev) =>
@@ -85,17 +89,27 @@ export const TypeFormScanner = ({ item }) => {
               )
             }
           >
-            <span className="whitespace-nowrap">Cámara "{facingMode}"</span>
+            
+            <span className="whitespace-nowrap"> <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan2.svg" alt="" /> </span>
+          </button>
+          <button 
+            className="w-12"
+            type="button"
+            onClick={capturePhoto}
+          >
+            <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan3.svg" alt="" />
           </button>
           <button
-            className="btn-primary mt-3"
+            className="w-8 "
             type="button"
             onClick={ () => setImageSrc(null) }
           >
-            Cancelar
+             <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan1.svg" alt="" />
           </button>
+          
+          </div>
 
-          {imageSrc && <img src={imageSrc} alt="" className="mt-2" />}
+         
         </>
       )}
     </div>
