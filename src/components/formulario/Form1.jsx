@@ -23,7 +23,6 @@ export const Form1 = ({ lengthSteps }) => {
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // // console.log({ score });
   // console.log({ tokenRecaptchaV2 });
 
   const { executeRecaptcha } = useGoogleReCaptcha();
