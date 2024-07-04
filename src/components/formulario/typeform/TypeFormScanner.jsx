@@ -53,7 +53,7 @@ export const TypeFormScanner = ({ item }) => {
           <img className="w-[350px]" src="https://tuentrada.com/experiencia/ayuda-consulta/dni.png" alt="" />
         </div>
         {scan ? (
-          <span className="whitespace-nowrap btn-primary">Cancelar Cámara</span>
+          <span className="whitespace-nowrap btn-primary">Desactivar Cámara</span>
         ) : (
           <span className="whitespace-nowrap btn-primary">Activar Cámara</span>
         )}
