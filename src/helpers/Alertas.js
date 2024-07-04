@@ -45,7 +45,8 @@ export const alertErrorTickets = ( text = "" ) => {
     confirmButtonColor: "#1955A5",
     iconColor: "#FC4242",
     showCloseButton: true,
-    showConfirmButton: false
+    showConfirmButton: false,
+    inputAutoFocus: false,
   });
 };
 
@@ -80,5 +81,12 @@ export const alertSuccessTickets = (numberTicket = "") => {
         <small style="font-size: 80%; color:#6C6C6C">La copia de la información que completaste te llegará por correo electrónico. Revisá la carpeta de spam en caso de no verlo en tu bandeja de entrada.</small> </div>`,
 
     confirmButtonColor: "#1955A5",
+    confirmButtonText: "Aceptar",
+    showCloseButton: true,
+    inputAutoFocus: false,
+    focusConfirm: false,
+    focusCancel: false,
+    focusDeny: false,
+    returnFocus: false
   });
 };

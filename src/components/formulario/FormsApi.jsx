@@ -114,8 +114,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     // return;
 
     const { email, emailConfirm, ...content } = data;
-    console.log({email, content})
-    console.log({stepNow})
+    // console.log({email, content})
+    // console.log({stepNow})
 
     // if (selectDefaultValue === "defaultValue") {
     //   handleErrorInput(true);
@@ -238,6 +238,11 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           }
           // objectModified[newKey] = content[key];
         });
+
+        // alertSuccessTickets(12345);
+        // alertErrorTickets()
+        // return
+
      
         const info = await fetch(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
