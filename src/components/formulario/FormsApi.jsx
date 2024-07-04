@@ -238,20 +238,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           }
           // objectModified[newKey] = content[key];
         });
-        // for (const [clave, valor] of formData.entries()) {
-        //   console.log(`${clave}: ${valor}`);
-        // }
-        // return;
-
-        for (let pair of formData.entries()) {
-          if (pair[1] instanceof File) {
-            console.log(`${pair[0]}: ${pair[1].name}, ${pair[1].size} bytes, ${pair[1].type}`);
-          } 
-        }
-        
-
-        return
-
+     
         const info = await fetch(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           {
@@ -262,23 +249,19 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
-        // console.log({ info });
 
         if (info === undefined || !info.ok) {
-          // console.log("info === undefined || !info.ok")
           alertErrorTickets();
           setFinalLoading(false);
           return;
         }
-        // console.log("info !== undefined || info.ok")
         const { data } = await info.json();
-        // console.log({ data });
         const numberTicket = data?.ticketNumber;
-        alertSuccessTickets(numberTicket);
+        alertSuccessTickets(numberTicket);        
       } catch (error) {
-        console.log({ error });
+        console.log(error);
+        alertErrorTickets()
       } finally {
-        // console.log("último finally")
         setFinalLoading(false);
         reset();
         resetStep();

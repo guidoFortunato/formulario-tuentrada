@@ -12,7 +12,7 @@ export const alertWarning = (text = "Debe ingresar un texto") => {
 };
 
 //Alerta del envío de formapi
-export const alertErrorTickets = () => {
+export const alertErrorTickets2 = () => {
   Swal.fire({
     icon: "error",
     html: ` <div style="text-align: center;"> 
@@ -23,6 +23,29 @@ export const alertErrorTickets = () => {
     allowOutsideClick: false,
     confirmButtonColor: "#1955A5",
     iconColor: "#FC4242",
+  });
+};
+
+export const alertErrorTickets = ( text = "" ) => {
+  Swal.fire({
+    icon: "error",
+    html: ` <div style="flex flex-col">
+    <div class="mb-5">
+      <span style="font-size: 25px; font-weight: bold;">Ocurrió un error inesperado</span> <br><br>  
+      <small style="font-size: 80%; color:#6C6C6C">Por favor, complete el siguiente formulario mientras solucionamos el inconveniente.</small>
+    </div>
+    <div>
+      <a href="https://forms.gle/bu8Hx1NdGGDpLWQX6">
+        <button class="btn-primary">Completar el formulario</button>
+      </a>
+    </div>
+ 
+     </div>`,
+    allowOutsideClick: false,
+    confirmButtonColor: "#1955A5",
+    iconColor: "#FC4242",
+    showCloseButton: true,
+    showConfirmButton: false
   });
 };
 
