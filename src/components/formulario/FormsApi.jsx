@@ -20,6 +20,7 @@ import { BotonSiguiente } from "./BotonSiguiente";
 import { BotonVolver } from "./BotonVolver";
 import { addPrefixes } from "@/utils/addPrefixes";
 import { formatDateString, isDateFormat } from "@/utils/helpDates";
+import { errorLogs } from "@/helpers/errorLogs";
 
 export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const {
@@ -245,7 +246,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
      
         const info = await fetch(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/format`,
           {
             method: "POST",
             headers: {
@@ -254,10 +255,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
-
+        console.log({info})
         if (info === undefined || !info.ok) {
           alertErrorTickets();
-          setFinalLoading(false);
+          errorLogs("/api/errors_clients", email, content, info.status.toString())
           return;
         }
         const { data } = await info.json();
@@ -266,11 +267,13 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       } catch (error) {
         console.log(error);
         alertErrorTickets()
+        errorLogs("/api/errors_clients", email, content, error)
+        
       } finally {
         setFinalLoading(false);
-        reset();
-        resetStep();
-        router.push("/");
+        // reset();
+        // resetStep();
+        // router.push("/");
       }
     }
   };
