@@ -18,6 +18,7 @@ export const TypeFormScanner = ({ item }) => {
 
   const handleScan = () => {
     setScan((prev) => !prev);
+    if (scan) setImageSrc(null); // Reset image when turning off the camera
   };
 
   return (
@@ -28,17 +29,14 @@ export const TypeFormScanner = ({ item }) => {
       >
         {item.name}{" "}
         {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
-        
       </label>
       
       <button
         className={clsx(
-          " bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full py-6 ",
+          "bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full py-6",
           {
-            "border-red-500 focus:ring-red-300 focus:border-red-500":
-              errors[name],
-            "border-gray-300 focus:ring-blue-300 focus:border-blue-dark":
-              !errors[name],
+            "border-red-500 focus:ring-red-300 focus:border-red-500": errors[name],
+            "border-gray-300 focus:ring-blue-300 focus:border-blue-dark": !errors[name],
           }
         )}
         onClick={handleScan}
@@ -46,10 +44,10 @@ export const TypeFormScanner = ({ item }) => {
         id={name}
         type="button"
       >
-      Debe adjuntar frente DNI, como figura en la imagen:
-   <div className="flex justify-center">
-   <img className="w-[350px] " src="https://tuentrada.com/experiencia/ayuda-consulta/dni.png" alt="" />
-   </div>
+       Adjunta el frente de tu DNI, tal como se muestra en la imagen:
+        <div className="flex justify-center">
+          <img className="w-[350px]" src="https://tuentrada.com/experiencia/ayuda-consulta/dni.png" alt="" />
+        </div>
         {scan ? (
           <span className="whitespace-nowrap btn-primary">Cancelar Cámara</span>
         ) : (
@@ -67,10 +65,9 @@ export const TypeFormScanner = ({ item }) => {
           {errors[name].message}
         </span>
       )}
-      
-      {scan && (
+
+      {scan && !imageSrc && (
         <>
-        
           <Webcam
             className="rounded-lg"
             ref={webcamRef}
@@ -78,38 +75,41 @@ export const TypeFormScanner = ({ item }) => {
             width={720}
             videoConstraints={{ facingMode: facingMode }}
           />
-          
-          {imageSrc && <img src={imageSrc} alt="" className="mt-2 rounded-lg" />}
-       <div style={{background:"linear-gradient(0deg, rgba(0,0,0,0.99) 0%, rgba(0,0,0,0) 100%)"}} className="flex justify-evenly items-center p-3 relative -top-[72px] rounded-lg">   <button
-            className="w-8 "
-            type="button"
-            onClick={() =>
-              setFacingMode((prev) =>
-                prev === "user" ? "environment" : "user"
-              )
-            }
-          >
-            
-            <span className="whitespace-nowrap"> <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan2.svg" alt="" /> </span>
-          </button>
-          <button 
-            className="w-12"
-            type="button"
-            onClick={capturePhoto}
-          >
-            <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan3.svg" alt="" />
-          </button>
-          <button
-            className="w-8 "
-            type="button"
-            onClick={ () => setImageSrc(null) }
-          >
-             <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan1.svg" alt="" />
-          </button>
-          
+          <div style={{background:"linear-gradient(0deg, rgba(0,0,0,0.99) 0%, rgba(0,0,0,0) 100%)"}} className="flex justify-evenly items-center p-3 relative -top-[72px] rounded-lg">   
+            <button
+              className="w-12"
+              type="button"
+              onClick={() =>
+                setFacingMode((prev) =>
+                  prev === "user" ? "environment" : "user"
+                )
+              }
+            >
+              <span className="whitespace-nowrap"><img src="https://tuentrada.com/experiencia/ayuda-consulta/scan2.svg" alt="" /></span>
+            </button>
+            <button 
+              className="w-12"
+              type="button"
+              onClick={capturePhoto}
+            >
+              <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan3.svg" alt="" />
+            </button>
           </div>
+        </>
+      )}
 
-         
+      {imageSrc && (
+        <>
+          <img src={imageSrc} alt="" className="mt-2 rounded-lg" />
+          <div style={{background:"linear-gradient(0deg, rgba(0,0,0,0.99) 0%, rgba(0,0,0,0) 100%)"}} className="flex justify-evenly items-center p-3 relative -top-[72px] rounded-lg">  
+            <button
+              className="w-12"
+              type="button"
+              onClick={() => setImageSrc(null)}
+            >
+              <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan1.svg" alt="" />
+            </button>
+          </div>
         </>
       )}
     </div>
