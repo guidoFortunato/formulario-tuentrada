@@ -25,6 +25,9 @@ export const TypeFormScanner = ({ item }) => {
     } 
   };
 
+  const isDNI = item.name.toLowerCase().includes("dni");
+  const isTarjeta = item.name.toLowerCase().includes("tarjeta");
+
   return (
     <div className={item.subtype === "hidden" ? "hidden" : ""}>
       <label
@@ -34,7 +37,7 @@ export const TypeFormScanner = ({ item }) => {
         {item.name}{" "}
         {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
       </label>
-      
+  
       <button
         className={clsx(
           "bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full py-6",
@@ -48,10 +51,22 @@ export const TypeFormScanner = ({ item }) => {
         id={name}
         type="button"
       >
-        Adjunta el frente de tu DNI, tal como se muestra en la imagen:
-        <div className="flex justify-center">
-          <img className="w-[350px]" src="https://tuentrada.com/experiencia/ayuda-consulta/dni.png" alt="" />
-        </div>
+        {isDNI && (
+          <>
+            Adjunta el frente de tu DNI, tal como se muestra en la imagen:
+            <div className="flex justify-center">
+              <img className="w-[350px]" src="https://tuentrada.com/experiencia/ayuda-consulta/dni.png" alt="DNI" />
+            </div>
+          </>
+        )}
+        {isTarjeta && (
+          <>
+            Adjunta el frente de tu Tarjeta, tal como se muestra en la imagen:
+            <div className="flex justify-center">
+              <img className="w-[350px]" src="https://tuentrada.com/experiencia/ayuda-consulta/tarjeta.png" alt="Tarjeta" />
+            </div>
+          </>
+        )}
         {scan ? (
           <span className="whitespace-nowrap btn-primary">Desactivar Cámara</span>
         ) : (
@@ -94,6 +109,7 @@ export const TypeFormScanner = ({ item }) => {
             />
           </svg>{" "}<span>Debe acceder a los permisos de la cámara para poder escanear su DNI.</span>
           </div>
+          
         ) : (
           <>
             <Webcam
@@ -114,14 +130,14 @@ export const TypeFormScanner = ({ item }) => {
                   )
                 }
               >
-                <span className="whitespace-nowrap"><img src="https://tuentrada.com/experiencia/ayuda-consulta/scan2.svg" alt="" /></span>
+                <span className="whitespace-nowrap"><img src="https://tuentrada.com/experiencia/ayuda-consulta/scan2.svg" alt="Cambiar cámara" /></span>
               </button>
               <button 
                 className="w-12"
                 type="button"
                 onClick={capturePhoto}
               >
-                <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan3.svg" alt="" />
+                <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan3.svg" alt="Capturar foto" />
               </button>
             </div>
           </>
@@ -130,18 +146,24 @@ export const TypeFormScanner = ({ item }) => {
 
       {imageSrc && (
         <>
-          <img src={imageSrc} alt="" className="mt-2 rounded-lg" />
+          <img src={imageSrc} alt="Captura" className="mt-2 rounded-lg" />
           <div style={{background:"linear-gradient(0deg, rgba(0,0,0,0.99) 0%, rgba(0,0,0,0) 100%)"}} className="flex justify-evenly items-center p-3 relative -top-[72px] rounded-lg">  
             <button
               className="w-12"
               type="button"
               onClick={() => setImageSrc(null)}
             >
-              <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan1.svg" alt="" />
+              <img src="https://tuentrada.com/experiencia/ayuda-consulta/scan1.svg" alt="Borrar captura" />
             </button>
           </div>
         </>
-      )}
+        )}
+      <div className="py-2">
+        <span className="text-sm text-gray-700">
+          Si estás utilizando una computadora o no tienes cámara, genera el código QR y escanéalo desde tu celular para realizar el trámite:
+        </span>
+        <span className="underline text-blue-dark cursor-pointer hover:text-blue-800">Generar QR</span>
+      </div>
     </div>
   );
 };
