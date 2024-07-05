@@ -5,7 +5,9 @@ import path from "path";
 
 export async function POST(request) {
   try {
-    const body = await request.json(); 
+    const body = await request.json();
+    console.log({request})
+    console.log({body})
     const { email, content, error } = body;
     const headersList = headers();
     const userAgent = headersList.get("user-agent");
