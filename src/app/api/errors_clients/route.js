@@ -1,17 +1,17 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import fs from "fs";
 import path from "path";
 
 export async function POST(request) {
   try {
-    const req = new NextRequest(request)
+    const body = await request.json(); 
+    const { email, content, error } = body;
     const headersList = headers();
     const userAgent = headersList.get("user-agent");
     const ip = request.ip === undefined ? "unknown" : request.ip;
-    const { email, content, error } = request.body;
     const date = new Date().toLocaleString().split(",")[0].split("/").join("_");
-    console.log({req})
+    console.log({ email, content, error })
 
     // Ruta de la carpeta logs y el archivo recaptcha_*.json
     const logsDir = path.join(process.cwd(), "public/logs");

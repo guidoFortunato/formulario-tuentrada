@@ -290,7 +290,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           }else{
             alertErrorTickets();
           }
-          // errorLogs("/api/errors_clients", email, content, info.status.toString())
+          errorLogs("/api/errors_clients", email, content, info.status.toString())
           return;
         }
         const { data } = await info.json();
@@ -314,7 +314,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         }else{
           alertErrorTickets();
         }
-        // errorLogs("/api/errors_clients", email, content, error)
+        errorLogs("/api/errors_clients", email, content, error)
         
       } finally {
         setFinalLoading(false);
