@@ -1,11 +1,13 @@
 import { Fragment, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getCookie, hasCookie, setCookie } from 'cookies-next';
 import { getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
 import {
   alertSuccessTickets,
   alertWarningTickets,
   alertErrorTickets,
+  alertErrorTicketsNotification,
 } from "@/helpers/Alertas";
 import {
   TypeFormCheckbox,
@@ -180,6 +182,21 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
     if (currentStep + 1 === lengthSteps) {
       //Form final
+      const existCookieAttempt = hasCookie("ftuein");
+      if (!existCookieAttempt) {
+        // Si la cookie no existe, crearla con valor 0 y una fecha de expiración 1 hora en el futuro
+        const expirationDate = new Date();
+        expirationDate.setMinutes(expirationDate.getMinutes() + 1);
+        setCookie(
+          "ftuein",
+          JSON.stringify({
+            value: 0,
+            expirationDate: expirationDate,
+          })
+        );   
+             
+      }
+
       let id;
       const subject = [];
 
@@ -242,6 +259,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
         // alertSuccessTickets(12345);
         // alertErrorTickets()
+        // alertErrorTicketsNotification()
         // return
 
      
@@ -257,8 +275,22 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         );
         console.log({info})
         if (info === undefined || !info.ok) {
-          alertErrorTickets();
-          errorLogs("/api/errors_clients", email, content, info.status.toString())
+        let { value, expirationDate } = JSON.parse(getCookie('ftuein'))
+        console.log({value, expirationDate})
+          
+          setCookie(
+            "ftuein",
+            JSON.stringify({
+              value: value + 1,
+              expirationDate: expirationDate,
+            })
+          );
+          if ((value + 1) < 3) {
+            alertErrorTicketsNotification()
+          }else{
+            alertErrorTickets();
+          }
+          // errorLogs("/api/errors_clients", email, content, info.status.toString())
           return;
         }
         const { data } = await info.json();
@@ -266,14 +298,29 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
         alertSuccessTickets(numberTicket);        
       } catch (error) {
         console.log(error);
-        alertErrorTickets()
-        errorLogs("/api/errors_clients", email, content, error)
+        let { value, expirationDate } = JSON.parse(getCookie('ftuein'))
+        console.log({value, expirationDate})
+
+        setCookie(
+          "ftuein",
+          JSON.stringify({
+            value: value + 1,
+            expirationDate: expirationDate,
+          })
+        );
+
+        if ((value + 1) < 3) {
+          alertErrorTicketsNotification()
+        }else{
+          alertErrorTickets();
+        }
+        // errorLogs("/api/errors_clients", email, content, error)
         
       } finally {
         setFinalLoading(false);
-        // reset();
-        // resetStep();
-        // router.push("/");
+        reset();
+        resetStep();
+        router.push("/");
       }
     }
   };
