@@ -20,6 +20,7 @@ import { BotonSiguiente } from "./BotonSiguiente";
 import { BotonVolver } from "./BotonVolver";
 import { addPrefixes } from "@/utils/addPrefixes";
 import { formatDateString, isDateFormat } from "@/utils/helpDates";
+import { errorLogs } from "@/helpers/errorLogs";
 
 export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
   const {
@@ -114,8 +115,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     // return;
 
     const { email, emailConfirm, ...content } = data;
-    console.log({email, content})
-    console.log({stepNow})
+    // console.log({email, content})
+    // console.log({stepNow})
 
     // if (selectDefaultValue === "defaultValue") {
     //   handleErrorInput(true);
@@ -238,22 +239,14 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           }
           // objectModified[newKey] = content[key];
         });
-        // for (const [clave, valor] of formData.entries()) {
-        //   console.log(`${clave}: ${valor}`);
-        // }
-        // return;
 
-        for (let pair of formData.entries()) {
-          if (pair[1] instanceof File) {
-            console.log(`${pair[0]}: ${pair[1].name}, ${pair[1].size} bytes, ${pair[1].type}`);
-          } 
-        }
-        
+        // alertSuccessTickets(12345);
+        // alertErrorTickets()
+        // return
 
-        return
-
+     
         const info = await fetch(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/format`,
           {
             method: "POST",
             headers: {
@@ -262,27 +255,25 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
-        // console.log({ info });
-
+        console.log({info})
         if (info === undefined || !info.ok) {
-          // console.log("info === undefined || !info.ok")
           alertErrorTickets();
-          setFinalLoading(false);
+          errorLogs("/api/errors_clients", email, content, info.status.toString())
           return;
         }
-        // console.log("info !== undefined || info.ok")
         const { data } = await info.json();
-        // console.log({ data });
         const numberTicket = data?.ticketNumber;
-        alertSuccessTickets(numberTicket);
+        alertSuccessTickets(numberTicket);        
       } catch (error) {
-        console.log({ error });
+        console.log(error);
+        alertErrorTickets()
+        errorLogs("/api/errors_clients", email, content, error)
+        
       } finally {
-        // console.log("último finally")
         setFinalLoading(false);
-        reset();
-        resetStep();
-        router.push("/");
+        // reset();
+        // resetStep();
+        // router.push("/");
       }
     }
   };

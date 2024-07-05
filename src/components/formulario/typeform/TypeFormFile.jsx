@@ -41,15 +41,15 @@ export const TypeFormFile = ({ item }) => {
                 "application/pdf",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
               ];
-              const maxFileSize = 2000 * 1024; // 2000 KB
+              const maxFileSize = 5000 * 1024; // 2000 KB
 
               const isValidFormat = allowedFormats.includes(value[0]?.type);
               const isFileSizeValid = value[0]?.size <= maxFileSize;
 
               if (!isValidFormat) {
-                return "Formato de archivo no permitido. Se admiten formatos: jpg, jpeg, png, webp, pdf, gif,svg y docx";
+                return "Formato de archivo no permitido. Se admiten formatos: jpg, jpeg, png, webp, pdf, gif, svg y docx";
               } else if (!isFileSizeValid) {
-                return "El archivo debe pesar menos de 2MB";
+                return "El archivo debe pesar menos de 5MB";
               } else {
                 return true; // La validación pasa
               }

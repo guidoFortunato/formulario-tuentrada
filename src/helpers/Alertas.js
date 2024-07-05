@@ -12,7 +12,7 @@ export const alertWarning = (text = "Debe ingresar un texto") => {
 };
 
 //Alerta del envío de formapi
-export const alertErrorTickets = () => {
+export const alertErrorTickets2 = () => {
   Swal.fire({
     icon: "error",
     html: ` <div style="text-align: center;"> 
@@ -23,6 +23,30 @@ export const alertErrorTickets = () => {
     allowOutsideClick: false,
     confirmButtonColor: "#1955A5",
     iconColor: "#FC4242",
+  });
+};
+
+export const alertErrorTickets = ( text = "" ) => {
+  Swal.fire({
+    icon: "error",
+    html: ` <div style="flex flex-col">
+    <div class="mb-5">
+      <span style="font-size: 25px; font-weight: bold;">Ocurrió un error inesperado</span> <br><br>  
+      <small style="font-size: 80%; color:#6C6C6C">Por favor, complete el siguiente formulario mientras solucionamos el inconveniente.</small>
+    </div>
+    <div>
+      <a href="https://forms.gle/bu8Hx1NdGGDpLWQX6">
+        <button class="btn-primary">Completar el formulario</button>
+      </a>
+    </div>
+ 
+     </div>`,
+    allowOutsideClick: false,
+    confirmButtonColor: "#1955A5",
+    iconColor: "#FC4242",
+    showCloseButton: true,
+    showConfirmButton: false,
+    inputAutoFocus: false,
   });
 };
 
@@ -57,5 +81,12 @@ export const alertSuccessTickets = (numberTicket = "") => {
         <small style="font-size: 80%; color:#6C6C6C">La copia de la información que completaste te llegará por correo electrónico. Revisá la carpeta de spam en caso de no verlo en tu bandeja de entrada.</small> </div>`,
 
     confirmButtonColor: "#1955A5",
+    confirmButtonText: "Aceptar",
+    showCloseButton: true,
+    inputAutoFocus: false,
+    focusConfirm: false,
+    focusCancel: false,
+    focusDeny: false,
+    returnFocus: false
   });
 };
