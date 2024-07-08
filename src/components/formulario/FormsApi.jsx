@@ -186,7 +186,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       if (!existCookieAttempt) {
         // Si la cookie no existe, crearla con valor 0 y una fecha de expiración 1 hora en el futuro
         const expirationDate = new Date();
-        expirationDate.setMinutes(expirationDate.getMinutes() + 10);
+        expirationDate.setHours(expirationDate.getHours() + 12);
         setCookie(
           "ftuein",
           JSON.stringify({
@@ -264,7 +264,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
      
         const info = await fetch(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/format`,
           {
             method: "POST",
             headers: {
@@ -285,7 +285,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
               expirationDate: expirationDate,
             })
           );
-          if ((value + 1) < 3) {
+          if ((value + 1) < 2) {
             alertErrorTicketsNotification()
           }else{
             alertErrorTickets();
@@ -309,7 +309,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
           })
         );
 
-        if ((value + 1) < 3) {
+        if ((value + 1) < 2) {
           alertErrorTicketsNotification()
         }else{
           alertErrorTickets();

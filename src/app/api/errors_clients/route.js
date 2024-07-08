@@ -3,6 +3,16 @@ import { headers } from "next/headers";
 import fs from "fs";
 import path from "path";
 
+const options = { 
+  year: 'numeric', 
+  month: '2-digit', 
+  day: '2-digit', 
+  hour: '2-digit', 
+  minute: '2-digit', 
+  second: '2-digit', 
+  hour12: false 
+};
+
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -41,7 +51,7 @@ export async function POST(request) {
       // Si el archivo no existe, crear un archivo con estructura inicial
       const initialData = {
         error: [],
-        time: new Date().toLocaleDateString(),
+        
       };
       fs.writeFileSync(filePath, JSON.stringify(initialData, null, 2), "utf8");
     }
@@ -50,16 +60,16 @@ export async function POST(request) {
     let data = fs.readFileSync(filePath, "utf8");
     let logs = JSON.parse(data);
 
+    //nuevo contenido agregando la fecha
+    const newContent = [{...content, time: new Date().toLocaleString('es-ES', options), ip, userAgent, error}]
+
     // Verificar si el email ya existe
     let emailClient = logs.error.find((log) => log.email === email);
 
     if (emailClient) {
 
       emailClient.quantity = (parseInt(emailClient.quantity) + 1).toString();
-      emailClient.ip.push(ip);
-      emailClient.userAgent.push(userAgent);
-      emailClient.content.push(content);
-      emailClient.error.push(error);
+      emailClient.content.push(newContent);
 
     } else {
 
@@ -67,10 +77,7 @@ export async function POST(request) {
       logs.error.push({
         email: email,
         quantity: "1",
-        content: [content],
-        ip: [ip],
-        userAgent: [userAgent],
-        error: [error],
+        content: [newContent],
       });
 
     }

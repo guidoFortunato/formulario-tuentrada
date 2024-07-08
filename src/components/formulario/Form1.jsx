@@ -55,7 +55,7 @@ export const Form1 = ({ lengthSteps }) => {
         // Crear una nueva fecha de expiración 1 hora en el futuro
         console.log('entra a new Date(cookieAttempt.expirationDate) <= new Date()')
         const expirationDate = new Date();
-        expirationDate.setMinutes(expirationDate.getMinutes() + 1);
+        expirationDate.setHours(expirationDate.getHours() + 12);
 
         // Actualizar la cookie con el valor 0 y la nueva fecha de expiración
         setCookie(
@@ -71,7 +71,7 @@ export const Form1 = ({ lengthSteps }) => {
 
       // Si la cookie no existe, crearla con valor 0 y una fecha de expiración 1 hora en el futuro
       const expirationDate = new Date();
-      expirationDate.setMinutes(expirationDate.getMinutes() + 10);
+      expirationDate.setHours(expirationDate.getHours() + 12);
       setCookie(
         "ftuein",
         JSON.stringify({

@@ -31,7 +31,7 @@ export const alertErrorTickets = (text = "") => {
     icon: "error",
     html: ` <div style="flex flex-col">
     <div class="mb-5">
-      <span style="font-size: 25px; font-weight: bold;">Ocurrió un error inesperado</span> <br><br>  
+      <p style="font-size: 25px; font-weight: bold;" class="mb-2">Ocurrió un error inesperado</p>
       <small style="font-size: 80%; color:#6C6C6C">Por favor, complete el siguiente formulario mientras solucionamos el inconveniente.</small>
     </div>
     <div>
