@@ -224,7 +224,7 @@ export const TypeFormScanner = ({ item }) => {
             )}
             <div className="mt-4">
               {imageSrc ? (
-                <div className="flex justify-center items-center">
+                <div className="flex justify-evenly items-center">
                   <button
                      className="w-12"
                     type="button"
@@ -232,7 +232,7 @@ export const TypeFormScanner = ({ item }) => {
                   >
                          <img
                       src="https://tuentrada.com/experiencia/ayuda-consulta/11.svg"
-                      alt="Cerrar Modal"
+                      alt="Validar Modal"
                     />
                   </button>
                   <button
@@ -242,7 +242,7 @@ export const TypeFormScanner = ({ item }) => {
                   >
                     <img
                       src="https://tuentrada.com/experiencia/ayuda-consulta/9.svg"
-                      alt="Cerrar"
+                      alt="Cerrar Modal"
                     />
                   </button>
                 </div>
@@ -275,7 +275,7 @@ export const TypeFormScanner = ({ item }) => {
                   <button className="w-12" type="button" onClick={closeModal}>
                   <img
                       src="https://tuentrada.com/experiencia/ayuda-consulta/9.svg"
-                      alt="Capturar foto"
+                      alt="Cerrar modal"
                     />
                   </button>
                 </div>
