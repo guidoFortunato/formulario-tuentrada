@@ -26,12 +26,12 @@ export const alertErrorTickets2 = () => {
   });
 };
 
-export const alertErrorTickets = ( text = "" ) => {
+export const alertErrorTickets = (text = "") => {
   Swal.fire({
     icon: "error",
     html: ` <div style="flex flex-col">
     <div class="mb-5">
-      <span style="font-size: 25px; font-weight: bold;">Ocurrió un error inesperado</span> <br><br>  
+      <p style="font-size: 25px; font-weight: bold;" class="mb-2">Ocurrió un error inesperado</p>
       <small style="font-size: 80%; color:#6C6C6C">Por favor, complete el siguiente formulario mientras solucionamos el inconveniente.</small>
     </div>
     <div>
@@ -87,6 +87,22 @@ export const alertSuccessTickets = (numberTicket = "") => {
     focusConfirm: false,
     focusCancel: false,
     focusDeny: false,
-    returnFocus: false
+    returnFocus: false,
+  });
+};
+
+export const alertErrorTicketsNotification = ( text = "Por favor, intente nuevamente en unos minutos." ) => {
+  Swal.fire({
+    icon: "error",
+    html: ` 
+    <div style="flex flex-col">    
+      <p style="font-size: 25px; font-weight: bold;" class="mb-1">Ocurrió un error inesperado</p>
+      <small style="font-size: 80%; color:#6C6C6C">${text}</small>    
+     </div>`,
+    allowOutsideClick: false,
+    confirmButtonColor: "#1955A5",
+    confirmButtonText: "Aceptar",
+    iconColor: "#FC4242",
+    showCloseButton: true,
   });
 };

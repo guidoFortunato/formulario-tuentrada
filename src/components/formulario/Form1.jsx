@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { setCookie, hasCookie, getCookie } from "cookies-next";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormContext } from "@/context/FormContext";
@@ -39,9 +40,47 @@ export const Form1 = ({ lengthSteps }) => {
   const handlePaste = (e) => {
     e.preventDefault();
   };
-  
+
   const onSubmit = async (data, event) => {
     event.preventDefault();
+
+    // Verificar si existe la cookie 'ftuein'
+    const existCookieAttempt = hasCookie("ftuein");
+    if (existCookieAttempt) {
+      // Parsear el valor de la cookie
+      let cookieAttempt = JSON.parse(getCookie("ftuein"));
+      console.log({cookieDate: cookieAttempt.expirationDate, dateNow: new Date()})
+      // Comprobar si la cookie ha expirado
+      if (new Date(cookieAttempt.expirationDate) <= new Date()) {
+        // Crear una nueva fecha de expiración 1 hora en el futuro
+        console.log('entra a new Date(cookieAttempt.expirationDate) <= new Date()')
+        const expirationDate = new Date();
+        expirationDate.setHours(expirationDate.getHours() + 12);
+
+        // Actualizar la cookie con el valor 0 y la nueva fecha de expiración
+        setCookie(
+          "ftuein",
+          JSON.stringify({
+            value: 0,
+            expirationDate: expirationDate,
+          })
+        );
+      }
+
+    } else {
+
+      // Si la cookie no existe, crearla con valor 0 y una fecha de expiración 1 hora en el futuro
+      const expirationDate = new Date();
+      expirationDate.setHours(expirationDate.getHours() + 12);
+      setCookie(
+        "ftuein",
+        JSON.stringify({
+          value: 0,
+          expirationDate: expirationDate,
+        })
+      );
+    }
+
     setIsLoading(true);
     if (process.env.NEXT_PUBLIC_RECAPTCHA_ACTIVE === "true") {
       if (score === null) {
