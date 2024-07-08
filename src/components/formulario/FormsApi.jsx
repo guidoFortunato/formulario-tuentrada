@@ -264,7 +264,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
      
         const info = await fetch(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/format`,
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           {
             method: "POST",
             headers: {

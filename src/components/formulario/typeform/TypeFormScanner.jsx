@@ -1,8 +1,9 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FormContext } from "@/context/FormContext";
 import Webcam from "react-webcam";
 import clsx from "clsx";
 import Modal from "react-modal";
+import { Loader } from "@/components/loading";
 
 const customStyles = {
   content: {
@@ -33,6 +34,12 @@ export const TypeFormScanner = ({ item }) => {
   const [cameraError, setCameraError] = useState(false);
   const [validationAttempts, setValidationAttempts] = useState(0);
   const [validationError, setValidationError] = useState(false);
+  const [dniValidated, setDniValidated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // useEffect(() => {
+  //   Modal.setAppElement('#root'); // Ajusta este selector según el elemento principal de tu aplicación
+  // }, []);
 
   // Definir isDNI fuera del retorno del componente
   const isDNI = item.name.toLowerCase().includes("dni");
@@ -61,13 +68,17 @@ export const TypeFormScanner = ({ item }) => {
     // Aquí puedes agregar la lógica para validar el DNI/Tarjeta
     // Simulando una llamada a una API (reemplaza con tu lógica real)
     try {
+      setIsLoading(true);
+      console.log({ isLoading });
       const apiResponse = await validarDocumento(imageSrc, isDNI); // Función simulada de validación
       const isValid = apiResponse.validado;
 
       if (isValid) {
-        setImageSrc(imageSrc);
+        // setImageSrc(imageSrc);
+        setDniValidated(true);
         setIsModalOpen(false);
       } else {
+        setDniValidated(false);
         setValidationAttempts((prev) => prev + 1);
         if (validationAttempts >= 2) {
           setValidationError(true);
@@ -75,6 +86,8 @@ export const TypeFormScanner = ({ item }) => {
       }
     } catch (error) {
       console.error("Error al validar documento:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -84,7 +97,7 @@ export const TypeFormScanner = ({ item }) => {
       setTimeout(() => {
         const validado = Math.random() < 0.8; // Simulación de resultado de validación
         resolve({ validado });
-      }, 1000);
+      }, 3000);
     });
   };
 
@@ -102,14 +115,17 @@ export const TypeFormScanner = ({ item }) => {
         className={clsx(
           "bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full py-6",
           {
-            "border-red-500 focus:ring-red-300 focus:border-red-500": errors[name],
-            "border-gray-300 focus:ring-blue-300 focus:border-blue-dark": !errors[name],
+            "border-red-500 focus:ring-red-300 focus:border-red-500":
+              errors[name],
+            "border-gray-300 focus:ring-blue-300 focus:border-blue-dark":
+              !errors[name],
           }
         )}
         onClick={openModal}
         name={name}
         id={name}
         type="button"
+        disabled={dniValidated}
       >
         {isDNI && (
           <>
@@ -135,12 +151,23 @@ export const TypeFormScanner = ({ item }) => {
             </div>
           </>
         )}
-        {imageSrc ? (
-          <span className="whitespace-nowrap btn-primary">
-            {isDNI ? "DNI Validado" : "Tarjeta Validada"}
-          </span>
+        {dniValidated ? (
+          <div className="mt-2">
+            <span
+              className={clsx("whitespace-nowrap", {
+                "btn-primary": !dniValidated,
+                "btn-disabled": dniValidated,
+              })}
+            >
+              {isDNI ? "✔️ DNI validado" : "Tarjeta cargada"}
+            </span>
+          </div>
         ) : (
-          <span className="whitespace-nowrap btn-primary">Activar Cámara</span>
+          <div className="mt-2">
+            <span className="whitespace-nowrap btn-primary">
+              Activar Cámara
+            </span>
+          </div>
         )}
       </button>
 
@@ -176,7 +203,7 @@ export const TypeFormScanner = ({ item }) => {
           </svg>
         </button>
         {cameraError ? (
-          <div className="text-red-600 text-xs mt-2 flex">
+          <div className="text-red-600 text-xs flex justify-center items-center">
             <svg
               className="mr-1"
               xmlns="http://www.w3.org/2000/svg"
@@ -226,19 +253,33 @@ export const TypeFormScanner = ({ item }) => {
               {imageSrc ? (
                 <div className="flex justify-evenly items-center">
                   <button
-                     className="w-12"
+                    className="w-12"
                     type="button"
                     onClick={handleAcceptPhoto}
+                    disabled={isLoading}
                   >
-                         <img
-                      src="https://tuentrada.com/experiencia/ayuda-consulta/11.svg"
-                      alt="Validar Modal"
-                    />
+                    {isLoading ? (
+                      <img
+                        src="https://www.tuentrada.com/experiencia/ayuda-consulta/12.gif"
+                        alt="gift"
+                      />
+                    ) : (
+                      <img
+                        src="https://tuentrada.com/experiencia/ayuda-consulta/11.svg"
+                        alt="Validar Modal"
+                      />
+                    )}
                   </button>
                   <button
-                    className="w-12 ml-2"
+                    className={clsx(
+                      "w-12 ml-2",
+                      {
+                        "hidden": isLoading
+                      }
+                    )}
                     type="button"
                     onClick={closeModal}
+                    disabled={isLoading}
                   >
                     <img
                       src="https://tuentrada.com/experiencia/ayuda-consulta/9.svg"
@@ -262,18 +303,14 @@ export const TypeFormScanner = ({ item }) => {
                       alt="Cambiar cámara"
                     />
                   </button>
-                  <button
-                    className="w-12"
-                    type="button"
-                    onClick={capturePhoto}
-                  >
+                  <button className="w-12" type="button" onClick={capturePhoto}>
                     <img
                       src="https://tuentrada.com/experiencia/ayuda-consulta/7.svg"
                       alt="Capturar foto"
                     />
                   </button>
                   <button className="w-12" type="button" onClick={closeModal}>
-                  <img
+                    <img
                       src="https://tuentrada.com/experiencia/ayuda-consulta/9.svg"
                       alt="Cerrar modal"
                     />
@@ -283,8 +320,8 @@ export const TypeFormScanner = ({ item }) => {
             </div>
             {validationError && (
               <div className="text-red-600 text-xs mt-2">
-                El {isDNI && "DNI" } no fue validado por Renaper. Se
-                mandó a validar a nuestro centro de atención al cliente.
+                El {isDNI && "DNI"} no fue validado por Renaper. Se mandó a
+                validar a nuestro centro de atención al cliente.
               </div>
             )}
           </>
