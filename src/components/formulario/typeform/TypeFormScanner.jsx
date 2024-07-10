@@ -4,6 +4,10 @@ import Webcam from "react-webcam";
 import clsx from "clsx";
 import Modal from "react-modal";
 import { Loader } from "@/components/loading";
+import { FaCheckCircle } from "react-icons/fa";
+import { PiCircleFill } from "react-icons/pi";
+import { MdChangeCircle } from "react-icons/md";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 const customStyles = {
   content: {
@@ -70,6 +74,7 @@ export const TypeFormScanner = ({ item }) => {
     try {
       setIsLoading(true);
       console.log({ isLoading });
+      console.log({ imageSrc });
       const apiResponse = await validarDocumento(imageSrc, isDNI); // Función simulada de validación
       const isValid = apiResponse.validado;
 
@@ -152,14 +157,14 @@ export const TypeFormScanner = ({ item }) => {
           </>
         )}
         {dniValidated ? (
-          <div className="mt-2">
+          <div className="mt-2 flex justify-center">
             <span
               className={clsx("whitespace-nowrap", {
                 "btn-primary": !dniValidated,
                 "btn-disabled": dniValidated,
               })}
             >
-              {isDNI ? "✔️ DNI validado" : "Tarjeta cargada"}
+              { <FaCheckCircle className="text-emerald-600 text-3xl "/>}
             </span>
           </div>
         ) : (
@@ -183,6 +188,7 @@ export const TypeFormScanner = ({ item }) => {
       )}
 
       <Modal
+      
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Modal de Cámara"
@@ -264,10 +270,7 @@ export const TypeFormScanner = ({ item }) => {
                         alt="gift"
                       />
                     ) : (
-                      <img
-                        src="https://tuentrada.com/experiencia/ayuda-consulta/11.svg"
-                        alt="Validar Modal"
-                      />
+                      <FaCheckCircle className="text-emerald-600 text-3xl "/>
                     )}
                   </button>
                   <button
@@ -281,16 +284,13 @@ export const TypeFormScanner = ({ item }) => {
                     onClick={closeModal}
                     disabled={isLoading}
                   >
-                    <img
-                      src="https://tuentrada.com/experiencia/ayuda-consulta/9.svg"
-                      alt="Cerrar Modal"
-                    />
+                    <AiFillCloseCircle className="text-red-700 text-4xl"  />
                   </button>
                 </div>
               ) : (
                 <div className="flex justify-evenly items-center mt-4">
                   <button
-                    className="w-12"
+                   
                     type="button"
                     onClick={() =>
                       setFacingMode((prev) =>
@@ -298,22 +298,13 @@ export const TypeFormScanner = ({ item }) => {
                       )
                     }
                   >
-                    <img
-                      src="https://tuentrada.com/experiencia/ayuda-consulta/8.svg"
-                      alt="Cambiar cámara"
-                    />
+                    <MdChangeCircle className="text-gray-400 text-4xl "/>
                   </button>
-                  <button className="w-12" type="button" onClick={capturePhoto}>
-                    <img
-                      src="https://tuentrada.com/experiencia/ayuda-consulta/7.svg"
-                      alt="Capturar foto"
-                    />
+                  <button className=" border-2 border-white rounded-full" type="button" onClick={capturePhoto}>
+                  <PiCircleFill className="text-white text-4xl "/>
                   </button>
-                  <button className="w-12" type="button" onClick={closeModal}>
-                    <img
-                      src="https://tuentrada.com/experiencia/ayuda-consulta/9.svg"
-                      alt="Cerrar modal"
-                    />
+                  <button type="button" onClick={closeModal}>
+                  <AiFillCloseCircle className="text-red-700 text-4xl"  />
                   </button>
                 </div>
               )}
