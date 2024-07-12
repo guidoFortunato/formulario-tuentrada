@@ -8,6 +8,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { PiCircleFill } from "react-icons/pi";
 import { MdChangeCircle } from "react-icons/md";
 import { AiFillCloseCircle } from "react-icons/ai";
+import QRCode from "qrcode";
 
 const customStyles = {
   content: {
@@ -28,6 +29,25 @@ const customStyles = {
   },
 };
 
+const customStylesQR = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "white",
+    borderRadius: "8px",
+    padding: "20px",    
+    // width: "90%",
+    maxWidth: "600px",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+  },
+};
+
 export const TypeFormScanner = ({ item }) => {
   const { register, errors } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
@@ -40,6 +60,8 @@ export const TypeFormScanner = ({ item }) => {
   const [validationError, setValidationError] = useState(false);
   const [dniValidated, setDniValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalQr, setModalQr] = useState(false);
+  const [srcQR, setSrcQR] = useState(null);
 
   // useEffect(() => {
   //   Modal.setAppElement('#root'); // Ajusta este selector según el elemento principal de tu aplicación
@@ -54,6 +76,10 @@ export const TypeFormScanner = ({ item }) => {
     setImageSrc(imageSrc);
   };
 
+  useEffect(() => {
+    QRCode.toDataURL("https://ayuda.tuentrada.com").then(setSrcQR);
+  }, []);
+
   const openModal = () => {
     setIsModalOpen(true);
     setImageSrc(null);
@@ -66,6 +92,14 @@ export const TypeFormScanner = ({ item }) => {
     setIsModalOpen(false);
     setValidationAttempts(0);
     setValidationError(false);
+  };
+
+  const openModalQR = () => {
+    setModalQr(true);
+  };
+
+  const closeModalQR = () => {
+    setModalQr(false);
   };
 
   const handleAcceptPhoto = async () => {
@@ -164,7 +198,7 @@ export const TypeFormScanner = ({ item }) => {
                 "btn-disabled": dniValidated,
               })}
             >
-              { <FaCheckCircle className="text-emerald-600 text-3xl "/>}
+              {<FaCheckCircle className="text-emerald-600 text-3xl " />}
             </span>
           </div>
         ) : (
@@ -188,11 +222,11 @@ export const TypeFormScanner = ({ item }) => {
       )}
 
       <Modal
-      
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Modal de Cámara"
         style={customStyles}
+        appElement={document.getElementById("root")}
       >
         <button
           onClick={closeModal}
@@ -270,27 +304,23 @@ export const TypeFormScanner = ({ item }) => {
                         alt="gift"
                       />
                     ) : (
-                      <FaCheckCircle className="text-emerald-600 text-3xl "/>
+                      <FaCheckCircle className="text-emerald-600 text-3xl " />
                     )}
                   </button>
                   <button
-                    className={clsx(
-                      "w-12 ml-2",
-                      {
-                        "hidden": isLoading
-                      }
-                    )}
+                    className={clsx("w-12 ml-2", {
+                      hidden: isLoading,
+                    })}
                     type="button"
                     onClick={closeModal}
                     disabled={isLoading}
                   >
-                    <AiFillCloseCircle className="text-red-700 text-4xl"  />
+                    <AiFillCloseCircle className="text-red-700 text-4xl" />
                   </button>
                 </div>
               ) : (
                 <div className="flex justify-evenly items-center mt-4">
                   <button
-                   
                     type="button"
                     onClick={() =>
                       setFacingMode((prev) =>
@@ -298,13 +328,17 @@ export const TypeFormScanner = ({ item }) => {
                       )
                     }
                   >
-                    <MdChangeCircle className="text-gray-400 text-4xl "/>
+                    <MdChangeCircle className="text-gray-400 text-4xl " />
                   </button>
-                  <button className=" border-2 border-white rounded-full" type="button" onClick={capturePhoto}>
-                  <PiCircleFill className="text-white text-4xl "/>
+                  <button
+                    className=" border-2 border-white rounded-full"
+                    type="button"
+                    onClick={capturePhoto}
+                  >
+                    <PiCircleFill className="text-white text-4xl " />
                   </button>
                   <button type="button" onClick={closeModal}>
-                  <AiFillCloseCircle className="text-red-700 text-4xl"  />
+                    <AiFillCloseCircle className="text-red-700 text-4xl" />
                   </button>
                 </div>
               )}
@@ -318,15 +352,35 @@ export const TypeFormScanner = ({ item }) => {
           </>
         )}
       </Modal>
+      <Modal
+        isOpen={modalQr}
+        onRequestClose={closeModalQR}
+        contentLabel="Modal de Qr"
+        style={customStylesQR}
+        appElement={document.getElementById("root")}
+        // className="hidden lg:auto"
+      >
+        {srcQR && (
+          <img
+            src={srcQR}
+            alt="QR"
+            className="rounded-lg"
+            style={{ maxWidth: "100%", maxHeight: "300px" }}
+          />
+        )}
+      </Modal>
 
-      <div className="py-2">
-        <span className="text-sm text-gray-700">
+      <div className="py-2 hidden lg:block">
+        <span className="text-sm text-gray-700 mr-1">
           Si estás utilizando una computadora o no tienes cámara, genera el
           código QR y escanéalo desde tu celular para realizar el trámite:
         </span>
-        <span className="underline text-blue-dark cursor-pointer hover:text-blue-800">
+        <button
+          className="underline text-blue-dark cursor-pointer hover:text-blue-800"
+          onClick={openModalQR}
+        >
           Generar QR
-        </span>
+        </button>
       </div>
     </div>
   );

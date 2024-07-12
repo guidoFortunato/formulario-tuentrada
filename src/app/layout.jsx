@@ -43,6 +43,7 @@ export default async function RootLayout({ children }) {
       <body
         className={`${inter.className} flex flex-col min-h-[100vh] m-0`}
         suppressHydrationWarning={true}
+        id='root'
       >
         <GoogleAnalyticsContainer />
         <FormProvider>
