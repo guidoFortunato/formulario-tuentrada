@@ -358,7 +358,6 @@ export const TypeFormScanner = ({ item }) => {
         contentLabel="Modal de Qr"
         style={customStylesQR}
         appElement={document.getElementById("root")}
-        // className="hidden lg:auto"
       >
         {srcQR && (
           <img
