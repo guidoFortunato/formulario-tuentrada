@@ -6,4 +6,3 @@ export * from "./TypeFormRadio";
 export * from "./TypeFormSelect";
 export * from "./TypeFormTextarea";
 export * from "./TypeFormScanner";
-export * from './TypeFormScanner2'

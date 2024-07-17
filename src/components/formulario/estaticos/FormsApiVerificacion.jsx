@@ -17,7 +17,6 @@ import {
   TypeFormInput,
   TypeFormRadio,
   TypeFormScanner,
-  TypeFormScanner2,
   TypeFormSelect,
   TypeFormTextarea,
 } from "../typeform";
