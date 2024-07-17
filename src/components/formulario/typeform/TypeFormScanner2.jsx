@@ -48,8 +48,8 @@ const customStylesQR = {
   },
 };
 
-export const TypeFormScanner = ({ item }) => {
-  const { register, errors, setValue } = useContext(FormContext);
+export const TypeFormScanner2 = ({ item }) => {
+  const { register, errors } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
   const webcamRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(null);
@@ -62,9 +62,6 @@ export const TypeFormScanner = ({ item }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalQr, setModalQr] = useState(false);
   const [srcQR, setSrcQR] = useState(null);
-  const [isValid, setIsValid] = useState(false);
-
-  // console.log({item})
 
   // Definir isDNI fuera del retorno del componente
   const isDNI = item.name.toLowerCase().includes("dni");
@@ -101,23 +98,20 @@ export const TypeFormScanner = ({ item }) => {
     setModalQr(false);
   };
 
-  const handleAcceptPhoto = async (value) => {
+  const handleAcceptPhoto = async () => {
     // Aquí puedes agregar la lógica para validar el DNI/Tarjeta
     // Simulando una llamada a una API (reemplaza con tu lógica real)
-
     try {
       // setIsLoading(true);
-      // console.log({ isLoading });
-      // console.log({ imageSrc });
+      console.log({ isLoading });
+      console.log({ imageSrc });
       // const apiResponse = await validarDocumento(imageSrc, isDNI); // Función simulada de validación
       // const isValid = apiResponse.validado;
 
-
-      if (value) {
-        // console.log({ imageSrc });
+      if (isValid) {
+        // setImageSrc(imageSrc);
         setDniValidated(true);
         setIsModalOpen(false);
-        setValue(name, imageSrc);
       } else {
         setDniValidated(false);
         setValidationAttempts((prev) => prev + 1);
@@ -128,7 +122,6 @@ export const TypeFormScanner = ({ item }) => {
     } catch (error) {
       console.error("Error al validar documento:", error);
     } finally {
-      closeModal();
       // setIsLoading(false);
     }
   };
@@ -153,66 +146,62 @@ export const TypeFormScanner = ({ item }) => {
         {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
       </label>
 
-      <button
-        className={clsx(
-          "bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full py-6",
-          {
-            "border-red-500 focus:ring-red-300 focus:border-red-500":
-              errors[name],
-            "border-gray-300 focus:ring-blue-300 focus:border-blue-dark":
-              !errors[name],
-          }
-        )}
-        onClick={openModal}
-        name={name}
-        id={name}
-        type="button"
-        disabled={dniValidated}
-        {...register(name, { required: item.required === 1 })}
-      >
-        {isDNI && (
-          <>
-            Adjunta el frente de tu DNI, tal como se muestra en la imagen:
-            <div className="flex justify-center">
-              <img
-                className="w-[350px]"
-                src="https://tuentrada.com/experiencia/ayuda-consulta/dni.png"
-                alt="DNI"
-              />
-            </div>
-          </>
-        )}
-        {!isDNI && (
-          <>
-            Adjunta el frente de tu Tarjeta, tal como se muestra en la imagen:
-            <div className="flex justify-center">
-              <img
-                className="w-[350px]"
-                src="https://tuentrada.com/experiencia/ayuda-consulta/tarjeta.png"
-                alt="Tarjeta"
-              />
-            </div>
-          </>
-        )}
-        {dniValidated ? (
-          <div className="mt-2 flex justify-center">
-            <span
-              className={clsx("whitespace-nowrap", {
-                "btn-primary": !dniValidated,
-                "btn-disabled": dniValidated,
-              })}
-            >
-              {<FaCheckCircle className="text-emerald-600 text-3xl " />}
-            </span>
+      {isDNI && (
+        <>
+          Adjunta el frente de tu DNI, tal como se muestra en la imagen:
+          <div className="flex justify-center">
+            <img
+              className="w-[350px]"
+              src="https://tuentrada.com/experiencia/ayuda-consulta/dni.png"
+              alt="DNI"
+            />
+            <input
+              className={clsx(
+                "bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full py-6 cursor-pointer",
+                {
+                  "border-red-500 focus:ring-red-300 focus:border-red-500":
+                    errors[name],
+                  "border-gray-300 focus:ring-blue-300 focus:border-blue-dark":
+                    !errors[name],
+                }
+              )}
+              onClick={openModal}
+              id={name}
+              type="text"
+              disabled={dniValidated}
+              {...register(name)}
+            />
           </div>
-        ) : (
-          <div className="mt-2">
-            <span className="whitespace-nowrap btn-primary">
-              Activar Cámara
-            </span>
+        </>
+      )}
+      {!isDNI && (
+        <>
+          Adjunta el frente de tu Tarjeta, tal como se muestra en la imagen:
+          <div className="flex justify-center">
+            <img
+              className="w-[350px]"
+              src="https://tuentrada.com/experiencia/ayuda-consulta/tarjeta.png"
+              alt="Tarjeta"
+            />
           </div>
-        )}
-      </button>
+        </>
+      )}
+      {dniValidated ? (
+        <div className="mt-2 flex justify-center">
+          <span
+            className={clsx("whitespace-nowrap", {
+              "btn-primary": !dniValidated,
+              "btn-disabled": dniValidated,
+            })}
+          >
+            {<FaCheckCircle className="text-emerald-600 text-3xl " />}
+          </span>
+        </div>
+      ) : (
+        <div className="mt-2">
+          <span className="whitespace-nowrap btn-primary">Activar Cámara</span>
+        </div>
+      )}
 
       {item.helperText && !errors[name] && (
         <span className="text-gray-500 text-xs block mt-1">
@@ -299,28 +288,25 @@ export const TypeFormScanner = ({ item }) => {
                   <button
                     className="w-12"
                     type="button"
-                    onClick={() => {
-                      handleAcceptPhoto(true);
-                    }}
+                    onClick={handleAcceptPhoto}
                     disabled={isLoading}
                   >
-                    {/* {isLoading ? (
+                    {isLoading ? (
                       <img
                         src="https://www.tuentrada.com/experiencia/ayuda-consulta/12.gif"
                         alt="gift"
                       />
                     ) : (
                       <FaCheckCircle className="text-emerald-600 text-3xl " />
-                    )} */}
-                    <FaCheckCircle className="text-emerald-600 text-3xl" />
+                    )}
                   </button>
                   <button
-                    className="w-12 ml-2"
+                    className={clsx("w-12 ml-2", {
+                      hidden: isLoading,
+                    })}
                     type="button"
-                    onClick={() => {
-                      handleAcceptPhoto(false);
-                    }}
-                    // disabled={isLoading}
+                    onClick={closeModal}
+                    disabled={isLoading}
                   >
                     <AiFillCloseCircle className="text-red-700 text-4xl" />
                   </button>

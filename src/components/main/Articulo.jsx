@@ -13,7 +13,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
   const rows = dataArticle?.rows;
   const articleType = dataArticle?.type;
   const titleCategory = params.categoria.slice(0, 1).toUpperCase() + params.categoria.split("-").join(" ").slice(1).toLowerCase();
-  // console.log({rows})
+  // console.log({dataArticle})
 
   return (
     <>

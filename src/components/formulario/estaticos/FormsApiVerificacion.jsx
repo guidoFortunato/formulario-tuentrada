@@ -17,6 +17,7 @@ import {
   TypeFormInput,
   TypeFormRadio,
   TypeFormScanner,
+  TypeFormScanner2,
   TypeFormSelect,
   TypeFormTextarea,
 } from "../typeform";
@@ -165,6 +166,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     }
 
     console.log('pasa el recaptcha')
+    console.log({data})
 
     return
 
