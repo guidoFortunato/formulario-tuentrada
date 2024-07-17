@@ -64,7 +64,7 @@ export const TypeFormScanner = ({ item }) => {
   const [srcQR, setSrcQR] = useState(null);
   const [isValid, setIsValid] = useState(false);
 
-  console.log({item})
+  // console.log({item})
 
   // Definir isDNI fuera del retorno del componente
   const isDNI = item.name.toLowerCase().includes("dni");
@@ -120,10 +120,10 @@ export const TypeFormScanner = ({ item }) => {
         setValue(name, imageSrc);
       } else {
         setDniValidated(false);
-        setValidationAttempts((prev) => prev + 1);
-        if (validationAttempts >= 2) {
-          setValidationError(true);
-        }
+        // setValidationAttempts((prev) => prev + 1);
+        // if (validationAttempts >= 2) {
+        //   setValidationError(true);
+        // }
       }
     } catch (error) {
       console.error("Error al validar documento:", error);
