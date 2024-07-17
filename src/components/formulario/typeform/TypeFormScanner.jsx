@@ -64,7 +64,7 @@ export const TypeFormScanner = ({ item }) => {
   const [srcQR, setSrcQR] = useState(null);
   const [isValid, setIsValid] = useState(false);
 
-  // console.log({item})
+  console.log({item})
 
   // Definir isDNI fuera del retorno del componente
   const isDNI = item.name.toLowerCase().includes("dni");
@@ -143,7 +143,7 @@ export const TypeFormScanner = ({ item }) => {
   //   });
   // };
 
-  return (
+  return isDNI && (
     <div className={item.subtype === "hidden" ? "hidden" : ""}>
       <label
         htmlFor={name}
