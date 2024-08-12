@@ -273,10 +273,10 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
             body: formData,
           }
         );
-        console.log({info})
+        // console.log({info})
         if (info === undefined || !info.ok) {
         let { value, expirationDate } = JSON.parse(getCookie('ftuein'))
-        console.log({value, expirationDate})
+        // console.log({value, expirationDate})
           
           setCookie(
             "ftuein",
@@ -299,7 +299,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
       } catch (error) {
         console.log(error);
         let { value, expirationDate } = JSON.parse(getCookie('ftuein'))
-        console.log({value, expirationDate})
+        // console.log({value, expirationDate})
 
         setCookie(
           "ftuein",

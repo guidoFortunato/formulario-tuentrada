@@ -49,11 +49,11 @@ export const Form1 = ({ lengthSteps }) => {
     if (existCookieAttempt) {
       // Parsear el valor de la cookie
       let cookieAttempt = JSON.parse(getCookie("ftuein"));
-      console.log({cookieDate: cookieAttempt.expirationDate, dateNow: new Date()})
+      // console.log({cookieDate: cookieAttempt.expirationDate, dateNow: new Date()})
       // Comprobar si la cookie ha expirado
       if (new Date(cookieAttempt.expirationDate) <= new Date()) {
         // Crear una nueva fecha de expiración 1 hora en el futuro
-        console.log('entra a new Date(cookieAttempt.expirationDate) <= new Date()')
+        // console.log('entra a new Date(cookieAttempt.expirationDate) <= new Date()')
         const expirationDate = new Date();
         expirationDate.setHours(expirationDate.getHours() + 12);
 
@@ -130,7 +130,7 @@ export const Form1 = ({ lengthSteps }) => {
           body: JSON.stringify({ tokenRecaptchaV2 }),
         });
         const { success } = await response.json();
-        console.log({ success });
+        // console.log({ success });
         if (!success) {
           setErrorRecaptcha(true);
           // router.push(

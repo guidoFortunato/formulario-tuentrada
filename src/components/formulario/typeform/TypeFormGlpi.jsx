@@ -12,7 +12,7 @@ export const TypeFormGlpi = ({ item }) => {
     glpiSubCategory,
   } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
-  console.log({itemGlpi: item})
+  // console.log({itemGlpi: item})
 
   const handleSelectChange = (e) => {
     if (e.target.value === "Selecciona una opción" && item.required === 1) {
