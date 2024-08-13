@@ -28,19 +28,17 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
-  const router = useRouter();
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const contact_id = useSearchParams().get("contact_id");
   const fields = dataForm?.steps[0]?.fields;
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
-  const contact_id = useSearchParams().get("contact_id");
   // console.log({ contact_id });
-
+  // console.log({params})
+  
   const { executeRecaptcha } = useGoogleReCaptcha();
-
-
-
 
   const renderForms = dataForm.steps[0].fields.map((item) => {
     if (item.type === "input") {
@@ -95,7 +93,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     if (item.type === "checkbox") {
       return (
         <Fragment key={item.name}>
-          <TypeFormCheckbox item={item} />
+          <TypeFormCheckbox item={item} params={params} />
         </Fragment>
       );
     }
