@@ -23,6 +23,8 @@ import {
 import ReCAPTCHA from "react-google-recaptcha";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
+const VERIFICAR_VIGENCIA = "verificar-vigencia"
+
 export const FormsApiVerificacion = ({ dataForm, params }) => {
   const { handleSubmit, reset, token } = useContext(FormContext);
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
@@ -36,7 +38,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
   // console.log({ contact_id });
-  // console.log({params})
+  // console.log(dataForm.steps[0].fields)
+  const checkValidity = dataForm.steps[0].fields.find( item => item.name.toLowerCase() === "type" )?.defaultValue
+  // console.log({checkValidity})
   
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -93,7 +97,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
     if (item.type === "checkbox") {
       return (
         <Fragment key={item.name}>
-          <TypeFormCheckbox item={item} params={params} />
+          <TypeFormCheckbox item={item} />
         </Fragment>
       );
     }
@@ -162,7 +166,10 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
       }
     }
 
-    console.log('pasa el recaptcha')
+    data.type = checkValidity
+    data.id = contact_id ? contact_id : "sin contact id";
+
+    // console.log('pasa el recaptcha')
     console.log({data})
 
     return

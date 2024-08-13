@@ -1,23 +1,21 @@
 import { useContext } from "react";
 import { FormContext } from "@/context/FormContext";
 
-export const TypeFormCheckbox = ({ item, params }) => {
+export const TypeFormCheckbox = ({ item }) => {
   const { register, errors, watch } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
-  // console.log({ item });
+  // const registerName = item.urlLabel ? name + " " + item.urlLabel : name;
 
   return (
     <div className={item.subtype === "hidden" ? "hidden" : ""}>
-      <span className="mb-4 text-sm font-medium text-gray-900 dark:text-white">
-        {item.name}{" "}
-       
-        {item.options?.length === 0 && (
+      <div className="mb-2 text-sm font-medium text-gray-900">
+      {item.options?.length === 0 && (
           <input
             id="aceptar"
             type="checkbox"
             value="aceptar"
             name={name}
-            className={`w-4 h-4 text-blue-dark bg-gray-100 border-gray-300 focus:ring-blue-dark`}
+            className={`w-4 h-4 text-blue-dark bg-gray-100 border-gray-300 focus:ring-blue-dark mr-2 cursor-pointer`}
             {...register(name, {
               required: {
                 value: item.required === 1 ? true : false,
@@ -26,8 +24,23 @@ export const TypeFormCheckbox = ({ item, params }) => {
             })}
           />
         )}
-         {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
-      </span>
+        {item.urlLabel ? (
+          <>
+            <span className="mr-1">{item.name}</span>
+            <a
+              href={item.urlLabelLink}
+              target={item.urlLabelTarget}
+              className="text-blue-dark underline"
+            >
+              {item.urlLabel}
+            </a>
+          </>
+        ) : (
+          <span>{item.name}</span>
+        )}
+        {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
+       
+      </div>
       <ul className="w-48 text-sm font-medium text-gray-900 ">
         {item.options?.length > 0 &&
           item.options.map((option) => (
