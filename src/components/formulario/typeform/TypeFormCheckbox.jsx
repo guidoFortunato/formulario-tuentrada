@@ -2,14 +2,15 @@ import { useContext } from "react";
 import { FormContext } from "@/context/FormContext";
 
 export const TypeFormCheckbox = ({ item }) => {
-  const { register, errors, watch } = useContext(FormContext);
+  const { register, errors } = useContext(FormContext);
   const name = item.name.toLowerCase().split(" ").join("_");
-  // const registerName = item.urlLabel ? name + " " + item.urlLabel : name;
+  const isPrivacityInName = item.name.toLowerCase().includes("privacidad");
+  // console.log({ item });
 
   return (
     <div className={item.subtype === "hidden" ? "hidden" : ""}>
       <div className="mb-2 text-sm font-medium text-gray-900">
-      {item.options?.length === 0 && (
+        {item.options?.length === 0 && (
           <input
             id="aceptar"
             type="checkbox"
@@ -19,14 +20,29 @@ export const TypeFormCheckbox = ({ item }) => {
             {...register(name, {
               required: {
                 value: item.required === 1 ? true : false,
-                message: "Este campo es obligatorio", //`El ${item.name.toLowerCase()} es obligatorio`,
+                message: "Este campo es obligatorio",
               },
             })}
           />
         )}
         {item.urlLabel ? (
           <>
-            <span className="mr-1">{item.name}</span>
+            {isPrivacityInName ? (
+              <>
+                <span className="mr-1">Leí y acepto las</span>
+                <a
+                  href="https://ayuda.tuentrada.com/general/politicas-de-privacidad-y-confidencialidad-de-la-informacion"
+                  target="_blank"
+                  className="text-blue-dark underline"
+                >
+                  Políticas de Privacidad
+                </a>
+                <span className="mx-1">y los</span>
+              </>
+            ) : (
+              <span className="mr-1">{item.name}</span>
+            )}
+
             <a
               href={item.urlLabelLink}
               target={item.urlLabelTarget}
@@ -39,10 +55,9 @@ export const TypeFormCheckbox = ({ item }) => {
           <span>{item.name}</span>
         )}
         {item.required === 1 && <span className="text-red-500 ml-1">*</span>}
-       
       </div>
-      <ul className="w-48 text-sm font-medium text-gray-900 ">
-        {item.options?.length > 0 &&
+      <ul className="w-48 text-sm font-medium text-gray-900">
+        {item.options?.length > 0 && 
           item.options.map((option) => (
             <li className="w-full" key={option}>
               <div className="flex items-center">
@@ -55,7 +70,7 @@ export const TypeFormCheckbox = ({ item }) => {
                   {...register(name, {
                     required: {
                       value: item.required === 1 ? true : false,
-                      message: "Este campo es obligatorio", //`El ${item.name.toLowerCase()} es obligatorio`,
+                      message: "Este campo es obligatorio",
                     },
                   })}
                 />
