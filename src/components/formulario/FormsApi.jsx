@@ -113,17 +113,7 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // console.log({ data });
-    // return;
-
     const { email, emailConfirm, ...content } = data;
-    // console.log({email, content})
-    // console.log({stepNow})
-
-    // if (selectDefaultValue === "defaultValue") {
-    //   handleErrorInput(true);
-    //   return;
-    // }
 
     if (stepNow.checkHaveTickets === 1) {
       let id;
