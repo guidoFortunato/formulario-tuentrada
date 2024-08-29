@@ -192,9 +192,9 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
       formData.append("name", firstSubject);
       formData.append("type", checkValidity);
 
-      for (const [clave, valor] of formData.entries()) {
-        console.log(`${clave}: ${valor}`);
-      }
+      // for (const [clave, valor] of formData.entries()) {
+      //   console.log(`${clave}: ${valor}`);
+      // }
 
       // return;
 
