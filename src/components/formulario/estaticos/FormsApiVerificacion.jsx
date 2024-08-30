@@ -3,10 +3,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FormContext } from "@/context/FormContext";
 import {
   alertSuccessTickets,
-  alertWarningTickets,
-  alertErrorTickets,
+  alertErrorRenaper,
+  alertErrorRenaperGeneral,
+  alertSuccessRenaper,
 } from "@/helpers/Alertas";
-import { addPrefixes, addPrefixesRenaper } from "@/utils/addPrefixes";
+import { addPrefixesRenaper } from "@/utils/addPrefixes";
 import { BotonEnviar } from "./BotonEnviar";
 import {
   TypeFormCheckbox,
@@ -21,7 +22,7 @@ import {
 import ReCAPTCHA from "react-google-recaptcha";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
-export const FormsApiVerificacion = ({ dataForm, params }) => {
+export const FormsApiVerificacion = ({ dataForm }) => {
   const { handleSubmit, reset, token } = useContext(FormContext);
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
   const [score, setScore] = useState(null);
@@ -29,7 +30,7 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
   const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const contact_id = useSearchParams().get("contact_id");
+  const campaignContactId = useSearchParams().get("id");
   const fields = dataForm?.steps[0]?.fields;
   const firstSubject = dataForm?.firstPartSubject;
   const checkValidity = fields.find(
@@ -181,19 +182,21 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
         }
 
         if (content[key].includes("aceptar")) {
-          formData.append(newKey, true);
+          formData.append(newKey, "1");
         } else {
           // Si no es un archivo, agregar el valor normalmente
           formData.append(newKey, content[key]);
         }
       });
 
-      formData.append("id", contact_id ? contact_id : "sin contact id");
+      formData.append("id", campaignContactId);
       formData.append("name", firstSubject);
       formData.append("type", checkValidity);
 
       // for (const [clave, valor] of formData.entries()) {
-      //   console.log(`${clave}: ${valor}`);
+      //   console.log(`${clave}: ${typeof valor}`);
+      //   // console.log()
+
       // }
 
       // return;
@@ -208,22 +211,34 @@ export const FormsApiVerificacion = ({ dataForm, params }) => {
           body: formData,
         }
       );
-      // console.log({ info });
+      console.log({ info });
 
       if (info === undefined || !info.ok) {
-        console.log({ info });
-        alertErrorTickets();
-        setIsLoading(false);
+        // console.log({ info });
+        const res  = await info.json();
+        console.log({dataInfoError: res})
+        alertErrorRenaperGeneral();
         return;
       }
 
-      const { data } = await info.json();
-      console.log({ data });
+      const res  = await info.json();
+      console.log({ res });
+      if (!res.status) {
+        // console.log({res})
+        alertErrorRenaper( res.errors.title, res.errors.message )
+        return
+      }
+      const titleRenaper = res?.data[0]?.title
+      const messageRenaper = res?.data[0]?.message
+      const ticketRenaper = res?.data[0]?.ticket
+
+      alertSuccessRenaper( titleRenaper, messageRenaper, ticketRenaper)      
       return;
-      const numberTicket = data?.ticketNumber;
-      alertSuccessTickets(numberTicket);
+
     } catch (error) {
       console.log({ error });
+      alertErrorRenaper()
+      throw new Error()
     } finally {
       setIsLoading(false);
       //reset();
