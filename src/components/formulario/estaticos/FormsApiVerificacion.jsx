@@ -216,15 +216,16 @@ export const FormsApiVerificacion = ({ dataForm }) => {
       if (info === undefined || !info.ok) {
         // console.log({ info });
         const res  = await info.json();
-        console.log({dataInfoError: res})
+        console.log({res})
         alertErrorRenaperGeneral();
         return;
       }
 
       const res  = await info.json();
       console.log({ res });
+
       if (!res.status) {
-        // console.log({res})
+        console.log({res})
         alertErrorRenaper( res.errors.title, res.errors.message )
         return
       }
@@ -236,9 +237,8 @@ export const FormsApiVerificacion = ({ dataForm }) => {
       return;
 
     } catch (error) {
-      console.log({ error });
-      alertErrorRenaper()
-      throw new Error()
+      alertErrorRenaperGeneral()
+      throw new Error(error)
     } finally {
       setIsLoading(false);
       //reset();
