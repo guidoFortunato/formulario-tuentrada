@@ -24,7 +24,7 @@ export const addPrefixesRenaper = (key, value) => {
     case /nombre/.test(keyStr):
       return "info_first_name";
     case /tr[aá]mite/.test(keyStr):
-      return "info_id_tramite";
+      return "id_tramite";
     case /acepto|pol[ií]tica|privacidad/.test(keyStr):
       return "info_accept_terms";
     // Aquí puedes añadir más casos según sea necesario

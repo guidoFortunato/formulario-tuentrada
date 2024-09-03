@@ -1,14 +1,14 @@
 import { Fragment, useContext, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormContext } from "@/context/FormContext";
 import {
-  alertSuccessTickets,
   alertErrorRenaper,
   alertErrorRenaperGeneral,
   alertSuccessRenaper,
 } from "@/helpers/Alertas";
 import { addPrefixesRenaper } from "@/utils/addPrefixes";
-import { BotonEnviar } from "./BotonEnviar";
 import {
   TypeFormCheckbox,
   TypeFormFile,
@@ -19,24 +19,19 @@ import {
   TypeFormSelect,
   TypeFormTextarea,
 } from "../typeform";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { BotonEnviar } from "./BotonEnviar";
 
 export const FormsApiVerificacion = ({ dataForm }) => {
   const { handleSubmit, reset, token } = useContext(FormContext);
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
-  const [loadingCheckHaveTickets, setLoadingCheckHaveTickets] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const campaignContactId = useSearchParams().get("id");
   const fields = dataForm?.steps[0]?.fields;
   const firstSubject = dataForm?.firstPartSubject;
-  const checkValidity = fields.find(
-    (item) => item.name.toLowerCase() === "type"
-  )?.defaultValue;
-  // console.log({checkValidity})
+  const checkValidity = fields.find( (item) => item.name.toLowerCase() === "type" )?.defaultValue;
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const renderForms = fields.map((item) => {
@@ -121,7 +116,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
           });
           const data = await response.json();
 
-          console.log({ data });
+          // console.log({ data });
 
           if (data?.success === true) {
             // console.log(`Success with score: ${data?.score}`);
@@ -162,8 +157,6 @@ export const FormsApiVerificacion = ({ dataForm }) => {
 
     const { id, type, ...content } = data;
 
-    console.log({ content });
-
     // Crear un nuevo FormData
     const formData = new FormData();
 
@@ -195,11 +188,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
 
       // for (const [clave, valor] of formData.entries()) {
       //   console.log(`${clave}: ${typeof valor}`);
-      //   // console.log()
-
       // }
-
-      // return;
 
       const info = await fetch(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper`,
@@ -214,31 +203,29 @@ export const FormsApiVerificacion = ({ dataForm }) => {
       console.log({ info });
 
       if (info === undefined || !info.ok) {
-        // console.log({ info });
-        const res  = await info.json();
-        console.log({res})
+        const res = await info.json();
+        console.log({ res });
         alertErrorRenaperGeneral();
         return;
       }
 
-      const res  = await info.json();
+      const res = await info.json();
       console.log({ res });
 
       if (!res.status) {
-        console.log({res})
-        alertErrorRenaper( res.errors.title, res.errors.message )
-        return
+        alertErrorRenaper(res.errors.title, res.errors.message);
+        return;
       }
-      const titleRenaper = res?.data[0]?.title
-      const messageRenaper = res?.data[0]?.message
-      const ticketRenaper = res?.data[0]?.ticket
 
-      alertSuccessRenaper( titleRenaper, messageRenaper, ticketRenaper)      
+      const titleRenaper = res?.data[0]?.title;
+      const messageRenaper = res?.data[0]?.message;
+      const ticketRenaper = res?.data[0]?.ticket;
+
+      alertSuccessRenaper(titleRenaper, messageRenaper, ticketRenaper);
       return;
-
     } catch (error) {
-      alertErrorRenaperGeneral()
-      throw new Error(error)
+      alertErrorRenaperGeneral();
+      throw new Error(error);
     } finally {
       setIsLoading(false);
       //reset();
@@ -274,10 +261,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
         </div>
       )}
       <div className="justify-center flex pb-10">
-        <BotonEnviar
-          loadingCheckHaveTickets={loadingCheckHaveTickets}
-          isLoading={isLoading}
-        />
+        <BotonEnviar isLoading={isLoading} />
       </div>
     </form>
   );

@@ -107,7 +107,7 @@ export const alertErrorTicketsNotification = ( text = "Por favor, intente nuevam
   });
 };
 
-export const alertSuccessRenaper = ( title = "Solicitud en Proceso", message = "Su solicitud se encuentra en proceso", ticket = "10548" ) => {
+export const alertSuccessRenaper = ( title = "Solicitud en Proceso", message = "Su solicitud se encuentra en proceso", ticket = "1" ) => {
   Swal.fire({
     icon: "success",
     iconColor: "#6bbf59",
