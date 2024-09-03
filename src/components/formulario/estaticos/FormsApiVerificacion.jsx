@@ -222,6 +222,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
       const ticketRenaper = res?.data[0]?.ticket;
 
       alertSuccessRenaper(titleRenaper, messageRenaper, ticketRenaper);
+      //router.push("/");
       return;
     } catch (error) {
       alertErrorRenaperGeneral();
@@ -229,7 +230,6 @@ export const FormsApiVerificacion = ({ dataForm }) => {
     } finally {
       setIsLoading(false);
       //reset();
-      //router.push("/");
     }
   };
 
