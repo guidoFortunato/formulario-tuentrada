@@ -1,6 +1,7 @@
 import React from "react";
 
-export const BotonEnviar = ({ isLoading, loadingCheckHaveTickets }) => {
+export const BotonEnviar = ({ isLoading, loadingCheckHaveTickets = false }) => {
+  // console.log({loadingCheckHaveTickets})
   return (
     <>
       {loadingCheckHaveTickets || isLoading ? (
