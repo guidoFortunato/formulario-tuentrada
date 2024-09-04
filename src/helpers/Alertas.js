@@ -144,6 +144,22 @@ export const alertErrorRenaper = ( title = "Ocurrió un error inesperado", messa
   });
 };
 
+export const alertWarningRenaper = ( title = "Ocurrió un error inesperado", message = "Por favor, intente nuevamente mas tarde" ) => {
+  Swal.fire({
+    icon: "warning",
+    html: ` 
+    <div style="flex flex-col">    
+      <p style="font-size: 25px; font-weight: bold;" class="mb-1">${title}</p>
+      <small style="font-size: 80%; color:#6C6C6C">${message}</small>    
+     </div>`,
+    allowOutsideClick: false,
+    confirmButtonColor: "#1955A5",
+    confirmButtonText: "Aceptar",
+    iconColor: "#FF9966",
+    showCloseButton: true,
+  });
+};
+
 export const alertErrorRenaperGeneral = () => {
   Swal.fire({
     icon: "error",
