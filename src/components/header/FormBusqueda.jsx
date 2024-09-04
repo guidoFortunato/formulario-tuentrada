@@ -134,10 +134,10 @@ export const FormBusqueda = () => {
       <div className="relative">
         <input
           className={clsx(
-            "block w-full p-4 text-sm border rounded-lg focus:ring-blue-light",
+            "block w-full p-4 text-base shadow-md border rounded-lg focus:ring-blue-light",
             {
-              "bg-gray-100 text-gray-300 border-gray-300": disabled && !loading,
-              "bg-gray-100 text-gray-300 border-gray-100": !disabled && loading,
+              "bg-gray-100 text-gray-500 border-gray-300": disabled && !loading,
+              "bg-gray-100 text-gray-500 border-gray-300": !disabled && loading,
               "text-gray-900 bg-white border-gray-300": !disabled && !loading,
             }
           )}
@@ -146,13 +146,14 @@ export const FormBusqueda = () => {
           placeholder="¿Qué estás buscando?..."
           value={value}
           onChange={handleChange}
+         
           autoComplete="off"
           disabled={disabled === false ? loading : disabled}
         />
         {loading && <Loader />}
       </div>
       {error && (
-        <span className="text-red-500 text-xs flex items-center pt-1">
+        <span className="text-red-500 text-sm flex items-center pt-1">
           <svg
             className="mr-1"
             xmlns="http://www.w3.org/2000/svg"
@@ -215,9 +216,9 @@ export const FormBusqueda = () => {
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                           />
                         </svg>
-                        <h3 className="text-sm font-semibold ">
+                        <h3 className="text-base font-semibold ">
                           {item.title} <br />
-                          <span className=" text-blue-dark text-xs bold-none">
+                          <span className=" text-blue-dark text-sm bold-none">
                             Categoría: {item.category.name}
                           </span>
                         </h3>

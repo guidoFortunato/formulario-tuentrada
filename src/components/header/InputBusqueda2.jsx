@@ -4,15 +4,15 @@ const InputBusqueda2 = () => {
   
   return (
     <>
-      <div className="flex justify-center flex-col items-center my-10">
+      <div className="flex justify-center flex-col items-center my-20">
         <section className="flex justify-center items-center flex-col">
-          <h1 className="text-[1.5rem] md:text-[2rem] text-blue-dark font-semibold mb-3 text-center">
+          <h1 className="text-[2rem] md:text-[2.5rem] text-blue-dark font-extrabold mb-3 text-center">
             {/* {data.name} */}
             Centro de Ayuda y Consultas
 
           </h1>
         </section>
-        <div className="w-[95%] md:w-2/5">
+        <div className="w-[75%] md:w-[50%] lg:w-[500px] ">
           <FormBusqueda />
         </div>
       </div>

@@ -28,16 +28,16 @@ const CardCategoria = ({ color, title, slug, description, icon }) => {
           <path d={icon.path}></path>
         </svg>
       </div>
-      <h5 className="mb-1 text-[1.5rem] font-bold tracking-tight">{title}</h5>
+      <h5 className="mb-1 text-[1.6rem] font-bold tracking-tight">{title}</h5>
       <div
-        className="mb-7 font-normal"
+        className="mb-5  text-base"
         dangerouslySetInnerHTML={{
           __html: sanitizer(description),
         }}
       ></div>
       <Link
         href={slug}
-        className={`text-white border-2 border-white hover:bg-white hover:text-black transition duration-150 ease-out hover:ease-in rounded-lg text-sm px-10 py-2.5 text-center mr-2 font-semibold`}
+        className={`text-white border-2 border-white hover:bg-white hover:text-black transition duration-150 ease-out hover:ease-in rounded-lg text-base px-10 py-2.5 text-center mr-2 font-semibold`}
       >
         Saber más
       </Link>

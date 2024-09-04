@@ -36,7 +36,7 @@ const AccordionSubCat = ({ name = "", articles = [], params }) => {
           aria-controls="accordion-flush-body-1"
           onClick={handleClick}
         >
-          <span className="font-semibold text-lg text-blue-dark">{name}</span>
+          <span className="font-semibold text-xl text-blue-dark">{name}</span>
           <svg
             data-accordion-icon
             className={`w-4 h-4 transition-transform transform ${

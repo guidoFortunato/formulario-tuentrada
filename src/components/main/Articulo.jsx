@@ -19,7 +19,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
     <>
       <div className=" container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 px-10 md:px-20 flex-1">
         <div className="mb-5">
-          <h2 className="text-2xl text-blue-dark font-semibold">
+          <h2 className="text-[1.6rem] text-blue-dark font-bold">
             {dataArticle?.title}
           </h2>
           {/* <ArticleSubtitle titleCategory={titleCategory} /> */}
@@ -36,7 +36,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
             <>
               <hr />
               <div className="flex justify-center items-center flex-col mb-5">
-                <h4 className="font-semibold text-center text-blue-dark mt-10 mb-2">
+                <h4 className="font-bold text-xl text-center text-blue-dark mt-10 mb-2">
                   {" "}
                   Te sirvió la información?
                 </h4>
@@ -54,7 +54,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
           articleType !== VERIFICAR_DATOS && (
             <>
               <div className="flex justify-center items-center flex-col mb-5">
-                <h4 className="font-semibold text-center text-blue-dark mt-10 mb-2">
+                <h4 className="font-bold text-xl text-center text-blue-dark mt-10 mb-2">
                   {" "}
                   Escribinos tu consulta:
                 </h4>
@@ -67,7 +67,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
         <div className="flex flex-col items-center md:items-start md:justify-evenly md:flex-row mt-10">
           {dataMostViews.length > 0 && articleType !== VERIFICAR_DATOS && (
             <div className="mb-8 md:mb-0">
-              <h4 className="text-blue-dark font-semibold mb-2 text-xl">
+              <h4 className="text-blue-dark font-bold mb-2 text-xl">
                 Artículos más vistos
               </h4>
               <ol className="text-sm">
@@ -75,7 +75,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
                   <li key={item.id} className="text-blue-dark mb-2">
                     ▸
                     <Link
-                      className="hover:underline text-base lg:text-sm"
+                      className="hover:underline text-base"
                       href={`/${item.category.slug}/${item.slug}`}
                     >
                       {item.title}
@@ -88,15 +88,15 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
           {dataArticle?.articleChild?.length > 0 &&
             articleType !== VERIFICAR_DATOS && (
               <div>
-                <h4 className="text-blue-dark text-xl font-semibold mb-2 ">
+                <h4 className="text-blue-dark text-xl font-bold mb-2 ">
                   Artículos relacionados
                 </h4>
-                <ol className="text-sm">
+                <ol className="text-base">
                   {dataArticle?.articleChild?.slice(0, 5).map((item) => (
                     <li key={item.id} className="text-blue-dark mb-2">
                       ▸
                       <Link
-                        className="hover:underline text-base lg:text-sm"
+                        className="hover:underline text-base"
                         href={item.slug}
                       >
                         {item.title}

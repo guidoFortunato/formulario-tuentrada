@@ -158,13 +158,13 @@ const FormProvider = ({ children }) => {
 
     if (token !== '') {
       // console.log('useEffect context getDataSite')
-      const getDataSite = async () => {  
+      const getDataSite = async () => {
         const info = await getDataCache( `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`, token );
         const data = info?.data?.site;
         // console.log({data})
         setDataSite(data)
       };
-      getDataSite()      
+      getDataSite()
     }
 
   }, [token]);
@@ -216,7 +216,7 @@ const FormProvider = ({ children }) => {
   const handleCategory = (category) => {
     setDataCategory(category);
   };
- 
+
   const handleContacto = (contacto) => {
     setDataContacto(contacto);
   };

@@ -11,11 +11,11 @@ const SubCategoria = ({ category, params }) => {
   return (
     <div className="container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 px-10 md:px-20 flex-1">
       <div className="mb-5">
-        <h2 className="text-2xl text-blue-dark font-semibold">
+        <h2 className="text-[1.6rem] text-blue-dark font-bold">
           {category?.name}
         </h2>
         <div
-        className="text-sm text-gray-500 italic"
+        className="text-base text-gray-500 italic"
         dangerouslySetInnerHTML={{
           __html: sanitizer(category?.reference),
         }}
