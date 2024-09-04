@@ -158,7 +158,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
     }
 
     if (!campaignContactId) {
-      alertErrorRenaperGeneral();
+      alertErrorRenaper("Error de validación", "Si recibiste un correo solicitando la validación de tu identidad, por favor hacé click en el botón que se encuentra en el correo enviado para completar el proceso.");
       return
     }
 
