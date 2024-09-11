@@ -7,8 +7,7 @@ import { FormContext } from "@/context/FormContext";
 import { Skeleton } from "../skeleton/Skeleton";
 
 export const ContainerMain = () => {
-  const { dataCategories, resetStep, resetDefaultValue, resetGlpiSubCategory } =
-    useContext(FormContext);
+  const { dataCategories, resetStep, resetDefaultValue, resetGlpiSubCategory } = useContext(FormContext);
 
   useEffect(() => {
     setTimeout(() => {

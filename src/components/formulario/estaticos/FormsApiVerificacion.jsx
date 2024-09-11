@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -7,7 +7,6 @@ import {
   alertErrorRenaper,
   alertErrorRenaperGeneral,
   alertSuccessRenaper,
-  alertWarningRenaper,
 } from "@/helpers/Alertas";
 import { addPrefixesRenaper } from "@/utils/addPrefixes";
 import {
@@ -94,7 +93,6 @@ export const FormsApiVerificacion = ({ dataForm }) => {
     }
   });
 
-
   const onSubmit = async (data, event) => {
     event.preventDefault();
 
@@ -157,51 +155,13 @@ export const FormsApiVerificacion = ({ dataForm }) => {
       }
     }
 
-    if (!campaignContactId) {
-      alertErrorRenaper("Error de validación", "Si recibiste un correo solicitando la validación de tu identidad, por favor hacé click en el botón que se encuentra en el correo enviado para completar el proceso.");
-      return
-    }
-
     const { id, type, ...content } = data;
 
     // Crear un nuevo FormData
     const formData = new FormData();
-    
+
     try {
       setIsLoading(true);
-      formData.append("id", campaignContactId);
-      
-      const infoCheck = await fetch(
-        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
-      console.log({ infoCheck });
-
-      if (infoCheck === undefined || !infoCheck.ok) {
-        console.log('infoCheck')
-        alertErrorRenaperGeneral();
-        return;
-      }
-
-      const resCheck = await infoCheck.json();
-      console.log({ resCheck });
-
-      if (!resCheck.status) {
-        console.log('resCheck')
-        alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
-        return;
-      }  
-      
-      
-      
-      formData.append("name", firstSubject);
-      formData.append("type", checkValidity);
 
       // Agregar cada propiedad al FormData
       Object.keys(content).forEach((key) => {
@@ -222,12 +182,13 @@ export const FormsApiVerificacion = ({ dataForm }) => {
         }
       });
 
-     
+      formData.append("id", campaignContactId);
+      formData.append("name", firstSubject);
+      formData.append("type", checkValidity);
 
       // for (const [clave, valor] of formData.entries()) {
-      //   console.log(`${clave}: ${valor}`);
+      //   console.log(`${clave}: ${typeof valor}`);
       // }
-      // return
 
       const info = await fetch(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper`,
