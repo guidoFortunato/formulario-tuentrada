@@ -3,10 +3,10 @@
 import { encryptToken } from "@/helpers/encryptToken";
 
 export async function getTokenServer() {
-  const email = process.env.NEXT_PUBLIC_EMAIL
-  const password = process.env.NEXT_PUBLIC_PASSWORD
+  const email = "gfortunato@tuentrada.com"
+  const password = "Olvido!2024"
   try {
-    const res = await fetch(`https://${process.env.NEXT_PUBLIC_API}/api/login`, {
+    const res = await fetch(`https://testapi.tuentrada.com/api/login`, {
       // next: { revalidate: 60 },
       method: "POST",
       headers: {
