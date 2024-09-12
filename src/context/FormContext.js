@@ -160,7 +160,7 @@ const FormProvider = ({ children }) => {
         if (currentDate < tokenExpires) {
           // Para desencriptar el token
           const decryptedToken = await decryptToken(token);
-          console.log({tokenEncrypted: token, decryptedToken})
+          // console.log({tokenEncrypted: token, decryptedToken})
           setToken(decryptedToken);
         }
       } else {
