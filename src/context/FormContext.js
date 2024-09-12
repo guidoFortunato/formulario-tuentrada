@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { getToken } from "@/helpers/getToken";
 import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";
+import { getTokenServer } from "@/actions/getTokenServer";
+import { decryptToken } from "@/helpers/encryptToken";
+import { getCookie, hasCookie, setCookie } from "cookies-next";
 
 export const FormContext = createContext();
 
@@ -19,6 +22,7 @@ const FormProvider = ({ children }) => {
   const [errorInput, setErrorInput] = useState(false);
   const [token, setToken] = useState("");
   const [tokenExpires, setTokenExpires] = useState("");
+  const [tokenServer, setTokenServer] = useState("");
   const [tokenCloud, setTokenCloud] = useState("");
   const [statusCloud, setStatusCloud] = useState("");
   const [dataCategories, setDataCategories] = useState([]);
@@ -145,28 +149,63 @@ const FormProvider = ({ children }) => {
   ];
 
   useEffect(() => {
+
     const getDataToken = async () => {
-      // console.log("useEffect getDataToken context");
-      const { token, tokenExpires } = await getToken(process.env.NEXT_PUBLIC_EMAIL, process.env.NEXT_PUBLIC_PASSWORD);
-      setToken(token);
-      setTokenExpires(tokenExpires);
+      if ( hasCookie("authjs-token-tuen") && hasCookie("authjs-tokenExpires-tuen") ) {
+        // console.log('entra al IF, SI hay token en cookies')
+        const token = getCookie("authjs-token-tuen");
+        const tokenExpires = getCookie("authjs-tokenExpires-tuen");
+        const currentDate = Date.now();
+
+        if (currentDate < tokenExpires) {
+          // Para desencriptar el token
+          const decryptedToken = await decryptToken(token);
+          console.log({tokenEncrypted: token, decryptedToken})
+          setToken(decryptedToken);
+        }
+      } else {
+        // console.log('entra al ELSE, NO hay token en cookies')
+        const { token, tokenExpires } = await getTokenServer();
+
+        // Para desencriptar el token
+        const decryptedToken = await decryptToken(token);
+        console.log({tokenEncrypted: token, decryptedToken})
+        setToken(decryptedToken);
+        setCookie("authjs-token-tuen", token);
+        setCookie("authjs-tokenExpires-tuen", tokenExpires);
+      }
     };
     getDataToken();
+
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   const getDataToken = async () => {
+  //     // console.log("useEffect getDataToken context");
+  //     const { token, tokenExpires } = await getToken(
+  //       process.env.NEXT_PUBLIC_EMAIL,
+  //       process.env.NEXT_PUBLIC_PASSWORD
+  //     );
+  //     setToken(token);
+  //     setTokenExpires(tokenExpires);
+  //   };
+  //   getDataToken();
+  // }, []);
 
-    if (token !== '') {
+  useEffect(() => {
+    if (token !== "") {
       // console.log('useEffect context getDataSite')
       const getDataSite = async () => {
-        const info = await getDataCache( `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`, token );
+        const info = await getDataCache(
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`,
+          token
+        );
         const data = info?.data?.site;
         // console.log({data})
-        setDataSite(data)
+        setDataSite(data);
       };
-      getDataSite()
+      getDataSite();
     }
-
   }, [token]);
 
   useEffect(() => {
@@ -179,8 +218,8 @@ const FormProvider = ({ children }) => {
             token
           );
           if (!info.status) {
-            router.push('/error')
-            return
+            router.push("/error");
+            return;
           }
           // console.log({token})
           // console.log({info})
@@ -191,7 +230,6 @@ const FormProvider = ({ children }) => {
       }
     }
   }, [token]);
-
 
   const handlePrevDataCategories = (value) => {
     setPrevDataCategories(value);

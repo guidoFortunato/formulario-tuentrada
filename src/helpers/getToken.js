@@ -37,8 +37,6 @@ export async function getToken(email, password) {
       );
     }
 
-    //! encriptar el token
-
     const data = await res.json();
     const { token } = data;
     const tokenExpires = new Date(data.expired_at).getTime();

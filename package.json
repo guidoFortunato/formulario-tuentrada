@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^14.2.3",
+    "bcryptjs": "^2.4.3",
     "bufferutil": "^4.0.8",
     "client-only": "^0.0.1",
     "clsx": "^2.1.1",
