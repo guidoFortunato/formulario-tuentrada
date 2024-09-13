@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { getToken } from "@/helpers/getToken";
 import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";
 import { getTokenServer } from "@/actions/getTokenServer";
-import { decryptToken } from "@/helpers/encryptToken";
+import { decryptToken } from "@/actions/encryptToken";
 import { getCookie, hasCookie, setCookie } from "cookies-next";
 
 export const FormContext = createContext();

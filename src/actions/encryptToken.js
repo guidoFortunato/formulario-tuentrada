@@ -1,7 +1,7 @@
 "use server"
 import CryptoJS from 'crypto-js';
 
-const secretKey = process.env.SECRET_KEY; // Llave secreta (asegúrate de que sea segura)
+const secretKey = "S#9fGz7^kLm%8jHdQ!wX$23RrN&PzA4eXt5V^yT*UbMnVz@0gC"; // Llave secreta (asegúrate de que sea segura)
 
 // Encriptar
 export async function encryptToken(token) {

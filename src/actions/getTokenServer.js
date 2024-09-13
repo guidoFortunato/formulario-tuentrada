@@ -1,6 +1,6 @@
 "use server"
 
-import { encryptToken } from "@/helpers/encryptToken";
+import { encryptToken } from "@/actions/encryptToken";
 
 export async function getTokenServer() {
   const email = "gfortunato@tuentrada.com"
