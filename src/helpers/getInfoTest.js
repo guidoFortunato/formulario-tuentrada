@@ -28,8 +28,6 @@ export async function getDataCache(url, token) {
   try {
     const res = await fetch(url, {
       next: { revalidate: 600 },
-      // cache: 'force-cache',
-      credentials: "include",
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

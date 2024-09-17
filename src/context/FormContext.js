@@ -16,22 +16,22 @@ const FormProvider = ({ children }) => {
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(0);
+  const [dataCategories, setDataCategories] = useState([]);
+  const [dataCategory, setDataCategory] = useState([]);
   const [dataContacto, setDataContacto] = useState("");
-  const [glpiSubCategory, setGlpiSubCategory] = useState("");
-  const [subtitleArticle, setSubtitleArticle] = useState("");
-  const [selectDefaultValue, setSelectDefaultValue] = useState("");
+  const [dataSite, setDataSite] = useState([]);
+  const [dni, setDni] = useState("");
   const [errorInput, setErrorInput] = useState(false);
+  const [glpiSubCategory, setGlpiSubCategory] = useState("");
+  const [isEditDNI, setIsEditDNI] = useState(false);
+  const [prevDataCategories, setPrevDataCategories] = useState("");
+  const [selectDefaultValue, setSelectDefaultValue] = useState("");
+  const [statusCloud, setStatusCloud] = useState("");
+  const [subtitleArticle, setSubtitleArticle] = useState("");
   const [token, setToken] = useState("");
+  const [tokenCloud, setTokenCloud] = useState("");
   const [tokenExpires, setTokenExpires] = useState("");
   const [tokenServer, setTokenServer] = useState("");
-  const [tokenCloud, setTokenCloud] = useState("");
-  const [statusCloud, setStatusCloud] = useState("");
-  const [dataCategories, setDataCategories] = useState([]);
-  const [dataSite, setDataSite] = useState([]);
-  const [dataCategory, setDataCategory] = useState([]);
-  const [prevDataCategories, setPrevDataCategories] = useState("");
-  const [isEditDNI, setIsEditDNI] = useState(false);
-  const [dni, setDni] = useState("");
 
   const {
     formState: { errors },

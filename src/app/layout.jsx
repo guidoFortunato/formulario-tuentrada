@@ -7,7 +7,6 @@ import GoogleAnalyticsContainer from "@/components/analytics/GoogleAnalyticsCont
 import { TagManager } from "@/components/tagmanager/TagManager";
 
 import "./globals.css";
-import { getTokenRedis } from "@/services/redisService";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,12 +29,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-
-  const token = await getTokenRedis();
-  console.log({token})
-
-
-
 
   return (
     <html lang="es">
