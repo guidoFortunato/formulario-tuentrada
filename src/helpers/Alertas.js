@@ -36,7 +36,7 @@ export const alertErrorTickets = (text = "") => {
     </div>
     <div>
       <a href="https://forms.gle/bu8Hx1NdGGDpLWQX6">
-        <button class="btn-primary">Completar el formulario</button>
+        <button class="btn-primary w-[200px]">Completar el formulario</button>
       </a>
     </div>
  

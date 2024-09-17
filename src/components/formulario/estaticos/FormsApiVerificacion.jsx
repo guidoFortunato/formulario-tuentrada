@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -7,6 +7,7 @@ import {
   alertErrorRenaper,
   alertErrorRenaperGeneral,
   alertSuccessRenaper,
+  alertWarningRenaper,
 } from "@/helpers/Alertas";
 import { addPrefixesRenaper } from "@/utils/addPrefixes";
 import {
@@ -19,11 +20,12 @@ import {
   TypeFormSelect,
   TypeFormTextarea,
 } from "../typeform";
-import { BotonEnviar } from "./BotonEnviar";
+import { BotonEnviar, BotonEnviarRenaper } from "./BotonEnviar";
 
 export const FormsApiVerificacion = ({ dataForm }) => {
   const { handleSubmit, reset, token } = useContext(FormContext);
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
+  const [checkId, setCheckId] = useState(null);
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +33,9 @@ export const FormsApiVerificacion = ({ dataForm }) => {
   const campaignContactId = useSearchParams().get("id");
   const fields = dataForm?.steps[0]?.fields;
   const firstSubject = dataForm?.firstPartSubject;
-  const checkValidity = fields.find( (item) => item.name.toLowerCase() === "type" )?.defaultValue;
+  const checkValidity = fields.find(
+    (item) => item.name.toLowerCase() === "type"
+  )?.defaultValue;
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const renderForms = fields.map((item) => {
@@ -92,6 +96,55 @@ export const FormsApiVerificacion = ({ dataForm }) => {
       );
     }
   });
+
+  console.log({campaignContactId})
+
+  useEffect(() => {
+
+    if (!campaignContactId) {
+      alertErrorRenaper(
+        "Error de validación",
+        "Si recibiste un correo solicitando la validación de tu identidad, por favor hacé click en el botón que se encuentra en el correo enviado para completar el proceso."
+      );
+      router.push("/");
+    }
+    
+  }, []);
+
+  useEffect(() => {
+
+    if (campaignContactId) {
+
+      const checkId = async () => {
+        // Crear un nuevo FormData
+        const formDataCheck = new FormData();
+        formDataCheck.append("id", campaignContactId);
+        const infoCheck = await fetch(
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formDataCheck,
+          }
+        );
+        const resCheck = await infoCheck.json();
+  
+        if (!resCheck.status) {
+          setCheckId(false);
+          alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
+          router.push("/");
+        } else {
+          setCheckId(true);
+        }
+      };
+      checkId();
+      
+    }
+
+
+  }, []);
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
@@ -162,6 +215,9 @@ export const FormsApiVerificacion = ({ dataForm }) => {
 
     try {
       setIsLoading(true);
+      formData.append("id", campaignContactId);
+      formData.append("name", firstSubject);
+      formData.append("type", checkValidity);
 
       // Agregar cada propiedad al FormData
       Object.keys(content).forEach((key) => {
@@ -182,13 +238,10 @@ export const FormsApiVerificacion = ({ dataForm }) => {
         }
       });
 
-      formData.append("id", campaignContactId);
-      formData.append("name", firstSubject);
-      formData.append("type", checkValidity);
-
       // for (const [clave, valor] of formData.entries()) {
-      //   console.log(`${clave}: ${typeof valor}`);
+      //   console.log(`${clave}: ${valor}`);
       // }
+      // return
 
       const info = await fetch(
         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper`,
@@ -261,7 +314,8 @@ export const FormsApiVerificacion = ({ dataForm }) => {
         </div>
       )}
       <div className="justify-center flex pb-10">
-        <BotonEnviar isLoading={isLoading} />
+        <BotonEnviarRenaper isLoading={isLoading} checkId={checkId} />
+        {/* <BotonEnviar isLoading={isLoading} /> */}
       </div>
     </form>
   );
