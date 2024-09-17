@@ -1,13 +1,13 @@
-// import Script from "next/script";
+import Script from "next/script";
 import { Inter } from "next/font/google";
 import FormProvider from "@/context/FormContext";
 import { ContainerApp } from "@/components/container/ContainerApp";
+import CookieBanner from "@/components/analytics/CookieBanner";
+import GoogleAnalyticsContainer from "@/components/analytics/GoogleAnalyticsContainer";
+import { TagManager } from "@/components/tagmanager/TagManager";
 
 import "./globals.css";
-import GoogleAnalyticsContainer from "@/components/analytics/GoogleAnalyticsContainer";
-import CookieBanner from "@/components/analytics/CookieBanner";
-import Script from "next/script";
-import { TagManager } from "@/components/tagmanager/TagManager";
+import { getTokenRedis } from "@/services/redisService";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +30,13 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+
+  const token = await getTokenRedis();
+  console.log({token})
+
+
+
+
   return (
     <html lang="es">
       <head>

@@ -8,6 +8,7 @@ import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";
 import { getTokenServer } from "@/actions/getTokenServer";
 import { decryptToken } from "@/actions/encryptToken";
 import { getCookie, hasCookie, setCookie } from "cookies-next";
+import { getTokenRedis } from "@/services/redisService";
 
 export const FormContext = createContext();
 
@@ -148,20 +149,41 @@ const FormProvider = ({ children }) => {
     },
   ];
 
-  useEffect(() => {
+  //  useEffect(() => {
+  //   const getDataToken = async () => {
+  //     // console.log("useEffect getDataToken context");
+  //     const token = await getTokenRedis();
+  //     console.log({token})
+  //   };
+  //   getDataToken();
+  // }, []);
 
+  useEffect(() => {
     const getDataToken = async () => {
-      if ( hasCookie("authjs-token-tuen") && hasCookie("authjs-tokenExpires-tuen") ) {
+      if (
+        hasCookie("authjs-token-tuen") &&
+        hasCookie("authjs-tokenExpires-tuen")
+      ) {
         // console.log('entra al IF, SI hay token en cookies')
         const token = getCookie("authjs-token-tuen");
         const tokenExpires = getCookie("authjs-tokenExpires-tuen");
         const currentDate = Date.now();
 
+        // Pregunto si el token no expiró, la fecha de hoy es menor a la fecha en que expirá por lo tanto si entra en el if quiere decir que no expiró
         if (currentDate < tokenExpires) {
           // Para desencriptar el token
           const decryptedToken = await decryptToken(token);
           // console.log({tokenEncrypted: token, decryptedToken})
           setToken(decryptedToken);
+        } else {
+          // console.log('entra al ELSE, NO hay token en cookies')
+          const { token, tokenExpires } = await getTokenServer();
+
+          // Para desencriptar el token
+          const decryptedToken = await decryptToken(token);
+          setToken(decryptedToken);
+          setCookie("authjs-token-tuen", token);
+          setCookie("authjs-tokenExpires-tuen", tokenExpires);
         }
       } else {
         // console.log('entra al ELSE, NO hay token en cookies')
@@ -169,14 +191,12 @@ const FormProvider = ({ children }) => {
 
         // Para desencriptar el token
         const decryptedToken = await decryptToken(token);
-        console.log({tokenEncrypted: token, decryptedToken})
         setToken(decryptedToken);
         setCookie("authjs-token-tuen", token);
         setCookie("authjs-tokenExpires-tuen", tokenExpires);
       }
     };
     getDataToken();
-
   }, []);
 
   // useEffect(() => {
