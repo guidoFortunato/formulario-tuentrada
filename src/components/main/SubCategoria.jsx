@@ -1,5 +1,3 @@
-"use client";
-
 import AccordionSubCat from "./AccordionSubCat";
 import dompurify from "isomorphic-dompurify";
 

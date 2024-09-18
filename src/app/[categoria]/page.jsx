@@ -1,4 +1,9 @@
-import { ContainerCategory } from "@/components/container/ContainerCategory";
+import { getTokenServerNoEnc } from "@/actions/getTokenServer";
+// import { ContainerCategory } from "@/components/container/ContainerCategory";
+import SubCategoria from "@/components/main/SubCategoria";
+import { getDataCache } from "@/helpers/getInfoTest";
+import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
+import { redirect } from "next/dist/server/api-utils";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -38,8 +43,27 @@ export const generateMetadata = ({ params }) => {
   };
 };
 
-const Subcategoria = async ({ params }) => {
-  return <ContainerCategory params={params} />;
-};
+export default async function PageSubcategory({ params }) {
+  // return <ContainerCategory params={params} />;
+  const tokenRedis = await getTokenRedis();
+  let token;
 
-export default Subcategoria;
+  if (!tokenRedis) {
+    const { token: tokenServer } = await getTokenServerNoEnc();
+    token = tokenServer;
+    await saveTokenRedis("authjs-token-tuen", tokenServer, "604800");
+  } else {
+    token = tokenRedis;
+  }
+
+  const info = await getDataCache(
+    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}`,
+    token
+  );
+
+  if (!info.status) redirect("/error");
+
+  const category = info?.data?.category;
+
+  return <SubCategoria category={category} params={params} />;
+}

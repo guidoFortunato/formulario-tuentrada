@@ -3,10 +3,12 @@ const AdBanner = dynamic(() => import("../adsense/AdBanner"), {
   ssr: false,
 });
 
+import { redirect } from "next/navigation";
 import { ContainerHeaderServer } from "./ContainerHeaderServer";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
 import { getDataCache } from "@/helpers/getInfoTest";
 import Footer from "../footer/Footer";
+import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 
 export const ContainerApp = async({ children }) => {
   const tokenRedis = await getTokenRedis();
@@ -25,11 +27,10 @@ export const ContainerApp = async({ children }) => {
     token
   );
 
-  if (!info.status) {
-    router.push("/error");
-    return;
-  }
+  if (!info.status) redirect("/error");
+
   const dataSite = info?.data?.site;
+
   return (
     <>
       <ContainerHeaderServer dataSite={dataSite} token={token} />

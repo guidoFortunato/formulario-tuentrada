@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import CardCategoria from "@/components/main/CardCategoria";
 import { Loader } from "@/components/loading";
 import { Skeleton } from "../skeleton/Skeleton";
@@ -24,12 +25,8 @@ export const ContainerMainServer = async () => {
   
   const info = await getDataCache(`https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`, token);
 
-  if (!info.status) {
-    router.push("/error");
-    return;
-  }
-  // console.log({token})
-  // console.log({info})
+  if (!info.status) redirect("/error");  
+
   const { categories } = info?.data;
 
   if (categories === undefined) return <Loader />;
