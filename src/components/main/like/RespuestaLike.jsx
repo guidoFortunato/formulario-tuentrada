@@ -4,7 +4,7 @@ import { ButtonLike } from "./ButtonLike";
 import { useState } from "react";
 import { ButtonFormulario } from "./ButtonFormulario";
 
-export const RespuestaLike = ({ params, dataArticleForm }) => {
+export const RespuestaLike = ({ params, dataArticleForm, token }) => {
   const [like, setLike] = useState(null);
   const [opinion, setOpinion] = useState(false);
 
@@ -32,6 +32,7 @@ export const RespuestaLike = ({ params, dataArticleForm }) => {
           handleOpinion={handleOpinion}
           opinion={opinion}
           params={params}
+          token={token}
         />
 
         <ButtonLike
@@ -43,6 +44,7 @@ export const RespuestaLike = ({ params, dataArticleForm }) => {
           handleOpinion={handleOpinion}
           opinion={opinion}
           params={params}
+          token={token}
         />
       </div>
       {!dataArticleForm && (

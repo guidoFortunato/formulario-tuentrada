@@ -1,3 +1,5 @@
+"use client"
+
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -22,8 +24,8 @@ import {
 } from "../typeform";
 import { BotonEnviar } from "./BotonEnviar";
 
-export const FormsApiVerificacion = ({ dataForm }) => {
-  const { handleSubmit, reset, token } = useContext(FormContext);
+export const FormsApiVerificacion = ({ dataForm, token }) => {
+  const { handleSubmit, reset } = useContext(FormContext);
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);

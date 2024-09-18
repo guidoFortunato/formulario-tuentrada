@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/skeleton/Skeleton";
 import { getDataCache } from "@/helpers/getInfoTest";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
 
-export default async function Home() {
+export default async function HomePage() {
   const tokenRedis = await getTokenRedis();
   let token;
 

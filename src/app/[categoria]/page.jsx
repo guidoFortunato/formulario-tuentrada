@@ -43,8 +43,7 @@ export const generateMetadata = ({ params }) => {
   };
 };
 
-export default async function PageSubcategory({ params }) {
-  // return <ContainerCategory params={params} />;
+export default async function SubcategoryPage({ params }) {
   const tokenRedis = await getTokenRedis();
   let token;
 

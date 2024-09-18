@@ -1,9 +1,10 @@
+"use client"
 import { useContext } from "react";
 import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
 import { FormContext } from "@/context/FormContext";
 import { Form1, Form2, FormsApi } from "./";
 
-export const FormStep = ({ dataForm, category, subCategory }) => {
+export const FormStep = ({ dataForm, category, subCategory, token }) => {
   const { currentStep, stepsEstaticos } = useContext(FormContext);
 
   const { steps } = dataForm;
@@ -15,7 +16,7 @@ export const FormStep = ({ dataForm, category, subCategory }) => {
     case 0:
       return (
         <GoogleCaptchaWrapper>
-          <Form1 lengthSteps={lengthSteps} dataForm={dataForm} />
+          <Form1 lengthSteps={lengthSteps} dataForm={dataForm} token={token} />
         </GoogleCaptchaWrapper>
       );
     case 1:
@@ -27,6 +28,7 @@ export const FormStep = ({ dataForm, category, subCategory }) => {
           lengthSteps={lengthSteps}
           category={category}
           subCategory={subCategory}
+          token={token}
         />
       );
   }

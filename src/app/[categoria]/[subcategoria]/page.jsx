@@ -1,4 +1,8 @@
-import { ContainerSubCategory } from "@/components/container/ContainerSubCategory";
+import { getTokenServerNoEnc } from "@/actions/getTokenServer";
+import Articulo from "@/components/main/Articulo";
+import { getDataCache } from "@/helpers/getInfoTest";
+import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
+import { redirect } from "next/navigation";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -37,7 +41,43 @@ export const generateMetadata = ({ params }) => {
   };
 };
 
-const ItemSubCategorie = async ({ params }) => {
-  return <ContainerSubCategory params={params} />;
+export default async function ArticlePage ({ params }){
+  const tokenRedis = await getTokenRedis();
+  let token;
+
+  if (!tokenRedis) {
+    const { token: tokenServer } = await getTokenServerNoEnc();
+    token = tokenServer;
+    await saveTokenRedis("authjs-token-tuen", tokenServer, "604800");
+  } else {
+    token = tokenRedis;
+  }
+
+  const infoArticle = await getDataCache(
+    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`,
+    token
+  );
+
+  if (!infoArticle.status ) redirect("/error");
+
+  const infoMostViews = await getDataCache(
+    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/articles/most-view`,
+    token
+  );
+
+  const dataArticle = infoArticle?.data?.article;
+  const dataMostViews= infoMostViews?.data?.mostViews
+
+  if (dataArticle.length === 0 || dataMostViews === undefined) return <ContainerLoader />;
+  if (dataMostViews.length === 0) return <span></span>;
+
+  return (
+    <Articulo
+      token={token}
+      params={params}
+      dataArticle={dataArticle}
+      dataMostViews={dataMostViews}
+    />
+  );
 };
-export default ItemSubCategorie;
+

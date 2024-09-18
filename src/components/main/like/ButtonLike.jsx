@@ -11,8 +11,9 @@ export const ButtonLike = ({
   opinion,
   params,
   like,
+  token
 }) => {
-  const { token } = useContext(FormContext);
+  
 
   // console.log({params})
 

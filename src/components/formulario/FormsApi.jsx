@@ -1,3 +1,5 @@
+"use client"
+
 import { Fragment, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCookie, hasCookie, setCookie } from 'cookies-next';
@@ -24,7 +26,7 @@ import { addPrefixes } from "@/utils/addPrefixes";
 import { formatDateString, isDateFormat } from "@/utils/helpDates";
 import { errorLogs } from "@/helpers/errorLogs";
 
-export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
+export const FormsApi = ({ dataForm, lengthSteps, category, subCategory, token }) => {
   const {
     handleSubmit,
     nextStep,
@@ -34,7 +36,6 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory }) => {
     glpiSubCategory,
     handleErrorInput,
     selectDefaultValue,
-    token,
     resetStep,
   } = useContext(FormContext);
 

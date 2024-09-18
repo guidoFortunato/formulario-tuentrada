@@ -158,46 +158,46 @@ const FormProvider = ({ children }) => {
   //   getDataToken();
   // }, []);
 
-  useEffect(() => {
-    const getDataToken = async () => {
-      if (
-        hasCookie("authjs-token-tuen") &&
-        hasCookie("authjs-tokenExpires-tuen")
-      ) {
-        // console.log('entra al IF, SI hay token en cookies')
-        const token = getCookie("authjs-token-tuen");
-        const tokenExpires = getCookie("authjs-tokenExpires-tuen");
-        const currentDate = Date.now();
+  // useEffect(() => {
+  //   const getDataToken = async () => {
+  //     if (
+  //       hasCookie("authjs-token-tuen") &&
+  //       hasCookie("authjs-tokenExpires-tuen")
+  //     ) {
+  //       // console.log('entra al IF, SI hay token en cookies')
+  //       const token = getCookie("authjs-token-tuen");
+  //       const tokenExpires = getCookie("authjs-tokenExpires-tuen");
+  //       const currentDate = Date.now();
 
-        // Pregunto si el token no expiró, la fecha de hoy es menor a la fecha en que expirá por lo tanto si entra en el if quiere decir que no expiró
-        if (currentDate < tokenExpires) {
-          // Para desencriptar el token
-          const decryptedToken = await decryptToken(token);
-          // console.log({tokenEncrypted: token, decryptedToken})
-          setToken(decryptedToken);
-        } else {
-          // console.log('entra al ELSE, NO hay token en cookies')
-          const { token, tokenExpires } = await getTokenServer();
+  //       // Pregunto si el token no expiró, la fecha de hoy es menor a la fecha en que expirá por lo tanto si entra en el if quiere decir que no expiró
+  //       if (currentDate < tokenExpires) {
+  //         // Para desencriptar el token
+  //         const decryptedToken = await decryptToken(token);
+  //         // console.log({tokenEncrypted: token, decryptedToken})
+  //         setToken(decryptedToken);
+  //       } else {
+  //         // console.log('entra al ELSE, NO hay token en cookies')
+  //         const { token, tokenExpires } = await getTokenServer();
 
-          // Para desencriptar el token
-          const decryptedToken = await decryptToken(token);
-          setToken(decryptedToken);
-          setCookie("authjs-token-tuen", token);
-          setCookie("authjs-tokenExpires-tuen", tokenExpires);
-        }
-      } else {
-        // console.log('entra al ELSE, NO hay token en cookies')
-        const { token, tokenExpires } = await getTokenServer();
+  //         // Para desencriptar el token
+  //         const decryptedToken = await decryptToken(token);
+  //         setToken(decryptedToken);
+  //         setCookie("authjs-token-tuen", token);
+  //         setCookie("authjs-tokenExpires-tuen", tokenExpires);
+  //       }
+  //     } else {
+  //       // console.log('entra al ELSE, NO hay token en cookies')
+  //       const { token, tokenExpires } = await getTokenServer();
 
-        // Para desencriptar el token
-        const decryptedToken = await decryptToken(token);
-        setToken(decryptedToken);
-        setCookie("authjs-token-tuen", token);
-        setCookie("authjs-tokenExpires-tuen", tokenExpires);
-      }
-    };
-    getDataToken();
-  }, []);
+  //       // Para desencriptar el token
+  //       const decryptedToken = await decryptToken(token);
+  //       setToken(decryptedToken);
+  //       setCookie("authjs-token-tuen", token);
+  //       setCookie("authjs-tokenExpires-tuen", tokenExpires);
+  //     }
+  //   };
+  //   getDataToken();
+  // }, []);
 
   // useEffect(() => {
   //   const getDataToken = async () => {
@@ -212,21 +212,21 @@ const FormProvider = ({ children }) => {
   //   getDataToken();
   // }, []);
 
-  useEffect(() => {
-    if (token !== "") {
-      // console.log('useEffect context getDataSite')
-      const getDataSite = async () => {
-        const info = await getDataCache(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`,
-          token
-        );
-        const data = info?.data?.site;
-        // console.log({data})
-        setDataSite(data);
-      };
-      getDataSite();
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token !== "") {
+  //     // console.log('useEffect context getDataSite')
+  //     const getDataSite = async () => {
+  //       const info = await getDataCache(
+  //         `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`,
+  //         token
+  //       );
+  //       const data = info?.data?.site;
+  //       // console.log({data})
+  //       setDataSite(data);
+  //     };
+  //     getDataSite();
+  //   }
+  // }, [token]);
 
   // useEffect(() => {
   //   if (token !== "") {

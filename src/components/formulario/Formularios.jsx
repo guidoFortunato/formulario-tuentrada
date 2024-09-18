@@ -1,11 +1,12 @@
+"use client"
+
 import { useContext, useEffect } from "react";
-import Script from "next/script";
 import { useRouter } from "next/navigation";
 import { FormContext } from "@/context/FormContext";
 import { FormStep, Steps } from ".";
 import { Loader } from "../loading";
 
-export const Formularios = ({ dataForm, params }) => {
+export const Formularios = ({ dataForm, params, token }) => {
   const { subtitleArticle } = useContext(FormContext);
   // console.log({dataForm})
 
@@ -44,6 +45,7 @@ export const Formularios = ({ dataForm, params }) => {
         dataForm={dataForm.form}
         category={category}
         subCategory={subCategory}
+        token={token}
       />
     </div>
   );

@@ -7,7 +7,7 @@ import { FormContext } from "@/context/FormContext";
 import { sendDataEmail } from "@/helpers/getInfoTest";
 import { BotonSiguiente, BotonVolver } from ".";
 
-export const Form1 = ({ lengthSteps }) => {
+export const Form1 = ({ lengthSteps, token }) => {
   const {
     register,
     handleSubmit,
@@ -16,7 +16,6 @@ export const Form1 = ({ lengthSteps }) => {
     nextStep,
     handleContacto,
     reset,
-    token,
   } = useContext(FormContext);
   const router = useRouter();
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");

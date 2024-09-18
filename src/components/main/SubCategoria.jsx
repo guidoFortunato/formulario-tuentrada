@@ -4,7 +4,7 @@ import dompurify from "isomorphic-dompurify";
 const SubCategoria = ({ category, params }) => {
   const subCategories = category?.subCategories;
   const sanitizer = dompurify.sanitize;
-  // console.log({category})
+  // console.dir({ category }, { depth: null });
 
   return (
     <div className="container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 px-10 md:px-20 flex-1">
