@@ -1,16 +1,14 @@
 "use client";
 
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
-import { FormContext } from "@/context/FormContext";
 import clsx from "clsx";
 import { Timer } from "./Timer";
 
-export const FormBusqueda = () => {
-  const { token } = useContext(FormContext);
+export const FormBusqueda = ({ token }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
@@ -146,7 +144,6 @@ export const FormBusqueda = () => {
           placeholder="¿Qué estás buscando?..."
           value={value}
           onChange={handleChange}
-         
           autoComplete="off"
           disabled={disabled === false ? loading : disabled}
         />

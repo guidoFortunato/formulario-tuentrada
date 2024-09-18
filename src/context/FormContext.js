@@ -228,28 +228,27 @@ const FormProvider = ({ children }) => {
     }
   }, [token]);
 
-  useEffect(() => {
-    if (token !== "") {
-      if (dataCategories.length === 0) {
-        // console.log("useEffect container main context");
-        const getDataCategories = async () => {
-          const info = await getDataPrueba(
-            `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`,
-            token
-          );
-          if (!info.status) {
-            router.push("/error");
-            return;
-          }
-          // console.log({token})
-          // console.log({info})
-          const { categories } = info?.data;
-          setDataCategories(categories);
-        };
-        getDataCategories();
-      }
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token !== "") {
+  //     if (dataCategories.length === 0) {
+      
+  //       const getDataCategories = async () => {
+  //         const info = await getDataPrueba(
+  //           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`,
+  //           token
+  //         );
+  //         if (!info.status) {
+  //           router.push("/error");
+  //           return;
+  //         }
+          
+  //         const { categories } = info?.data;
+  //         setDataCategories(categories);
+  //       };
+  //       getDataCategories();
+  //     }
+  //   }
+  // }, [token]);
 
   const handlePrevDataCategories = (value) => {
     setPrevDataCategories(value);
