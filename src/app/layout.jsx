@@ -1,13 +1,12 @@
-// import Script from "next/script";
+import Script from "next/script";
 import { Inter } from "next/font/google";
 import FormProvider from "@/context/FormContext";
 import { ContainerApp } from "@/components/container/ContainerApp";
 
-import "./globals.css";
 import GoogleAnalyticsContainer from "@/components/analytics/GoogleAnalyticsContainer";
 import CookieBanner from "@/components/analytics/CookieBanner";
-import Script from "next/script";
 import { TagManager } from "@/components/tagmanager/TagManager";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

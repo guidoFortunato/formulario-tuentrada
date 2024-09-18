@@ -198,7 +198,7 @@ export const TypeFormScanner = ({ item }) => {
           <div className="mt-2 flex justify-center">
             <span
               className={clsx("whitespace-nowrap", {
-                "btn-primary": !dniValidated,
+                "btn-primary w-[200px]": !dniValidated,
                 "btn-disabled": dniValidated,
               })}
             >
@@ -207,7 +207,7 @@ export const TypeFormScanner = ({ item }) => {
           </div>
         ) : (
           <div className="mt-2">
-            <span className="whitespace-nowrap btn-primary">
+            <span className="whitespace-nowrap btn-primary w-[200px]">
               Activar Cámara
             </span>
           </div>
