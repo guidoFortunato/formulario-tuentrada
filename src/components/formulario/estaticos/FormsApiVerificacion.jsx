@@ -36,6 +36,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
   const checkValidity = fields.find(
     (item) => item.name.toLowerCase() === "type"
   )?.defaultValue;
+
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const renderForms = fields.map((item) => {
@@ -97,10 +98,9 @@ export const FormsApiVerificacion = ({ dataForm }) => {
     }
   });
 
-  console.log({campaignContactId})
+  console.log({ campaignContactId });
 
   useEffect(() => {
-
     if (!campaignContactId) {
       alertErrorRenaper(
         "Error de validación",
@@ -108,13 +108,10 @@ export const FormsApiVerificacion = ({ dataForm }) => {
       );
       router.push("/");
     }
-    
   }, []);
 
   useEffect(() => {
-
     if (campaignContactId) {
-
       const checkId = async () => {
         // Crear un nuevo FormData
         const formDataCheck = new FormData();
@@ -130,7 +127,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
           }
         );
         const resCheck = await infoCheck.json();
-  
+
         if (!resCheck.status) {
           setCheckId(false);
           alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
@@ -140,10 +137,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
         }
       };
       checkId();
-      
     }
-
-
   }, []);
 
   const onSubmit = async (data, event) => {
@@ -275,14 +269,14 @@ export const FormsApiVerificacion = ({ dataForm }) => {
       const ticketRenaper = res?.data[0]?.ticket;
 
       alertSuccessRenaper(titleRenaper, messageRenaper, ticketRenaper);
-      //router.push("/");
-      return;
+
     } catch (error) {
       alertErrorRenaperGeneral();
       throw new Error(error);
     } finally {
       setIsLoading(false);
-      //reset();
+      reset();
+      router.push("/");
     }
   };
 
@@ -313,9 +307,9 @@ export const FormsApiVerificacion = ({ dataForm }) => {
           </div>
         </div>
       )}
-      <div className="justify-center flex pb-10">
-        <BotonEnviarRenaper isLoading={isLoading} checkId={checkId} />
-        {/* <BotonEnviar isLoading={isLoading} /> */}
+      <div className="justify-center flex items-center pb-10">
+        {/* <BotonEnviarRenaper isLoading={isLoading} checkId={checkId} /> */}
+        <BotonEnviar isLoading={isLoading} />
       </div>
     </form>
   );

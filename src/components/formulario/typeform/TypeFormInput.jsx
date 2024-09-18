@@ -115,9 +115,12 @@ export const TypeFormInput = ({ item }) => {
               },
               pattern: {
                 value:
-                  item.subtype === "email" &&
-                  /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/,
-                message: `Ingrese un texto válido`,
+                  item.subtype === "email" 
+                  ? /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/
+                  : item.subtype === "number"
+                  ? /^\d+$/
+                  : undefined,
+                  message: `Ingrese un texto válido`,
               },
               minLength: {
                 value: item.min,

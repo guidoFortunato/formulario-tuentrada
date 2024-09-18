@@ -5,10 +5,8 @@ export const BotonEnviar = ({ isLoading, loadingCheckHaveTickets = false }) => {
   return (
     <>
       {loadingCheckHaveTickets || isLoading ? (
-        <button
-          disabled
-          type="button"
-          className={`cursor-not-allowed text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-10 w-[150px]`}
+        <span
+          className={`btn-primary w-[150px] cursor-default`}
         >
           <svg
             aria-hidden="true"
@@ -27,12 +25,12 @@ export const BotonEnviar = ({ isLoading, loadingCheckHaveTickets = false }) => {
               fill="#1C64F2"
             />
           </svg>
-          Loading...
-        </button>
+          cargando...
+        </span>
       ) : (
         <button
           type="submit"
-          className={`text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-10 w-[150px]`}
+          className={`btn-primary w-[150px] cursor-pointer`}
         >
           Enviar
         </button>
@@ -46,10 +44,8 @@ export const BotonEnviarRenaper = ({ isLoading, checkId = true }) => {
   return (
     <>
       {isLoading ? (
-        <button
-          disabled
-          type="button"
-          className={`cursor-not-allowed text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-10 w-[150px]`}
+        <span
+          className={`btn-primary w-[150px] cursor-default`}
         >
           <svg
             aria-hidden="true"
@@ -68,14 +64,14 @@ export const BotonEnviarRenaper = ({ isLoading, checkId = true }) => {
               fill="#1C64F2"
             />
           </svg>
-          Loading...
-        </button>
+          cargando...
+        </span>
       ) : checkId === false ? (
         <span className="btn-disabled w-[150px] select-none">Enviar</span>
       ) : (
         <button
           type="submit"
-          className={`btn-primary w-[150px]`}
+          className={`btn-primary w-[150px] cursor-pointer`}
         >
           Enviar
         </button>
