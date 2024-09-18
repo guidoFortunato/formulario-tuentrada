@@ -98,7 +98,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
     }
   });
 
-  console.log({ campaignContactId });
+  // console.log({ campaignContactId });
 
   useEffect(() => {
     if (!campaignContactId) {

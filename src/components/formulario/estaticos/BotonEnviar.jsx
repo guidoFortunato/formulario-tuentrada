@@ -1,6 +1,6 @@
 import React from "react";
 
-export const BotonEnviar = ({ isLoading, loadingCheckHaveTickets = false }) => {
+export const BotonEnviar = ({ isLoading, loadingCheckHaveTickets = false, firstText = "cargando...", secondText="Enviar" }) => {
   // console.log({loadingCheckHaveTickets})
   return (
     <>
@@ -25,14 +25,14 @@ export const BotonEnviar = ({ isLoading, loadingCheckHaveTickets = false }) => {
               fill="#1C64F2"
             />
           </svg>
-          cargando...
+          { firstText }
         </span>
       ) : (
         <button
           type="submit"
           className={`btn-primary w-[150px] cursor-pointer`}
         >
-          Enviar
+          { secondText }
         </button>
       )}
     </>

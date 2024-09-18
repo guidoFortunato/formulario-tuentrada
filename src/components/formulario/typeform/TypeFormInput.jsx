@@ -24,7 +24,7 @@ import { FormContext } from "@/context/FormContext";
 export const TypeFormInput = ({ item }) => {
   const { register, errors, control, watch } = useContext(FormContext);
   const nameInput = item.name;
-  // console.log({item})
+  console.log({item})
 
   return (
     <>
@@ -73,7 +73,7 @@ export const TypeFormInput = ({ item }) => {
           type={
             item.subtype === "datetime"
               ? "datetime-local"
-              : item.subtype === "emailConfirm" || item.subtype === "email"
+              : item.subtype === "emailConfirm" || item.subtype === "email" || /dni/.test(item.name.toLowerCase()) || /n[uú]mero.*tr[aá]mite/.test(item.name.toLowerCase())
               ? "text"
               : item.subtype
           }
@@ -117,10 +117,12 @@ export const TypeFormInput = ({ item }) => {
                 value:
                   item.subtype === "email" 
                   ? /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/
-                  : item.subtype === "number"
+                  : /dni/.test(item.name.toLowerCase()) || /n[uú]mero.*tr[aá]mite/.test(item.name.toLowerCase())
                   ? /^\d+$/
                   : undefined,
-                  message: `Ingrese un texto válido`,
+                  message: /dni/.test(item.name.toLowerCase()) || /n[uú]mero.*tr[aá]mite/.test(item.name.toLowerCase())
+                  ? "Ingrese el número sin puntos, guiones ni espacios"
+                  : "Ingrese un texto válido",
               },
               minLength: {
                 value: item.min,
