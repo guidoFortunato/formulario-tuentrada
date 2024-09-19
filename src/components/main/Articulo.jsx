@@ -64,57 +64,50 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [] }) => {
             </>
           )}
 
-        <div className="flex flex-col items-center md:items-start lg:justify-evenly lg:flex-row mt-10 bg-slate-50 p-8 lg:p-20  border border-gray-200" >
+<div className="flex justify-around  flex-col lg:flex-row mt-6 bg-slate-50 p-4 sm:p-6 lg:p-12 border border-gray-200 rounded-lg shadow-sm ">
+  
 
-        <div className="mb-8 md:mb-0 text-start md:py-2 lg:py-0">
-              <h2 className="font-bold text-2xl text-center text-blue-dark mt-10 mb-2 md:text-start">
-              Centro de Ayuda y Consultas
-              </h2>
-              <p className="text-sm text-center md:text-start">Explorá nuestros recursos más útiles y populares. <br />Encontrá respuestas a tus consultas y mejora tu experiencia. <br /> ¡Descubrilos ahora!</p> <br />
-           
-            </div>
-          {dataMostViews.length > 0 && articleType !== VERIFICAR_DATOS && (
-            <div className="mb-8 md:mb-0 md:py-2 lg:py-0">
-              <h4 className="text-blue-dark font-bold mb-2 text-xl">
-                Artículos más vistos
-              </h4>
-              <ol className="text-sm">
-                {dataMostViews.slice(0, 5).map((item) => (
-                  <li key={item.id} className="text-blue-dark mb-2">
-                    <span style={{fontSize:"20px"}}>▸ </span>
-                    <Link
-                      className="hover:underline text-base"
-                      href={`/${item.category.slug}/${item.slug}`}
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
-          {dataArticle?.articleChild?.length > 0 &&
-            articleType !== VERIFICAR_DATOS && (
-              <div>
-                <h4 className="text-blue-dark text-xl font-bold mb-2 md:py-2 lg:py-0">
-                  Artículos relacionados
-                </h4>
-                <ol className="text-base">
-                  {dataArticle?.articleChild?.slice(0, 5).map((item) => (
-                    <li key={item.id} className="text-blue-dark mb-2">
-                      <span style={{fontSize:"20px"}}>▸ </span>
-                      <Link
-                        className="hover:underline text-base"
-                        href={item.slug}
-                      >
-                        {item.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-        </div>
+
+  {/* Artículos más vistos */}
+  {dataMostViews.length > 0 && articleType !== VERIFICAR_DATOS && (
+    <div className="lg:col-span-1 py-2">
+      <h4 className="font-bold text-blue-dark text-lg sm:text-xl lg:text-2xl mb-4 ">
+        Artículos más vistos
+      </h4>
+      <ol className="text-sm sm:text-base lg:text-lg list-none pl-0">
+        {dataMostViews.slice(0, 5).map((item) => (
+          <li key={item.id} className="mb-2">
+            <span className="text-md lg:text-lg">▸ </span>
+            <Link className="hover:underline text-blue-dark transition-colors duration-300 text-sm" href={`/${item.category.slug}/${item.slug}`}>
+              {item.title}
+            </Link>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )}
+
+  {/* Artículos Relacionados */}
+  {dataArticle?.articleChild?.length > 0 && articleType !== VERIFICAR_DATOS && (
+    <div className="lg:col-span-1 py-2">
+      <h4 className="font-bold text-blue-dark text-lg sm:text-xl lg:text-2xl mb-4">
+        Artículos relacionados
+      </h4>
+      <ol className="text-sm sm:text-base lg:text-lg list-none pl-0">
+        {dataArticle?.articleChild?.slice(0, 5).map((item) => (
+          <li key={item.id} className="mb-2">
+            <span className="text-md lg:text-lg">▸ </span>
+            <Link className="hover:underline text-blue-dark transition-colors duration-300 text-sm" href={item.slug}>
+              {item.title}
+            </Link>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )}
+</div>
+
+
       </div>
     </>
   );
