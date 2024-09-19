@@ -3,7 +3,7 @@ import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import SubCategoria from "@/components/main/SubCategoria";
 import { getDataCache } from "@/helpers/getInfoTest";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
