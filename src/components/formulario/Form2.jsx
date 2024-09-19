@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+"use client"
+
+import { useContext, useEffect } from "react";
 
 import { FormContext } from "@/context/FormContext";
 import { BotonSiguiente, BotonVolver } from ".";
 import { Controller, useForm } from "react-hook-form";
-// import { Recaptcha } from "./Recaptcha";
 
 export const Form2 = ({ lengthSteps, dataForm }) => {
   const {

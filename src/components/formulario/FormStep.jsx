@@ -1,8 +1,12 @@
 "use client"
+
 import { useContext } from "react";
 import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
 import { FormContext } from "@/context/FormContext";
-import { Form1, Form2, FormsApi } from "./";
+import { Form1 } from "./Form1";
+import { Form2 } from "./Form2";
+import { FormsApi } from ".";
+
 
 export const FormStep = ({ dataForm, category, subCategory, token }) => {
   const { currentStep, stepsEstaticos } = useContext(FormContext);

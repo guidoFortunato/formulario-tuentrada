@@ -1,9 +1,7 @@
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
-// import { ContainerCategory } from "@/components/container/ContainerCategory";
 import SubCategoria from "@/components/main/SubCategoria";
 import { getDataCache } from "@/helpers/getInfoTest";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
-import { redirect } from "next/navigation";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -60,7 +58,7 @@ export default async function SubcategoryPage({ params }) {
     token
   );
 
-  if (!info.status) redirect("/error");
+  if (!info.status) notFound();
 
   const category = info?.data?.category;
 

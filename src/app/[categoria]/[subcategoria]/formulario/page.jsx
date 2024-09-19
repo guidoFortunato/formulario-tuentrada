@@ -1,11 +1,8 @@
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
-import { ContainerForm } from "@/components/container/ContainerForm";
-import { ContainerFormServer } from "@/components/container/ContainerFormServer";
-import { ContainerLoader } from "@/components/container/ContainerLoader";
 import { Formularios } from "@/components/formulario/Formularios";
 import { getDataCache } from "@/helpers/getInfoTest";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   return [
@@ -74,20 +71,9 @@ export default async function FormPage({ params }) {
     token
   );
 
-  if (!info.status) redirect("/error");
+  if (!info.status) notFound();
 
   const dataForm = info?.data;
 
-  // useEffect(() => {
-  //   if (params.categoria === "verificacion-datos") {
-  //     router.push("/verificacion-datos");
-  //     return;
-  //   }
-  // }, []);
-
-  if (dataForm !== undefined && dataForm.length === 0)
-    return <ContainerLoader />;
-
-  return <Formularios dataForm={dataForm} params={params} />;
+  return <Formularios dataForm={dataForm} params={params} token={token} />;
 }
-

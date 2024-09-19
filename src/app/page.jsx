@@ -1,4 +1,3 @@
-import { redirect } from "next/dist/server/api-utils";
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import { Loader } from "@/components/loading";
 import CardCategoria from "@/components/main/CardCategoria";
@@ -23,7 +22,7 @@ export default async function HomePage() {
     token
   );
 
-  if (!info.status) redirect("/error");
+  if (!info.status) notFound();
 
   const { categories } = info?.data;
 

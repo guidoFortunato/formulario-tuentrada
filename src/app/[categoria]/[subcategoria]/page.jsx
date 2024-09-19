@@ -2,7 +2,6 @@ import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import Articulo from "@/components/main/Articulo";
 import { getDataCache } from "@/helpers/getInfoTest";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
-import { redirect } from "next/navigation";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -41,7 +40,7 @@ export const generateMetadata = ({ params }) => {
   };
 };
 
-export default async function ArticlePage ({ params }){
+export default async function ArticlePage({ params }) {
   const tokenRedis = await getTokenRedis();
   let token;
 
@@ -58,7 +57,7 @@ export default async function ArticlePage ({ params }){
     token
   );
 
-  if (!infoArticle.status ) redirect("/error");
+  if (!infoArticle.status) notFound();
 
   const infoMostViews = await getDataCache(
     `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/articles/most-view`,
@@ -66,9 +65,10 @@ export default async function ArticlePage ({ params }){
   );
 
   const dataArticle = infoArticle?.data?.article;
-  const dataMostViews= infoMostViews?.data?.mostViews
+  const dataMostViews = infoMostViews?.data?.mostViews;
 
-  if (dataArticle.length === 0 || dataMostViews === undefined) return <ContainerLoader />;
+  if (dataArticle.length === 0 || dataMostViews === undefined)
+    return <ContainerLoader />;
   if (dataMostViews.length === 0) return <span></span>;
 
   return (
@@ -79,5 +79,4 @@ export default async function ArticlePage ({ params }){
       dataMostViews={dataMostViews}
     />
   );
-};
-
+}
