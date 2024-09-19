@@ -91,8 +91,9 @@ visibility: hidden;
   
 .adsbygoogle div #aswift_1 {
     
-  height: 140px!important;
+  /* height: 140px!important; */
   border: 1px solid #D9D9D9!important;
+ 
 }
 
 }

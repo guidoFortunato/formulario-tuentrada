@@ -72,7 +72,7 @@ const AccordionSubCat = ({ name = "", articles = [], params }) => {
                 className="text-base"
                 onClick={() => handleSubtitleArticle(name)}
               >
-                <span className="text-blue-dark">▸</span>{" "}
+                <span className="text-blue-dark text-xl">▸</span>{" "}
                 <span className="hover:underline">{item.title}</span>
               </Link>
             </p>
