@@ -1,5 +1,3 @@
-"use client"
-
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -22,11 +20,12 @@ import {
   TypeFormSelect,
   TypeFormTextarea,
 } from "../typeform";
-import { BotonEnviar } from "./BotonEnviar";
+import { BotonEnviar, BotonEnviarRenaper } from "./BotonEnviar";
 
-export const FormsApiVerificacion = ({ dataForm, token }) => {
-  const { handleSubmit, reset } = useContext(FormContext);
+export const FormsApiVerificacion = ({ dataForm }) => {
+  const { handleSubmit, reset, token } = useContext(FormContext);
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
+  const [checkId, setCheckId] = useState(null);
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +33,10 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
   const campaignContactId = useSearchParams().get("id");
   const fields = dataForm?.steps[0]?.fields;
   const firstSubject = dataForm?.firstPartSubject;
-  const checkValidity = fields.find( (item) => item.name.toLowerCase() === "type" )?.defaultValue;
+  const checkValidity = fields.find(
+    (item) => item.name.toLowerCase() === "type"
+  )?.defaultValue;
+
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const renderForms = fields.map((item) => {
@@ -96,6 +98,47 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
     }
   });
 
+  // console.log({ campaignContactId });
+
+  useEffect(() => {
+    if (!campaignContactId) {
+      alertErrorRenaper(
+        "Error de validación",
+        "Si recibiste un correo solicitando la validación de tu identidad, por favor hacé click en el botón que se encuentra en el correo enviado para completar el proceso."
+      );
+      router.push("/");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (campaignContactId) {
+      const checkId = async () => {
+        // Crear un nuevo FormData
+        const formDataCheck = new FormData();
+        formDataCheck.append("id", campaignContactId);
+        const infoCheck = await fetch(
+          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formDataCheck,
+          }
+        );
+        const resCheck = await infoCheck.json();
+
+        if (!resCheck.status) {
+          setCheckId(false);
+          alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
+          router.push("/");
+        } else {
+          setCheckId(true);
+        }
+      };
+      checkId();
+    }
+  }, []);
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
@@ -159,49 +202,14 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       }
     }
 
-    if (!campaignContactId) {
-      alertErrorRenaper("Error de validación", "Si recibiste un correo solicitando la validación de tu identidad, por favor hacé click en el botón que se encuentra en el correo enviado para completar el proceso.");
-      return
-    }
-
     const { id, type, ...content } = data;
 
     // Crear un nuevo FormData
     const formData = new FormData();
-    
+
     try {
       setIsLoading(true);
       formData.append("id", campaignContactId);
-      
-      const infoCheck = await fetch(
-        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
-      console.log({ infoCheck });
-
-      if (infoCheck === undefined || !infoCheck.ok) {
-        console.log('infoCheck')
-        alertErrorRenaperGeneral();
-        return;
-      }
-
-      const resCheck = await infoCheck.json();
-      console.log({ resCheck });
-
-      if (!resCheck.status) {
-        console.log('resCheck')
-        alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
-        return;
-      }  
-      
-      
-      
       formData.append("name", firstSubject);
       formData.append("type", checkValidity);
 
@@ -223,8 +231,6 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
           formData.append(newKey, content[key]);
         }
       });
-
-     
 
       // for (const [clave, valor] of formData.entries()) {
       //   console.log(`${clave}: ${valor}`);
@@ -263,14 +269,14 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       const ticketRenaper = res?.data[0]?.ticket;
 
       alertSuccessRenaper(titleRenaper, messageRenaper, ticketRenaper);
-      //router.push("/");
-      return;
+
     } catch (error) {
       alertErrorRenaperGeneral();
       throw new Error(error);
     } finally {
       setIsLoading(false);
-      //reset();
+      reset();
+      router.push("/");
     }
   };
 
@@ -301,7 +307,8 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
           </div>
         </div>
       )}
-      <div className="justify-center flex pb-10">
+      <div className="justify-center flex items-center pb-10">
+        {/* <BotonEnviarRenaper isLoading={isLoading} checkId={checkId} /> */}
         <BotonEnviar isLoading={isLoading} />
       </div>
     </form>
