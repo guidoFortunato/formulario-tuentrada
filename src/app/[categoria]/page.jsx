@@ -1,6 +1,7 @@
 import SubCategoria from "@/components/main/SubCategoria";
 import { getData } from "@/utils/getData";
 
+
 export const generateMetadata = ({ params }) => {
   let primerLetra;
   let resto;

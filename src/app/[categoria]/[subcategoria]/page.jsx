@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import Articulo from "@/components/main/Articulo";
 import { getData } from "@/utils/getData";
 

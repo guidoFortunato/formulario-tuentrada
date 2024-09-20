@@ -1,5 +1,4 @@
 import { getDataCache } from "@/helpers/getInfoTest";
-import { ContainerLoader } from "./ContainerLoader";
 
 import { FormsApiVerificacion } from "../formulario/estaticos/FormsApiVerificacion";
 import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
@@ -11,19 +10,16 @@ export const ContainerDatosPageServer = async ({ params, token }) => {
     token
   );
 
+  // console.log({infoForm})
+
   if (!infoForm.status) notFound();
 
-  const dataForm = infoForm?.data;
-
-  if (dataForm !== undefined && dataForm.length === 0)
-    return <ContainerLoader />;
-
-  if (dataForm === undefined) notFound();
+  const dataForm = infoForm?.data.form;
 
   return (
     <GoogleCaptchaWrapper>
       <div>
-        <FormsApiVerificacion dataForm={dataForm.form} params={params} token={token} />
+        <FormsApiVerificacion dataForm={dataForm} params={params} token={token} />
       </div>
     </GoogleCaptchaWrapper>
   );

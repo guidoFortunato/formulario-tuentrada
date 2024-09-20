@@ -1,3 +1,5 @@
+"use client"
+
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -126,6 +128,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
             body: formDataCheck,
           }
         );
+        console.log({infoCheck})
         const resCheck = await infoCheck.json();
 
         if (!resCheck.status) {

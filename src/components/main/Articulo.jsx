@@ -3,6 +3,7 @@ import { ButtonFormulario } from "./like/ButtonFormulario";
 import Link from "next/link";
 import { ArticleRows } from "./ArticleRows";
 import { ContainerDatosPage } from "../container/ContainerDatosPage";
+import { ContainerDatosPageServer } from "../container/ContainerDatosPageServer";
 
 const VERIFICAR_DATOS = "Verificar Datos";
 
@@ -27,6 +28,7 @@ const Articulo = ({ params, dataArticle = {}, dataMostViews = [], token }) => {
           rows.map((item) => <ArticleRows key={item.name} item={item} />)}
 
         {articleType === VERIFICAR_DATOS && (
+          // <ContainerDatosPageServer params={params} token={token} />
           <ContainerDatosPage params={params} token={token} />
         )}
 
