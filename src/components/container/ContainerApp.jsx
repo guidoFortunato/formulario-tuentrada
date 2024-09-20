@@ -3,7 +3,7 @@ const AdBanner = dynamic(() => import("../adsense/AdBanner"), {
   ssr: false,
 });
 
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { ContainerHeaderServer } from "./ContainerHeaderServer";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
 import { getDataCache } from "@/helpers/getInfoTest";
@@ -27,7 +27,7 @@ export const ContainerApp = async({ children }) => {
     token
   );
 
-  if (!info.status) redirect("/error");
+  if (!info.status) notFound();
 
   const dataSite = info?.data?.site;
 

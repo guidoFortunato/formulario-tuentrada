@@ -3,7 +3,7 @@ import { ContainerLoader } from "./ContainerLoader";
 
 import { FormsApiVerificacion } from "../formulario/estaticos/FormsApiVerificacion";
 import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const ContainerDatosPageServer = async ({ params, token }) => {
   const infoForm = await getDataCache(
@@ -11,14 +11,14 @@ export const ContainerDatosPageServer = async ({ params, token }) => {
     token
   );
 
-  if (!infoForm.status) redirect("/error");
+  if (!infoForm.status) notFound();
 
   const dataForm = infoForm?.data;
 
   if (dataForm !== undefined && dataForm.length === 0)
     return <ContainerLoader />;
 
-  if (dataForm === undefined) redirect("/error");
+  if (dataForm === undefined) notFound();
 
   return (
     <GoogleCaptchaWrapper>

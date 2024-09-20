@@ -5,6 +5,7 @@ import { ContainerLoader } from "./ContainerLoader";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import { redirect } from "next/dist/server/api-utils";
+import { notFound } from "next/navigation";
 
 export const ContainerSubCategoryServer = async({ params }) => {
 
@@ -24,7 +25,7 @@ export const ContainerSubCategoryServer = async({ params }) => {
     token
   );
 
-  if (!infoArticle.status ) redirect("/error");
+  if (!infoArticle.status ) notFound();
 
   const infoMostViews = await getDataCache(
     `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/articles/most-view`,

@@ -1,11 +1,10 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import Script from "next/script";
 import { FormContext } from "@/context/FormContext";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { ContainerLoader } from "./ContainerLoader";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { FormsApiVerificacion } from "../formulario/estaticos/FormsApiVerificacion";
 import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
 
@@ -25,10 +24,8 @@ export const ContainerDatosPage = ({ params }) => {
           token
         );
 
-        if (!info.status) {
-          router.push("/error");
-          return;
-        }
+        if (!info.status) notFound();
+        
         setDataForm(info?.data);
       };
       getDataForm();
@@ -38,10 +35,7 @@ export const ContainerDatosPage = ({ params }) => {
   if (dataForm !== undefined && dataForm.length === 0)
     return <ContainerLoader />;
 
-  if (dataForm === undefined) {
-    router.push("/error");
-    return;
-  }
+  if (dataForm === undefined) notFound();
 
   return (
     <GoogleCaptchaWrapper>

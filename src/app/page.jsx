@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import { Loader } from "@/components/loading";
 import CardCategoria from "@/components/main/CardCategoria";

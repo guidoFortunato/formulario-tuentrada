@@ -3,7 +3,7 @@ import { getDataCache } from "@/helpers/getInfoTest";
 import { ContainerLoader } from "./ContainerLoader";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const ContainerFormServer = async ({ params }) => {
   const tokenRedis = await getTokenRedis();
@@ -22,7 +22,7 @@ export const ContainerFormServer = async ({ params }) => {
     token
   );
 
-  if (!info.status) redirect("/error");
+  if (!info.status) notFound();
 
   const dataForm = info?.data;
 

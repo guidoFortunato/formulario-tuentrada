@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import CardCategoria from "@/components/main/CardCategoria";
 import { Loader } from "@/components/loading";
 import { Skeleton } from "../skeleton/Skeleton";
@@ -25,7 +25,7 @@ export const ContainerMainServer = async () => {
   
   const info = await getDataCache(`https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`, token);
 
-  if (!info.status) redirect("/error");  
+  if (!info.status) notFound();
 
   const { categories } = info?.data;
 

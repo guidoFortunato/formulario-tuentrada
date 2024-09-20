@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import Articulo from "@/components/main/Articulo";
 import { getDataCache } from "@/helpers/getInfoTest";

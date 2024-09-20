@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import SubCategoria from "@/components/main/SubCategoria";
 import { getDataCache } from "@/helpers/getInfoTest";

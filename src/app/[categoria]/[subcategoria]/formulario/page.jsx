@@ -1,8 +1,8 @@
+import { notFound } from "next/navigation";
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import { Formularios } from "@/components/formulario/Formularios";
 import { getDataCache } from "@/helpers/getInfoTest";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
-import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   return [
@@ -71,9 +71,11 @@ export default async function FormPage({ params }) {
     token
   );
 
+  console.log({info})
+
   if (!info.status) notFound();
 
-  const dataForm = info?.data;
+  const dataForm = info?.data.form;
 
   return <Formularios dataForm={dataForm} params={params} token={token} />;
 }
