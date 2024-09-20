@@ -1,8 +1,8 @@
-import { getDataCache } from "@/helpers/getInfoTest";
+import { notFound } from "next/navigation";
 
+import { getDataCache } from "@/helpers/getInfoTest";
 import { FormsApiVerificacion } from "../formulario/estaticos/FormsApiVerificacion";
 import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
-import { notFound, redirect } from "next/navigation";
 
 export const ContainerDatosPageServer = async ({ params, token }) => {
   const infoForm = await getDataCache(

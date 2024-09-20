@@ -1,7 +1,7 @@
 "use client"
 
 import { Fragment, useContext, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormContext } from "@/context/FormContext";
@@ -116,27 +116,33 @@ export const FormsApiVerificacion = ({ dataForm }) => {
     if (campaignContactId) {
       const checkId = async () => {
         // Crear un nuevo FormData
-        const formDataCheck = new FormData();
-        formDataCheck.append("id", campaignContactId);
-        const infoCheck = await fetch(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            body: formDataCheck,
+        try {
+          const formDataCheck = new FormData();
+          formDataCheck.append("id", campaignContactId);
+          const infoCheck = await fetch(
+            `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              body: formDataCheck,
+            }
+          );
+          console.log({infoCheck})
+          const resCheck = await infoCheck.json();
+  
+          if (!resCheck.status) {
+            setCheckId(false);
+            alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
+            router.push("/");
+          } else {
+            setCheckId(true);
           }
-        );
-        console.log({infoCheck})
-        const resCheck = await infoCheck.json();
-
-        if (!resCheck.status) {
-          setCheckId(false);
-          alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
-          router.push("/");
-        } else {
-          setCheckId(true);
+          
+        } catch (error) {
+          console.log({error})
+          notFound()
         }
       };
       checkId();
