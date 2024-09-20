@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
-import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import Articulo from "@/components/main/Articulo";
-import { getDataCache } from "@/helpers/getInfoTest";
-import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
+import { getData } from "@/utils/getData";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -42,31 +40,17 @@ export const generateMetadata = ({ params }) => {
 };
 
 export default async function ArticlePage({ params }) {
-  const tokenRedis = await getTokenRedis();
-  let token;
-
-  if (!tokenRedis) {
-    const { token: tokenServer } = await getTokenServerNoEnc();
-    token = tokenServer;
-    await saveTokenRedis("authjs-token-tuen", tokenServer, "604800");
-  } else {
-    token = tokenRedis;
-  }
-
-  const infoArticle = await getDataCache(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`,
-    token
+ 
+  const { res: resArticle, token } = await getData(
+    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`
   );
 
-  if (!infoArticle.status) notFound();
-
-  const infoMostViews = await getDataCache(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/articles/most-view`,
-    token
+  const { res: resMostViews } = await getData(
+    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/articles/most-view`
   );
 
-  const dataArticle = infoArticle?.data?.article;
-  const dataMostViews = infoMostViews?.data?.mostViews;
+  const dataArticle = resArticle?.data?.article;
+  const dataMostViews = resMostViews?.data?.mostViews;
 
   if (dataArticle.length === 0 || dataMostViews === undefined)
     return <ContainerLoader />;

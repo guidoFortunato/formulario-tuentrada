@@ -1,33 +1,14 @@
-import { notFound } from "next/navigation";
-import { getTokenServerNoEnc } from "@/actions/getTokenServer";
-import { Loader } from "@/components/loading";
 import CardCategoria from "@/components/main/CardCategoria";
 import { Skeleton } from "@/components/skeleton/Skeleton";
-import { getDataCache } from "@/helpers/getInfoTest";
-import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
+import { getData } from "@/utils/getData";
 
 export default async function HomePage() {
-  const tokenRedis = await getTokenRedis();
-  let token;
-
-  if (!tokenRedis) {
-    const { token: tokenServer } = await getTokenServerNoEnc();
-    token = tokenServer;
-    await saveTokenRedis("authjs-token-tuen", tokenServer, "604800");
-  } else {
-    token = tokenRedis;
-  }
-
-  const info = await getDataCache(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`,
-    token
+  
+  const { res } = await getData(
+    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`
   );
 
-  if (!info.status) notFound();
-
-  const { categories } = info?.data;
-
-  if (categories === undefined) return <Loader />;
+  const categories  = res?.data?.categories;
 
   if (categories.length === 0)
     return (
