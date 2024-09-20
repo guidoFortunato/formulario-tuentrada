@@ -24,7 +24,7 @@ import { FormContext } from "@/context/FormContext";
 export const TypeFormInput = ({ item }) => {
   const { register, errors, control, watch } = useContext(FormContext);
   const nameInput = item.name;
-  console.log({item})
+  // console.log({item})
 
   return (
     <>
