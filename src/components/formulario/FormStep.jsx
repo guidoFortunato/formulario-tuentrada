@@ -1,6 +1,6 @@
 "use client"
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
 import { FormContext } from "@/context/FormContext";
 import { Form1 } from "./Form1";

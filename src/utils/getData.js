@@ -1,6 +1,3 @@
-// utils/fetchWithToken.js
-
-
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import { getDataCache } from "@/helpers/getInfoTest";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
@@ -14,7 +11,7 @@ export const getData = async (url) => {
   if (!token) {
     const { token: tokenServer } = await getTokenServerNoEnc();
     token = tokenServer;
-    await saveTokenRedis("authjs-token-tuen", tokenServer, "604800");
+    await saveTokenRedis("authjs-token-tuen", tokenServer, "80000");
   }
 
   // Hacer la solicitud a la API con el token
