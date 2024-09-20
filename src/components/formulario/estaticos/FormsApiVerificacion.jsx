@@ -247,7 +247,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
           body: formData,
         }
       );
-      console.log({ info });
+      // console.log({ info });
 
       if (info === undefined || !info.ok) {
         const res = await info.json();
@@ -257,7 +257,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
       }
 
       const res = await info.json();
-      console.log({ res });
+      // console.log({ res });
 
       if (!res.status) {
         alertErrorRenaper(res.errors.title, res.errors.message);
