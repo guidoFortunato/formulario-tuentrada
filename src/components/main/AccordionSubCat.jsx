@@ -66,16 +66,17 @@ const AccordionSubCat = ({ name = "", articles = [], params }) => {
       >
         <div className="py-5 border-b border-gray-200">
           {renderedArticles.map((item) => (
-            <p className="text-gray-700 mb-1 pl-2" key={item.id}>
-              <Link
-                href={`${params.categoria}/${item.slug}`}
-                className="text-base"
-                onClick={() => handleSubtitleArticle(name)}
-              >
-                <span className="text-blue-dark text-xl">▸</span>{" "}
-                <span className="hover:underline">{item.title}</span>
-              </Link>
-            </p>
+           <p className="text-gray-600 mb-2 pl-2" key={item.id}>
+           <Link
+             href={`${params.categoria}/${item.slug}`}
+             className="text-base sm:text-lg lg:text-lg transition-colors duration-300"
+             onClick={() => handleSubtitleArticle(name)}
+           >
+             <span className="text-black text-lg lg:text-xl">▸</span>{" "}
+             <span className="hover:underline text-blue-dark text-base ">{item.title}</span>
+           </Link>
+         </p>
+         
           ))}
           {/* Mostrar el botón "Ver más" si hay más de 5 artículos */}
           {remainingArticles.length > 0 && (

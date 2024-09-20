@@ -93,7 +93,6 @@ visibility: hidden;
     
   /* height: 140px!important; */
   border: 1px solid #D9D9D9!important;
- 
 }
 
 }
@@ -125,3 +124,5 @@ div:where(.swal2-container) button:where(.swal2-close):focus {
  background: rgba(0, 0, 0, 0.68)!important;
  border:1px solid rgba(0, 0, 0, 0.374)!important;
  }
+
+
