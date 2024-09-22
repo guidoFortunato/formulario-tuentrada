@@ -1,7 +1,6 @@
-import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import SubCategoria from "@/components/main/SubCategoria";
-import { getDataCache } from "@/helpers/getInfoTest";
-import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
+import { getData } from "@/utils/getData";
+
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -42,25 +41,12 @@ export const generateMetadata = ({ params }) => {
 };
 
 export default async function SubcategoryPage({ params }) {
-  const tokenRedis = await getTokenRedis();
-  let token;
 
-  if (!tokenRedis) {
-    const { token: tokenServer } = await getTokenServerNoEnc();
-    token = tokenServer;
-    await saveTokenRedis("authjs-token-tuen", tokenServer, "604800");
-  } else {
-    token = tokenRedis;
-  }
-
-  const info = await getDataCache(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}`,
-    token
+  const { res } = await getData(
+    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}`
   );
 
-  if (!info.status) notFound();
-
-  const category = info?.data?.category;
+  const category = res?.data?.category;
 
   return <SubCategoria category={category} params={params} />;
 }

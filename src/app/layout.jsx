@@ -5,6 +5,7 @@ import { ContainerApp } from "@/components/container/ContainerApp";
 import CookieBanner from "@/components/analytics/CookieBanner";
 import GoogleAnalyticsContainer from "@/components/analytics/GoogleAnalyticsContainer";
 import { TagManager } from "@/components/tagmanager/TagManager";
+import { ResetStep } from "@/components/formulario/ResetStep";
 
 import "./globals.css";
 
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }) {
           <TagManager />
           <ContainerApp>{children}</ContainerApp>
           <CookieBanner />
+          <ResetStep />
         </FormProvider>
       </body>
     </html>

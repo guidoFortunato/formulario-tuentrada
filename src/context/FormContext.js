@@ -1,19 +1,11 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { createContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { getToken } from "@/helpers/getToken";
-import { getDataCache, getDataPrueba } from "@/helpers/getInfoTest";
-import { getTokenServer } from "@/actions/getTokenServer";
-import { decryptToken } from "@/actions/encryptToken";
-import { getCookie, hasCookie, setCookie } from "cookies-next";
-import { getTokenRedis } from "@/services/redisService";
 
 export const FormContext = createContext();
 
 const FormProvider = ({ children }) => {
-  const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [dataCategories, setDataCategories] = useState([]);
@@ -31,7 +23,6 @@ const FormProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [tokenCloud, setTokenCloud] = useState("");
   const [tokenExpires, setTokenExpires] = useState("");
-  const [tokenServer, setTokenServer] = useState("");
 
   const {
     formState: { errors },

@@ -1,8 +1,5 @@
-import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 import { Formularios } from "@/components/formulario/Formularios";
-import { getDataCache } from "@/helpers/getInfoTest";
-import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
-import { notFound } from "next/navigation";
+import { getData } from "@/utils/getData";
 
 export async function generateStaticParams() {
   return [
@@ -55,25 +52,11 @@ export const generateMetadata = ({ params }) => {
 };
 
 export default async function FormPage({ params }) {
-  const tokenRedis = await getTokenRedis();
-  let token;
-
-  if (!tokenRedis) {
-    const { token: tokenServer } = await getTokenServerNoEnc();
-    token = tokenServer;
-    await saveTokenRedis("authjs-token-tuen", tokenServer, "604800");
-  } else {
-    token = tokenRedis;
-  }
-
-  const info = await getDataCache(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
-    token
+  const { res, token } = await getData(
+    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`
   );
 
-  if (!info.status) notFound();
-
-  const dataForm = info?.data;
+  const dataForm = res?.data.form;
 
   return <Formularios dataForm={dataForm} params={params} token={token} />;
 }

@@ -24,14 +24,15 @@ export async function getDataPrueba(url, token) {
   }
 }
 
-export async function getDataCache(url, token) {
+export async function getDataCache(url, token, timeRevalidate = 600) {
   try {
     const res = await fetch(url, {
-      next: { revalidate: 600 },
+      next: { revalidate: timeRevalidate },
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
         accept: "application/json",
+        "Access-Control-Allow-Origin": "*"
       },
     });
     // console.log({getDataPrueba: res})
