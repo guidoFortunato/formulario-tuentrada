@@ -1,3 +1,5 @@
+"use client"
+
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -22,8 +24,8 @@ import {
 } from "../typeform";
 import { BotonEnviar, BotonEnviarRenaper } from "./BotonEnviar";
 
-export const FormsApiVerificacion = ({ dataForm }) => {
-  const { handleSubmit, reset, token } = useContext(FormContext);
+export const FormsApiVerificacion = ({ dataForm, token }) => {
+  const { handleSubmit, reset } = useContext(FormContext);
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
   const [checkId, setCheckId] = useState(null);
   const [score, setScore] = useState(null);
@@ -36,6 +38,12 @@ export const FormsApiVerificacion = ({ dataForm }) => {
   const checkValidity = fields.find(
     (item) => item.name.toLowerCase() === "type"
   )?.defaultValue;
+
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -106,7 +114,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
         "Error de validación",
         "Si recibiste un correo solicitando la validación de tu identidad, por favor hacé click en el botón que se encuentra en el correo enviado para completar el proceso."
       );
-      router.push("/");
+      // router.push("/");
     }
   }, []);
 
@@ -131,7 +139,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
         if (!resCheck.status) {
           setCheckId(false);
           alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
-          router.push("/");
+          // router.push("/");
         } else {
           setCheckId(true);
         }
@@ -276,7 +284,7 @@ export const FormsApiVerificacion = ({ dataForm }) => {
     } finally {
       setIsLoading(false);
       reset();
-      router.push("/");
+      // router.push("/");
     }
   };
 
