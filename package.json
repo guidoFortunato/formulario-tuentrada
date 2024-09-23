@@ -20,10 +20,10 @@
     "flowbite-datepicker": "^1.2.6",
     "flowbite-react": "^0.6.4",
     "isomorphic-dompurify": "^1.10.0",
-    "next": "13.5.4",
+    "next": "^14.2.13",
     "qrcode": "^1.5.3",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-google-recaptcha": "^3.1.0",
     "react-google-recaptcha-v3": "^1.10.1",
     "react-hook-form": "^7.47.0",
@@ -34,13 +34,13 @@
     "react-select": "^5.8.0",
     "react-webcam": "^7.2.0",
     "redis": "^4.7.0",
-    "sweetalert2": "^11.9.0",
+    "sweetalert2": "^11.14.1",
     "utf-8-validate": "^6.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^10",
     "eslint": "^8",
-    "eslint-config-next": "13.5.4",
+    "eslint-config-next": "^14.2.13",
     "postcss": "^8",
     "tailwindcss": "^3"
   }
