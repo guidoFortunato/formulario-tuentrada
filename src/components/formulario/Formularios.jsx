@@ -2,8 +2,6 @@ import { Steps } from ".";
 import { FormStep } from "./FormStep";
 
 export const Formularios = ({ dataForm, params, token }) => {
-  // const { subtitleArticle } = useContext(FormContext);
-  // console.log({dataForm})
 
   const category =
     params.categoria.slice(0, 1).toUpperCase() +
@@ -19,7 +17,6 @@ export const Formularios = ({ dataForm, params, token }) => {
           Completá la información
         </h2>
         <span className="text-base text-gray-500   italic">
-          {/* {category} » {subtitleArticle.length > 0 && ` » ${subtitleArticle}`} {subCategory} */}
         </span>
       </div>
       <Steps dataForm={dataForm} />

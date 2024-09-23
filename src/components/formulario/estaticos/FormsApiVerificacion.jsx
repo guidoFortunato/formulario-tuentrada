@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 import { Fragment, useContext, useEffect, useState } from "react";
-import { notFound, useRouter, useSearchParams } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormContext } from "@/context/FormContext";
 import {
@@ -22,12 +22,12 @@ import {
   TypeFormSelect,
   TypeFormTextarea,
 } from "../typeform";
-import { BotonEnviar, BotonEnviarRenaper } from "./BotonEnviar";
+import { BotonEnviar } from "./BotonEnviar";
+import { ContainerLoader } from "@/components/container/ContainerLoader";
 
 export const FormsApiVerificacion = ({ dataForm, token }) => {
   const { handleSubmit, reset } = useContext(FormContext);
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
-  const [checkId, setCheckId] = useState(null);
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -114,7 +114,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
         "Error de validación",
         "Si recibiste un correo solicitando la validación de tu identidad, por favor hacé click en el botón que se encuentra en el correo enviado para completar el proceso."
       );
-      // router.push("/");
+      router.push("/");
     }
   }, []);
 
@@ -135,20 +135,21 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
               body: formDataCheck,
             }
           );
-          console.log({infoCheck})
+
+          if (!infoCheck.ok) {
+            notFound();
+          }
+
           const resCheck = await infoCheck.json();
-  
+
           if (!resCheck.status) {
-            setCheckId(false);
             alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
             router.push("/");
-          } else {
-            setCheckId(true);
+            return;
           }
-          
         } catch (error) {
-          console.log({error})
-          notFound()
+          console.log({ error });
+          notFound();
         }
       };
       checkId();
@@ -262,9 +263,9 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
           body: formData,
         }
       );
-      console.log({ info });
 
       if (info === undefined || !info.ok) {
+        console.log({ info });
         const res = await info.json();
         console.log({ res });
         alertErrorRenaperGeneral();
@@ -284,16 +285,17 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       const ticketRenaper = res?.data[0]?.ticket;
 
       alertSuccessRenaper(titleRenaper, messageRenaper, ticketRenaper);
-
     } catch (error) {
       alertErrorRenaperGeneral();
       throw new Error(error);
     } finally {
       setIsLoading(false);
       reset();
-      // router.push("/");
+      router.push("/");
     }
   };
+
+  if (!loaded) return <ContainerLoader />;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
@@ -323,7 +325,6 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
         </div>
       )}
       <div className="justify-center flex items-center pb-10">
-        {/* <BotonEnviarRenaper isLoading={isLoading} checkId={checkId} /> */}
         <BotonEnviar isLoading={isLoading} />
       </div>
     </form>
