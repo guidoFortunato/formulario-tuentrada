@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCookie, hasCookie, setCookie } from 'cookies-next';
 import { getDataTickets } from "@/helpers/getInfoTest";
@@ -25,6 +25,7 @@ import { BotonVolver } from "./BotonVolver";
 import { addPrefixes } from "@/utils/addPrefixes";
 import { formatDateString, isDateFormat } from "@/utils/helpDates";
 import { errorLogs } from "@/helpers/errorLogs";
+import { ContainerLoader } from "../container/ContainerLoader";
 
 export const FormsApi = ({ dataForm, lengthSteps, category, subCategory, token }) => {
   const {
@@ -49,7 +50,12 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory, token }
   const firstSubject = dataForm?.firstPartSubject;
   const secondSubject = dataForm?.secondPartSubject;
   const fields = steps.flatMap((item) => item.fields);
+  const [loaded, setLoaded] = useState(false);
   // console.log({dataForm})
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   const renderForms =
     newSteps.length > 2 &&
@@ -315,6 +321,8 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory, token }
       }
     }
   };
+
+  if (!loaded) return <ContainerLoader />;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
