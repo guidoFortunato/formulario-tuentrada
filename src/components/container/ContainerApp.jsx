@@ -10,7 +10,7 @@ import { getDataCache } from "@/helpers/getInfoTest";
 import Footer from "../footer/Footer";
 import { getTokenServerNoEnc } from "@/actions/getTokenServer";
 
-export const ContainerApp = async({ children }) => {
+export const ContainerApp = async ({ children }) => {
   const tokenRedis = await getTokenRedis();
   let token;
 
@@ -40,7 +40,6 @@ export const ContainerApp = async({ children }) => {
         data-full-width-responsive="true"
         data-ad-layout="in-article"
         data-ad-format="fluid"
-        
       />
       <Footer data={dataSite} />
     </>

@@ -3,12 +3,11 @@ import { Skeleton } from "@/components/skeleton/Skeleton";
 import { getData } from "@/utils/getData";
 
 export default async function HomePage() {
-  
   const { res } = await getData(
     `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`
   );
 
-  const categories  = res?.data?.categories;
+  const categories = res?.data?.categories;
 
   if (categories.length === 0)
     return (

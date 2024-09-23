@@ -1,7 +1,6 @@
 import SubCategoria from "@/components/main/SubCategoria";
 import { getData } from "@/utils/getData";
 
-
 export const generateMetadata = ({ params }) => {
   let primerLetra;
   let resto;
@@ -41,7 +40,6 @@ export const generateMetadata = ({ params }) => {
 };
 
 export default async function SubcategoryPage({ params }) {
-
   const { res } = await getData(
     `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}`
   );
