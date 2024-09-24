@@ -9,9 +9,9 @@ export const getData = async (url, timeRevalidate = 600) => {
 
   // Si no existe el token en Redis, obtenerlo desde el servidor y guardarlo
   if (!token) {
-    const { token: tokenServer } = await getTokenServerNoEnc();
+    const { token: tokenServer, tokenExpires } = await getTokenServerNoEnc();
     token = tokenServer;
-    await saveTokenRedis("authjs-token-tuen", tokenServer, "80000");
+    await saveTokenRedis("authjs-token-tuen", tokenServer, tokenExpires);
   }
 
   // Hacer la solicitud a la API con el token

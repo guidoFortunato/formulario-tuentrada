@@ -3,33 +3,16 @@ const AdBanner = dynamic(() => import("../adsense/AdBanner"), {
   ssr: false,
 });
 
-import { notFound } from "next/navigation";
 import { ContainerHeaderServer } from "./ContainerHeaderServer";
-import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
-import { getDataCache } from "@/helpers/getInfoTest";
 import Footer from "../footer/Footer";
-import { getTokenServerNoEnc } from "@/actions/getTokenServer";
+import { getData } from "@/utils/getData";
 
 export const ContainerApp = async ({ children }) => {
-  const tokenRedis = await getTokenRedis();
-  let token;
-
-  if (!tokenRedis) {
-    const { token: tokenServer } = await getTokenServerNoEnc();
-    token = tokenServer;
-    await saveTokenRedis("authjs-token-tuen", tokenServer, "604800");
-  } else {
-    token = tokenRedis;
-  }
-
-  const info = await getDataCache(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`,
-    token
+  const { res, token } = await getData(
+    `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`
   );
 
-  if (!info.status) notFound();
-
-  const dataSite = info?.data?.site;
+  const dataSite = res?.data?.site;
 
   return (
     <>
