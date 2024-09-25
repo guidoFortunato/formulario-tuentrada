@@ -27,7 +27,6 @@ export const TypeFormInput = ({ item }) => {
   const nameInput = item.name;
   const params = useParams()
   const paramsRenaper = params.subcategoria.includes("renaper")
-  console.log({paramsRenaper})
 
   return (
     <>
