@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { BiSearchAlt } from "react-icons/bi";
+import { MdOutlineSearch } from "react-icons/md";
 import Link from "next/link";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { alertWarning } from "@/helpers/Alertas";
@@ -199,7 +199,7 @@ export const FormBusqueda = ({ token }) => {
                       onClick={() => handleClick(item)}
                     >
                       <div className="border-gray-100 border-t flex items-center cursor-pointer text-gray-700 hover:bg-blue-light hover-div gap-4 p-5 ">
-                        <BiSearchAlt className="w-6 h-6 mr-2 icon-search" />
+                        <MdOutlineSearch className="w-6 h-6 mr-2 icon-search" />
 
                         <h3 className="text-base font-semibold">
                           {item.title} <br />
