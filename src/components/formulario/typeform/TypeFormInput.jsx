@@ -94,7 +94,6 @@ export const TypeFormInput = ({ item }) => {
                 message: "Este campo es obligatorio",
               },
               validate: (value) => {
-                // console.log({value: item.subtype})
                 // Filtra los campos que contienen la palabra "email" pero no son "emailConfirm"
                 const objectFields = watch()
                 const fields = Object.keys(objectFields).filter(
