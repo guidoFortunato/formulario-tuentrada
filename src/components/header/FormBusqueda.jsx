@@ -198,7 +198,7 @@ export const FormBusqueda = ({ token }) => {
                       href={`/${item.category.slug}/${item.slug}`}
                       onClick={() => handleClick(item)}
                     >
-                      <div className="border-gray-100 border-t flex items-center cursor-pointer text-gray-700 hover:bg-blue-light hover-div gap-4 p-5 ">
+                      <div className="border-gray-200 border-t flex items-center cursor-pointer text-gray-700 hover:bg-blue-light hover-div gap-4 p-5 ">
                         <MdOutlineSearch className="w-6 h-6 mr-2 icon-search" />
 
                         <h3 className="text-base font-semibold">
