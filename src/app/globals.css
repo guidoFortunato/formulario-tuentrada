@@ -120,3 +120,8 @@ div:where(.swal2-container) button:where(.swal2-close):focus {
  background: rgba(0, 0, 0, 0.68)!important;
  border:1px solid rgba(0, 0, 0, 0.374)!important;
  }
+
+ /* Selecciona el span cuando el padre tiene hover */
+ .hover-div:hover h3, .hover-div:hover h3 span, .hover-div:hover .icon-search {
+  color: #fff;
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { BiSearchAlt } from "react-icons/bi";
 import Link from "next/link";
 import { getDataPrueba } from "@/helpers/getInfoTest";
 import { alertWarning } from "@/helpers/Alertas";
@@ -197,25 +198,12 @@ export const FormBusqueda = ({ token }) => {
                       href={`/${item.category.slug}/${item.slug}`}
                       onClick={() => handleClick(item)}
                     >
-                      <div className="border-gray-200 border-b flex items-center cursor-pointer text-gray-700 hover:bg-blue-light hover:text-white gap-4 p-4 ">
-                        <svg
-                          className="w-4 h-4 mr-2"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                          />
-                        </svg>
-                        <h3 className="text-base font-semibold ">
+                      <div className="border-gray-100 border-t flex items-center cursor-pointer text-gray-700 hover:bg-blue-light hover-div gap-4 p-5 ">
+                        <BiSearchAlt className="w-6 h-6 mr-2 icon-search" />
+
+                        <h3 className="text-base font-semibold">
                           {item.title} <br />
-                          <span className=" text-blue-dark text-sm bold-none">
+                          <span className="text-blue-dark text-sm bold-none">
                             Categoría: {item.category.name}
                           </span>
                         </h3>
