@@ -1,8 +1,9 @@
 import { useContext } from "react";
+import { useParams } from "next/navigation";
+import { FormContext } from "@/context/FormContext";
 // import Script from "next/script";
 // import { Controller } from "react-hook-form";
 // import { Datepicker } from "flowbite-react";
-import { FormContext } from "@/context/FormContext";
 // import { Flowbite } from "flowbite-react";
 
 // Meses en español
@@ -24,7 +25,9 @@ import { FormContext } from "@/context/FormContext";
 export const TypeFormInput = ({ item }) => {
   const { register, errors, control, watch } = useContext(FormContext);
   const nameInput = item.name;
-  // console.log({item})
+  const params = useParams()
+  const paramsRenaper = params.subcategoria.includes("renaper")
+  console.log({paramsRenaper})
 
   return (
     <>
@@ -117,11 +120,11 @@ export const TypeFormInput = ({ item }) => {
                 value:
                   item.subtype === "email" 
                   ? /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/
-                  : /dni/.test(item.name.toLowerCase()) || /n[uú]mero.*tr[aá]mite/.test(item.name.toLowerCase())
+                  : paramsRenaper && (/dni/.test(item.name.toLowerCase()) || /n[uú]mero.*tr[aá]mite/.test(item.name.toLowerCase()))
                   ? /^\d+$/
                   : undefined,
                   message: /dni/.test(item.name.toLowerCase()) || /n[uú]mero.*tr[aá]mite/.test(item.name.toLowerCase())
-                  ? "Ingrese el número sin puntos, guiones ni espacios"
+                  ? "Debe ingresar un número sin puntos, guiones ni espacios"
                   : "Ingrese un texto válido",
               },
               minLength: {
