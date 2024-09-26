@@ -1,6 +1,7 @@
 "use server";
 
 import { getRedisClient } from "@/lib/redis";
+import { notFound } from "next/navigation";
 
 // Función para guardar el token en Redis
 export const saveTokenRedis = async (key, token, expirationInSeconds) => {
@@ -11,6 +12,7 @@ export const saveTokenRedis = async (key, token, expirationInSeconds) => {
     });
   } catch (error) {
     console.error("Error al guardar el token en Redis:", error);
+    notFound()
   }
 };
 
@@ -22,6 +24,6 @@ export const getTokenRedis = async () => {
     return token;
   } catch (error) {
     console.error("Error al obtener el token de Redis:", error);
-    return null;
+    notFound()
   }
 };
