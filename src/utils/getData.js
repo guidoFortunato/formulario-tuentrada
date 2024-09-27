@@ -3,7 +3,7 @@ import { getDataCache } from "@/helpers/getInfoTest";
 import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
 import { notFound } from "next/navigation";
 
-export const getData = async (url, timeRevalidate = 600) => {
+export const getData = async (url, timeRevalidate = 10) => {
   // Obtener el token desde Redis
   let token = await getTokenRedis();
 

@@ -24,7 +24,7 @@ export async function getDataPrueba(url, token) {
   }
 }
 
-export async function getDataCache(url, token, timeRevalidate = 600) {
+export async function getDataCache(url, token, timeRevalidate = 10) {
   try {
     const res = await fetch(url, {
       next: { revalidate: timeRevalidate },
