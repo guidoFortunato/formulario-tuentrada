@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@neshca/cache-handler": "^1.7.3",
     "@next/third-parties": "^14.2.3",
     "bcryptjs": "^2.4.3",
     "bufferutil": "^4.0.8",
