@@ -273,7 +273,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       }
 
       const res = await info.json();
-      console.log({ res });
+      // console.log({ res });
 
       if (!res.status) {
         alertErrorRenaper(res.errors.title, res.errors.message);
