@@ -145,7 +145,7 @@ export const Form1 = ({ lengthSteps, token }) => {
     try {
       setIsLoading(true);
       const info = await sendDataEmail(
-        `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/search/contact`,
+        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
         token,
         data.email
       );
