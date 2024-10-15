@@ -1,8 +1,8 @@
-import { createClient } from 'redis';
+import { createClient } from "redis";
 
 let redisClient;
 
-export const getRedisClient = async () => {
+const getRedisClient = async () => {
   if (!redisClient) {
     redisClient = createClient({
       socket: {
@@ -11,10 +11,12 @@ export const getRedisClient = async () => {
       },
     });
 
-    redisClient.on('error', (err) => console.log('Redis Client Error', err));
+    redisClient.on("error", (err) => console.log("Redis Client Error", err));
 
     await redisClient.connect();
   }
-  
+
   return redisClient;
 };
+
+export default getRedisClient;

@@ -16,7 +16,7 @@ export const ContainerApp = async ({ children }) => {
 
   return (
     <>
-      <ContainerHeaderServer dataSite={dataSite} token={token} />
+      {/* <ContainerHeaderServer dataSite={dataSite} token={token} /> */}
       {children}
       <AdBanner
         data-ad-slot="4322497970"
@@ -24,7 +24,7 @@ export const ContainerApp = async ({ children }) => {
         data-ad-layout="in-article"
         data-ad-format="fluid"
       />
-      <Footer data={dataSite} />
+      {/* <Footer data={dataSite} /> */}
     </>
   );
 };

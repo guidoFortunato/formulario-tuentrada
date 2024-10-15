@@ -1,3 +1,5 @@
+
+// import getRedisClient from '@/lib/redis';
 import { CacheHandler } from '@neshca/cache-handler';
 import createLruHandler from '@neshca/cache-handler/local-lru';
 import createRedisHandler from '@neshca/cache-handler/redis-stack';
@@ -11,6 +13,8 @@ CacheHandler.onCreation(async () => {
     client = createClient({
       url: process.env.REDIS_URL ?? 'redis://localhost:6379',
     });
+
+    // client = await getRedisClient();
  
     // Redis won't work without error handling. https://github.com/redis/node-redis?tab=readme-ov-file#events
     client.on('error', (error) => {

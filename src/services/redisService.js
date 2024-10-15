@@ -1,6 +1,7 @@
 "use server";
 
-import { getRedisClient } from "@/lib/redis";
+
+import getRedisClient from "@/lib/redis";
 import { notFound } from "next/navigation";
 
 // Función para guardar el token en Redis
