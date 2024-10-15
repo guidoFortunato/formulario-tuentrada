@@ -1,6 +1,4 @@
-import { FormContext } from "@/context/FormContext";
-import { getDataPrueba } from "@/helpers/getInfoTest";
-import { useContext } from "react";
+import { getDataCache } from "@/helpers/getInfoTest";
 
 export const ButtonLike = ({
   name,
@@ -23,7 +21,7 @@ export const ButtonLike = ({
       // console.log({result})
       handleLike();
       // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/1`);
-      await getDataPrueba(
+      await getDataCache(
         `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`,
         token
       );
@@ -32,7 +30,7 @@ export const ButtonLike = ({
       // console.log({result})
       handleDisLike();
       // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/0`);
-      await getDataPrueba(
+      await getDataCache(
         `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`,
         token
       );

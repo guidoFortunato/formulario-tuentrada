@@ -3,11 +3,12 @@
 import { encryptToken } from "@/actions/encryptToken";
 
 export async function getTokenServer() {
-  const email = "gfortunato@tuentrada.com";
-  const password = "Olvido!2024";
+  const email = process.env.CREDENTIAL_EMAIL;
+  const password = process.env.CREDENTIAL_PASSWORD;
+
   try {
-    const res = await fetch(`https://testapi.tuentrada.com/api/login`, {
-      // next: { revalidate: 60 },
+    const res = await fetch(`https://${process.env.ENDPOINT_API}/api/login`, {
+      cache: "no-store",
       method: "POST",
       headers: {
         "Content-Type": "application/json",

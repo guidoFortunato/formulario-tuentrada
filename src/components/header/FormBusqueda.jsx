@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import Link from "next/link";
-import { getDataPrueba } from "@/helpers/getInfoTest";
+import { getDataCache } from "@/helpers/getInfoTest";
 import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
 import clsx from "clsx";
@@ -30,10 +30,11 @@ export const FormBusqueda = ({ token }) => {
       try {
         setLoading(true); // Activar indicador de carga
         if (value.length >= 3) {
-          const res = await getDataPrueba(
-            `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/search/article/${value}`,
+          const res = await getDataCache(
+            `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
             token
           );
+          // console.log({res})
           if (res.status === 429) {
             // Si ocurre un error 429, guardar la hora actual en localStorage
             const clientDate = Number(localStorage.getItem("clientDate"));
