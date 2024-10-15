@@ -159,7 +159,8 @@ const FormProvider = ({ children }) => {
     if (token !== '') {
       // console.log('useEffect context getDataSite')
       const getDataSite = async () => {
-        const info = await getDataCache( `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`, token );
+        const info = await getDataCache( `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/site/ayuda.tuentrada.com`, token );
+        
         const data = info?.data?.site;
         // console.log({data})
         setDataSite(data)
@@ -178,6 +179,7 @@ const FormProvider = ({ children }) => {
             `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`,
             token
           );
+          // console.log({info, token})
           if (!info.status) {
             router.push('/error')
             return
@@ -185,6 +187,7 @@ const FormProvider = ({ children }) => {
           // console.log({token})
           // console.log({info})
           const { categories } = info?.data;
+          // console.log({categories})
           setDataCategories(categories);
         };
         getDataCategories();

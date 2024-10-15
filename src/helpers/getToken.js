@@ -18,6 +18,8 @@ export async function getToken(email, password) {
       }
     }
 
+    // console.log({email, password})
+
     const res = await fetch(`https://${process.env.NEXT_PUBLIC_API}/api/login`, {
       method: "POST",
       headers: {
@@ -40,6 +42,7 @@ export async function getToken(email, password) {
     //! encriptar el token
 
     const data = await res.json();
+    // console.log({data})
     const { token } = data;
     const tokenExpires = new Date(data.expired_at).getTime();
     const randomNumber = Math.floor(100000 + Math.random() * 900000);

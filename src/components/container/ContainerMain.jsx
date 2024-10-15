@@ -21,6 +21,8 @@ export const ContainerMain = () => {
     resetGlpiSubCategory();
   }, []);
 
+  // console.log({dataCategories})
+
   if (dataCategories === undefined) return <Loader />;
 
   if (dataCategories.length === 0)
