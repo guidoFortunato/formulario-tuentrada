@@ -126,7 +126,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
           const formDataCheck = new FormData();
           formDataCheck.append("id", campaignContactId);
           const infoCheck = await fetch(
-            `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/form/renaper/checks`,
+            `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
             {
               method: "POST",
               headers: {
@@ -254,7 +254,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       // return
 
       const info = await fetch(
-        `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/form/renaper`,
+        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper`,
         {
           method: "POST",
           headers: {

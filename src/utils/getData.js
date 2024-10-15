@@ -10,7 +10,7 @@ export const getData = async (url, timeRevalidate = 60) => {
   if (!token) {
     const { token: tokenServer, tokenExpires } = await getTokenServerNoEnc();
     token = tokenServer;
-    await saveTokenRedis("authjs-token-tuen", tokenServer, tokenExpires);
+    await saveTokenRedis("at-authjs-token", tokenServer, tokenExpires);
   }
 
   // Hacer la solicitud a la API con el token
@@ -20,6 +20,7 @@ export const getData = async (url, timeRevalidate = 60) => {
   if (!res.status) {
     return {
       status: false,
+      message: res.message ?? "Error de autenticación"
     };
   }
 

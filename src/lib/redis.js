@@ -4,6 +4,7 @@ let redisClient;
 
 const getRedisClient = async () => {
   if (!redisClient) {
+    console.log('se crea la conexion a redis por primera vez')
     redisClient = createClient({
       socket: {
         host: process.env.REDIS_HOST,
