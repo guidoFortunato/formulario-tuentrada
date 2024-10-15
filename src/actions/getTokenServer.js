@@ -45,7 +45,7 @@ export async function getTokenServerNoEnc() {
   const password = process.env.CREDENTIAL_PASSWORD;
   try {
     const res = await fetch(`${process.env.ENDPOINT_API}/api/login`, {
-      next: { revalidate: 0 },
+      cache: "no-store",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
