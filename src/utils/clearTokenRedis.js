@@ -1,5 +1,4 @@
-
-const { default: getRedisClient } = require("@/lib/redis");
+const { getRedisClient } = require("../lib/redis");
 
 
 async function deleteToken() {
