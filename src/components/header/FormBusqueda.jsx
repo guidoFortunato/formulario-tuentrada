@@ -31,7 +31,7 @@ export const FormBusqueda = ({ token }) => {
         setLoading(true); // Activar indicador de carga
         if (value.length >= 3) {
           const res = await getDataPrueba(
-            `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
+            `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/search/article/${value}`,
             token
           );
           if (res.status === 429) {

@@ -6,17 +6,23 @@ const AdBanner = dynamic(() => import("../adsense/AdBanner"), {
 import { ContainerHeaderServer } from "./ContainerHeaderServer";
 import Footer from "../footer/Footer";
 import { getData } from "@/utils/getData";
+import { notFound } from "next/navigation";
 
 export const ContainerApp = async ({ children }) => {
-  const { res, token } = await getData(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`
+  const { status, res, token } = await getData(
+    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/site/ayuda.tuentrada.com`
   );
+
+  if (!status) {
+    // Redirige a una página 404 si no se encuentra la información
+    notFound()
+  }
 
   const dataSite = res?.data?.site;
 
   return (
     <>
-      {/* <ContainerHeaderServer dataSite={dataSite} token={token} /> */}
+      <ContainerHeaderServer dataSite={dataSite} token={token} />
       {children}
       <AdBanner
         data-ad-slot="4322497970"
@@ -24,7 +30,7 @@ export const ContainerApp = async ({ children }) => {
         data-ad-layout="in-article"
         data-ad-format="fluid"
       />
-      {/* <Footer data={dataSite} /> */}
+      <Footer data={dataSite} />
     </>
   );
 };

@@ -1,5 +1,6 @@
 import { Formularios } from "@/components/formulario/Formularios";
 import { getData } from "@/utils/getData";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   return [
@@ -52,9 +53,14 @@ export const generateMetadata = ({ params }) => {
 };
 
 export default async function FormPage({ params }) {
-  const { res, token } = await getData(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`
+  const { status, res, token } = await getData(
+    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`
   );
+
+  if (!status) {
+    // Redirige a una página 404 si no se encuentra la información
+    notFound()
+  }
 
   const dataForm = res?.data.form;
 

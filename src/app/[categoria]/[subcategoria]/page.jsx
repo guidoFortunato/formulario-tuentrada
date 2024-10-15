@@ -1,5 +1,6 @@
 import Articulo from "@/components/main/Articulo";
 import { getData } from "@/utils/getData";
+import { notFound } from "next/navigation";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -40,12 +41,17 @@ export const generateMetadata = ({ params }) => {
 
 export default async function ArticlePage({ params }) {
  
-  const { res: resArticle, token } = await getData(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`
+  const { res: resArticle, token, status } = await getData(
+    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`
   );
 
+  if (!status) {
+    // Redirige a una página 404 si no se encuentra la información
+    notFound()
+  }
+
   const { res: resMostViews } = await getData(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/articles/most-view`
+    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/articles/most-view`
   );
 
   const dataArticle = resArticle?.data?.article;

@@ -19,8 +19,10 @@ export const getData = async (url, timeRevalidate = 10) => {
 
   // Verificar si la respuesta es válida
   if (!res.status) {
-    notFound(); // Redirige a una página 404 si no se encuentra la información
+    return {
+      status: false,
+    };
   }
 
-  return { res, token }; // Retornar los datos que necesitas
+  return { status: true, res, token };
 };

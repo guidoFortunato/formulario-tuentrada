@@ -41,10 +41,10 @@ export async function getTokenServer() {
 }
 
 export async function getTokenServerNoEnc() {
-  const email = "gfortunato@tuentrada.com";
-  const password = "Olvido!2024";
+  const email = process.env.CREDENTIAL_EMAIL;
+  const password = process.env.CREDENTIAL_PASSWORD;
   try {
-    const res = await fetch(`https://testapi.tuentrada.com/api/login`, {
+    const res = await fetch(`${process.env.ENDPOINT_API}/api/login`, {
       // next: { revalidate: 60 },
       method: "POST",
       headers: {

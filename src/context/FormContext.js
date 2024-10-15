@@ -208,7 +208,7 @@ const FormProvider = ({ children }) => {
   //     // console.log('useEffect context getDataSite')
   //     const getDataSite = async () => {
   //       const info = await getDataCache(
-  //         `https://${process.env.NEXT_PUBLIC_API}/api/v1/site/ayuda.tuentrada.com`,
+  //         `https://${process.env.ENDPOINT_API}/api/v1/site/ayuda.tuentrada.com`,
   //         token
   //       );
   //       const data = info?.data?.site;
@@ -225,7 +225,7 @@ const FormProvider = ({ children }) => {
       
   //       const getDataCategories = async () => {
   //         const info = await getDataPrueba(
-  //           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/categories`,
+  //           `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/categories`,
   //           token
   //         );
   //         if (!info.status) {

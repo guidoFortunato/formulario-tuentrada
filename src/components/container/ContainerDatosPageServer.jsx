@@ -6,7 +6,7 @@ import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
 
 export const ContainerDatosPageServer = async ({ params, token }) => {
   const infoForm = await getDataCache(
-    `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
+    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
     token
   );
 
