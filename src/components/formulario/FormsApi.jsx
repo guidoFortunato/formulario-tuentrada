@@ -270,7 +270,9 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory, token }
             body: formData,
           }
         );
-        // console.log({info})
+
+      
+
         if (info === undefined || !info.ok) {
         let { value, expirationDate } = JSON.parse(getCookie('ftuein'))
         // console.log({value, expirationDate})
@@ -290,9 +292,12 @@ export const FormsApi = ({ dataForm, lengthSteps, category, subCategory, token }
           errorLogs("/api/errors_clients", email, content, info.status.toString())
           return;
         }
+
         const { data } = await info.json();
+
         const numberTicket = data?.ticketNumber;
-        alertSuccessTickets(numberTicket);        
+        alertSuccessTickets(numberTicket);
+
       } catch (error) {
         console.log(error);
         let { value, expirationDate } = JSON.parse(getCookie('ftuein'))
