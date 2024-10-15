@@ -2,7 +2,7 @@
 
 
 const nextConfig = {
-  cacheHandler: require.resolve('./cache-handler.mjs'),
+  // cacheHandler: require.resolve('./cache-handler.mjs'),
   images: {
     remotePatterns: [
       {
