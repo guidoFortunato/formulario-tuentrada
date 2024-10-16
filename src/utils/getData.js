@@ -15,7 +15,7 @@ export const getData = async (url, timeRevalidate = 60) => {
 
   // Hacer la solicitud a la API con el token
   const res = await getDataCache(url, token, timeRevalidate);
-  console.log({res})
+  // console.log({res})
 
   // Verificar si la respuesta es válida
   if (!res.status) {
