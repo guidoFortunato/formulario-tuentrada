@@ -2,7 +2,7 @@ import { createClient } from "redis";
 
 const getRedisClient = async () => {
   if (!globalThis.redisClient) {
-    console.log('se crea la conexion a redis por primera vez');
+    console.log("se crea la conexion a redis por primera vez");
     globalThis.redisClient = createClient({
       socket: {
         host: process.env.REDIS_HOST,
@@ -10,7 +10,9 @@ const getRedisClient = async () => {
       },
     });
 
-    globalThis.redisClient.on("error", (err) => console.log("Redis Client Error", err));
+    globalThis.redisClient.on("error", (err) =>
+      console.log("Redis Client Error", err)
+    );
 
     await globalThis.redisClient.connect();
   }

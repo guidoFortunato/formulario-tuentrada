@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node src/utils/clearTokenRedis.js && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -17,6 +17,7 @@
     "clsx": "^2.1.1",
     "cookies-next": "^4.2.1",
     "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.5",
     "flowbite": "^1.8.1",
     "flowbite-datepicker": "^1.2.6",
     "flowbite-react": "^0.6.4",

@@ -24,4 +24,3 @@ export const getTokenRedis = async () => {
     console.error("Error al obtener el token de Redis:", error);
   }
 };
-
