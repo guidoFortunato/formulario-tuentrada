@@ -1,6 +1,6 @@
 import { Formularios } from "@/components/formulario/Formularios";
 import { getData } from "@/utils/getData";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export async function generateStaticParams() {
   return [
@@ -59,7 +59,8 @@ export default async function FormPage({ params }) {
 
   if (!status) {
     // Redirige a una página 404 si no se encuentra la información
-    notFound()
+    // notFound()
+    redirect(`/error`);
   }
 
   const dataForm = res?.data.form;

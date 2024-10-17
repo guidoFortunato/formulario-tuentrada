@@ -1,7 +1,6 @@
+import Link from "next/link";
+
 export default function ErrorPageConection() {
-
-  //Todo: cambiar error por not-found
-
   return (
     <div className="w-full mb-20 mt-10 flex flex-col items-center justify-center">
       <svg
@@ -319,9 +318,16 @@ export default function ErrorPageConection() {
 
       <div className="flex flex-col items-center justify-center">
         <p className="text-lg md:text-xl lg:text-2xl font-bold text-gray-500 mt-8 text-center">
-          <span>Ha ocurrido un error inesperado</span> <br />
-          <span>Intente nuevamente mas tarde</span>
+          Lo sentimos, página no encontrada
         </p>
+        <Link href="/" className="mt-4">
+          <button
+            type="button"
+            className="w-auto mr-2 text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:blue-dark  font-medium rounded-md text-sm px-5 py-2.5 text-center mb-2"
+          >
+            Ir a la Home
+          </button>
+        </Link>
       </div>
     </div>
   );

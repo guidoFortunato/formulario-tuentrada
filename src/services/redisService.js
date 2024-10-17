@@ -5,6 +5,7 @@ import getRedisClient from "@/lib/redis";
 // Función para guardar el token en Redis
 export const saveTokenRedis = async (key, token, expirationInSeconds) => {
   const client = await getRedisClient();
+
   try {
     await client.set(key, token, {
       EX: expirationInSeconds, // Tiempo de expiración en segundos
@@ -17,6 +18,7 @@ export const saveTokenRedis = async (key, token, expirationInSeconds) => {
 // Función para obtener un token de Redis
 export const getTokenRedis = async () => {
   const client = await getRedisClient();
+
   try {
     const token = await client.get("at-authjs-token");
     return token;

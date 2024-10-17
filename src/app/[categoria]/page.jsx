@@ -1,6 +1,6 @@
 import SubCategoria from "@/components/main/SubCategoria";
 import { getData } from "@/utils/getData";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -44,9 +44,11 @@ export default async function SubcategoryPage({ params }) {
   const { status, res } = await getData(
     `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}`
   );
+
   if (!status) {
     // Redirige a una página 404 si no se encuentra la información
-    notFound()
+    // notFound()
+    redirect(`/error`);
   }
 
   const category = res?.data?.category;

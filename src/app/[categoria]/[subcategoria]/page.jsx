@@ -1,6 +1,6 @@
 import Articulo from "@/components/main/Articulo";
 import { getData } from "@/utils/getData";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;
@@ -47,7 +47,8 @@ export default async function ArticlePage({ params }) {
 
   if (!status) {
     // Redirige a una página 404 si no se encuentra la información
-    notFound()
+    // notFound()
+    redirect(`/error`);
   }
 
   const { res: resMostViews } = await getData(

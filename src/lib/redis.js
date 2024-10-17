@@ -14,6 +14,7 @@ const getRedisClient = async () => {
       console.log("Redis Client Error", err);
       // Desconectar si hay un error
       globalThis.redisClient.disconnect();
+      return
     });
 
     await globalThis.redisClient.connect();

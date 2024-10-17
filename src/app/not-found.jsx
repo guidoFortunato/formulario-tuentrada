@@ -318,14 +318,15 @@ export default function NotFound() {
 
       <div className="flex flex-col items-center justify-center">
         <p className="text-lg md:text-xl lg:text-2xl font-bold text-gray-500 mt-8 text-center">
-          Lo sentimos, página no encontrada
+          <span>Ha ocurrido un error inesperado</span> <br />
+          <span>Intente nuevamente mas tarde</span>
         </p>
-        <Link href="/" className="mt-4">
+        <Link href="https://tuentrada.com" className="mt-4">
           <button
             type="button"
             className="w-auto mr-2 text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:blue-dark  font-medium rounded-md text-sm px-5 py-2.5 text-center mb-2"
           >
-            Ir a la Home
+            Ir a tuentrada.com
           </button>
         </Link>
       </div>
