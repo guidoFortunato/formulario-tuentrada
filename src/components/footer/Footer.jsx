@@ -4,6 +4,11 @@ import SocialMedia from "./SocialMedia";
 import Link from "next/link";
 
 const Footer = ({ data }) => {
+  
+  //todo: Por si falla la conexión, debería mover el layout a las páginas internas
+  if (!data) {
+    return <span></span>
+  }
   // Extraer las páginas de los datos proporcionados
   const { pages } = data;
 

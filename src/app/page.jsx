@@ -1,31 +1,19 @@
 import CardCategoria from "@/components/main/CardCategoria";
-import { Skeleton } from "@/components/skeleton/Skeleton";
 import { getData } from "@/utils/getData";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function HomePage() {
   const { status, res } = await getData(
     `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/categories`
   );
+
   if (!status) {
     // Redirige a una página 404 si no se encuentra la información
     notFound()
+    // redirect("/error");
   }
 
   const categories = res?.data?.categories;
-
-  if (categories.length === 0)
-    return (
-      <main>
-        <div className="flex justify-center items-center h-screen">
-          <section>
-            {[2].map((item) => (
-              <Skeleton key={item} />
-            ))}
-          </section>
-        </div>
-      </main>
-    );
 
   const infoCategories = (categories) =>
     categories.length > 0 &&

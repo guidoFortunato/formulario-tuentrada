@@ -6,17 +6,17 @@ const AdBanner = dynamic(() => import("../adsense/AdBanner"), {
 import { ContainerHeaderServer } from "./ContainerHeaderServer";
 import Footer from "../footer/Footer";
 import { getData } from "@/utils/getData";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 export const ContainerApp = async ({ children }) => {
   const { status, res, token } = await getData(
     `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/site/ayuda.tuentrada.com`
   );
 
-  if (!status) {
-    // Redirige a una página 404 si no se encuentra la información
-    notFound()
-  }
+  // if (!status) {
+  //   // Redirige a una página 404 si no se encuentra la información
+  //   redirect(`/error`);
+  // }
 
   const dataSite = res?.data?.site;
 

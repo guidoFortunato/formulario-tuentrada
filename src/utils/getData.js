@@ -21,7 +21,7 @@ export const getData = async (url, timeRevalidate = 60) => {
   if (!res.status) {
     return {
       status: false,
-      message: res.message ?? "Error de autenticación"
+      message: res.message.toLowerCase() ?? "Error de autenticación"
     };
   }
 
