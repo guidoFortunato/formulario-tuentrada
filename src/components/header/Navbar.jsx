@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ToggleButtonElements } from "./ToggleButtonElements";
 
 export default function NavBar({ data }) {
+
   const newSrc = data.logo?.src.replace(
     "/images/",
     "https://api.tuentrada.com/storage/"

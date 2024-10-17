@@ -3,7 +3,7 @@ import InputBusqueda2 from "../header/InputBusqueda2";
 
 export const ContainerHeaderServer = async ({ dataSite, token }) => {
 
-  //todo: Por si falla la conexión, debería mover el layout a las páginas internas
+  //! Por si falla la llamada a la api, otra opción es mover el layout a las páginas internas
   if (!dataSite) {
     return <span></span>
   }

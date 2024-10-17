@@ -3,9 +3,9 @@ import Accordion from "./Accordion";
 import SocialMedia from "./SocialMedia";
 import Link from "next/link";
 
-const Footer = ({ data }) => {
+const Footer = ({ data }) => {  
   
-  //todo: Por si falla la conexión, debería mover el layout a las páginas internas
+  //! Por si falla la llamada a la api, otra opción es mover el layout a las páginas internas
   if (!data) {
     return <span></span>
   }
