@@ -8,7 +8,9 @@ export async function getTokenServer() {
 
   try {
     const res = await fetch(`https://${process.env.ENDPOINT_API}/api/login`, {
-      cache: "no-store",
+      next: {
+        revalidate: 0,
+      },
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +48,9 @@ export async function getTokenServerNoEnc() {
   const password = process.env.CREDENTIAL_PASSWORD;
   try {
     const res = await fetch(`https://${process.env.ENDPOINT_API}/api/login`, {
-      cache: "no-store",
+      next: {
+        revalidate: 0,
+      },
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +71,7 @@ export async function getTokenServerNoEnc() {
     }
 
     const { token, expired_at } = await res.json();
-    
+
     // Paso 1: Obtener la fecha y hora actual
     const now = new Date();
 
@@ -78,7 +82,6 @@ export async function getTokenServerNoEnc() {
     const tokenExpires = Math.floor((expiredAt - now) / 1000);
 
     return { token, tokenExpires };
-    
   } catch (error) {
     throw new Error(`Error catch getTokenServer: ${error}`);
   }
