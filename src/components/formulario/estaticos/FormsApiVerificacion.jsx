@@ -233,6 +233,8 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
 
       //! comparar con dev client
 
+      //todo: ver de que no aparezca el botón enviar si no existe el id o está repetido
+
       return
 
       // Agregar cada propiedad al FormData
