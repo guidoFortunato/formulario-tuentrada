@@ -225,9 +225,15 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
 
     try {
       setIsLoading(true);
-      formData.append("id", campaignContactId);
+      formData.append("id", +campaignContactId);
       formData.append("name", firstSubject);
       formData.append("type", checkValidity);
+
+      console.log(typeof +campaignContactId)
+
+      //! comparar con dev client
+
+      return
 
       // Agregar cada propiedad al FormData
       Object.keys(content).forEach((key) => {
@@ -273,10 +279,11 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       }
 
       const res = await info.json();
-      // console.log({ res });
+      console.log({ res });
 
       if (!res.status) {
-        alertErrorRenaper(res.errors.title, res.errors.message);
+        console.log('entra')
+        alertWarningRenaper(res.errors.title, res.errors.message);
         return;
       }
 
@@ -287,11 +294,11 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       alertSuccessRenaper(titleRenaper, messageRenaper, ticketRenaper);
     } catch (error) {
       alertErrorRenaperGeneral();
-      throw new Error(error);
+      console.error({error});
     } finally {
       setIsLoading(false);
-      reset();
-      router.push("/");
+      // reset();
+      // router.push("/");
     }
   };
 
