@@ -4,7 +4,6 @@ import { useContext } from "react";
 export const BotonSiguiente = ({
   lengthSteps,
   loadingCheckHaveTickets = false,
-  finalLoading = false,
   isLoading = false
 }) => {
   const { currentStep } = useContext(FormContext);
@@ -12,11 +11,11 @@ export const BotonSiguiente = ({
   return (
     <>
       {lengthSteps === currentStep + 1 ? (
-        finalLoading || loadingCheckHaveTickets ? (
+        isLoading || loadingCheckHaveTickets ? (
           <button
             disabled
             type="button"
-            className={`cursor-not-allowed text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-10 w-[150px]`}
+            className={`cursor-not-allowed text-white bg-gradient-to-r from-blue-light to-blue-dark font-medium rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-10 w-[150px]`}
             
           >
             <svg

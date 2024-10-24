@@ -229,13 +229,13 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       formData.append("name", firstSubject);
       formData.append("type", checkValidity);
 
-      console.log(typeof +campaignContactId)
+      // console.log(typeof +campaignContactId)
 
       //! comparar con dev client
 
       //todo: ver de que no aparezca el botón enviar si no existe el id o está repetido
 
-      return
+      //return
 
       // Agregar cada propiedad al FormData
       Object.keys(content).forEach((key) => {

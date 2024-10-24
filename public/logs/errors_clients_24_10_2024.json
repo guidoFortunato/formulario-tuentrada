@@ -1,0 +1,42 @@
+{
+  "error": [
+    {
+      "email": "gfortunato@tuentrada.com",
+      "quantity": "2",
+      "content": [
+        [
+          {
+            "nombre": "Guido Javier",
+            "apellido": "FORTUNATO",
+            "DNI_STX": "37417530",
+            "Problemas para iniciar sesión": "",
+            "Imagenes": {},
+            "Imagenes 2": {},
+            "Fecha": "",
+            "prueba": "",
+            "time": "24/10/2024, 18:38:31",
+            "ip": "unknown",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+            "error": {}
+          }
+        ],
+        [
+          {
+            "nombre": "Guido Javier",
+            "apellido": "FORTUNATO",
+            "DNI_STX": "37417530",
+            "Problemas para iniciar sesión": "",
+            "Imagenes": {},
+            "Imagenes 2": {},
+            "Fecha": "",
+            "prueba": "",
+            "time": "24/10/2024, 18:39:03",
+            "ip": "unknown",
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+            "error": {}
+          }
+        ]
+      ]
+    }
+  ]
+}
