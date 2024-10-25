@@ -131,7 +131,7 @@ export const FormsApi = ({
     try {
       setIsLoading(true);
       if (stepNow.checkHaveTickets === 1) {
-        console.log('entra')
+        console.log("entra");
         let id;
         setLoadingCheckHaveTickets(true);
 
@@ -324,7 +324,7 @@ export const FormsApi = ({
         })
       );
 
-      if ((value + 1) < 2) {
+      if (value + 1 < 2) {
         alertErrorTicketsNotification();
       } else {
         alertErrorTickets();
@@ -359,7 +359,6 @@ export const FormsApi = ({
   );
 };
 
-
 //onSubit previo
 
 // const onSubmit = async (data, event) => {
@@ -368,7 +367,6 @@ export const FormsApi = ({
 
 //   if (stepNow.checkHaveTickets === 1) {
 //     let id;
-    
 
 //     try {
 //       setLoadingCheckHaveTickets(true);
@@ -386,7 +384,7 @@ export const FormsApi = ({
 //         email,
 //         id
 //       );
-      
+
 //       //! ver tickets abiertos
 //       console.log({ticketsRepeat: info})
 
@@ -395,7 +393,7 @@ export const FormsApi = ({
 //         // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
 //         const ticketsCloseForm = info.data.tickets.filter( (ticket) => ticket.closeForm === 1 );
 //         if (ticketsCloseForm.length > 0) {
-          
+
 //           // console.log("tiene tickets sin cerrar", { ticketsCloseForm });
 //           const ticketNumber = ticketsCloseForm[0].number;
 //           const status = ticketsCloseForm[0].status;
@@ -440,8 +438,8 @@ export const FormsApi = ({
 //           value: 0,
 //           expirationDate: expirationDate,
 //         })
-//       );   
-           
+//       );
+
 //     }
 
 //     let id;
@@ -509,7 +507,6 @@ export const FormsApi = ({
 //       // alertErrorTicketsNotification()
 //       return
 
-   
 //       const info = await fetch(
 //         `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
 //         {
@@ -522,12 +519,11 @@ export const FormsApi = ({
 //       );
 
 //       console.log({info})
-    
 
 //       if (info === undefined || !info.ok) {
 //       let { value, expirationDate } = JSON.parse(getCookie('ftuein'))
 //       // console.log({value, expirationDate})
-        
+
 //         setCookie(
 //           "ftuein",
 //           JSON.stringify({
@@ -568,7 +564,7 @@ export const FormsApi = ({
 //         alertErrorTickets();
 //       }
 //       errorLogs("/api/errors_clients", email, content, error)
-      
+
 //     } finally {
 //       setFinalLoading(false);
 //       // reset();
