@@ -63,8 +63,6 @@ export const FormsApi = ({
     setLoaded(true);
   }, []);
 
-  console.log({stepNow})
-
   const renderForms =
     newSteps.length > 2 &&
     newSteps.slice(2).map((item, index) => {
