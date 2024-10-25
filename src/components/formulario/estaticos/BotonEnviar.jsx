@@ -33,7 +33,7 @@ export const BotonEnviar = ({
               fill="#1C64F2"
             />
           </svg>
-          cargando...
+          Enviando...
         </div>
       ) : checkingRenaper ? (
         <div

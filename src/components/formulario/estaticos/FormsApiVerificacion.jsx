@@ -2,7 +2,7 @@
 
 import { Fragment, useContext, useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useRouter, useSearchParams } from "next/navigation";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormContext } from "@/context/FormContext";
 import {
@@ -124,7 +124,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       const checkId = async () => {
         // Chequear si ya tiene un ticket en renaper
         try {
-          setCheckingRenaper(true);
+          setCheckingRenaper(true)
           const formData = new FormData();
           formData.append("id", campaignContactId);
           const info = await fetch(
@@ -141,25 +141,25 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
           // console.log({info})
 
           if (!info.ok) {
-            console.error({ message: "Error check", info });
-            alertErrorRenaperGeneral();
+            console.error({message:"Error check",info})
+            alertErrorRenaperGeneral()
             router.push("/");
-            return;
+            return
           }
 
           const res = await info.json();
 
           if (!res.status) {
-            console.error({ message: "Error res", info });
+            console.error({message:"Error res",info})
             alertWarningRenaper(res.errors.title, res.errors.message);
             router.push("/");
             return;
           }
         } catch (error) {
           console.error({ error });
-          alertErrorRenaperGeneral();
-        } finally {
-          setCheckingRenaper(false);
+          alertErrorRenaperGeneral()
+        } finally{
+          setCheckingRenaper(false)
         }
       };
       checkId();
@@ -289,7 +289,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       console.log({ res });
 
       if (!res.status) {
-        console.log("entra");
+        console.log('entra')
         alertWarningRenaper(res.errors.title, res.errors.message);
         return;
       }
@@ -301,11 +301,11 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       alertSuccessRenaper(titleRenaper, messageRenaper, ticketRenaper);
     } catch (error) {
       alertErrorRenaperGeneral();
-      console.error({ error });
+      console.error({error});
     } finally {
       setIsLoading(false);
-      reset();
-      router.push("/");
+      // reset();
+      // router.push("/");
     }
   };
 
