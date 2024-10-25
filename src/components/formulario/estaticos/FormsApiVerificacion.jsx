@@ -31,6 +31,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [checkingRenaper, setCheckingRenaper] = useState(false);
   const router = useRouter();
   const campaignContactId = useSearchParams().get("id");
   const fields = dataForm?.steps[0]?.fields;
@@ -121,8 +122,9 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
   useEffect(() => {
     if (campaignContactId) {
       const checkId = async () => {
-        // Crear un nuevo FormData
+        // Chequear si ya tiene un ticket en renaper
         try {
+          setCheckingRenaper(true)
           const formDataCheck = new FormData();
           formDataCheck.append("id", campaignContactId);
           const infoCheck = await fetch(
@@ -137,7 +139,9 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
           );
 
           if (!infoCheck.ok) {
-            notFound();
+            alertErrorRenaperGeneral()
+            router.push("/");
+            return
           }
 
           const resCheck = await infoCheck.json();
@@ -149,7 +153,9 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
           }
         } catch (error) {
           console.log({ error });
-          notFound();
+          alertErrorRenaperGeneral()
+        } finally{
+          setCheckingRenaper(false)
         }
       };
       checkId();
@@ -228,12 +234,6 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       formData.append("id", +campaignContactId);
       formData.append("name", firstSubject);
       formData.append("type", checkValidity);
-
-      // console.log(typeof +campaignContactId)
-
-      //! comparar con dev client
-
-      //todo: ver de que no aparezca el botón enviar si no existe el id o está repetido
 
       //return
 
@@ -334,7 +334,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
         </div>
       )}
       <div className="justify-center flex items-center pb-10">
-        <BotonEnviar isLoading={isLoading} />
+        <BotonEnviar isLoading={isLoading} checkingRenaper={checkingRenaper} />
       </div>
     </form>
   );
