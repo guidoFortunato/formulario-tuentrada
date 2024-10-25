@@ -5,6 +5,11 @@ export const BotonEnviar = ({
   loadingCheckHaveTickets = false,
   checkingRenaper = false,
 }) => {
+
+  console.log({isLoading})
+
+
+
   return (
     <>
       {loadingCheckHaveTickets || isLoading ? (
@@ -28,7 +33,7 @@ export const BotonEnviar = ({
               fill="#1C64F2"
             />
           </svg>
-          Loading...
+          cargando...
         </div>
       ) : checkingRenaper ? (
         <div
@@ -40,6 +45,7 @@ export const BotonEnviar = ({
         <button
           type="submit"
           className={`text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-10 w-[150px]`}
+          // onClick={()=>console.log('click')}
         >
           Enviar
         </button>

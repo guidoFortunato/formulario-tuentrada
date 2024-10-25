@@ -124,38 +124,42 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       const checkId = async () => {
         // Chequear si ya tiene un ticket en renaper
         try {
-          setCheckingRenaper(true)
-          const formDataCheck = new FormData();
-          formDataCheck.append("id", campaignContactId);
-          const infoCheck = await fetch(
+          setCheckingRenaper(true);
+          const formData = new FormData();
+          formData.append("id", campaignContactId);
+          const info = await fetch(
             `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
             {
               method: "POST",
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-              body: formDataCheck,
+              body: formData,
             }
           );
 
-          if (!infoCheck.ok) {
-            alertErrorRenaperGeneral()
+          // console.log({info})
+
+          if (!info.ok) {
+            console.error({ message: "Error check", info });
+            alertErrorRenaperGeneral();
             router.push("/");
-            return
+            return;
           }
 
-          const resCheck = await infoCheck.json();
+          const res = await info.json();
 
-          if (!resCheck.status) {
-            alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
+          if (!res.status) {
+            console.error({ message: "Error res", info });
+            alertWarningRenaper(res.errors.title, res.errors.message);
             router.push("/");
             return;
           }
         } catch (error) {
-          console.log({ error });
-          alertErrorRenaperGeneral()
-        } finally{
-          setCheckingRenaper(false)
+          console.error({ error });
+          alertErrorRenaperGeneral();
+        } finally {
+          setCheckingRenaper(false);
         }
       };
       checkId();
@@ -259,6 +263,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       // for (const [clave, valor] of formData.entries()) {
       //   console.log(`${clave}: ${valor}`);
       // }
+      // console.log('se envia')
       // return
 
       const info = await fetch(
@@ -273,9 +278,9 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       );
 
       if (info === undefined || !info.ok) {
-        console.log({ info });
+        console.error({ info });
         const res = await info.json();
-        console.log({ res });
+        console.error({ res });
         alertErrorRenaperGeneral();
         return;
       }
@@ -284,7 +289,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       console.log({ res });
 
       if (!res.status) {
-        console.log('entra')
+        console.log("entra");
         alertWarningRenaper(res.errors.title, res.errors.message);
         return;
       }
@@ -296,11 +301,11 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       alertSuccessRenaper(titleRenaper, messageRenaper, ticketRenaper);
     } catch (error) {
       alertErrorRenaperGeneral();
-      console.error({error});
+      console.error({ error });
     } finally {
       setIsLoading(false);
-      // reset();
-      // router.push("/");
+      reset();
+      router.push("/");
     }
   };
 

@@ -268,7 +268,7 @@ export const FormsApi = ({
         // alertSuccessTickets(12345);
         // alertErrorTickets()
         // alertErrorTicketsNotification()
-        return;
+        // return;
 
         const info = await fetch(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
@@ -335,9 +335,9 @@ export const FormsApi = ({
     } finally {
       setIsLoading(false);
       setLoadingCheckHaveTickets(false);
-      // reset();
-      // resetStep();
-      // router.push("/");
+      reset();
+      resetStep();
+      router.push("/");
     }
   };
 
