@@ -1,13 +1,19 @@
 import React from "react";
 
-export const BotonEnviar = ({ isLoading, loadingCheckHaveTickets = false }) => {
-  // console.log({loadingCheckHaveTickets})
+export const BotonEnviar = ({
+  isLoading = false,
+  loadingCheckHaveTickets = false,
+  checkingRenaper = false,
+}) => {
+
+  console.log({isLoading})
+
+
+
   return (
     <>
       {loadingCheckHaveTickets || isLoading ? (
-        <button
-          disabled
-          type="button"
+        <div
           className={`cursor-not-allowed text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-10 w-[150px]`}
         >
           <svg
@@ -27,12 +33,19 @@ export const BotonEnviar = ({ isLoading, loadingCheckHaveTickets = false }) => {
               fill="#1C64F2"
             />
           </svg>
-          Loading...
-        </button>
+          Enviando...
+        </div>
+      ) : checkingRenaper ? (
+        <div
+          className={`text-white bg-gray-300 font-medium rounded-md select-none text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-10 w-[150px]`}
+        >
+          Enviar
+        </div>
       ) : (
         <button
           type="submit"
           className={`text-white bg-gradient-to-r from-blue-light to-blue-dark hover:bg-gradient-to-bl font-medium rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-10 w-[150px]`}
+          // onClick={()=>console.log('click')}
         >
           Enviar
         </button>

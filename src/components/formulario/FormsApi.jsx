@@ -159,6 +159,8 @@ export const FormsApi = ({
           const ticketsCloseForm = info.data.tickets.filter(
             (ticket) => ticket.closeForm === 1
           );
+
+          console.log({ ticketsCloseForm });
           if (ticketsCloseForm.length > 0) {
             // console.log("tiene tickets sin cerrar", { ticketsCloseForm });
             const ticketNumber = ticketsCloseForm[0].number;
@@ -179,7 +181,11 @@ export const FormsApi = ({
 
             alertWarningTickets(ticketNumber, finalDate, status, message);
 
-            //! ver si te saca si tenes repetidos
+            //! definir con las chicas el tema del closeForm, mostrar alerta del último ticket abierto
+
+            reset();
+            resetStep();
+            router.push("/");
 
             return;
           }
@@ -266,7 +272,7 @@ export const FormsApi = ({
         // alertSuccessTickets(12345);
         // alertErrorTickets()
         // alertErrorTicketsNotification()
-        return;
+        // return;
 
         const info = await fetch(
           `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
@@ -310,6 +316,9 @@ export const FormsApi = ({
 
         const numberTicket = data?.ticketNumber;
         alertSuccessTickets(numberTicket);
+        reset();
+        resetStep();
+        router.push("/");
       }
     } catch (error) {
       console.log(error);
@@ -330,12 +339,12 @@ export const FormsApi = ({
         alertErrorTickets();
       }
       errorLogs("/api/errors_clients", email, content, error);
+      reset();
+      resetStep();
+      router.push("/");
     } finally {
       setIsLoading(false);
       setLoadingCheckHaveTickets(false);
-      // reset();
-      // resetStep();
-      // router.push("/");
     }
   };
 

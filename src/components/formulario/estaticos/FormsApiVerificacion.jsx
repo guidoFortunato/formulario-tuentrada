@@ -31,6 +31,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [checkingRenaper, setCheckingRenaper] = useState(false);
   const router = useRouter();
   const campaignContactId = useSearchParams().get("id");
   const fields = dataForm?.steps[0]?.fields;
@@ -121,35 +122,44 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
   useEffect(() => {
     if (campaignContactId) {
       const checkId = async () => {
-        // Crear un nuevo FormData
+        // Chequear si ya tiene un ticket en renaper
         try {
-          const formDataCheck = new FormData();
-          formDataCheck.append("id", campaignContactId);
-          const infoCheck = await fetch(
+          setCheckingRenaper(true)
+          const formData = new FormData();
+          formData.append("id", campaignContactId);
+          const info = await fetch(
             `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
             {
               method: "POST",
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-              body: formDataCheck,
+              body: formData,
             }
           );
 
-          if (!infoCheck.ok) {
-            notFound();
+          // console.log({info})
+
+          if (!info.ok) {
+            console.error({message:"Error check",info})
+            alertErrorRenaperGeneral()
+            router.push("/");
+            return
           }
 
-          const resCheck = await infoCheck.json();
+          const res = await info.json();
 
-          if (!resCheck.status) {
-            alertWarningRenaper(resCheck.errors.title, resCheck.errors.message);
+          if (!res.status) {
+            console.error({message:"Error res",info})
+            alertWarningRenaper(res.errors.title, res.errors.message);
             router.push("/");
             return;
           }
         } catch (error) {
-          console.log({ error });
-          notFound();
+          console.error({ error });
+          alertErrorRenaperGeneral()
+        } finally{
+          setCheckingRenaper(false)
         }
       };
       checkId();
@@ -229,12 +239,6 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       formData.append("name", firstSubject);
       formData.append("type", checkValidity);
 
-      // console.log(typeof +campaignContactId)
-
-      //! comparar con dev client
-
-      //todo: ver de que no aparezca el botón enviar si no existe el id o está repetido
-
       //return
 
       // Agregar cada propiedad al FormData
@@ -259,6 +263,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       // for (const [clave, valor] of formData.entries()) {
       //   console.log(`${clave}: ${valor}`);
       // }
+      // console.log('se envia')
       // return
 
       const info = await fetch(
@@ -273,9 +278,9 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       );
 
       if (info === undefined || !info.ok) {
-        console.log({ info });
+        console.error({ info });
         const res = await info.json();
-        console.log({ res });
+        console.error({ res });
         alertErrorRenaperGeneral();
         return;
       }
@@ -334,7 +339,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
         </div>
       )}
       <div className="justify-center flex items-center pb-10">
-        <BotonEnviar isLoading={isLoading} />
+        <BotonEnviar isLoading={isLoading} checkingRenaper={checkingRenaper} />
       </div>
     </form>
   );
