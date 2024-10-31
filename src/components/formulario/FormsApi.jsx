@@ -131,7 +131,6 @@ export const FormsApi = ({
     try {
       setIsLoading(true);
       if (stepNow.checkHaveTickets === 1) {
-        console.log("entra");
         let id;
         setLoadingCheckHaveTickets(true);
 
@@ -155,12 +154,13 @@ export const FormsApi = ({
 
         // tickets abiertos
         if (info?.data?.tickets?.length > 0) {
+          console.log("entra");
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
-          const ticketsCloseForm = info.data.tickets.filter(
+          const ticketsCloseForm = info?.data?.tickets?.filter(
             (ticket) => ticket.closeForm === 1
           );
 
-          console.log({ ticketsCloseForm });
+          // console.log({ ticketsCloseForm });
           if (ticketsCloseForm.length > 0) {
             // console.log("tiene tickets sin cerrar", { ticketsCloseForm });
             const ticketNumber = ticketsCloseForm[0].number;
@@ -285,9 +285,8 @@ export const FormsApi = ({
           }
         );
 
-        console.log({ info });
-
         if (info === undefined || !info.ok) {
+          console.error({ info });
           let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
           // console.log({value, expirationDate})
 
@@ -309,12 +308,17 @@ export const FormsApi = ({
             content,
             info.status.toString()
           );
+          reset();
+          resetStep();
+          router.push("/");
           return;
         }
 
-        const { data } = await info.json();
+        // console.log({info})
 
-        const numberTicket = data?.ticketNumber;
+        const res = await info.json();
+
+        const numberTicket = res?.data?.ticketNumber;
         alertSuccessTickets(numberTicket);
         reset();
         resetStep();
