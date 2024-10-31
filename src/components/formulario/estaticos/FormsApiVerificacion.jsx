@@ -286,10 +286,10 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       }
 
       const res = await info.json();
-      console.log({ res });
+      // console.log({ res });
 
       if (!res.status) {
-        console.log('entra')
+        // console.log('entra')
         alertWarningRenaper(res.errors.title, res.errors.message);
         return;
       }
@@ -304,8 +304,8 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       console.error({error});
     } finally {
       setIsLoading(false);
-      // reset();
-      // router.push("/");
+      reset();
+      router.push("/");
     }
   };
 
