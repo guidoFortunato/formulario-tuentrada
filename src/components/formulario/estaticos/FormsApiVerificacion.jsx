@@ -40,8 +40,6 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
     (item) => item.name.toLowerCase() === "type"
   )?.defaultValue;
 
-  // console.log({dataForm})
-
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -292,7 +290,6 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
 
       if (!res.status) {
         console.error({ res });
-        // console.log('entra')
         alertWarningRenaper(res.errors.title, res.errors.message);
         return;
       }
