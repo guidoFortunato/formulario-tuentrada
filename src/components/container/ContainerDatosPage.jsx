@@ -22,6 +22,8 @@ export const ContainerDatosPage = ({ params, token }) => {
           token
         );
 
+        // console.log({info})
+
         if (!info.status) notFound();
         
         setDataForm(info?.data);

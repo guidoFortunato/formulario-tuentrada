@@ -6,7 +6,7 @@ export const BotonEnviar = ({
   checkingRenaper = false,
 }) => {
 
-  console.log({isLoading})
+  // console.log({isLoading})
 
 
 
