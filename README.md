@@ -1,3 +1,3 @@
-## TODO
+## Sitio web de atención al cliente de TuEntrada
 
-4. mejorar description SEO en las pages
+# Tecnologías usadas: Next js, Tailwind, Flowbite, Redis
