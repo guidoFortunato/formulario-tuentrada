@@ -150,11 +150,10 @@ export const FormsApi = ({
         );
 
         //! ver tickets abiertos
-        console.log({ ticketsRepeat: info });
+        // console.log({ ticketsRepeat: info });
 
         // tickets abiertos
         if (info?.data?.tickets?.length > 0) {
-          console.log("entra");
           // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
           const ticketsCloseForm = info?.data?.tickets?.filter(
             (ticket) => ticket.closeForm === 1
