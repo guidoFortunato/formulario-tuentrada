@@ -324,7 +324,8 @@ export const FormsApi = ({
         router.push("/");
       }
     } catch (error) {
-      console.error({message: "catch(error)", error})
+      console.log("catch(error)")
+      console.error(error)
       let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
       // console.log({value, expirationDate})
 
