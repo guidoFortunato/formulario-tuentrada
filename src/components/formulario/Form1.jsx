@@ -26,6 +26,7 @@ export const Form1 = ({ lengthSteps, token }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // console.log({ tokenRecaptchaV2 });
+  // console.log({ token });
 
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -160,7 +161,7 @@ export const Form1 = ({ lengthSteps, token }) => {
       }
       nextStep();
     } catch (error) {
-      console.log(error);
+      console.error({error});
     } finally {
       setIsLoading(false);
     }

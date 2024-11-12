@@ -285,7 +285,7 @@ export const FormsApi = ({
         );
 
         if (info === undefined || !info.ok) {
-          console.error({ info });
+          console.error({message: "info === undefined || !info.ok", error})
           let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
           // console.log({value, expirationDate})
 
@@ -324,7 +324,7 @@ export const FormsApi = ({
         router.push("/");
       }
     } catch (error) {
-      console.log(error);
+      console.error({message: "catch(error)", error})
       let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
       // console.log({value, expirationDate})
 

@@ -1,7 +1,7 @@
 export async function getDataCache(url, token, timeRevalidate = 60) {
   try {
     const res = await fetch(url, {
-      next: { revalidate: timeRevalidate },
+      next: { revalidate: 0 },
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -21,11 +21,14 @@ export async function getDataCache(url, token, timeRevalidate = 60) {
 export async function sendDataEmail(url, token, email) {
   try {
     const res = await fetch(url, {
+      next: {
+        revalidate: 0,
+      },
       method: "POST",
-      cache: "no-store",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
         email,
@@ -43,7 +46,9 @@ export async function getDataTickets(url, token, email, itilcategoriesId) {
   try {
     const res = await fetch(url, {
       method: "POST",
-      cache: "no-store",
+      next: {
+        revalidate: 0,
+      },
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
