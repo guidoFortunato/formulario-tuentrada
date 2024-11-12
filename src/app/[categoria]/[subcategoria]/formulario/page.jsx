@@ -54,7 +54,8 @@ export const generateMetadata = ({ params }) => {
 
 export default async function FormPage({ params }) {
   const { status, res, token } = await getData(
-    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`
+    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
+    0
   );
 
   if (!status) {

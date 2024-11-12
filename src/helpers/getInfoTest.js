@@ -1,7 +1,7 @@
-export async function getDataCache(url, token, timeRevalidate = 60) {
+export async function getDataCache(url, token, timeRevalidate) {
   try {
     const res = await fetch(url, {
-      next: { revalidate: 0 },
+      next: { revalidate: timeRevalidate },
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -14,7 +14,7 @@ export async function getDataCache(url, token, timeRevalidate = 60) {
     // console.log({dataCache: data})
     return data;
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
   }
 }
 
