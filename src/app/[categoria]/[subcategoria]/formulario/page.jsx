@@ -1,18 +1,20 @@
+export const dynamic = "force-dynamic";
+
 import { Formularios } from "@/components/formulario/Formularios";
 import { getData } from "@/utils/getData";
 import { notFound, redirect } from "next/navigation";
 
-export async function generateStaticParams() {
-  return [
-    { name: "/mis-entradas/punto-de-venta-fisico" },
-    { name: "/tu-entrada-wallet/que-es-tuentrada-wallet" },
-    { name: "/tu-entrada-wallet/instrucciones" },
-    { name: "/devoluciones/como-solicitar-una-devolucion" },
-    { name: "/devoluciones/requisitos-y-aspectos-legales-para-devoluciones" },
-    { name: "/mis-entradas/punto-de-venta-fisico" },
-    { name: "/devoluciones/preguntas-frecuentes" },
-  ];
-}
+// export async function generateStaticParams() {
+//   return [
+//     { name: "/mis-entradas/punto-de-venta-fisico" },
+//     { name: "/tu-entrada-wallet/que-es-tuentrada-wallet" },
+//     { name: "/tu-entrada-wallet/instrucciones" },
+//     { name: "/devoluciones/como-solicitar-una-devolucion" },
+//     { name: "/devoluciones/requisitos-y-aspectos-legales-para-devoluciones" },
+//     { name: "/mis-entradas/punto-de-venta-fisico" },
+//     { name: "/devoluciones/preguntas-frecuentes" },
+//   ];
+// }
 
 export const generateMetadata = ({ params }) => {
   let primerLetra;

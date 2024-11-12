@@ -5,7 +5,7 @@ import { getTokenRedis, saveTokenRedis } from "@/services/redisService";
 export const getData = async (url, timeRevalidate = 60) => {
   // Obtener el token desde Redis
   let token = await getTokenRedis();
-  console.log({token})
+  console.log({getTokenRedis: token})
 
   // Si no existe el token en Redis, obtenerlo desde el servidor y guardarlo
   if (!token) {
