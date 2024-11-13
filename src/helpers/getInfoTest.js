@@ -1,4 +1,4 @@
-export async function getDataCache(url, token, timeRevalidate) {
+export async function getDataCache(url, token, timeRevalidate = 60) {
   try {
     const res = await fetch(url, {
       next: { revalidate: timeRevalidate },

@@ -19,7 +19,8 @@ export const ContainerDatosPage = ({ params, token }) => {
       const getDataForm = async () => {
         const info = await getDataCache(
           `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
-          token
+          token,
+          0
         );
 
         // console.log({info})
