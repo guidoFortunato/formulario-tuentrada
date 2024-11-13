@@ -7,7 +7,6 @@ import { ContainerHeaderServer } from "./ContainerHeaderServer";
 import Footer from "../footer/Footer";
 import { getData } from "@/utils/getData";
 import { redirect } from "next/navigation";
-import TaboolaWidget from "../taboola/TaboolaWidget";
 
 export const ContainerApp = async ({ children }) => {
   const { status, res, token } = await getData(
@@ -31,7 +30,6 @@ export const ContainerApp = async ({ children }) => {
         data-ad-layout="in-article"
         data-ad-format="fluid"
       />
-      <TaboolaWidget />
       <Footer data={dataSite} />
     </>
   );
