@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export const ArticleImages = ({ itemColumn, index, item }) => {
   if (item.width === "33%-67%") {
-    console.log({ index });
-    console.log({ item });
+    // console.log({ index });
+    // console.log({ item });
   }
   const newSrc = itemColumn.image?.src.replace("/images/", "https://api.tuentrada.com/storage/" )
 
