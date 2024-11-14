@@ -143,7 +143,7 @@ export const FormsApi = ({
           id = glpiSubCategory.id;
         }
         const info = await getDataTickets(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
+          `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
           token,
           email,
           id
@@ -274,7 +274,7 @@ export const FormsApi = ({
         // return;
 
         const info = await fetch(
-          `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
+          `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
           {
             method: "POST",
             headers: {

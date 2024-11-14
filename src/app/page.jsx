@@ -4,7 +4,7 @@ import { notFound, redirect } from "next/navigation";
 
 export default async function HomePage() {
   const { status, res } = await getData(
-    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/categories`
+    `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/categories`
   );
 
   if (!status) {

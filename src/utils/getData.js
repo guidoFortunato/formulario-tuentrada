@@ -13,6 +13,7 @@ export const getData = async (url, timeRevalidate = 60) => {
     token = tokenServer;
     await saveTokenRedis("at-authjs-token", tokenServer, tokenExpires);
   }
+  // console.log({token})
 
   // Hacer la solicitud a la API con el token
   // const res = await getDataCache(url, token, timeRevalidate);

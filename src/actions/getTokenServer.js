@@ -7,7 +7,7 @@ export async function getTokenServer() {
   const password = process.env.CREDENTIAL_PASSWORD;
 
   try {
-    const res = await fetch(`https://${process.env.ENDPOINT_API}/api/login`, {
+    const res = await fetch(`${process.env.ENDPOINT_API}/api/login`, {
       next: {
         revalidate: 0,
       },
@@ -47,7 +47,7 @@ export async function getTokenServerNoEnc() {
   const email = process.env.CREDENTIAL_EMAIL;
   const password = process.env.CREDENTIAL_PASSWORD;
   try {
-    const res = await fetch(`https://${process.env.ENDPOINT_API}/api/login`, {
+    const res = await fetch(`${process.env.ENDPOINT_API}/api/login`, {
       next: {
         revalidate: 0,
       },
