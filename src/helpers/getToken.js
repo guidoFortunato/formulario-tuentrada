@@ -18,7 +18,7 @@ export async function getToken(email, password) {
       }
     }
 
-    const res = await fetch(`https://${process.env.ENDPOINT_API}/api/login`, {
+    const res = await fetch(`${process.env.ENDPOINT_API}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

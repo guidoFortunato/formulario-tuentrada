@@ -11,7 +11,7 @@ import TaboolaWidget from "../taboola/TaboolaWidget";
 
 export const ContainerApp = async ({ children }) => {
   const { status, res, token } = await getData(
-    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/site/ayuda.tuentrada.com`
+    `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/site/ayuda.tuentrada.com`
   );
 
   // if (!status) {

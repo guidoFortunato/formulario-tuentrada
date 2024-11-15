@@ -128,7 +128,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
           const formData = new FormData();
           formData.append("id", campaignContactId);
           const info = await fetch(
-            `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
+            `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper/checks`,
             {
               method: "POST",
               headers: {
@@ -267,7 +267,7 @@ export const FormsApiVerificacion = ({ dataForm, token }) => {
       // return
 
       const info = await fetch(
-        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper`,
+        `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/form/renaper`,
         {
           method: "POST",
           headers: {

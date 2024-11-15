@@ -42,7 +42,7 @@ export const generateMetadata = ({ params }) => {
 
 export default async function SubcategoryPage({ params }) {
   const { status, res } = await getData(
-    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}`
+    `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}`
   );
 
   if (!status) {

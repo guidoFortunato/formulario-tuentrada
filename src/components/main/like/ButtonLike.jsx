@@ -22,7 +22,7 @@ export const ButtonLike = ({
       handleLike();
       // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/1`);
       await getDataCache(
-        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`,
+        `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`,
         token
       );
     }
@@ -31,7 +31,7 @@ export const ButtonLike = ({
       handleDisLike();
       // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/0`);
       await getDataCache(
-        `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`,
+        `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`,
         token
       );
     }

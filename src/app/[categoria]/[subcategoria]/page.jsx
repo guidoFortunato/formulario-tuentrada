@@ -42,7 +42,7 @@ export const generateMetadata = ({ params }) => {
 export default async function ArticlePage({ params }) {
  
   const { res: resArticle, token, status } = await getData(
-    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`
+    `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}`
   );
 
   if (!status) {
@@ -52,7 +52,7 @@ export default async function ArticlePage({ params }) {
   }
 
   const { res: resMostViews } = await getData(
-    `https://${process.env.ENDPOINT_API}/api/v1/atencion-cliente/articles/most-view`
+    `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/articles/most-view`
   );
 
   const dataArticle = resArticle?.data?.article;

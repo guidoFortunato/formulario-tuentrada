@@ -31,7 +31,7 @@ export const FormBusqueda = ({ token }) => {
         setLoading(true); // Activar indicador de carga
         if (value.length >= 3) {
           const res = await getDataCache(
-            `https://${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
+            `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
             token
           );
           // console.log({res})
