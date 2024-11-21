@@ -18,8 +18,9 @@ export const Form1 = ({ lengthSteps, token }) => {
     nextStep,
     handleContacto,
     reset,
+    handleEditDni
   } = useContext(FormContext);
-  const router = useRouter();
+  
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
@@ -31,6 +32,7 @@ export const Form1 = ({ lengthSteps, token }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   useEffect(() => {
+    handleEditDni(false)
     handleContacto(null);
     reset();
   }, []);
