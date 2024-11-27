@@ -11,6 +11,7 @@
   "dependencies": {
     "@neshca/cache-handler": "^1.7.3",
     "@next/third-parties": "^14.2.3",
+    "@sentry/nextjs": "^8.41.0",
     "bcryptjs": "^2.4.3",
     "bufferutil": "^4.0.8",
     "client-only": "^0.0.1",

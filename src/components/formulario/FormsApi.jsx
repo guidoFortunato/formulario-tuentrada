@@ -26,6 +26,7 @@ import { addPrefixes } from "@/utils/addPrefixes";
 import { formatDateString, isDateFormat } from "@/utils/helpDates";
 import { errorLogs } from "@/helpers/errorLogs";
 import { ContainerLoader } from "../container/ContainerLoader";
+import { captureException } from "@sentry/nextjs";
 
 export const FormsApi = ({
   dataForm,
@@ -326,6 +327,7 @@ export const FormsApi = ({
     } catch (error) {
       console.log("catch(error)")
       console.error(error)
+      captureException(error)
       let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
       // console.log({value, expirationDate})
 
