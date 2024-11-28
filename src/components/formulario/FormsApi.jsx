@@ -287,6 +287,9 @@ export const FormsApi = ({
 
         if (info === undefined || !info.ok) {
           console.error({message: "info === undefined || !info.ok", error})
+          if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
+            captureException(error)        
+          }
           let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
           // console.log({value, expirationDate})
 
@@ -327,7 +330,9 @@ export const FormsApi = ({
     } catch (error) {
       console.log("catch(error)")
       console.error(error)
-      captureException(error)
+      if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
+        captureException(error)        
+      }
       let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
       // console.log({value, expirationDate})
 
