@@ -3,6 +3,7 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCookie, hasCookie, setCookie } from "cookies-next";
+import { captureException, setContext } from "@sentry/nextjs";
 import { getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
 import {
@@ -26,7 +27,6 @@ import { addPrefixes } from "@/utils/addPrefixes";
 import { formatDateString, isDateFormat } from "@/utils/helpDates";
 import { errorLogs } from "@/helpers/errorLogs";
 import { ContainerLoader } from "../container/ContainerLoader";
-import { captureException } from "@sentry/nextjs";
 
 export const FormsApi = ({
   dataForm,
@@ -288,7 +288,11 @@ export const FormsApi = ({
         if (info === undefined || !info.ok) {
           console.error({message: "info === undefined || !info.ok", error})
           if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
-            captureException(error)        
+            setContext("infoError", {
+              word: token,
+              info: JSON.stringify(info),
+            });
+            captureException(new Error("Error al hacer el fetch, línea 295 FormsApi"));       
           }
           let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
           // console.log({value, expirationDate})
@@ -331,7 +335,12 @@ export const FormsApi = ({
       console.log("catch(error)")
       console.error(error)
       if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
-        captureException(error)        
+
+        setContext("catch", {
+          word: token,
+          error: JSON.stringify(error),
+        });
+        captureException(new Error("Error al hacer el fetch, línea 343 FormsApi"))        
       }
       let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
       // console.log({value, expirationDate})
