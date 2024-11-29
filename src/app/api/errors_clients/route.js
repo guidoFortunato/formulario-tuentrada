@@ -16,14 +16,14 @@ const options = {
 export async function POST(request) {
   try {
     const body = await request.json();
-    console.log({request})
-    console.log({body})
+    // console.log({request})
+    // console.log({body})
     const { email, content, error } = body;
     const headersList = headers();
     const userAgent = headersList.get("user-agent");
     const ip = request.ip === undefined ? "unknown" : request.ip;
     const date = new Date().toLocaleString().split(",")[0].split("/").join("_");
-    console.log({ email, content, error })
+    // console.log({ email, content, error })
 
     // Ruta de la carpeta logs y el archivo recaptcha_*.json
     const logsDir = path.join(process.cwd(), "public/logs");
