@@ -1,8 +1,9 @@
 export const addPrefixes = (key, value) => {
+  
   if (typeof value === "string" || Array.isArray(value)) {
-    return "info_" + key;
+    return "info_" + key.toString().toLowerCase().split(" ").join("_");
   } else if (typeof value === "object" && value instanceof FileList) {
-    return "file_" + key;
+    return "file_" + key.toString().toLowerCase().split(" ").join("_");
   }
   return key;
 };

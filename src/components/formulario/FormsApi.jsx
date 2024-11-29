@@ -275,12 +275,11 @@ export const FormsApi = ({
         // alertErrorTickets()
         // alertErrorTicketsNotification()
 
-        formData.forEach((value, key) => {
-          console.log(`Clave: ${key}, Valor:`, value);
-        });
+        // formData.forEach((value, key) => {
+        //   console.log(`Clave: ${key}, Valor:`, value);
+        // });
 
-        return;
-        // formDatatest = formData
+        // return;
 
         const info = await fetch(
           `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
@@ -293,16 +292,20 @@ export const FormsApi = ({
           }
         );
 
+        console.log({info})
+
         if (info === undefined || !info.ok) {
-          console.error({message: "info === undefined || !info.ok", error})
-          // if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
-          //   setContext("infoError", {
-          //     word: token,
-          //     info: JSON.stringify(info),
-          //     formData: JSON.stringify(formData),
-          //   });
-          //   captureException(new Error("Error al hacer el fetch, línea 295 FormsApi"));       
-          // }
+          console.error({ message: "info === undefined || !info.ok", error });
+          if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
+            setContext("infoError", {
+              word: token,
+              info: JSON.stringify(info),
+              formData: JSON.stringify(formData),
+            });
+            captureException(
+              new Error("Error al hacer el fetch, línea 295 FormsApi")
+            );
+          }
           let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
           // console.log({value, expirationDate})
 
@@ -341,17 +344,15 @@ export const FormsApi = ({
         // router.push("/");
       }
     } catch (error) {
-      console.log("catch(error)")
-      console.error(error)
-      // if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
-
-      //   setContext("catch", {
-      //     word: token,
-      //     error: JSON.stringify(error),
-      //     formDatatest: JSON.stringify(formDatatest),
-      //   });
-      //   captureException(new Error("Error al hacer el fetch, línea 343 FormsApi"))        
-      // }
+      console.log("catch(error)");
+      console.error(error);
+      if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
+        setContext("catch", {
+          word: token,
+          error: JSON.stringify(error),
+        });
+        captureException(error);
+      }
       let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
       // console.log({value, expirationDate})
 
