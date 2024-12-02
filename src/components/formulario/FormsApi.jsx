@@ -185,9 +185,9 @@ export const FormsApi = ({
 
             //! definir con las chicas el tema del closeForm, mostrar alerta del último ticket abierto
 
-            // reset();
-            // resetStep();
-            // router.push("/");
+            reset();
+            resetStep();
+            router.push("/");
 
             return;
           }
@@ -274,12 +274,7 @@ export const FormsApi = ({
         // alertSuccessTickets(12345);
         // alertErrorTickets()
         // alertErrorTicketsNotification()
-
-        // formData.forEach((value, key) => {
-        //   console.log(`Clave: ${key}, Valor:`, value);
-        // });
-
-        // return;
+        // return
 
         const info = await fetch(
           `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
@@ -291,8 +286,6 @@ export const FormsApi = ({
             body: formData,
           }
         );
-
-        console.log({info})
 
         if (info === undefined || !info.ok) {
           console.error({ message: "info === undefined || !info.ok", error });
@@ -327,9 +320,9 @@ export const FormsApi = ({
             content,
             info.status.toString()
           );
-          // reset();
-          // resetStep();
-          // router.push("/");
+          reset();
+          resetStep();
+          router.push("/");
           return;
         }
 
@@ -339,9 +332,9 @@ export const FormsApi = ({
 
         const numberTicket = res?.data?.ticketNumber;
         alertSuccessTickets(numberTicket);
-        // reset();
-        // resetStep();
-        // router.push("/");
+        reset();
+        resetStep();
+        router.push("/");
       }
     } catch (error) {
       console.log("catch(error)");
@@ -350,8 +343,11 @@ export const FormsApi = ({
         setContext("catch", {
           word: token,
           error: JSON.stringify(error),
+          formDatatest: JSON.stringify(formDatatest),
         });
-        captureException(error);
+        captureException(
+          new Error("Error al hacer el fetch, línea 343 FormsApi")
+        );
       }
       let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
       // console.log({value, expirationDate})
@@ -370,9 +366,9 @@ export const FormsApi = ({
         alertErrorTickets();
       }
       errorLogs("/api/errors_clients", email, content, error);
-      // reset();
-      // resetStep();
-      // router.push("/");
+      reset();
+      resetStep();
+      router.push("/");
     } finally {
       setIsLoading(false);
       setLoadingCheckHaveTickets(false);
