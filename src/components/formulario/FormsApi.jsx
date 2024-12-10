@@ -296,7 +296,7 @@ export const FormsApi = ({
               formData: JSON.stringify(formData),
             });
             captureException(
-              new Error("Error al hacer el fetch, línea 295 FormsApi")
+              new Error("Error al hacer el fetch, línea 299 FormsApi")
             );
           }
           let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
@@ -346,7 +346,7 @@ export const FormsApi = ({
           formDatatest: JSON.stringify(formDatatest),
         });
         captureException(
-          new Error("Error al hacer el fetch, línea 343 FormsApi")
+          new Error("Error al hacer el fetch, línea 349 FormsApi")
         );
       }
       let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
