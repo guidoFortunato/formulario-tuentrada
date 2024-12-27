@@ -8,6 +8,7 @@ import { TagManager } from "@/components/tagmanager/TagManager";
 import { ResetStep } from "@/components/formulario/ResetStep";
 
 import "./globals.css";
+import SerenityChat from "@/components/serenity/SerenityChat";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,7 +40,12 @@ export default async function RootLayout({ children }) {
           strategy="lazyOnload"
           crossOrigin="anonymous"
         />
-       
+        {/* Add Serenity* Star Chat CSS */}
+        <link
+          key={"serenity-chat-styles"}
+          rel="stylesheet"
+          href="https://hub.serenitystar.ai/resources/chat.css"
+        />
       </head>
       <body
         className={`${inter.className} flex flex-col min-h-[100vh] m-0`}
@@ -49,7 +55,15 @@ export default async function RootLayout({ children }) {
         <GoogleAnalyticsContainer />
         <FormProvider>
           <TagManager />
-          <ContainerApp>{children}</ContainerApp>
+          <ContainerApp>
+            {/* Placeholder for Chat Component */}
+            <div id="aihub-chat"></div>
+            {children}
+            {/* Initialize Serenity Chat */}
+            <SerenityChat />
+            {/* Add Serenity* Star Chat JS */}
+            <script src="https://hub.serenitystar.ai/resources/chat.js"></script>
+          </ContainerApp>
           <CookieBanner />
           <ResetStep />
         </FormProvider>
