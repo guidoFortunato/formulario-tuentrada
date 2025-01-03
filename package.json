@@ -39,7 +39,8 @@
     "redis": "^4.7.0",
     "sharp": "^0.33.5",
     "sweetalert2": "^11.14.1",
-    "utf-8-validate": "^6.0.3"
+    "utf-8-validate": "^6.0.3",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^10",

@@ -7,6 +7,7 @@ import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
 import clsx from "clsx";
 import { Timer } from "./Timer";
+import { getOrCreateUserId } from "@/utils/userId";
 
 export const FormBusqueda = ({token}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,13 +26,14 @@ export const FormBusqueda = ({token}) => {
   // console.log({ isOpen });
 
   const fetchResults = async (value) => {
+    const userId = getOrCreateUserId(); // Obtén o genera el userId único
     try {
       const response = await fetch("/api/proxy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ value }),
+        body: JSON.stringify({ value, userId }),
       });
 
       // if (!response.ok) {
@@ -69,46 +71,50 @@ export const FormBusqueda = ({token}) => {
           }
           console.log({articles, ok, errorFetch})
           
-          
+          //! falta verificar si el error es 429
 
           // console.log({res})
-          // if (res.status === 429) {
-          //   // Si ocurre un error 429, guardar la hora actual en localStorage
-          //   const clientDate = Number(localStorage.getItem("clientDate"));
+          if (res.status === 429) {
+            // Si ocurre un error 429, guardar la hora actual en localStorage
+            const clientDate = Number(localStorage.getItem("clientDate"));
 
-          //   if (!clientDate) {
-          //     // console.log("entra a !clientDate");
-          //     setExistClientDate(false);
-          //     localStorage.setItem("clientDate", Date.now());
-          //     setTimeDifference(61000);
-          //     setDisabled(true);
-          //     setError(true);
-          //     setTimeout(() => {
-          //       setDisabled(false);
-          //       setError(false);
-          //       localStorage.removeItem("clientDate");
-          //     }, 61000); // 60 segundos
-          //   } else {
-          //     // console.log("entra a clientDate");
-          //     const currentDate = Date.now();
-          //     const timeLeft = 61000 - (currentDate - clientDate);
-          //     // console.log({ timeLeft });
-          //     setExistClientDate(true);
-          //     setTimeDifference(currentDate - clientDate);
-          //     setDisabled(true);
-          //     setError(true);
-          //     setTimeout(() => {
-          //       setDisabled(false);
-          //       setError(false);
-          //       localStorage.removeItem("clientDate");
-          //     }, timeLeft);
-          //   }
-          //   return;
-          // }
+            if (!clientDate) {
+              // console.log("entra a !clientDate");
+              setExistClientDate(false);
+              localStorage.setItem("clientDate", Date.now());
+              setTimeDifference(61000);
+              setDisabled(true);
+              setError(true);
+              setTimeout(() => {
+                setDisabled(false);
+                setError(false);
+                localStorage.removeItem("clientDate");
+              }, 61000); // 60 segundos
+            } else {
+              // console.log("entra a clientDate");
+              const currentDate = Date.now();
+              const timeLeft = 61000 - (currentDate - clientDate);
+              // console.log({ timeLeft });
+              setExistClientDate(true);
+              setTimeDifference(currentDate - clientDate);
+              setDisabled(true);
+              setError(true);
+              setTimeout(() => {
+                setDisabled(false);
+                setError(false);
+                localStorage.removeItem("clientDate");
+              }, timeLeft);
+            }
+            return;
+          }
 
           if (articles.length > 0) {
             setIsOpen(true);
             setError(false);
+          }
+          if (articles.length === 0) {
+            setIsOpen(false);
+            setError(true);
           }
           if (errorFetch) {
             setIsOpen(false);
@@ -188,7 +194,7 @@ export const FormBusqueda = ({token}) => {
         />
         {loading && <Loader />}
       </div>
-      {data.length === 0 && (
+      {error && (
         <span className="text-red-500 text-sm flex items-center pt-1">
           <svg
             className="mr-1"
