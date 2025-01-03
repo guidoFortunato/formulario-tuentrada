@@ -1,4 +1,4 @@
-import { getDataCache } from "@/helpers/getInfoTest";
+import { getData } from "@/utils/getData";
 
 export const ButtonLike = ({
   name,
@@ -9,7 +9,6 @@ export const ButtonLike = ({
   opinion,
   params,
   like,
-  token
 }) => {
   
 
@@ -21,18 +20,16 @@ export const ButtonLike = ({
       // console.log({result})
       handleLike();
       // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/1`);
-      await getDataCache(
+      await getData(
         `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`,
-        token
       );
     }
     if (!result) {
       // console.log({result})
       handleDisLike();
       // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/0`);
-      await getDataCache(
+      await getData(
         `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`,
-        token
       );
     }
   };

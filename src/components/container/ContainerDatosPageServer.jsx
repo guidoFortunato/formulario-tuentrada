@@ -1,21 +1,20 @@
 import { notFound } from "next/navigation";
 
-import { getDataCache } from "@/helpers/getInfoTest";
 import { FormsApiVerificacion } from "../formulario/estaticos/FormsApiVerificacion";
 import GoogleCaptchaWrapper from "@/app/GoogleCaptchaWrapper";
+import { getData } from "@/utils/getData";
 
 export const ContainerDatosPageServer = async ({ params, token }) => {
-  const infoForm = await getDataCache(
+  const { status, res } = await getData(
     `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/form`,
-    token,
     0
   );
 
   // console.log({infoForm})
 
-  if (!infoForm.status) notFound();
+  if (!status) notFound();
 
-  const dataForm = infoForm?.data.form;
+  const dataForm = res?.data.form;
 
   return (
     <GoogleCaptchaWrapper>

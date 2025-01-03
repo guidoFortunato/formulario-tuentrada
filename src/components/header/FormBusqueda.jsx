@@ -3,13 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import Link from "next/link";
-import { getDataCache } from "@/helpers/getInfoTest";
 import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
 import clsx from "clsx";
 import { Timer } from "./Timer";
 
-export const FormBusqueda = ({ token }) => {
+export const FormBusqueda = ({token}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
@@ -17,6 +16,7 @@ export const FormBusqueda = ({ token }) => {
   const [loading, setLoading] = useState(false);
   const searchTimer = useRef(null);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [timeDifference, setTimeDifference] = useState("");
   const [existClientDate, setExistClientDate] = useState(false);
@@ -24,64 +24,101 @@ export const FormBusqueda = ({ token }) => {
   // console.log({ data });
   // console.log({ isOpen });
 
+  const fetchResults = async (value) => {
+    try {
+      const response = await fetch("/api/proxy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ value }),
+      });
+
+      // if (!response.ok) {
+      //   setError("Error al obtener los datos.");
+      //   throw new Error("Error al obtener los datos.");
+      // }
+
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("No se pudo completar la búsqueda.");
+      setError(true);
+    }
+  };
+
   useEffect(() => {
     // Lógica de búsqueda
     const search = async () => {
       try {
         setLoading(true); // Activar indicador de carga
         if (value.length >= 3) {
-          const res = await getDataCache(
-            `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
-            token
-          );
-          // console.log({res})
-          if (res.status === 429) {
-            // Si ocurre un error 429, guardar la hora actual en localStorage
-            const clientDate = Number(localStorage.getItem("clientDate"));
+          // const res = await getDataCache(
+          //   `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
+          //   token,
+          //   0
+          // );
 
-            if (!clientDate) {
-              // console.log("entra a !clientDate");
-              setExistClientDate(false);
-              localStorage.setItem("clientDate", Date.now());
-              setTimeDifference(61000);
-              setDisabled(true);
-              setError(true);
-              setTimeout(() => {
-                setDisabled(false);
-                setError(false);
-                localStorage.removeItem("clientDate");
-              }, 61000); // 60 segundos
-            } else {
-              // console.log("entra a clientDate");
-              const currentDate = Date.now();
-              const timeLeft = 61000 - (currentDate - clientDate);
-              // console.log({ timeLeft });
-              setExistClientDate(true);
-              setTimeDifference(currentDate - clientDate);
-              setDisabled(true);
-              setError(true);
-              setTimeout(() => {
-                setDisabled(false);
-                setError(false);
-                localStorage.removeItem("clientDate");
-              }, timeLeft);
-            }
-            return;
+          const { data: articles, ok, error: errorFetch } = await fetchResults(value);
+          
+          if (!ok) {
+            setError("No se encontraron resultados.");
+            return
           }
+          console.log({articles, ok, errorFetch})
+          
+          
 
-          if (res.data?.articles?.length > 0) {
+          // console.log({res})
+          // if (res.status === 429) {
+          //   // Si ocurre un error 429, guardar la hora actual en localStorage
+          //   const clientDate = Number(localStorage.getItem("clientDate"));
+
+          //   if (!clientDate) {
+          //     // console.log("entra a !clientDate");
+          //     setExistClientDate(false);
+          //     localStorage.setItem("clientDate", Date.now());
+          //     setTimeDifference(61000);
+          //     setDisabled(true);
+          //     setError(true);
+          //     setTimeout(() => {
+          //       setDisabled(false);
+          //       setError(false);
+          //       localStorage.removeItem("clientDate");
+          //     }, 61000); // 60 segundos
+          //   } else {
+          //     // console.log("entra a clientDate");
+          //     const currentDate = Date.now();
+          //     const timeLeft = 61000 - (currentDate - clientDate);
+          //     // console.log({ timeLeft });
+          //     setExistClientDate(true);
+          //     setTimeDifference(currentDate - clientDate);
+          //     setDisabled(true);
+          //     setError(true);
+          //     setTimeout(() => {
+          //       setDisabled(false);
+          //       setError(false);
+          //       localStorage.removeItem("clientDate");
+          //     }, timeLeft);
+          //   }
+          //   return;
+          // }
+
+          if (articles.length > 0) {
             setIsOpen(true);
             setError(false);
           }
-          if (res.errors) {
+          if (errorFetch) {
             setIsOpen(false);
             setError(true);
           }
 
-          setData(res?.data?.articles);
+          setData(articles);
         }
       } catch (err) {
-        console.log({ error });
+        console.log({ err });
       } finally {
         setLoading(false); // Desactivar indicador de carga
       }
@@ -127,7 +164,7 @@ export const FormBusqueda = ({ token }) => {
     setIsOpen(false);
   };
 
-  if (token === "") return <span></span>;
+  // if (token === "") return <span></span>;
 
   return (
     <form onSubmit={onSubmit} className="relative">
@@ -151,7 +188,7 @@ export const FormBusqueda = ({ token }) => {
         />
         {loading && <Loader />}
       </div>
-      {error && (
+      {data.length === 0 && (
         <span className="text-red-500 text-sm flex items-center pt-1">
           <svg
             className="mr-1"
