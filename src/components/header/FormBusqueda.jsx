@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import Link from "next/link";
-import { getDataCache } from "@/helpers/getInfoTest";
+import clsx from "clsx";
 import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
-import clsx from "clsx";
 import { Timer } from "./Timer";
+import { getData } from "@/utils/getData";
 
 export const FormBusqueda = ({ token }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,12 +30,18 @@ export const FormBusqueda = ({ token }) => {
       try {
         setLoading(true); // Activar indicador de carga
         if (value.length >= 3) {
-          const res = await getDataCache(
-            `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
-            token
+          const response  = await getData(
+            `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`
           );
-          // console.log({res})
-          if (res.status === 429) {
+          // console.log({response})
+
+          if (!response.status) {
+            setIsOpen(false);
+            setError(true);
+            return
+          }
+
+          if (response.res.status === 429) {
             // Si ocurre un error 429, guardar la hora actual en localStorage
             const clientDate = Number(localStorage.getItem("clientDate"));
 
@@ -69,19 +75,19 @@ export const FormBusqueda = ({ token }) => {
             return;
           }
 
-          if (res.data?.articles?.length > 0) {
+          if (response.res.data?.articles?.length > 0) {
             setIsOpen(true);
             setError(false);
           }
-          if (res.errors) {
+          if (response.res.errors) {
             setIsOpen(false);
             setError(true);
           }
 
-          setData(res?.data?.articles);
+          setData(response.res?.data?.articles);
         }
       } catch (err) {
-        console.log({ error });
+        console.log({ err });
       } finally {
         setLoading(false); // Desactivar indicador de carga
       }

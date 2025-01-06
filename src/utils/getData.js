@@ -22,10 +22,9 @@ export const getData = async (url, timeRevalidate = 60) => {
 
   // Verificar si la respuesta es válida
   if (!res.status) {
-    console.error({res})
     return {
       status: false,
-      message: res.message.toLowerCase() ?? "Error de autenticación"
+      message: res.message ?? "Error de autenticación"
     };
   }
 
