@@ -12,37 +12,43 @@ export async function POST(req) {
 
     if (!userId || !value) {
       return NextResponse.json(
-        { error: "El userId y el valor son requeridos.", ok: false },
+        { error: "El userId y el valor son requeridos.", ok: false, data: [] },
         { status: 400 }
       );
     }
 
-    //! falta verificar si el rate limiting por userId
-
     // Manejar el rate limiting por userId
     const now = Date.now();
-    if (!rateLimitMap.has(userId)) {
+    const userData = rateLimitMap.get(userId);
+
+    if (!userData) {
+       // Primera solicitud: inicializar datos del usuario
       rateLimitMap.set(userId, { count: 1, startTime: now });
+
     } else {
 
-
       const userData = rateLimitMap.get(userId);
+
       if (now - userData.startTime < TIME_WINDOW) {
-        if (userData.count >= MAX_REQUESTS) {
+        // Dentro de la ventana de tiempo
+        if (userData.count > MAX_REQUESTS) {
           return NextResponse.json(
             {
-              error: "Demasiadas solicitudes, inténtalo más tarde.",
+              error: "Demasiadas solicitudes, inténtalo más tarde",
               ok: false,
+              data: [],
             },
             { status: 429 }
           );
         }
         userData.count += 1;
       } else {
+        // Fuera de la ventana de tiempo: reiniciar contador y tiempo
         rateLimitMap.set(userId, { count: 1, startTime: now });
       }
     }
 
+    // Hacer la solicitud a la API externa
     const url = `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/search/article/${value}`;
     const { status, res } = await getData(url, 0);
 
@@ -51,7 +57,7 @@ export async function POST(req) {
       return NextResponse.json({ data: [], ok: true }, { status: 200 });
     }
 
-    // Retorna una respuesta
+    // Retorna los resultados obtenidos
     return NextResponse.json(
       { data: res.data.articles, ok: true },
       { status: 200 }
@@ -59,7 +65,7 @@ export async function POST(req) {
   } catch (error) {
     console.error("Error en el servidor:", error);
     return NextResponse.json(
-      { error: "Error interno del servidor", ok: false },
+      { error: "Intente nuevamente mas tarde", ok: false, data: [] },
       { status: 500 }
     );
   }

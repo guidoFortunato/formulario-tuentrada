@@ -9,7 +9,7 @@ import clsx from "clsx";
 import { Timer } from "./Timer";
 import { getOrCreateUserId } from "@/utils/userId";
 
-export const FormBusqueda = ({token}) => {
+export const FormBusqueda = ({ token }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
@@ -17,7 +17,7 @@ export const FormBusqueda = ({token}) => {
   const [loading, setLoading] = useState(false);
   const searchTimer = useRef(null);
   const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [timeDifference, setTimeDifference] = useState("");
   const [existClientDate, setExistClientDate] = useState(false);
@@ -37,17 +37,18 @@ export const FormBusqueda = ({token}) => {
       });
 
       // if (!response.ok) {
-      //   setError("Error al obtener los datos.");
-      //   throw new Error("Error al obtener los datos.");
+      //   setError(true);
+      //   setErrorMessage("No se pudo completar la búsqueda");
+      //   return
+      //   // throw new Error("Error al obtener los datos.");
       // }
-
 
       const data = await response.json();
       return data;
     } catch (error) {
       console.error(error);
-      setErrorMessage("No se pudo completar la búsqueda.");
       setError(true);
+      setErrorMessage("No se pudo completar la búsqueda");
     }
   };
 
@@ -57,71 +58,29 @@ export const FormBusqueda = ({token}) => {
       try {
         setLoading(true); // Activar indicador de carga
         if (value.length >= 3) {
-          // const res = await getDataCache(
-          //   `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`,
-          //   token,
-          //   0
-          // );
+          const {
+            data: articles,
+            ok,
+            error: errorFetch,
+          } = await fetchResults(value);
 
-          const { data: articles, ok, error: errorFetch } = await fetchResults(value);
-          
           if (!ok) {
-            setError("No se encontraron resultados.");
-            return
-          }
-          console.log({articles, ok, errorFetch})
-          
-          //! falta verificar si el error es 429
-
-          // console.log({res})
-          if (res.status === 429) {
-            // Si ocurre un error 429, guardar la hora actual en localStorage
-            const clientDate = Number(localStorage.getItem("clientDate"));
-
-            if (!clientDate) {
-              // console.log("entra a !clientDate");
-              setExistClientDate(false);
-              localStorage.setItem("clientDate", Date.now());
-              setTimeDifference(61000);
-              setDisabled(true);
-              setError(true);
-              setTimeout(() => {
-                setDisabled(false);
-                setError(false);
-                localStorage.removeItem("clientDate");
-              }, 61000); // 60 segundos
-            } else {
-              // console.log("entra a clientDate");
-              const currentDate = Date.now();
-              const timeLeft = 61000 - (currentDate - clientDate);
-              // console.log({ timeLeft });
-              setExistClientDate(true);
-              setTimeDifference(currentDate - clientDate);
-              setDisabled(true);
-              setError(true);
-              setTimeout(() => {
-                setDisabled(false);
-                setError(false);
-                localStorage.removeItem("clientDate");
-              }, timeLeft);
-            }
+            setError(true);
+            setIsOpen(false);
+            setErrorMessage(errorFetch);
             return;
           }
 
           if (articles.length > 0) {
             setIsOpen(true);
             setError(false);
+            setData(articles);
           }
           if (articles.length === 0) {
             setIsOpen(false);
             setError(true);
+            setErrorMessage("No se encontraron coincidencias");
           }
-          if (errorFetch) {
-            setIsOpen(false);
-            setError(true);
-          }
-
-          setData(articles);
         }
       } catch (err) {
         console.log({ err });
@@ -169,8 +128,6 @@ export const FormBusqueda = ({token}) => {
     }
     setIsOpen(false);
   };
-
-  // if (token === "") return <span></span>;
 
   return (
     <form onSubmit={onSubmit} className="relative">
@@ -222,7 +179,7 @@ export const FormBusqueda = ({token}) => {
               existClientDate={existClientDate}
             />
           ) : (
-            "No se encontraron coincidencias"
+            errorMessage
           )}
         </span>
       )}
