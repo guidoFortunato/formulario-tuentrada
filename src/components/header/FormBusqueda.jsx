@@ -9,7 +9,7 @@ import { Loader } from "../loading";
 import { Timer } from "./Timer";
 import { getOrCreateUserId } from "@/utils/userId";
 
-export const FormBusqueda = ({ token }) => {
+export const FormBusqueda = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
@@ -21,7 +21,6 @@ export const FormBusqueda = ({ token }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [timeDifference, setTimeDifference] = useState("");
   const [enableTimer, setEnableTimer] = useState(false);
-  // const [existClientDate, setExistClientDate] = useState(false);
 
   // console.log({ data });
   // console.log({ isOpen });
@@ -36,13 +35,6 @@ export const FormBusqueda = ({ token }) => {
         },
         body: JSON.stringify({ value, userId }),
       });
-
-      // if (!response.ok) {
-      //   setError(true);
-      //   setErrorMessage("No se pudo completar la búsqueda");
-      //   return
-      //   // throw new Error("Error al obtener los datos.");
-      // }
 
       const data = await response.json();
       return data;
