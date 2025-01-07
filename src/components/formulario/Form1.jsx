@@ -160,6 +160,7 @@ export const Form1 = ({ lengthSteps, token }) => {
       });
 
       const results = await info.json();
+      // console.log({ results });
 
       if (results?.status) {
         handleContacto({

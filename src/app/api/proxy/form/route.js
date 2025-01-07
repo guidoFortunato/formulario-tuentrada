@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   // const { value, userId } = await req.json();
   try {
-    const { email }  = await req.json();
+    const { email } = await req.json();
 
     if (!email) {
       return NextResponse.json(
@@ -13,14 +13,18 @@ export async function POST(req) {
       );
     }
 
-
     // Hacer la solicitud a la API externa
     const url = `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/search/contact`;
-    const { status, res } = await sendData(url, email);
-    console.log({ res });
+    const info = await sendData(url, email);
 
+    if (!info.status) {
+      return NextResponse.json({ status: false, data: [] }, { status: 200 });
+    }
 
-    return NextResponse.json({ status, data: res.data }, { status: 200 });
+    return NextResponse.json(
+      { status: info.status, data: info.res.data },
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
