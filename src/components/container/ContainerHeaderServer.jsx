@@ -1,7 +1,7 @@
 import NavBar from "../header/Navbar";
 import InputBusqueda2 from "../header/InputBusqueda2";
 
-export const ContainerHeaderServer = async ({ dataSite, token }) => {
+export const ContainerHeaderServer = async ({ dataSite }) => {
 
   //! Por si falla la llamada a la api, otra opción es mover el layout a las páginas internas
   if (!dataSite) {
@@ -11,7 +11,7 @@ export const ContainerHeaderServer = async ({ dataSite, token }) => {
   return (
     <header>
       <NavBar data={dataSite} />
-      <InputBusqueda2 data={dataSite} token={token} />
+      <InputBusqueda2 data={dataSite} />
     </header>
   );
 };

@@ -1,6 +1,6 @@
 import { FormBusqueda } from "./FormBusqueda";
 
-const InputBusqueda2 = ({ token }) => {
+const InputBusqueda2 = () => {
   return (
     <div className="flex justify-center flex-col items-center my-20">
       <section className="flex justify-center items-center flex-col">
@@ -10,7 +10,7 @@ const InputBusqueda2 = ({ token }) => {
         </h1>
       </section>
       <div className="w-[75%] md:w-[50%] lg:w-[500px] ">
-        <FormBusqueda token={token} />
+        <FormBusqueda />
       </div>
     </div>
   );

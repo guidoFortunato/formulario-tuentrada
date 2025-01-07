@@ -9,7 +9,7 @@ import { getData } from "@/utils/getData";
 import { redirect } from "next/navigation";
 
 export const ContainerApp = async ({ children }) => {
-  const { status, res, token } = await getData(
+  const { status, res } = await getData(
     `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/site/ayuda.tuentrada.com`
   );
 
@@ -22,7 +22,7 @@ export const ContainerApp = async ({ children }) => {
 
   return (
     <>
-      <ContainerHeaderServer dataSite={dataSite} token={token} />
+      <ContainerHeaderServer dataSite={dataSite} />
       {children}
       <AdBanner
         data-ad-slot="4322497970"

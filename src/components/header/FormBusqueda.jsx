@@ -9,7 +9,7 @@ import { Loader } from "../loading";
 import { Timer } from "./Timer";
 import { getData } from "@/utils/getData";
 
-export const FormBusqueda = ({ token }) => {
+export const FormBusqueda = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
@@ -33,7 +33,7 @@ export const FormBusqueda = ({ token }) => {
           const response  = await getData(
             `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`
           );
-          // console.log({response})
+          console.log({response})
 
           if (!response.status) {
             setIsOpen(false);
@@ -132,8 +132,6 @@ export const FormBusqueda = ({ token }) => {
     }
     setIsOpen(false);
   };
-
-  if (token === "") return <span></span>;
 
   return (
     <form onSubmit={onSubmit} className="relative">
