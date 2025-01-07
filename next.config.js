@@ -19,6 +19,14 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "apirest.tuentrada.com",
+      },
+      {
+        protocol: "https",
+        hostname: "ayuda.tuentrada.com",
+      },
+      {
+        protocol: "https",
         hostname: "testapi.tuentrada.com",
       },
     ],

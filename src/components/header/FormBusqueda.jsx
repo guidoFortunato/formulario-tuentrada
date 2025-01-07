@@ -33,7 +33,7 @@ export const FormBusqueda = () => {
           const response  = await getData(
             `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/article/${value}`
           );
-          console.log({response})
+          // console.log({response})
 
           if (!response.status) {
             setIsOpen(false);
