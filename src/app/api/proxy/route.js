@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const rateLimitMap = new Map(); // Para rastrear solicitudes por userId
 const TIME_WINDOW = 60 * 1000; // 60 segundos
-const MAX_REQUESTS = 5; // Máximo de solicitudes permitidas por ventana de tiempo
+const MAX_REQUESTS = 2; // Máximo de solicitudes permitidas por ventana de tiempo
 
 export async function POST(req) {
   try {
@@ -19,24 +19,25 @@ export async function POST(req) {
 
     // Manejar el rate limiting por userId
     const now = Date.now();
-    const userData = rateLimitMap.get(userId);
+    let userData = rateLimitMap.get(userId);
 
     if (!userData) {
-       // Primera solicitud: inicializar datos del usuario
-      rateLimitMap.set(userId, { count: 1, startTime: now });
-
+      // Primera solicitud: inicializar datos del usuario
+      userData = { count: 1, startTime: now };
+      rateLimitMap.set(userId, userData);
     } else {
-
-      const userData = rateLimitMap.get(userId);
-
       if (now - userData.startTime < TIME_WINDOW) {
         // Dentro de la ventana de tiempo
-        if (userData.count > MAX_REQUESTS) {
+        if (userData.count >= MAX_REQUESTS) {
+          const timeLeft = TIME_WINDOW - (now - userData.startTime);
+          const timeDifference = Math.ceil(timeLeft / 1000); // Tiempo restante en segundos
+
           return NextResponse.json(
             {
               error: "Demasiadas solicitudes, inténtalo más tarde",
               ok: false,
               data: [],
+              time: timeDifference,
             },
             { status: 429 }
           );
@@ -44,7 +45,8 @@ export async function POST(req) {
         userData.count += 1;
       } else {
         // Fuera de la ventana de tiempo: reiniciar contador y tiempo
-        rateLimitMap.set(userId, { count: 1, startTime: now });
+        userData = { count: 1, startTime: now };
+        rateLimitMap.set(userId, userData);
       }
     }
 

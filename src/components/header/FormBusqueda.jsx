@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import Link from "next/link";
+import clsx from "clsx";
 import { alertWarning } from "@/helpers/Alertas";
 import { Loader } from "../loading";
-import clsx from "clsx";
 import { Timer } from "./Timer";
 import { getOrCreateUserId } from "@/utils/userId";
 
@@ -17,10 +17,11 @@ export const FormBusqueda = ({ token }) => {
   const [loading, setLoading] = useState(false);
   const searchTimer = useRef(null);
   const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [timeDifference, setTimeDifference] = useState("");
-  const [existClientDate, setExistClientDate] = useState(false);
+  const [enableTimer, setEnableTimer] = useState(false);
+  // const [existClientDate, setExistClientDate] = useState(false);
 
   // console.log({ data });
   // console.log({ isOpen });
@@ -62,24 +63,31 @@ export const FormBusqueda = ({ token }) => {
             data: articles,
             ok,
             error: errorFetch,
+            time,
           } = await fetchResults(value);
+          
 
           if (!ok) {
             setError(true);
             setIsOpen(false);
             setErrorMessage(errorFetch);
+            if (time) {
+              setTimeDifference(time);
+              setEnableTimer(true)
+              setDisabled(true)
+            }
             return;
           }
 
-          if (articles.length > 0) {
-            setIsOpen(true);
-            setError(false);
-            setData(articles);
-          }
           if (articles.length === 0) {
             setIsOpen(false);
             setError(true);
             setErrorMessage("No se encontraron coincidencias");
+          }
+          if (articles.length > 0) {
+            setIsOpen(true);
+            setError(false);
+            setData(articles);
           }
         }
       } catch (err) {
@@ -121,12 +129,17 @@ export const FormBusqueda = ({ token }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log("enter");
     if (!value.trim()) {
       alertWarning();
       return;
     }
     setIsOpen(false);
+  };
+
+  const handleTimerEnd = () => {
+    setError(false);
+    setEnableTimer(false);
+    setDisabled(false);
   };
 
   return (
@@ -136,9 +149,8 @@ export const FormBusqueda = ({ token }) => {
           className={clsx(
             "block w-full p-4 text-base shadow-md border rounded-lg focus:ring-blue-light",
             {
-              "bg-gray-100 text-gray-500 border-gray-300": disabled && !loading,
-              "bg-gray-100 text-gray-500 border-gray-300": !disabled && loading,
-              "text-gray-900 bg-white border-gray-300": !disabled && !loading,
+              "bg-gray-100 text-gray-500 border-gray-300": loading || disabled,
+              "text-gray-900 bg-white border-gray-300": !loading && !disabled,
             }
           )}
           name="search"
@@ -147,7 +159,7 @@ export const FormBusqueda = ({ token }) => {
           value={value}
           onChange={handleChange}
           autoComplete="off"
-          disabled={disabled === false ? loading : disabled}
+          disabled={loading || disabled}
         />
         {loading && <Loader />}
       </div>
@@ -173,10 +185,10 @@ export const FormBusqueda = ({ token }) => {
               d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
             />
           </svg>{" "}
-          {disabled ? (
+          {enableTimer ? (
             <Timer
               timeDifference={timeDifference}
-              existClientDate={existClientDate}
+              onTimerEnd={handleTimerEnd}
             />
           ) : (
             errorMessage
