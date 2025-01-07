@@ -18,11 +18,11 @@ export async function getDataCache(url, token, timeRevalidate = 60) {
   }
 }
 
-export async function sendDataEmail(url, token, email) {
+export async function sendDataEmail(url, token, email, timeRevalidate = 0) {
   try {
     const res = await fetch(url, {
       next: {
-        revalidate: 0,
+        revalidate: timeRevalidate,
       },
       method: "POST",
       headers: {

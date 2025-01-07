@@ -4,19 +4,17 @@ export const Timer = ({ timeDifference, onTimerEnd }) => {
   const [timeLeft, setTimeLeft] = useState(timeDifference);
 
   useEffect(() => {
+    if (timeLeft <= 0) {
+      onTimerEnd();
+      return;
+    }
+
     const intervalId = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(intervalId);
-          onTimerEnd();
-          return 0;
-        }
-        return prevTime - 1;
-      });
+      setTimeLeft((prevTime) => prevTime - 1);
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [onTimerEnd]);
+  }, [timeLeft, onTimerEnd]);
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;

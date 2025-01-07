@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -18,9 +18,9 @@ export const Form1 = ({ lengthSteps, token }) => {
     nextStep,
     handleContacto,
     reset,
-    handleEditDni
+    handleEditDni,
   } = useContext(FormContext);
-  
+
   const [tokenRecaptchaV2, setTokenRecaptchaV2] = useState("");
   const [score, setScore] = useState(null);
   const [errorRecaptcha, setErrorRecaptcha] = useState(false);
@@ -32,7 +32,7 @@ export const Form1 = ({ lengthSteps, token }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   useEffect(() => {
-    handleEditDni(false)
+    handleEditDni(false);
     handleContacto(null);
     reset();
   }, []);
@@ -70,9 +70,7 @@ export const Form1 = ({ lengthSteps, token }) => {
           })
         );
       }
-
     } else {
-
       // Si la cookie no existe, crearla con valor 0 y una fecha de expiración 1 hora en el futuro
       const expirationDate = new Date();
       expirationDate.setHours(expirationDate.getHours() + 12);
@@ -147,23 +145,32 @@ export const Form1 = ({ lengthSteps, token }) => {
 
     try {
       setIsLoading(true);
-      const info = await sendDataEmail(
-        `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
-        token,
-        data.email
-      );
-      // console.log({ data });
-      // console.log({info})
-      if (info?.status) {
+      // const info = await sendDataEmail(
+      //   `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/contact`,
+      //   token,
+      //   data.email
+      // );
+
+      const info = await fetch("/api/proxy/form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: data.email }),
+      });
+
+      const results = await info.json();
+
+      if (results?.status) {
         handleContacto({
-          nombre: info.data.contact.first_name,
-          apellido: info.data.contact.last_name,
-          DNI_STX: info.data.contact.document,
+          nombre: results.data.contact.first_name,
+          apellido: results.data.contact.last_name,
+          DNI_STX: results.data.contact.document,
         });
       }
       nextStep();
     } catch (error) {
-      console.error({error});
+      console.error({ error });
     } finally {
       setIsLoading(false);
     }

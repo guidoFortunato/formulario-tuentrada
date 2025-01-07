@@ -25,10 +25,12 @@ export const FormBusqueda = () => {
   // console.log({ data });
   // console.log({ isOpen });
 
+  //! ver si poner cuantos segudnos quedan, o poner que siempre que pasen los MAX_REQUESTS necesiten un minuto completo para vovler a hacer una peticion
+
   const fetchResults = async (value) => {
     const userId = getOrCreateUserId(); // Obtén o genera el userId único
     try {
-      const response = await fetch("/api/proxy", {
+      const response = await fetch("/api/proxy/search", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
