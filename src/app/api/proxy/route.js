@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const rateLimitMap = new Map(); // Para rastrear solicitudes por userId
 const TIME_WINDOW = 60 * 1000; // 60 segundos
-const MAX_REQUESTS = 2; // Máximo de solicitudes permitidas por ventana de tiempo
+const MAX_REQUESTS = 20; // Máximo de solicitudes permitidas por ventana de tiempo
 
 export async function POST(req) {
   try {
