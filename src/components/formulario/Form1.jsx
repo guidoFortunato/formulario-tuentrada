@@ -156,11 +156,10 @@ export const Form1 = ({ lengthSteps, token }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: data.email }),
+        body: JSON.stringify({ email: data.email, typeUrl: "contact", typeFunction: "send" }),
       });
 
       const results = await info.json();
-      // console.log({ results });
 
       if (results?.status) {
         handleContacto({

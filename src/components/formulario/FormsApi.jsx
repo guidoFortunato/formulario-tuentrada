@@ -24,17 +24,10 @@ import {
 import { BotonSiguiente } from "./BotonSiguiente";
 import { BotonVolver } from "./BotonVolver";
 import { addPrefixes } from "@/utils/addPrefixes";
-import { formatDateString, isDateFormat } from "@/utils/helpDates";
 import { errorLogs } from "@/helpers/errorLogs";
 import { ContainerLoader } from "../container/ContainerLoader";
 
-export const FormsApi = ({
-  dataForm,
-  lengthSteps,
-  category,
-  subCategory,
-  token,
-}) => {
+export const FormsApi = ({ dataForm, lengthSteps, token }) => {
   const {
     handleSubmit,
     nextStep,
@@ -42,8 +35,6 @@ export const FormsApi = ({
     currentStep,
     reset,
     glpiSubCategory,
-    handleErrorInput,
-    selectDefaultValue,
     resetStep,
   } = useContext(FormContext);
 
@@ -145,15 +136,23 @@ export const FormsApi = ({
         if (glpiSubCategory !== "" && glpiSubCategory !== undefined) {
           id = glpiSubCategory.id;
         }
-        const info = await getDataTickets(
-          `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
-          token,
-          email,
-          id
-        );
+        // const info = await getDataTickets(
+        //   `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/search/tickets`,
+        //   token,
+        //   email,
+        //   id
+        // );
+
+        const info = await fetch("/api/proxy/form", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, typeUrl: "getTickets", typeFunction: "get", itilcategoriesId: id }),
+        });
 
         //! ver tickets abiertos
-        // console.log({ ticketsRepeat: info });
+        console.log({ info });
 
         // tickets abiertos
         if (info?.data?.tickets?.length > 0) {
@@ -274,7 +273,7 @@ export const FormsApi = ({
         // alertSuccessTickets(12345);
         // alertErrorTickets()
         // alertErrorTicketsNotification()
-        // return
+        return
 
         const info = await fetch(
           `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
@@ -314,12 +313,12 @@ export const FormsApi = ({
           } else {
             alertErrorTickets();
           }
-          errorLogs(
-            "/api/errors_clients",
-            email,
-            content,
-            info.status.toString()
-          );
+          // errorLogs(
+          //   "/api/errors_clients",
+          //   email,
+          //   content,
+          //   info.status.toString()
+          // );
           reset();
           resetStep();
           router.push("/");
@@ -365,10 +364,10 @@ export const FormsApi = ({
       } else {
         alertErrorTickets();
       }
-      errorLogs("/api/errors_clients", email, content, error);
-      reset();
-      resetStep();
-      router.push("/");
+      // errorLogs("/api/errors_clients", email, content, error);
+      // reset();
+      // resetStep();
+      // router.push("/");
     } finally {
       setIsLoading(false);
       setLoadingCheckHaveTickets(false);

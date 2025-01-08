@@ -1,21 +1,37 @@
-import { sendData } from "@/utils/getData";
+import { getDataTickets } from "@/helpers/getInfoTest";
+import { getTickets, sendData } from "@/utils/getData";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  // const { value, userId } = await req.json();
+  let url = "";
+  let info = "";
   try {
-    const { email } = await req.json();
+    const { email, typeUrl, typeFunction, itilcategoriesId } = await req.json();
 
-    if (!email) {
+    if (!email || !typeUrl || !typeFunction) {
       return NextResponse.json(
-        { error: "El email es requerido.", ok: false, data: [] },
+        { error: "El email , el tipo de url y el tipo de funcion son requeridos.", ok: false, data: [] },
         { status: 400 }
       );
     }
 
     // Hacer la solicitud a la API externa
-    const url = `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/search/contact`;
-    const info = await sendData(url, email);
+    if (typeUrl === "contact") {
+      url = `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/search/contact`;
+    }
+
+    if (typeUrl === "getTickets") {
+      url = `${process.env.ENDPOINT_API}/api/v1/atencion-cliente/search/tickets`;
+    }
+
+    if (typeFunction === "send") {
+      info = await sendData(url, email);
+    }
+
+    if (typeFunction === "get") {
+      info = await getTickets(url, email, itilcategoriesId);
+    }
+        
 
     if (!info.status) {
       return NextResponse.json({ status: false, data: [] }, { status: 200 });
