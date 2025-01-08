@@ -143,52 +143,63 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
         //   id
         // );
 
-        const info = await fetch("/api/proxy/form", {
+        const res = await fetch("/api/proxy/form", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, typeUrl: "getTickets", typeFunction: "get", itilcategoriesId: id }),
+          body: JSON.stringify({
+            email,
+            typeUrl: "getTickets",
+            typeFunction: "get",
+            itilcategoriesId: id,
+          }),
         });
 
         //! ver tickets abiertos
-        console.log({ info });
+        // console.log({ info });
+
+        const info = await res.json();
+        // console.log({ info });
 
         // tickets abiertos
-        if (info?.data?.tickets?.length > 0) {
-          // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
-          const ticketsCloseForm = info?.data?.tickets?.filter(
-            (ticket) => ticket.closeForm === 1
-          );
+        if (info?.status) {
+          console.log("entra a info?.status")
+          if (info?.data?.tickets?.length > 0) {
+            // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
+            const ticketsCloseForm = info?.data?.tickets?.filter(
+              (ticket) => ticket.closeForm === 1
+            );
 
-          // console.log({ ticketsCloseForm });
-          if (ticketsCloseForm.length > 0) {
-            // console.log("tiene tickets sin cerrar", { ticketsCloseForm });
-            const ticketNumber = ticketsCloseForm[0].number;
-            const status = ticketsCloseForm[0].status;
-            const message = ticketsCloseForm[0].message;
-            const date = ticketsCloseForm[0].dateCreated
-              .split(" ")[0]
-              .split("-");
-            const day = date[2];
-            const month = date[1];
-            const year = date[0];
-            const time = ticketsCloseForm[0].dateCreated
-              .split(" ")[1]
-              .split(":");
-            const hours = time[0];
-            const minutes = time[1];
-            const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
+            // console.log({ ticketsCloseForm });
+            if (ticketsCloseForm.length > 0) {
+              // console.log("tiene tickets sin cerrar", { ticketsCloseForm });
+              const ticketNumber = ticketsCloseForm[0].number;
+              const status = ticketsCloseForm[0].status;
+              const message = ticketsCloseForm[0].message;
+              const date = ticketsCloseForm[0].dateCreated
+                .split(" ")[0]
+                .split("-");
+              const day = date[2];
+              const month = date[1];
+              const year = date[0];
+              const time = ticketsCloseForm[0].dateCreated
+                .split(" ")[1]
+                .split(":");
+              const hours = time[0];
+              const minutes = time[1];
+              const finalDate = `${day}-${month}-${year} a las ${hours}:${minutes}hs`;
 
-            alertWarningTickets(ticketNumber, finalDate, status, message);
+              alertWarningTickets(ticketNumber, finalDate, status, message);
 
-            //! definir con las chicas el tema del closeForm, mostrar alerta del último ticket abierto
+              //! definir con las chicas el tema del closeForm, mostrar alerta del último ticket abierto
 
-            reset();
-            resetStep();
-            router.push("/");
+              reset();
+              resetStep();
+              router.push("/");
 
-            return;
+              return;
+            }
           }
         }
       }
@@ -273,7 +284,7 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
         // alertSuccessTickets(12345);
         // alertErrorTickets()
         // alertErrorTicketsNotification()
-        return
+        // return
 
         const info = await fetch(
           `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
@@ -287,7 +298,7 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
         );
 
         if (info === undefined || !info.ok) {
-          console.error({ message: "info === undefined || !info.ok", error });
+          console.error({ message: "info === undefined || !info.ok", info });
           if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
             setContext("infoError", {
               word: token,
@@ -295,7 +306,7 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
               formData: JSON.stringify(formData),
             });
             captureException(
-              new Error("Error al hacer el fetch, línea 299 FormsApi")
+              new Error("Error al hacer el fetch, línea 309 FormsApi")
             );
           }
           let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
@@ -331,9 +342,9 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
 
         const numberTicket = res?.data?.ticketNumber;
         alertSuccessTickets(numberTicket);
-        reset();
-        resetStep();
-        router.push("/");
+        // reset();
+        // resetStep();
+        // router.push("/");
       }
     } catch (error) {
       console.log("catch(error)");
@@ -345,7 +356,7 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
           formDatatest: JSON.stringify(formDatatest),
         });
         captureException(
-          new Error("Error al hacer el fetch, línea 349 FormsApi")
+          new Error("Error al hacer el fetch, línea 359 FormsApi")
         );
       }
       let { value, expirationDate } = JSON.parse(getCookie("ftuein"));
@@ -365,9 +376,9 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
         alertErrorTickets();
       }
       // errorLogs("/api/errors_clients", email, content, error);
-      // reset();
-      // resetStep();
-      // router.push("/");
+      reset();
+      resetStep();
+      router.push("/");
     } finally {
       setIsLoading(false);
       setLoadingCheckHaveTickets(false);

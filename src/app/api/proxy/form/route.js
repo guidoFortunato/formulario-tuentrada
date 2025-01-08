@@ -31,6 +31,8 @@ export async function POST(req) {
     if (typeFunction === "get") {
       info = await getTickets(url, email, itilcategoriesId);
     }
+
+    console.dir({ info }, { depth: null });
         
 
     if (!info.status) {

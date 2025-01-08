@@ -33,6 +33,7 @@ export const getData = async (url, timeRevalidate = 60) => {
 };
 
 export const sendData = async (url, email, timeRevalidate = 0) => {
+  console.log('entra a sendData')
   // Obtener el token desde Redis
   let token = await getTokenRedis();
   // console.log({getTokenRedis: token})
@@ -63,6 +64,7 @@ export const sendData = async (url, email, timeRevalidate = 0) => {
 };
 
 export const getTickets = async (url, email, itilcategoriesId) => {
+  console.log('entra a getTickets')
   // Obtener el token desde Redis
   let token = await getTokenRedis();
   // console.log({getTokenRedis: token})
