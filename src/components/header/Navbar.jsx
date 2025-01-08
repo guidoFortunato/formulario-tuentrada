@@ -4,6 +4,8 @@ import { ToggleButtonElements } from "./ToggleButtonElements";
 
 export default function NavBar({ data }) {
 
+  console.log({data})
+
   const newSrc = data.logo?.src.replace(
     "/images/",
     "https://api.tuentrada.com/storage/"

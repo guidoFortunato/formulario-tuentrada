@@ -284,7 +284,8 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
         // alertSuccessTickets(12345);
         // alertErrorTickets()
         // alertErrorTicketsNotification()
-        // return
+        console.log({token})
+        return
 
         const info = await fetch(
           `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/create/form`,
@@ -330,9 +331,9 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
           //   content,
           //   info.status.toString()
           // );
-          reset();
-          resetStep();
-          router.push("/");
+          // reset();
+          // resetStep();
+          // router.push("/");
           return;
         }
 
