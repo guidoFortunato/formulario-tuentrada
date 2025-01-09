@@ -4,7 +4,8 @@ import SocialMedia from "./SocialMedia";
 import Link from "next/link";
 
 const Footer = ({ data }) => {  
-  
+
+ 
   //! Por si falla la llamada a la api, otra opción es mover el layout a las páginas internas
   if (!data) {
     return <span></span>
@@ -22,8 +23,8 @@ const Footer = ({ data }) => {
     <footer className="bg-gradient-image shadow relative bottom-0 w-full">
       <div className="w-full max-w-screen-xl mx-auto pt-4">
         <div className="flex items-center flex-col">
-          <a
-            href="https://tuentrada.com/"
+          <Link
+            href={ data.logoFooter?.link ?? "https://tuentrada.com/" }
             className="flex items-center mb-4 sm:mb-0"
           >
             <Image
@@ -34,7 +35,7 @@ const Footer = ({ data }) => {
               priority
               style={{ width: "auto", height: "auto" }}
             />
-          </a>
+          </Link>
           <span className="mb-4 text-slate-400">
             Todos los derechos reservados
           </span>

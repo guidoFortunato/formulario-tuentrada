@@ -1,4 +1,3 @@
-import { getDataTickets } from "@/helpers/getInfoTest";
 import { getTickets, sendData } from "@/utils/getData";
 import { NextResponse } from "next/server";
 

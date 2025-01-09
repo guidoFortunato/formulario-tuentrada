@@ -25,7 +25,7 @@ export function middleware(request) {
 export const config = {
   matcher: [
     // Solo las rutas que usan Server Actions o tienen problemas con headers
-    '/[categoria]/[subcategoria]/formulario/:path*', // Para los formularios
+    // '/[categoria]/[subcategoria]/formulario/:path*', // Para los formularios
     '/api/proxy/:path*',                            // Para las búsquedas y formularios proxy
   ]
 }; 
