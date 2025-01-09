@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import { createTicket } from "@/utils/getData";
 
 export async function POST(req) {
@@ -27,7 +28,7 @@ export async function POST(req) {
   } catch (error) {
     console.log(error);
     return NextResponse.json(
-      { error: "Intente nuevamente mas tarde", ok: false, data: [] },
+      { error: error, ok: false, data: [] },
       { status: 500 }
     );
   }

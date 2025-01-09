@@ -193,9 +193,9 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
 
               //! definir con las chicas el tema del closeForm, mostrar alerta del último ticket abierto
 
-              reset();
-              resetStep();
-              router.push("/");
+              // reset();
+              // resetStep();
+              // router.push("/");
 
               return;
             }
@@ -303,7 +303,9 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: formData,
+          body: JSON.stringify({
+            formData: Object.fromEntries(formData)
+          }),
         })
         
         console.log({info})
@@ -384,9 +386,9 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
         alertErrorTickets();
       }
     
-      reset();
-      resetStep();
-      router.push("/");
+      // reset();
+      // resetStep();
+      // router.push("/");
     } finally {
       setIsLoading(false);
       setLoadingCheckHaveTickets(false);
