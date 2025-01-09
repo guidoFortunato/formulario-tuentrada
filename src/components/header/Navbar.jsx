@@ -14,7 +14,7 @@ export default function NavBar({ data }) {
   return (
     <nav className="bg-gradient-to-b from-maroon-dark to-blue-dark md:from-blue-dark md:to-maroon-dark px-[0.8rem] lg:px-[7.5rem] py-1">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link href="https://www.tuentrada.com/">
+        <Link href={ data.logo?.link ?? "https://tuentrada.com/" }>
           <Image
             src={newSrc}
             alt={data.logo.alt}
