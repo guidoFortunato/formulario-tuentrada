@@ -269,9 +269,7 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
               formData.append(newKey, content[key][0]);
             }
           }
-          // if (Array.isArray(content[key])) {
-          //   formData.append(newKey, content[key].join(" - "));
-          // }
+
           else {
             // Si no es un archivo, agregar el valor normalmente
             formData.append(newKey, content[key]);
