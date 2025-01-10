@@ -2,6 +2,11 @@ import dynamic from "next/dynamic";
 const AdBanner = dynamic(() => import("../adsense/AdBanner"), {
   ssr: false,
 });
+const TagManager = dynamic(() => import("../tagmanager/TagManager").then(mod => mod.TagManager), {
+  ssr: false
+});
+
+
 
 import { ContainerHeaderServer } from "./ContainerHeaderServer";
 import Footer from "../footer/Footer";
@@ -22,6 +27,7 @@ export const ContainerApp = async ({ children }) => {
 
   return (
     <>
+      <TagManager dataSite={dataSite} />
       <ContainerHeaderServer dataSite={dataSite} />
       {children}
       <AdBanner
