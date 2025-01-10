@@ -26,12 +26,12 @@ export const getData = async (url, timeRevalidate = 60) => {
   return { status: true, res, token };
 };
 
-export const sendData = async (url, email, timeRevalidate = 0) => {
+export const sendData = async (url, email) => {
   // Obtener el token
   let token = await getToken();
 
   // Hacer la solicitud a la API con el token
-  const res = await sendDataEmail(url, token, email, timeRevalidate);
+  const res = await sendDataEmail(url, token, email);
 
   // Verificar si la respuesta es válida
   if (!res.status) {
@@ -66,9 +66,11 @@ export const getTickets = async (url, email, itilcategoriesId) => {
 export const createTicket = async (url, formData) => {
   // Obtener el token
   let token = await getToken();
+  // console.log({ formData });
 
   // Hacer la solicitud a la API con el token
   const res = await createForm(url, token, formData);
+  // console.log({ resCreateTicket: res });
 
   // Verificar si la respuesta es válida
   if (!res.status) {

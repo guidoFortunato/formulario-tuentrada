@@ -156,14 +156,13 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
         });
 
         //! ver tickets abiertos
-        // console.log({ info });
 
         const info = await res.json();
         // console.log({ info });
 
         // tickets abiertos
         if (info?.status) {
-          console.log("entra a info?.status")
+          // console.log("entra a info?.status")
           if (info?.data?.tickets?.length > 0) {
             // const haveCloseForm = info?.data?.tickets.some((ticket) => ticket.closeForm === 1);
             const ticketsCloseForm = info?.data?.tickets?.filter(
@@ -193,9 +192,9 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
 
               //! definir con las chicas el tema del closeForm, mostrar alerta del último ticket abierto
 
-              // reset();
-              // resetStep();
-              // router.push("/");
+              reset();
+              resetStep();
+              router.push("/");
 
               return;
             }
@@ -300,17 +299,10 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
 
         const info = await fetch("/api/proxy/create", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            formData: Object.fromEntries(formData)
-          }),
-        })
-        
-        console.log({info})
+          body: formData,
+        });
 
-
+        // console.log({info})
 
         if (info === undefined || !info.ok) {
           console.error({ message: "info === undefined || !info.ok", info });
@@ -339,10 +331,10 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
           } else {
             alertErrorTickets();
           }
-         
-          // reset();
-          // resetStep();
-          // router.push("/");
+
+          reset();
+          resetStep();
+          router.push("/");
           return;
         }
 
@@ -350,11 +342,13 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
 
         const res = await info.json();
 
+        // console.log({ res });
+
         const numberTicket = res?.data?.ticketNumber;
         alertSuccessTickets(numberTicket);
-        // reset();
-        // resetStep();
-        // router.push("/");
+        reset();
+        resetStep();
+        router.push("/");
       }
     } catch (error) {
       console.log("catch(error)");
@@ -385,10 +379,10 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
       } else {
         alertErrorTickets();
       }
-    
-      // reset();
-      // resetStep();
-      // router.push("/");
+
+      reset();
+      resetStep();
+      router.push("/");
     } finally {
       setIsLoading(false);
       setLoadingCheckHaveTickets(false);
@@ -414,4 +408,3 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
     </form>
   );
 };
-

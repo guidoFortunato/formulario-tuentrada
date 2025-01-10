@@ -3,7 +3,14 @@ import { createTicket } from "@/utils/getData";
 
 export async function POST(req) {
   try {
-    const { formData } = await req.json();
+    const formData = await req.formData();
+    // const body = await req.json();
+    console.log({ formData });
+
+    // return NextResponse.json(
+    //   { status: true, data: "" },
+    //   { status: 200 }
+    // );
     
     if (!formData) {
       return NextResponse.json(
@@ -26,7 +33,7 @@ export async function POST(req) {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
+    console.log({errorRoute: error});
     return NextResponse.json(
       { error: error, ok: false, data: [] },
       { status: 500 }
