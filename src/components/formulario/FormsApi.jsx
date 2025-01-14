@@ -4,7 +4,6 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCookie, hasCookie, setCookie } from "cookies-next";
 import { captureException, setContext } from "@sentry/nextjs";
-import { getDataTickets } from "@/helpers/getInfoTest";
 import { FormContext } from "@/context/FormContext";
 import {
   alertSuccessTickets,
@@ -26,7 +25,7 @@ import { BotonVolver } from "./BotonVolver";
 import { addPrefixes } from "@/utils/addPrefixes";
 import { ContainerLoader } from "../container/ContainerLoader";
 
-export const FormsApi = ({ dataForm, lengthSteps, token }) => {
+export const FormsApi = ({ dataForm, lengthSteps }) => {
   const {
     handleSubmit,
     nextStep,
@@ -306,7 +305,7 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
           console.error({ message: "info === undefined || !info.ok", info });
           if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
             setContext("infoError", {
-              word: token,
+              // word: token,
               info: JSON.stringify(info),
               formData: JSON.stringify(formData),
             });
@@ -353,7 +352,7 @@ export const FormsApi = ({ dataForm, lengthSteps, token }) => {
       console.error(error);
       if (process.env.NEXT_PUBLIC_ENABLE_SENTRY === "true") {
         setContext("catch", {
-          word: token,
+          // word: token,
           error: JSON.stringify(error),
           formDatatest: JSON.stringify(formDatatest),
         });

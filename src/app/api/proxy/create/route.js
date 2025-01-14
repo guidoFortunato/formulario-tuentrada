@@ -4,14 +4,7 @@ import { createTicket } from "@/utils/getData";
 export async function POST(req) {
   try {
     const formData = await req.formData();
-    // const body = await req.json();
-    console.log({ formData });
 
-    // return NextResponse.json(
-    //   { status: true, data: "" },
-    //   { status: 200 }
-    // );
-    
     if (!formData) {
       return NextResponse.json(
         { error: "El formulario es requerido.", ok: false, data: [] },
@@ -26,14 +19,14 @@ export async function POST(req) {
       return NextResponse.json({ status: false, data: [] }, { status: 200 });
     }
 
-    console.dir({ info }, { depth: null });
+    // console.dir({ info }, { depth: null });
 
     return NextResponse.json(
       { status: info.status, data: info.res.data },
       { status: 200 }
     );
   } catch (error) {
-    console.log({errorRoute: error});
+    console.log({ errorRoute: error });
     return NextResponse.json(
       { error: error, ok: false, data: [] },
       { status: 500 }
