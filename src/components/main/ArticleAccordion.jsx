@@ -20,8 +20,8 @@ export const ArticleAccordion = ({ itemColumn }) => {
   return (
     <>
       {itemColumn.acordion &&
-        itemColumn.acordion.map((item, index) => (
-          <div
+        itemColumn.acordion.map((item, index) => {
+          return <div
             id="accordion-flush"
             data-accordion="collapse"
             data-active-classes="bg-white text-gray-900"
@@ -74,7 +74,7 @@ export const ArticleAccordion = ({ itemColumn }) => {
               ></div>
             </div>
           </div>
-        ))}
+})}
     </>
   );
 };

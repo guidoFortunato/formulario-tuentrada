@@ -4,7 +4,52 @@ import dompurify from "isomorphic-dompurify";
 const SubCategoria = ({ category, params }) => {
   const subCategories = category?.subCategories;
   const sanitizer = dompurify.sanitize;
-  // console.dir({ category }, { depth: null });
+  // console.dir({ subCategories }, { depth: null });
+
+  // const subCategoriesFAQ = subCategories.filter( (item) => item.name.toLowerCase().includes("protege") )[0].articles
+  // const titleFAQ = Boolean(subCategoriesFAQ.find( item => item.title.toLowerCase().includes("preguntas frecuentes") ))
+  // console.log({titleFAQ})
+
+  // function getFAQTitle(items = Array.from(document.querySelectorAll("#accordion-flush")), category = "protege", key = "preguntas frecuentes") {
+  //   var protegeCategory = items.filter(function(item) {
+  //     return item.name.toLowerCase().includes(category);
+  //   })[0];
+  
+  //   if (!protegeCategory) return false;
+  
+  //   var hasFAQTitle = protegeCategory.articles.find(function(item) {
+  //     return item.title.toLowerCase().includes(key);
+  //   });
+
+  //   if (!Boolean(hasFAQTitle)) return "";
+  
+  //   return hasFAQTitle.title;
+  // }
+
+  // function getFAQTitle(items) {
+  //   if (!items) {
+  //     items = Array.from(document.querySelectorAll("#accordion-flush"));
+  //   }
+
+  //   var title = items.find(function(item) {
+  //     return item.textContent.toLowerCase().includes("costo del servicio");
+  //   });
+    
+  //   if (!title) {
+  //     return null;
+  //   }
+
+  //   var span = title.querySelector("h2 button span");
+  //   if (span) {
+  //     return span.textContent;
+  //   }
+  //   return null;
+  // }
+
+  // console.log({subCategories})
+  
+  // const titleFAQ = getFAQTitle(subCategories);
+  // console.log({titleFAQ})
 
   return (
     <div className="container mx-auto bg-main-image bg-no-repeat bg-left-50 pb-10 px-10 md:px-20 flex-1">

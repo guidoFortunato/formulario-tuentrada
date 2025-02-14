@@ -36,6 +36,7 @@ export const ArticleRows = ({ item }) => {
     >
       {columns.map((column) => {
         return column.items.map((itemColumn, index) => {
+          // console.dir({itemColumn}, {depth: null})
           if (itemColumn.type === "richText") {
             return (
               <RichText
