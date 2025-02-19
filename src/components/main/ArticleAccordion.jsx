@@ -3,6 +3,19 @@
 import { useState } from "react";
 import dompurify from "isomorphic-dompurify";
 
+const splitContent = (string) => {
+  const tableIndex = string.indexOf("<table");
+
+  if (tableIndex === -1) {
+    return { description: string, table: "" };
+  }
+
+  return {
+    description: string.substring(0, tableIndex).trim(),
+    table: string.substring(tableIndex).trim(),
+  };
+};
+
 export const ArticleAccordion = ({ itemColumn }) => {
   const [openStates, setOpenStates] = useState(
     itemColumn.acordion.map(() => false)
@@ -20,8 +33,10 @@ export const ArticleAccordion = ({ itemColumn }) => {
   return (
     <>
       {itemColumn.acordion &&
-        itemColumn.acordion.map((item, index) => (
-          <div
+        itemColumn.acordion.map((item, index) => {
+          const { description, table } = splitContent(item?.descripcion);
+
+          return <div
             id="accordion-flush"
             data-accordion="collapse"
             data-active-classes="bg-white text-gray-900"
@@ -67,14 +82,29 @@ export const ArticleAccordion = ({ itemColumn }) => {
               }`}
               aria-labelledby={`accordion-flush-heading-${index}`}
             >
-              <div className="text-base text-gray-700 py-5 pl-2"
-                dangerouslySetInnerHTML={{
-                  __html: sanitizer(item.descripcion),
-                }}
-              ></div>
+              <div
+                  className="text-base text-gray-700 py-5 pl-2"
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizer(description),
+                  }}
+                ></div>
+              {table && (
+                <div
+                  style={{
+                    width: "auto",
+                    overflowX: "auto",
+                    display: "block",
+                    whiteSpace: "nowrap",
+                  }}
+                  className="text-base text-gray-700 py-5 pl-2"
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizer(table),
+                  }}
+                />
+              )}
             </div>
-          </div>
-        ))}
+          </div>;
+        })}
     </>
   );
 };
