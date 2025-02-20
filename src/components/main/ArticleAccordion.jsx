@@ -91,10 +91,9 @@ export const ArticleAccordion = ({ itemColumn }) => {
               {table && (
                 <div
                   style={{
-                    width: "auto",
+                    // width: "auto",
                     overflowX: "auto",
                     display: "block",
-                    whiteSpace: "nowrap",
                   }}
                   className="text-base text-gray-700 py-5 pl-2"
                   dangerouslySetInnerHTML={{
