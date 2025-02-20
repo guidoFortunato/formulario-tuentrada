@@ -1,4 +1,4 @@
-import { getData } from "@/utils/getData";
+"use client";
 
 export const ButtonLike = ({
   name,
@@ -10,29 +10,30 @@ export const ButtonLike = ({
   params,
   like,
 }) => {
-  
-
   // console.log({params})
 
   const handleClick = async () => {
     handleOpinion();
+
     if (result) {
-      // console.log({result})
       handleLike();
-      // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/1`);
-      await getData(
-        `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/1`,
-      );
-    }
-    if (!result) {
-      // console.log({result})
+    } else {
       handleDisLike();
-      // await getDataPrueba(`https://api.tuentrada.com/api/v1/atencion-cliente/article/${params.subcategoria}/like/0`);
-      await getData(
-        `${process.env.NEXT_PUBLIC_API}/api/v1/atencion-cliente/category/${params.categoria}/article/${params.subcategoria}/like/0`,
-      );
+    }
+
+    try {
+      await fetch("/api/proxy/button", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ params, result }),
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
+
   return (
     <>
       {opinion ? (
