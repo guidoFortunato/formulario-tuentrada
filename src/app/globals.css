@@ -109,3 +109,9 @@ div:where(.swal2-container) button:where(.swal2-close):focus {
 .hover-div:hover .icon-search {
   color: #fff;
 }
+
+
+/* Tablas */
+#tableContainer table{
+  width: auto !important;
+}
