@@ -9,7 +9,7 @@ export async function getDataCache(url, token, timeRevalidate = 60) {
         "Access-Control-Allow-Origin": "*"
       },
     });
-    // console.log({getDataPrueba: res})
+    // console.log({getDataCache: res})
     const data = await res.json();
     // console.log({dataCache: data})
     return data;
